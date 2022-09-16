@@ -1,0 +1,95 @@
+/*!
+ * Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+.Roster_roster {
+  color: var(--color_alabaster);
+  height: 100%;
+  display: flex;
+  overflow-y: scroll;
+  flex-direction: column;
+  position: relative;
+  border-top: 1px solid var(--color_mine_shaft_light);
+}
+
+.Roster_noAttendee {
+  color: var(--color_silver_chalice);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Roster_attendee {
+  flex: 0 0 3rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  padding: 0 1rem;
+}
+
+.Roster_name {
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: auto;
+  text-overflow: ellipsis;
+}
+
+.Roster_weak-signal {
+  color: var(--color_thunderbird);
+}
+
+.Roster_active-speaker {
+  color: var(--color_green);
+}
+
+.Roster_raisedHand {
+  font-size: 1.3rem;
+  margin-left: 0.5rem;
+  animation: shake 1.22s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  user-select: none;
+}
+
+.Roster_video {
+  text-align: center;
+  flex: 0 0 1.5rem;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+  width: 1.5rem;
+}
+
+.Roster_muted {
+  text-align: center;
+  flex: 0 0 1.5rem;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+  width: 1.5rem;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-0.5px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(1px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-1.5px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(1.5px, 0, 0);
+  }
+}
