@@ -7,6 +7,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
 import routes from '../constants/routes.json';
@@ -27,7 +28,7 @@ const optionalFeatures = [
 export default function CreateOrJoin() {
   const chime = useContext(getChimeContext()) as ChimeSdkWrapper;
   const [state] = useContext(getUIStateContext());
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(state.classMode === ClassMode.Teacher ? uuidv4().substring(0,8) : '');
   const [name, setName] = useState('');
   const [region, setRegion] = useState<RegionType | undefined>(undefined);
   const [optionalFeature, setOptionalFeature] = useState('');
@@ -67,6 +68,7 @@ export default function CreateOrJoin() {
           }}
         >
           <input
+            value={title}
             className={cx('CreateOrJoin_titleInput')}
             onChange={event => {
               setTitle(event.target.value);
