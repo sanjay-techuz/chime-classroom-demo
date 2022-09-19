@@ -14,7 +14,6 @@ import {
   LogLevel,
   MeetingSession,
   MeetingSessionConfiguration,
-  ReconnectingPromisedWebSocket,
   DefaultActiveSpeakerPolicy
 } from 'amazon-chime-sdk-js';
 import { useIntl } from 'react-intl';
@@ -84,7 +83,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
 
   configuration: MeetingSessionConfiguration | null = null;
 
-  messagingSocket: ReconnectingPromisedWebSocket | null = null;
+  messagingSocket: any | null = null;
 
   messageUpdateCallbacks: MessageUpdateCallbackType[] = [];
 
@@ -197,7 +196,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
   initializeMeetingSession = async (
     configuration: MeetingSessionConfiguration
   ): Promise<void> => {
-    const logger = new ConsoleLogger('SDK', LogLevel.DEBUG);
+    const logger = new ConsoleLogger('SDK', LogLevel.OFF);
     const deviceController = new DefaultDeviceController(logger);
     this.meetingSession = new DefaultMeetingSession(
       configuration,
@@ -388,6 +387,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
 
   leaveRoom = async (end: boolean): Promise<void> => {
     try {
+      this.audioVideo.chooseVideoInputDevice(null);
+      this.audioVideo.stopLocalVideoTile();
       this.audioVideo?.stop();
     } catch (error) {
       this.logError(error);
@@ -396,7 +397,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     try {
       if (end && this.title) {
         await fetch(
-          `${commonob.getBaseUrl}}end?title=${encodeURIComponent(this.title)}`,
+          `${commonob.getBaseUrl}end?title=${encodeURIComponent(this.title)}`,
           {
             method: 'POST'
           }

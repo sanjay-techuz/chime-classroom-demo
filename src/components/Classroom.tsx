@@ -1,35 +1,35 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import classNames from 'classnames/bind';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import Modal from 'react-modal';
+import classNames from "classnames/bind";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
+import Modal from "react-modal";
 
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import getMeetingStatusContext from '../context/getMeetingStatusContext';
-import getUIStateContext from '../context/getUIStateContext';
-import ClassMode from '../enums/ClassMode';
-import MeetingStatus from '../enums/MeetingStatus';
-import ViewMode from '../enums/ViewMode';
-import Chat from './Chat';
-import styles from './Classroom.css';
-import ContentVideo from './ContentVideo';
-import Controls from './Controls';
-import DeviceSwitcher from './DeviceSwitcher';
-import Error from './Error';
-import LoadingSpinner from './LoadingSpinner';
-import LocalVideo from './LocalVideo';
-import RemoteVideoGroup from './RemoteVideoGroup';
-import Roster from './Roster';
-import ScreenShareHeader from './ScreenShareHeader';
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import getMeetingStatusContext from "../context/getMeetingStatusContext";
+import getUIStateContext from "../context/getUIStateContext";
+import ClassMode from "../enums/ClassMode";
+import MeetingStatus from "../enums/MeetingStatus";
+import ViewMode from "../enums/ViewMode";
+import Chat from "./Chat";
+import styles from "./Classroom.css";
+import ContentVideo from "./ContentVideo";
+import Controls from "./Controls";
+import DeviceSwitcher from "./DeviceSwitcher";
+import Error from "./Error";
+import LoadingSpinner from "./LoadingSpinner";
+import LocalVideo from "./LocalVideo";
+import RemoteVideoGroup from "./RemoteVideoGroup";
+import Roster from "./Roster";
+import ScreenShareHeader from "./ScreenShareHeader";
 
 const cx = classNames.bind(styles);
 
 export default function Classroom() {
-  Modal.setAppElement('body');
+  Modal.setAppElement("body");
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const [state] = useContext(getUIStateContext());
   const { meetingStatus, errorMessage } = useContext(getMeetingStatusContext());
@@ -39,16 +39,16 @@ export default function Classroom() {
 
   const stopContentShare = async () => {
     setIsModeTransitioning(true);
-    await new Promise(resolve => setTimeout(resolve, 200));
-      try {
-        chime?.audioVideo?.stopContentShare();
-      } catch (error) {
-        // eslint-disable-next-line
-        console.error(error);
-      } finally {
-        setViewMode(ViewMode.Room);
-        setIsModeTransitioning(false);
-      }
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    try {
+      chime?.audioVideo?.stopContentShare();
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    } finally {
+      setViewMode(ViewMode.Room);
+      setIsModeTransitioning(false);
+    }
   };
 
   // Must pass a memoized callback to the ContentVideo component using useCallback().
@@ -64,7 +64,7 @@ export default function Classroom() {
     [viewMode]
   );
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     useEffect(() => {
       // Recommend using "onbeforeunload" over "addEventListener"
       window.onbeforeunload = async (event: BeforeUnloadEvent) => {
@@ -88,11 +88,11 @@ export default function Classroom() {
 
   return (
     <div
-      className={cx('ClassRoom_classroom', {
+      className={cx("ClassRoom_classroom", {
         ClassRoom_roomMode: viewMode === ViewMode.Room,
         ClassRoom_screenShareMode: viewMode === ViewMode.ScreenShare,
         isModeTransitioning,
-        isContentShareEnabled
+        isContentShareEnabled,
       })}
     >
       {meetingStatus === MeetingStatus.Loading && <LoadingSpinner />}
@@ -102,52 +102,51 @@ export default function Classroom() {
       {meetingStatus === MeetingStatus.Succeeded && (
         <>
           <>
-            <div className={cx('ClassRoom_left')}>
+            <div className={cx("ClassRoom_left")}>
               {viewMode === ViewMode.ScreenShare && (
                 <ScreenShareHeader onClickStopButton={stopContentShare} />
               )}
-              <div className={cx('ClassRoom_contentVideoWrapper')}>
+              <div className={cx("ClassRoom_contentVideoWrapper")}>
                 <ContentVideo onContentShareEnabled={onContentShareEnabled} />
               </div>
-              <div className={cx('ClassRoom_remoteVideoGroupWrapper')}>
+              <div className={cx("ClassRoom_remoteVideoGroupWrapper")}>
                 <RemoteVideoGroup
                   viewMode={viewMode}
                   isContentShareEnabled={isContentShareEnabled}
                 />
               </div>
-              <div className={cx('ClassRoom_localVideoWrapper')}>
-                <div className={cx('ClassRoom_controls')}>
+              <div className={cx("ClassRoom_localVideoWrapper")}>
+                <div className={cx("ClassRoom_controls")}>
                   <Controls
                     viewMode={viewMode}
                     onClickShareButton={async () => {
                       try {
                         await chime?.audioVideo?.startContentShareFromScreenCapture();
                       } catch (err) {
-                        console.log("err.....", err)
+                        console.log("err.....", err);
                       }
-                    }
-                    }
+                    }}
                   />
                 </div>
-                <div className={cx('ClassRoom_localVideo')}>
+                <div className={cx("ClassRoom_localVideo")}>
                   <LocalVideo />
                 </div>
               </div>
             </div>
-            <div className={cx('ClassRoom_right')}>
-              <div className={cx('ClassRoom_titleWrapper')}>
-                <div className={cx('ClassRoom_title')}>{chime?.title}</div>
-                <div className={cx('ClassRoom_label')}>
+            <div className={cx("ClassRoom_right")}>
+              <div className={cx("ClassRoom_titleWrapper")}>
+                <div className={cx("ClassRoom_title")}>{chime?.title}</div>
+                <div className={cx("ClassRoom_label")}>
                   <FormattedMessage id="Classroom.classroom" />
                 </div>
               </div>
-              <div className={cx('ClassRoom_deviceSwitcher')}>
+              <div className={cx("ClassRoom_deviceSwitcher")}>
                 <DeviceSwitcher />
               </div>
-              <div className={cx('ClassRoom_roster')}>
+              <div className={cx("ClassRoom_roster")}>
                 <Roster />
               </div>
-              <div className={cx('ClassRoom_chat')}>
+              <div className={cx("ClassRoom_chat")}>
                 <Chat />
               </div>
             </div>

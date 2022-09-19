@@ -173,8 +173,7 @@ export default function Controls(props: Props) {
           )}
         </button>
       </Tooltip>
-      {state.classMode === ClassMode.Teacher &&
-        viewMode !== ViewMode.ScreenShare && (
+      {viewMode !== ViewMode.ScreenShare && (
           <Tooltip
             tooltip={intl.formatMessage({ id: 'Controls.shareScreenTooltip' })}
           >

@@ -63,7 +63,12 @@ export default function MeetingStatusProvider(props: Props) {
               MeetingSessionStatusCode.AudioCallEnded
             ) {
               history.push('/');
-              chime?.leaveRoom(state.classMode === ClassMode.Teacher);
+              if(state.classMode === ClassMode.Teacher){
+                chime?.leaveRoom(true);
+              }else{
+                chime?.leaveRoom(false);
+              }
+              
             }
           }
         });
