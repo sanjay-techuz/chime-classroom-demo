@@ -18,6 +18,7 @@ import Chat from "./Chat";
 import styles from "./Classroom.css";
 import ContentVideo from "./ContentVideo";
 import Controls from "./Controls";
+import CopyInfo from "./CopyInfo";
 import DeviceSwitcher from "./DeviceSwitcher";
 import Error from "./Error";
 import LoadingSpinner from "./LoadingSpinner";
@@ -135,10 +136,10 @@ export default function Classroom() {
             </div>
             <div className={cx("ClassRoom_right")}>
               <div className={cx("ClassRoom_titleWrapper")}>
-                <div className={cx("ClassRoom_title")}>{chime?.title}</div>
                 <div className={cx("ClassRoom_label")}>
                   <FormattedMessage id="Classroom.classroom" />
                 </div>
+                <CopyInfo />
               </div>
               <div className={cx("ClassRoom_deviceSwitcher")}>
                 <DeviceSwitcher />

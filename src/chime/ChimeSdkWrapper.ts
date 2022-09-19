@@ -406,7 +406,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     } catch (error) {
       this.logError(error);
     }
-
+    localStorage.clear();
     this.initializeSdkWrapper();
   };
 

@@ -36,6 +36,15 @@ export default function CreateOrJoin() {
   const intl = useIntl();
 
   useEffect(() => {
+    const url = new URL(window.location.href);
+    const urlParams = new URLSearchParams(url.search);
+    const meetingParam = urlParams.get('meetingId');
+    if(meetingParam){
+      setTitle(meetingParam);
+    }
+  },[])
+
+  useEffect(() => {
     setOptionalFeature(optionalFeatures[0].value);
     (async () => {
       setRegion(await chime?.lookupClosestChimeRegion());

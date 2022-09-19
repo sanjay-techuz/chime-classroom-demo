@@ -33,6 +33,10 @@ export default {
 
   'Classroom.classroom': `Classroom`,
 
+  'Copyinfo.copyMeetingId': `Copy`,
+  'Copyinfo.coppiedMeetingId': `Coppied`,
+
+
   'RemoteVideoGroup.noVideo': `No one is sharing video`,
 
   'DeviceSwitcher.noAudioInputPlaceholder': `No microphone`,
