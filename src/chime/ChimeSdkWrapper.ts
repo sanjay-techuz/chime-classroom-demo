@@ -191,6 +191,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     this.title = title;
     this.name = name;
     this.region = region;
+    localStorage.setItem('currenteMeetingID', JoinInfo.Meeting.MeetingId);
+    localStorage.setItem('currentAtendeeId', JoinInfo.Attendee.AttendeeId);
   };
 
   initializeMeetingSession = async (

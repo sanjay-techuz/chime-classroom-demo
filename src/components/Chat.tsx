@@ -9,16 +9,28 @@ import { DataMessage } from 'amazon-chime-sdk-js';
 
 import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
 import getChimeContext from '../context/getChimeContext';
+import useRoster from '../hooks/useRoster';
 import styles from './Chat.css';
 import ChatInput from './ChatInput';
 import MessageTopic from '../enums/MessageTopic';
+import RosterAttendeeType from '../types/RosterAttendeeType';
 
 const cx = classNames.bind(styles);
 
 export default function Chat() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const [messages, setMessages] = useState<DataMessage[]>([]);
+  const [filterMessage, setFilterMessage] = useState<DataMessage[]>([]);
+  const [activeChannel,setActiveChannel] = useState<string>(MessageTopic.PublicChannel);
+  const [activeChatAttendee,setActiveChatAttendee] = useState<string>(MessageTopic.PublicChannel);
   const bottomElement = useRef(null);
+  const roster = useRoster();
+  const localUserId: string = chime?.meetingSession?.configuration?.credentials?.attendeeId;
+
+  let chatAttendeeIds;
+  if (chime?.meetingSession && roster) {
+    chatAttendeeIds = Object.keys(roster).filter(attendeeId => attendeeId !== localUserId);
+  }
 
   useEffect(() => {
     const realTimeMessages: DataMessage[] = [];
@@ -27,7 +39,8 @@ export default function Chat() {
       setMessages(realTimeMessages.slice() as DataMessage[]);
     };
 
-    const chatMessageUpdateCallback = { topic: MessageTopic.Chat, callback };
+    const chatMessageUpdateCallback = { topic: MessageTopic.GroupChat, callback };
+
     const raiseHandMessageUpdateCallback = {
       topic: MessageTopic.RaiseHand,
       callback
@@ -49,40 +62,107 @@ export default function Chat() {
     }, 10);
   }, [messages]);
 
+  useEffect(() => {
+    const filteredArry = [];
+    messages.forEach((message) => {
+      if(message.topic === MessageTopic.GroupChat){
+          const msgObj = JSON.parse(new TextDecoder().decode(message.data));
+        if(msgObj.channel === activeChannel){
+          filteredArry.push(message);
+        }
+      }
+    })
+    setFilterMessage([...filteredArry]);
+  },[messages,activeChannel])
+
+  const setChannelName = (attendeeId: string) => {
+    const chnlArr = [];
+    chnlArr[0] = chime?.configuration?.credentials?.attendeeId;
+    chnlArr[1] = attendeeId;
+    const channel = chnlArr.sort().join("-")
+    return channel;
+}
+
   return (
     <div className={cx('Chat_chat')}>
+      <div className={cx('Chat_attendee_list')}>
+      <span className={cx('Chat_initials',{
+            Chat_active_initials: activeChatAttendee === MessageTopic.PublicChannel
+          })} onClick={() => {
+        setActiveChatAttendee(MessageTopic.PublicChannel);
+        setActiveChannel(MessageTopic.PublicChannel);
+      } 
+        }>All</span>
+        {chatAttendeeIds.map(chatAttdId => {
+        const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
+        const initials = rosterAttendee?.name?.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g)?.join('')
+        return (
+          <span className={cx('Chat_initials',{
+            Chat_active_initials: activeChatAttendee === chatAttdId
+          })} onClick={() => {
+            setActiveChatAttendee(chatAttdId);
+            setActiveChannel(setChannelName(chatAttdId));
+          }}>{initials}</span>
+        )
+      })}
+      </div>
       <div className={cx('Chat_messages')}>
-        {messages.map(message => {
+        {filterMessage.map(message => {
           let messageString;
-          if (message.topic === MessageTopic.Chat) {
-            messageString = message.text();
+          if (message.topic === MessageTopic.GroupChat) {
+            messageString = JSON.parse(new TextDecoder().decode(message.data)).sendingMessage;
           } else if (message.topic === MessageTopic.RaiseHand) {
             messageString = `✋`;
           }
 
-          return (
-            <div
-              key={message.timestampMs}
-              className={cx('Chat_messageWrapper', {
-                Chat_raiseHand: message.topic === MessageTopic.RaiseHand
-              })}
-            >
-              <div className={cx('Chat_senderWrapper')}>
-                <div className={cx('Chat_senderName')}>
-                  {chime?.roster[message.senderAttendeeId].name}
+          if(message.senderAttendeeId === localUserId){
+            return (
+              <div
+                key={message.timestampMs}
+                className={cx('Chat_sender_messageWrapper', {
+                  Chat_raiseHand: message.topic === MessageTopic.RaiseHand
+                })}
+              >
+                <div className={cx('Chat_right_Wrapper')}>
+                <div className={cx('Chat_senderWrapper')}>
+                  <div className={cx('Chat_senderName')}>
+                    {chime?.roster[message.senderAttendeeId].name}
+                  </div>
+                  <div className={cx('Chat_date')}>
+                    {moment(message.timestampMs).format('h:mm A')}
+                  </div>
                 </div>
-                <div className={cx('Chat_date')}>
-                  {moment(message.timestampMs).format('h:mm A')}
+                <div className={cx('Chat_message')}>{messageString}</div>
                 </div>
               </div>
-              <div className={cx('Chat_message')}>{messageString}</div>
-            </div>
-          );
+            );
+          }else{
+            return (
+              <div
+                key={message.timestampMs}
+                className={cx('Chat_reciever_messageWrapper', {
+                  Chat_raiseHand: message.topic === MessageTopic.RaiseHand
+                })}
+              >
+              <div className={cx('Chat_left_Wrapper')}>
+                <div className={cx('Chat_senderWrapper')}>
+                  <div className={cx('Chat_senderName')}>
+                    {chime?.roster[message.senderAttendeeId].name}
+                  </div>
+                  <div className={cx('Chat_date')}>
+                    {moment(message.timestampMs).format('h:mm A')}
+                  </div>
+                </div>
+                <div className={cx('Chat_message')}>{messageString}</div>
+                </div>
+              </div>
+            );
+          }
         })}
         <div className="bottom" ref={bottomElement} />
       </div>
       <div className={cx('Chat_chatInput')}>
-        <ChatInput />
+        <ChatInput activeChannel={activeChannel} />
       </div>
     </div>
   );

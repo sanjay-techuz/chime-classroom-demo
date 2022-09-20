@@ -17,8 +17,24 @@
   padding-top: 0.5rem;
 }
 
-.Chat_messageWrapper {
+.Chat_sender_messageWrapper {
   padding: 0.5rem 1.25rem;
+  width: 100%;
+  height: 25%;
+}
+
+.Chat_right_Wrapper{
+  float: right;
+}
+
+.Chat_left_Wrapper{
+  float: left;
+}
+
+.Chat_reciever_messageWrapper{
+  padding: 0.5rem 1.25rem;
+  width: 100%;
+  height: 25%;
 }
 
 .Chat_senderName {
@@ -49,4 +65,51 @@
 
 .Chat_chatInput {
   flex: 0 0 auto;
+}
+
+.Chat_attendee_list{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  height: 15%;
+  max-height: 15%;
+  min-height: 15%;
+  overflow-x: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.Chat_attendee_list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.Chat_attendee_list {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.Chat_initials{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  color: black;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.Chat_active_initials{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  background-color: #1a1919fc;
+  border-radius: 4px;
+  color: #FFFFFF;
+  margin: 2px;
+  cursor: pointer;
 }

@@ -24,7 +24,7 @@ export default function CopyInfo() {
     setIsMeetingCoppied(true);
     navigator.clipboard.writeText(chime?.title);
     setTimeout(() => {
-      setIsMeetingCoppied(true);
+      setIsMeetingCoppied(false);
     }, 5000);
   };
 
@@ -34,7 +34,7 @@ export default function CopyInfo() {
     const meetingUrl = `${url.origin}/?meetingId=${chime?.title}`
     navigator.clipboard.writeText(meetingUrl);
     setTimeout(() => {
-      setIsMeetingUrlCoppied(true);
+      setIsMeetingUrlCoppied(false);
     }, 5000);
   };
 

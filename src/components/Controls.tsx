@@ -82,11 +82,15 @@ export default function Controls(props: Props) {
             onClick={() => {
               const newFocusState = !focus;
               chime?.sendMessage(MessageTopic.Focus, { focus: newFocusState });
+              const msgObject = {
+                sendingMessage: newFocusState
+                ? intl.formatMessage({ id: 'Controls.focusOnMessage' })
+                : intl.formatMessage({ id: 'Controls.focusOffMessage' }),
+                channel: MessageTopic.PublicChannel
+              }
               chime?.sendMessage(
-                MessageTopic.Chat,
-                newFocusState
-                  ? intl.formatMessage({ id: 'Controls.focusOnMessage' })
-                  : intl.formatMessage({ id: 'Controls.focusOffMessage' })
+                MessageTopic.GroupChat,
+                JSON.stringify(msgObject)
               );
               setFocus(newFocusState);
             }}

@@ -18,7 +18,12 @@ const cx = classNames.bind(styles);
 
 let timeoutId: number;
 
-export default React.memo(function ChatInput() {
+type Props = {
+  activeChannel: string;
+};
+
+export default React.memo(function ChatInput(props: Props) {
+  const { activeChannel } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const [state] = useContext(getUIStateContext());
   const [inputText, setInputText] = useState('');
@@ -68,9 +73,13 @@ export default React.memo(function ChatInput() {
             }
             if (event.keyCode === 13) {
               const sendingMessage = inputText.trim();
+              const msgObject = {
+                sendingMessage,
+                channel: activeChannel
+              }
               const attendeeId = chime?.configuration?.credentials?.attendeeId;
               if (sendingMessage !== '' && attendeeId) {
-                chime?.sendMessage(MessageTopic.Chat, sendingMessage);
+                chime?.sendMessage(MessageTopic.GroupChat, JSON.stringify(msgObject));
                 setInputText('');
               }
             }
