@@ -59,9 +59,6 @@ export default {
   'Controls.focusOffMessage': `Focus off`,
   'Controls.removeAttendee': `Remove Attendee`,
 
-  'ScreenShareHeader.stopSharing': `Stop sharing`,
-  'ScreenShareHeader.online': `{number} online`,
-
   'ChatInput.inputPlaceholder': `Type a chat message`,
   'ChatInput.raiseHandAriaLabel': `Raise hand`,
 

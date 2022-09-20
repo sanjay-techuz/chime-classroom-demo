@@ -25,7 +25,6 @@ import LoadingSpinner from "./LoadingSpinner";
 import LocalVideo from "./LocalVideo";
 import RemoteVideoGroup from "./RemoteVideoGroup";
 import Roster from "./Roster";
-import ScreenShareHeader from "./ScreenShareHeader";
 import Tooltip from "./Tooltip";
 
 const cx = classNames.bind(styles);
@@ -107,9 +106,6 @@ export default function Classroom() {
         <>
           <>
             <div className={cx("ClassRoom_left")}>
-              {viewMode === ViewMode.ScreenShare && (
-                <ScreenShareHeader onClickStopButton={stopContentShare} />
-              )}
               <div className={cx("ClassRoom_contentVideoWrapper")}>
                 <ContentVideo onContentShareEnabled={onContentShareEnabled} />
               </div>
