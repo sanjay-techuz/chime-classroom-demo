@@ -4,7 +4,7 @@
 
 import classNames from "classnames/bind";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from 'react-intl';
 import Modal from "react-modal";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -26,6 +26,7 @@ import LocalVideo from "./LocalVideo";
 import RemoteVideoGroup from "./RemoteVideoGroup";
 import Roster from "./Roster";
 import ScreenShareHeader from "./ScreenShareHeader";
+import Tooltip from "./Tooltip";
 
 const cx = classNames.bind(styles);
 
@@ -37,6 +38,8 @@ export default function Classroom() {
   const [isContentShareEnabled, setIsContentShareEnabled] = useState(false);
   const [viewMode, setViewMode] = useState(ViewMode.Room);
   const [isModeTransitioning, setIsModeTransitioning] = useState(false);
+  const [openRightBar, setOpenRightBar] = useState(true);
+  const intl = useIntl();
 
   const stopContentShare = async () => {
     setIsModeTransitioning(true);
@@ -134,8 +137,16 @@ export default function Classroom() {
                 </div>
               </div>
             </div>
-            <div className={cx("ClassRoom_right")}>
+
+            <div className={cx("ClassRoom_right",{
+              Classroom_right_none: !openRightBar
+            })}>
               <div className={cx("ClassRoom_titleWrapper")}>
+                <Tooltip
+                    tooltip={intl.formatMessage({ id: 'Classroom.closeRightMenu' })}
+                  >
+                <div className={cx('ClassRoom_right_close')} onClick={() => setOpenRightBar(false)}><i className="fas fa-2x fa-times" /></div>
+                </Tooltip>
                 <div className={cx("ClassRoom_label")}>
                   <FormattedMessage id="Classroom.classroom" />
                 </div>
@@ -151,6 +162,15 @@ export default function Classroom() {
                 <Chat />
               </div>
             </div>
+            
+            {
+              !openRightBar && (<Tooltip
+                tooltip={intl.formatMessage({ id: 'Classroom.openRightMenu' })}
+              >
+                <div className={cx('ClassRoom_right_open')} onClick={() => setOpenRightBar(true)}><i className="fas fa-2x fa-bars" /></div>
+              </Tooltip>  
+              )
+            }                    
           </>
         </>
       )}

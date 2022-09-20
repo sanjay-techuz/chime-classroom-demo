@@ -97,7 +97,7 @@ export default function Chat() {
         const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
         const initials = rosterAttendee?.name?.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g)?.join('')
         return (
-          <span className={cx('Chat_initials',{
+          <span key={`${new Date().getTime()}_${chatAttdId}`} className={cx('Chat_initials',{
             Chat_active_initials: activeChatAttendee === chatAttdId
           })} onClick={() => {
             setActiveChatAttendee(chatAttdId);
@@ -126,7 +126,7 @@ export default function Chat() {
                 <div className={cx('Chat_right_Wrapper')}>
                 <div className={cx('Chat_senderWrapper')}>
                   <div className={cx('Chat_senderName')}>
-                    {chime?.roster[message.senderAttendeeId].name}
+                    {chime?.roster[message.senderAttendeeId]?.name}
                   </div>
                   <div className={cx('Chat_date')}>
                     {moment(message.timestampMs).format('h:mm A')}
@@ -147,7 +147,7 @@ export default function Chat() {
               <div className={cx('Chat_left_Wrapper')}>
                 <div className={cx('Chat_senderWrapper')}>
                   <div className={cx('Chat_senderName')}>
-                    {chime?.roster[message.senderAttendeeId].name}
+                    {chime?.roster[message.senderAttendeeId]?.name}
                   </div>
                   <div className={cx('Chat_date')}>
                     {moment(message.timestampMs).format('h:mm A')}

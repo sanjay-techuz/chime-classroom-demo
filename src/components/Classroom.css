@@ -142,3 +142,20 @@
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(0.5rem);
 }
+
+.ClassRoom_right_close{
+  position: absolute;
+  cursor: pointer;
+  right: 1%;
+}
+
+.ClassRoom_right_open{
+  position: absolute;
+  cursor: pointer;
+  right: 1%;
+  top: 1%;
+}
+
+.Classroom_right_none{
+  display: none;
+}

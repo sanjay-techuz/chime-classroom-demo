@@ -32,6 +32,8 @@ export default {
   'CreateOrJoin.serverError': `Server error`,
 
   'Classroom.classroom': `Classroom`,
+  'Classroom.closeRightMenu': `Close menu`,
+  'Classroom.openRightMenu': `Open menu`,
 
   'Copyinfo.copyMeetingId': `Copy`,
   'Copyinfo.coppiedMeetingId': `Coppied`,
