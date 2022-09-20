@@ -23,8 +23,8 @@ export default {
 
   'CreateOrJoin.teacherTitle': `Create or join a classroom`,
   'CreateOrJoin.studentTitle': `Join a classroom`,
-  'CreateOrJoin.titlePlaceholder': `Classroom`,
-  'CreateOrJoin.namePlaceholder': `Your name`,
+  'CreateOrJoin.titlePlaceholder': `Enter Meeting id`,
+  'CreateOrJoin.namePlaceholder': `Enter your name`,
   'CreateOrJoin.continueButton': `Continue`,
   'CreateOrJoin.notTeacherLink': `Not a teacher? Click here.`,
   'CreateOrJoin.notStudentLink': `Not a student? Click here.`,
@@ -55,6 +55,7 @@ export default {
   'Controls.micMutedInScreenViewMode': `Mic muted`,
   'Controls.focusOnMessage': `Focus on`,
   'Controls.focusOffMessage': `Focus off`,
+  'Controls.removeAttendee': `Remove Attendee`,
 
   'ScreenShareHeader.stopSharing': `Stop sharing`,
   'ScreenShareHeader.online': `{number} online`,
@@ -63,6 +64,7 @@ export default {
   'ChatInput.raiseHandAriaLabel': `Raise hand`,
 
   'Roster.raiseHandAriaLabel': `Raised hand by {name}`,
+  'Roster.sureRemove': `Are you sure to remove {name} from meeting ?`,
 
   'RemoteVideo.raiseHandAriaLabel': `Raised hand`,
 

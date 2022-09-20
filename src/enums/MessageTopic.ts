@@ -6,7 +6,9 @@ enum MessageTopic {
   GroupChat = 'group-chat-message',
   RaiseHand = 'raise-hand',
   DismissHand = 'dismiss-hand',
-  Focus = 'focus'
+  Focus = 'focus',
+  RemoteMuteUnmute = 'remote-mute-unmute',
+  RemoveAttendee = 'remove-attendee'
 }
 
 export default MessageTopic;
