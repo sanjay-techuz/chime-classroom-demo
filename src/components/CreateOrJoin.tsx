@@ -34,13 +34,16 @@ export default function CreateOrJoin() {
   const [optionalFeature, setOptionalFeature] = useState('');
   const history = useHistory();
   const intl = useIntl();
+  const invitedUrl = localStorage.getItem("invited_url");
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const urlParams = new URLSearchParams(url.search);
-    const meetingParam = urlParams.get('meetingId');
-    if(meetingParam){
-      setTitle(meetingParam);
+    if(invitedUrl){
+      const url = new URL(invitedUrl);
+      const urlParams = new URLSearchParams(url.search);
+      const meetingParam = urlParams.get('meetingId');
+      if(meetingParam){
+        setTitle(meetingParam);
+      }
     }
   },[])
 

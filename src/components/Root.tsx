@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import ChimeProvider from '../providers/ChimeProvider';
 import I18nProvider from '../providers/I18nProvider';
@@ -12,7 +12,7 @@ import UIStateProvider from '../providers/UIStateProvider';
 import Routes from '../Routes';
 
 const Root = () => (
-  <HashRouter>
+  <BrowserRouter>
     <I18nProvider>
       <ChimeProvider>
         <UIStateProvider>
@@ -20,7 +20,7 @@ const Root = () => (
         </UIStateProvider>
       </ChimeProvider>
     </I18nProvider>
-  </HashRouter>
+  </BrowserRouter>
 );
 
 export default hot(Root);

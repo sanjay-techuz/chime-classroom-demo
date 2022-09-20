@@ -3,7 +3,7 @@
 /* eslint-disable  */ 
 
 import classNames from 'classnames/bind';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import routes from '../constants/routes.json';
@@ -17,6 +17,10 @@ type Props = {
 
 export default function Error(props: Props) {
   const { errorMessage } = props;
+  useEffect(()=>{
+    localStorage.removeItem("invited_url")
+    console.log("🌅🌅🌅",errorMessage)
+  },[])
   return (
     <div className={cx('Error_error')}>
       <div className={cx('Error_errorMessage')}>
