@@ -38,13 +38,23 @@ export default function CreateOrJoin() {
 
   useEffect(() => {
     if(invitedUrl){
+      let isRecordingUrl = invitedUrl.split("&")[1] == "record=true" ? true : false;
       const url = new URL(invitedUrl);
       const urlParams = new URLSearchParams(url.search);
       const meetingParam = urlParams.get('meetingId');
-      if(meetingParam){
+      if (meetingParam && !isRecordingUrl) {
         setTitle(meetingParam);
       }
+      if (meetingParam && isRecordingUrl) {
+        // localStorage.setItem("currentAtendeeName", "«Meeting Recorder»");
+        history.push(`/classroom?title=${encodeURIComponent(meetingParam)}&name=Unknown&region=us-east-1`);
+      }
+
+
+      if(meetingParam){
+      }
     }
+
   },[])
 
   useEffect(() => {
