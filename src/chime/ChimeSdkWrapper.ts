@@ -44,6 +44,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
 
   region: string | null = null;
 
+  host: boolean | null = null;
+
   supportedChimeRegions: RegionType[] = [
     { label: 'United States (N. Virginia)', value: 'us-east-1' },
     { label: 'Japan (Tokyo)', value: 'ap-northeast-1' },
@@ -191,6 +193,10 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     this.title = title;
     this.name = name;
     this.region = region;
+    this.host = JoinInfo.Attendee.host;
+    if(JoinInfo.Attendee.host){
+      localStorage.setItem('hostId', JoinInfo.Attendee.AttendeeId);
+    }
     localStorage.setItem('currenteMeetingID', JoinInfo.Meeting.MeetingId);
     localStorage.setItem('currentAtendeeId', JoinInfo.Attendee.AttendeeId);
   };

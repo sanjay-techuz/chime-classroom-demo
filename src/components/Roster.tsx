@@ -77,31 +77,12 @@ export default function Roster() {
       {attendeeIds &&
         attendeeIds.map((attendeeId: string) => {
           const rosterAttendee: RosterAttendeeType = roster[attendeeId];
+          const initials = rosterAttendee?.name?.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g)?.join(''); 
           return (
             <div key={attendeeId} className={cx('Roster_attendee')}>
-              <div className={cx('Roster_name')}>{rosterAttendee.name}</div>
-              {raisedHandAttendees.has(attendeeId) && (
-                <div className={cx('Roster_raisedHand')}>
-                  <span
-                    role="img"
-                    aria-label={intl.formatMessage(
-                      {
-                        id: 'Roster.raiseHandAriaLabel'
-                      },
-                      {
-                        name: rosterAttendee.name
-                      }
-                    )}
-                  >
-                    ✋
-                  </span>
-                </div>
-              )}
-              {videoAttendees.has(attendeeId) && (
-                <div className={cx('Roster_video')}>
-                  <i className={cx('fas fa-video')} />
-                </div>
-              )}
+              <div className={cx('Roster_attendde_control')}>
+              <span className={cx('Roster_attendee_initials')}>{initials}</span>
+              <span className={cx('Roster_attendee_mic_control')}>
               {typeof rosterAttendee.muted === 'boolean' && (
                 (state.classMode === ClassMode.Teacher && attendeeId !== localUserId) ? 
                 <Tooltip
@@ -151,6 +132,32 @@ export default function Roster() {
                 )}
               </div>
               )}
+              </span>
+              </div>
+              <div className={cx('Roster_name')}>{rosterAttendee.name}{` `} {attendeeId === localUserId ?  `(You${attendeeId === localStorage.getItem('hostId')   ? ', Presenter)' : ')'}` : `${attendeeId === localStorage.getItem('hostId') ? ', Presenter)' : ''}`}</div>
+              {raisedHandAttendees.has(attendeeId) && ( 
+                <div className={cx('Roster_raisedHand')}>
+                  <span
+                    role="img"
+                    aria-label={intl.formatMessage(
+                      {
+                        id: 'Roster.raiseHandAriaLabel'
+                      },
+                      {
+                        name: rosterAttendee.name
+                      }
+                    )}
+                  >
+                    ✋
+                  </span>
+                </div>
+              )}
+              {videoAttendees.has(attendeeId) && (
+                <div className={cx('Roster_video')}>
+                  <i className={cx('fas fa-video')} />
+                </div>
+              )}
+              
               {state.classMode === ClassMode.Teacher && attendeeId !== localUserId && ( 
                 <Tooltip
                 tooltip={intl.formatMessage({ id: 'Controls.removeAttendee' })}

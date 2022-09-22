@@ -92,10 +92,10 @@ export default function Classroom() {
   return (
     <div
       className={cx("ClassRoom_classroom", {
-        ClassRoom_roomMode: viewMode === ViewMode.Room,
-        ClassRoom_screenShareMode: viewMode === ViewMode.ScreenShare,
-        isModeTransitioning,
-        isContentShareEnabled,
+        // ClassRoom_roomMode: viewMode === ViewMode.Room,
+        // ClassRoom_screenShareMode: viewMode === ViewMode.ScreenShare,
+        // isModeTransitioning,
+        // isContentShareEnabled,
       })}
     >
       {meetingStatus === MeetingStatus.Loading && <LoadingSpinner />}
@@ -104,6 +104,7 @@ export default function Classroom() {
       )}
       {meetingStatus === MeetingStatus.Succeeded && (
         <>
+        {/* <>
           <>
             <div className={cx("ClassRoom_left")}>
               <div className={cx("ClassRoom_contentVideoWrapper")}>
@@ -168,6 +169,71 @@ export default function Classroom() {
               )
             }                    
           </>
+        </> */}
+        <div className={cx('ClassRoom_leftbar_pannel')}>
+          <div className={cx('ClassRoom_leftbar_pannel_header')}>
+            <span>Users</span>
+            <i className="fa fa-gear" />
+          </div>
+          <div className={cx('ClassRoom_leftbar_pannel_content')}>
+            <Roster />
+          </div>
+        </div>
+        <div className={cx('ClassRoom_middlebar_pannel')}>
+          <div className={cx('ClassRoom_middlebar_pannel_content_section')}>
+          <div className={cx("ClassRoom_left")}>
+              <div className={cx("ClassRoom_contentVideoWrapper")}>
+                <ContentVideo onContentShareEnabled={onContentShareEnabled} />
+              </div>
+              <div className={cx("ClassRoom_remoteVideoGroupWrapper")}>
+                <RemoteVideoGroup
+                  viewMode={viewMode}
+                  isContentShareEnabled={isContentShareEnabled}
+                />
+              </div>
+              <div className={cx("ClassRoom_localVideoWrapper")}>
+                <div className={cx("ClassRoom_localVideo")}>
+                  <LocalVideo />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={cx('ClassRoom_middlebar_pannel_control_bar')}>
+              <Controls
+                    viewMode={viewMode}
+                    onClickShareButton={async () => {
+                      try {
+                        await chime?.audioVideo?.startContentShareFromScreenCapture();
+                      } catch (err) {
+                        console.log("err.....", err);
+                      }
+                    }}
+                  />
+          </div>
+        </div>
+        <div className={cx('ClassRoom_rightbar_pannel')}>
+        <div className={cx("ClassRoom_right",{
+              Classroom_right_none: !openRightBar
+            })}>
+              <div className={cx("ClassRoom_titleWrapper")}>
+                <Tooltip
+                    tooltip={intl.formatMessage({ id: 'Classroom.closeRightMenu' })}
+                  >
+                <div className={cx('ClassRoom_right_close')} onClick={() => setOpenRightBar(false)}><i className="fas fa-2x fa-times" /></div>
+                </Tooltip>
+                <div className={cx("ClassRoom_label")}>
+                  <FormattedMessage id="Classroom.classroom" />
+                </div>
+                <CopyInfo />
+              </div>
+              <div className={cx("ClassRoom_deviceSwitcher")}>
+                <DeviceSwitcher />
+              </div>
+              <div className={cx("ClassRoom_chat")}>
+                <Chat />
+              </div>
+            </div>
+        </div>
         </>
       )}
     </div>

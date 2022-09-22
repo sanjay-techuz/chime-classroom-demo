@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-.ClassRoom_classroom {
+/* .ClassRoom_classroom {
   display: flex;
-  background: var(--color_mine_shaft_light);
+  background: var(--primary_color);
   height: 100%;
   align-items: center;
   justify-content: center;
@@ -18,7 +18,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: var(--color_mine_shaft_light);
+  background: var(--primary_color);
   z-index: 10;
 }
 
@@ -91,7 +91,7 @@
 
 .ClassRoom_titleWrapper {
   padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--color_mine_shaft_light);
+  border-bottom: 1px solid var(--primary_color);
 }
 
 .ClassRoom_title {
@@ -158,4 +158,75 @@
 
 .Classroom_right_none{
   display: none;
+} */
+
+
+/*    ---------------- NEW THEME ----------------- */
+.ClassRoom_classroom{
+  display: flex;
+  flex-direction: row;
+  background: var(--primary_color);
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.ClassRoom_leftbar_pannel{
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  height: 100%;
+  background-color: #FFFFFF;
+}
+
+.ClassRoom_middlebar_pannel{
+  display: flex;
+  height: 100%;
+  width: 60%;
+  flex-direction: column;
+}
+
+.ClassRoom_middlebar_pannel_content_section{
+  display: flex;
+  height: 90%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary_color);
+  color: #FFFFFF;
+}
+
+.ClassRoom_middlebar_pannel_control_bar{
+  display: flex;
+  height: 10%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(36, 36, 119);
+}
+
+.ClassRoom_rightbar_pannel{
+  display: flex;
+  width: 20%;
+  height: 100%;
+  background-color: #FFFFFF;
+}
+
+.ClassRoom_leftbar_pannel_header{
+  display: flex;
+  width: 100%;
+  height: 7%;
+  align-items: flex-end;
+  justify-content: space-around;
+  color: grey;
+}
+
+.ClassRoom_leftbar_pannel_header span{
+  width: 70%;
+}
+
+.ClassRoom_leftbar_pannel_content{
+  width: 100%;
+  height: 93%;
 }

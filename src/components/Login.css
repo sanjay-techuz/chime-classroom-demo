@@ -58,7 +58,7 @@
   font-size: 1.1rem;
   font-weight: 500;
   color: var(--color_alabaster);
-  background: var(--color_mine_shaft_light);
+  background: var(--primary_color);
   cursor: pointer;
   transition: background-color 0.15s;
   user-select: none;

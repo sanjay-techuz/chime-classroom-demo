@@ -20,7 +20,7 @@
 }
 
 .DeviceSwitcher_control:hover {
-  background-color: var(--color_mine_shaft_light);
+  background-color: var(--primary_color);
 }
 
 .DeviceSwitcher_placeholder {

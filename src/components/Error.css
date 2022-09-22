@@ -22,7 +22,7 @@
   padding: 0.75rem 2rem;
   font-size: 1.1rem;
   font-weight: 500;
-  color: var(--color_mine_shaft_light);
+  color: var(--primary_color);
   background: var(--color_alabaster);
   cursor: pointer;
   transition: opacity 0.15s;

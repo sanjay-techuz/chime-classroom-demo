@@ -95,7 +95,7 @@ export default function Chat() {
         }>All</span>
         {chatAttendeeIds.map(chatAttdId => {
         const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
-        const initials = rosterAttendee?.name?.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g)?.join('')
+        const initials = rosterAttendee?.name?.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g)?.join('');
         return (
           <span key={`${new Date().getTime()}_${chatAttdId}`} className={cx('Chat_initials',{
             Chat_active_initials: activeChatAttendee === chatAttdId
