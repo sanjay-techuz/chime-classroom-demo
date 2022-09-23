@@ -14,6 +14,7 @@ import styles from './Chat.css';
 import ChatInput from './ChatInput';
 import MessageTopic from '../enums/MessageTopic';
 import RosterAttendeeType from '../types/RosterAttendeeType';
+import localStorageKeys from '../constants/localStorageKeys.json'
 
 const cx = classNames.bind(styles);
 
@@ -30,6 +31,7 @@ export default function Chat() {
   let chatAttendeeIds;
   if (chime?.meetingSession && roster) {
     chatAttendeeIds = Object.keys(roster).filter(attendeeId => attendeeId !== localUserId);
+    chatAttendeeIds = chatAttendeeIds.filter(attendeeId => attendeeId !== localStorage.getItem(localStorageKeys.CURRENT_RECORDER_ID));
   }
 
   useEffect(() => {

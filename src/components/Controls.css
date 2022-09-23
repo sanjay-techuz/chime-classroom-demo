@@ -88,3 +88,7 @@
 .Controls_endButton {
   background: var(--color_thunderbird) !important;
 }
+
+.Controls_recordRedButton{
+  color: rgb(255 106 106) !important;
+}

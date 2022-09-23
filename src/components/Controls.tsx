@@ -16,6 +16,8 @@ import ViewMode from '../enums/ViewMode';
 import styles from './Controls.css';
 import Tooltip from './Tooltip';
 import MessageTopic from '../enums/MessageTopic';
+import { startRecording, stopRecording } from '../services';
+import localStorageKeys from '../constants/localStorageKeys.json';
 
 const cx = classNames.bind(styles);
 
@@ -37,6 +39,8 @@ export default function Controls(props: Props) {
   const history = useHistory();
   const [muted, setMuted] = useState(false);
   const [focus, setFocus] = useState(false);
+  const [recording, setRecording] = useState(false);
+  const [recordingArn, setRecordingArn] = useState('');
   const [videoStatus, setVideoStatus] = useState(VideoStatus.Disabled);
   const intl = useIntl();
 
@@ -53,6 +57,35 @@ export default function Controls(props: Props) {
       }
     };
   }, []);
+
+  const handleRecording = async() => {
+    setRecording(!recording);
+    if(recording){   
+      try{
+        const result = await stopRecording(recordingArn);
+        console.log(result);
+      }catch(err){
+        console.error(err);
+      } 
+    }else{
+      try{
+        const result = await startRecording(chime?.title);
+        console.log(result);
+        setRecordingArn(result);
+        if(localStorage.getItem(localStorageKeys.RECORDING_ARNS)){
+          const recordingArns: Array<string> = JSON.parse(localStorage.getItem(localStorageKeys.RECORDING_ARNS));
+          recordingArns.push(result);
+          localStorage.setItem(localStorageKeys.RECORDING_ARNS,JSON.stringify(recordingArns))
+        }else{
+          const recordingArns: Array<string> =  [];
+          recordingArns.push(result);
+          localStorage.setItem(localStorageKeys.RECORDING_ARNS,JSON.stringify(recordingArns))
+        }
+      }catch(err){
+        console.error(err);
+      }
+    }
+  }
 
   return (
     <div
@@ -189,6 +222,23 @@ export default function Controls(props: Props) {
               }}
             >
               <i className="fas fa-desktop" />
+            </button>
+          </Tooltip>
+        )}
+        {  state.classMode === ClassMode.Teacher && (
+          <Tooltip
+            tooltip={recording ? intl.formatMessage({ id: 'Controls.stopRecordingScreenTooltip' }) : intl.formatMessage({ id: 'Controls.startRecordingScreenTooltip' })}
+          >
+            <button
+              type="button"
+              className={cx('Controls_recordButton',{
+                Controls_recordRedButton : recording
+              })}
+              onClick={() => {
+                handleRecording();
+              }}
+            >
+              <i className="fas fa-record-vinyl"></i>
             </button>
           </Tooltip>
         )}

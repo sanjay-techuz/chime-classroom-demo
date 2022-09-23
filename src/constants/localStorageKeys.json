@@ -1,3 +1,8 @@
 {
-  "CLASS_MODE": "CLASS_MODE"
+  "CLASS_MODE": "CLASS_MODE",
+  "INVITED_URL": "invited_url",
+  "CURRENT_MEETING_ID": "currentMeetingID",
+  "CURRENT_ATTENDEE_ID": "currentAtendeeId",
+  "CURRENT_RECORDER_ID": "recorderId",
+  "RECORDING_ARNS": "recording_arns"
 }

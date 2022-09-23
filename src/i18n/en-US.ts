@@ -58,6 +58,8 @@ export default {
   'Controls.focusOnMessage': `Focus on`,
   'Controls.focusOffMessage': `Focus off`,
   'Controls.removeAttendee': `Remove Attendee`,
+  'Controls.startRecordingScreenTooltip': `Start recording`,
+  'Controls.stopRecordingScreenTooltip': `stop recording`,
 
   'ChatInput.inputPlaceholder': `Type a chat message`,
   'ChatInput.raiseHandAriaLabel': `Raise hand`,

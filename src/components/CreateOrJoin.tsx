@@ -17,6 +17,7 @@ import ClassMode from '../enums/ClassMode';
 import RegionType from '../types/RegionType';
 import styles from './CreateOrJoin.css';
 import OptionalFeature from '../enums/OptionalFeature';
+import localStorageKeys from '../constants/localStorageKeys.json';
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +35,7 @@ export default function CreateOrJoin() {
   const [optionalFeature, setOptionalFeature] = useState('');
   const history = useHistory();
   const intl = useIntl();
-  const invitedUrl = localStorage.getItem("invited_url");
+  const invitedUrl = localStorage.getItem(localStorageKeys.INVITED_URL);
 
   useEffect(() => {
     if(invitedUrl){
@@ -46,7 +47,6 @@ export default function CreateOrJoin() {
         setTitle(meetingParam);
       }
       if (meetingParam && isRecordingUrl) {
-        // localStorage.setItem("currentAtendeeName", "«Meeting Recorder»");
         history.push(`/classroom?title=${encodeURIComponent(meetingParam)}&name=Unknown&region=us-east-1`);
       }
 

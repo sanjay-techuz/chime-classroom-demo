@@ -26,6 +26,8 @@ import RegionType from '../types/RegionType';
 import RosterType from '../types/RosterType';
 import commonob from '../constants/common.json'
 import OptionalFeature from '../enums/OptionalFeature';
+import localStorageKeys from '../constants/localStorageKeys.json';
+import { stopRecording } from '../services';
 
 export default class ChimeSdkWrapper implements DeviceChangeObserver {
   intl = useIntl();
@@ -43,6 +45,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
   name: string | null = null;
 
   region: string | null = null;
+
+  meetingRecorderName: string = "Unknown";
 
   supportedChimeRegions: RegionType[] = [
     { label: 'United States (N. Virginia)', value: 'us-east-1' },
@@ -191,8 +195,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     this.title = title;
     this.name = name;
     this.region = region;
-    localStorage.setItem('currenteMeetingID', JoinInfo.Meeting.MeetingId);
-    localStorage.setItem('currentAtendeeId', JoinInfo.Attendee.AttendeeId);
+    localStorage.setItem(localStorageKeys.CURRENT_MEETING_ID, JoinInfo.Meeting.MeetingId);
+    localStorage.setItem(localStorageKeys.CURRENT_ATTENDEE_ID, JoinInfo.Attendee.AttendeeId);
   };
 
   initializeMeetingSession = async (
@@ -283,14 +287,27 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
                 signalStrength * 100
               );
             }
-            if (this.title && attendeeId && !this.roster[attendeeId].name) {
+
+            if (this.title && attendeeId && !this.roster[attendeeId].name && attendeeId !== localStorage.getItem(localStorageKeys.CURRENT_RECORDER_ID)) {
               const response = await fetch(
                 `${commonob.getBaseUrl}attendee?title=${encodeURIComponent(
                   this.title
                 )}&attendee=${encodeURIComponent(attendeeId)}`
               );
               const json = await response.json();
-              this.roster[attendeeId].name = json.AttendeeInfo.Name || '';
+              
+              if(this.roster[this.meetingSession?.configuration.credentials?.attendeeId]?.name === this.meetingRecorderName){
+                this.audioVideo?.realtimeMuteLocalAudio();
+              }
+
+              if(json.AttendeeInfo.Name === this.meetingRecorderName && attendeeId !== this.meetingSession?.configuration.credentials?.attendeeId){
+                localStorage.setItem(localStorageKeys.CURRENT_RECORDER_ID,attendeeId);
+                delete this.roster[presentAttendeeId];
+                this.publishRosterUpdate();
+                return;
+              }
+              this.roster[attendeeId].name = json.AttendeeInfo?.Name || '';
+
               shouldPublishImmediately = true;
             }
 
@@ -404,6 +421,12 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
             method: 'POST'
           }
         );
+        if(localStorage.getItem(localStorageKeys.RECORDING_ARNS)){
+          const recordingArns: Array<string> = JSON.parse(localStorage.getItem(localStorageKeys.RECORDING_ARNS));
+          await Promise.all(recordingArns.map(async(recordingArn) => {
+            return await stopRecording(recordingArn);
+          }));
+        }
       }
     } catch (error) {
       this.logError(error);
