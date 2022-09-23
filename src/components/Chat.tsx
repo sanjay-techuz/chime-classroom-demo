@@ -15,6 +15,7 @@ import ChatInput from './ChatInput';
 import MessageTopic from '../enums/MessageTopic';
 import RosterAttendeeType from '../types/RosterAttendeeType';
 import localStorageKeys from '../constants/localStorageKeys.json'
+import { createPrivateChannel } from '../utils';
 
 const cx = classNames.bind(styles);
 
@@ -30,8 +31,8 @@ export default function Chat() {
 
   let chatAttendeeIds;
   if (chime?.meetingSession && roster) {
-    chatAttendeeIds = Object.keys(roster).filter(attendeeId => attendeeId !== localUserId);
-    chatAttendeeIds = chatAttendeeIds.filter(attendeeId => attendeeId !== localStorage.getItem(localStorageKeys.CURRENT_RECORDER_ID));
+    chatAttendeeIds = Object.keys(roster).filter((attendeeId: string) => attendeeId !== localUserId);
+    chatAttendeeIds = chatAttendeeIds.filter((attendeeId: string) => attendeeId !== localStorage.getItem(localStorageKeys.CURRENT_RECORDER_ID));
   }
 
   useEffect(() => {
@@ -77,14 +78,6 @@ export default function Chat() {
     setFilterMessage([...filteredArry]);
   },[messages,activeChannel])
 
-  const setChannelName = (attendeeId: string) => {
-    const chnlArr = [];
-    chnlArr[0] = chime?.configuration?.credentials?.attendeeId;
-    chnlArr[1] = attendeeId;
-    const channel = chnlArr.sort().join("-")
-    return channel;
-}
-
   return (
     <div className={cx('Chat_chat')}>
       <div className={cx('Chat_attendee_list')}>
@@ -95,7 +88,7 @@ export default function Chat() {
         setActiveChannel(MessageTopic.PublicChannel);
       } 
         }>All</span>
-        {chatAttendeeIds.map(chatAttdId => {
+        {chatAttendeeIds.map((chatAttdId: string) => {
         const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
         const initials = rosterAttendee?.name?.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g)?.join('')
         return (
@@ -103,14 +96,14 @@ export default function Chat() {
             Chat_active_initials: activeChatAttendee === chatAttdId
           })} onClick={() => {
             setActiveChatAttendee(chatAttdId);
-            setActiveChannel(setChannelName(chatAttdId));
+            setActiveChannel(createPrivateChannel(localUserId, chatAttdId))
           }}>{initials}</span>
         )
       })}
       </div>
       <div className={cx('Chat_messages')}>
         {filterMessage.map(message => {
-          let messageString;
+          let messageString: string;
           if (message.topic === MessageTopic.GroupChat) {
             messageString = JSON.parse(new TextDecoder().decode(message.data)).sendingMessage;
           } else if (message.topic === MessageTopic.RaiseHand) {

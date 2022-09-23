@@ -7,6 +7,7 @@ import React, { ReactNode, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import routes from '../constants/routes.json';
+import localStorageKeys from '../constants/localStorageKeys.json';
 import styles from './Error.css';
 
 const cx = classNames.bind(styles);
@@ -18,9 +19,9 @@ type Props = {
 export default function Error(props: Props) {
   const { errorMessage } = props;
   useEffect(()=>{
-    localStorage.removeItem("invited_url")
-    console.log("🌅🌅🌅",errorMessage)
+    localStorage.removeItem(localStorageKeys.INVITED_URL);
   },[])
+  
   return (
     <div className={cx('Error_error')}>
       <div className={cx('Error_errorMessage')}>
