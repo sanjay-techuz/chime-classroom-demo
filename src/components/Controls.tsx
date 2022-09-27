@@ -40,7 +40,7 @@ export default function Controls(props: Props) {
   const [muted, setMuted] = useState(false);
   const [focus, setFocus] = useState(false);
   const [recording, setRecording] = useState(false);
-  const [recordingArn, setRecordingArn] = useState('');
+  const [mediaPipelineId, setMediaPipelineId] = useState('');
   const [videoStatus, setVideoStatus] = useState(VideoStatus.Disabled);
   const intl = useIntl();
 
@@ -62,25 +62,16 @@ export default function Controls(props: Props) {
     setRecording(!recording);
     if(recording){   
       try{
-        const result = await stopRecording(recordingArn);
+        const result = await stopRecording(mediaPipelineId);
         console.log(result);
       }catch(err){
         console.error(err);
       } 
     }else{
       try{
-        const result = await startRecording(chime?.title);
+        const result = await startRecording(chime?.meetingId);
         console.log(result);
-        setRecordingArn(result);
-        if(localStorage.getItem(localStorageKeys.RECORDING_ARNS)){
-          const recordingArns: Array<string> = JSON.parse(localStorage.getItem(localStorageKeys.RECORDING_ARNS));
-          recordingArns.push(result);
-          localStorage.setItem(localStorageKeys.RECORDING_ARNS,JSON.stringify(recordingArns))
-        }else{
-          const recordingArns: Array<string> =  [];
-          recordingArns.push(result);
-          localStorage.setItem(localStorageKeys.RECORDING_ARNS,JSON.stringify(recordingArns))
-        }
+        setMediaPipelineId(result.MediaPipelineId);
       }catch(err){
         console.error(err);
       }

@@ -42,6 +42,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
 
   title: string | null = null;
 
+  meetingId: string | null = null;
+
   name: string | null = null;
 
   region: string | null = null;
@@ -95,6 +97,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     this.meetingSession = null;
     this.audioVideo = null;
     this.title = null;
+    this.meetingId = null;
     this.name = null;
     this.region = null;
     this.currentAudioInputDevice = null;
@@ -195,6 +198,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     this.title = title;
     this.name = name;
     this.region = region;
+    this.meetingId = JoinInfo.Meeting.MeetingId;
     localStorage.setItem(localStorageKeys.CURRENT_MEETING_ID, JoinInfo.Meeting.MeetingId);
     localStorage.setItem(localStorageKeys.CURRENT_ATTENDEE_ID, JoinInfo.Attendee.AttendeeId);
   };
@@ -421,12 +425,6 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
             method: 'POST'
           }
         );
-        if(localStorage.getItem(localStorageKeys.RECORDING_ARNS)){
-          const recordingArns: Array<string> = JSON.parse(localStorage.getItem(localStorageKeys.RECORDING_ARNS));
-          await Promise.all(recordingArns.map(async(recordingArn) => {
-            return await stopRecording(recordingArn);
-          }));
-        }
       }
     } catch (error) {
       this.logError(error);

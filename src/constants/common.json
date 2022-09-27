@@ -1,5 +1,4 @@
 {
     "getBaseUrl": "https://2yw2oltffl.execute-api.us-east-1.amazonaws.com/Prod/",
-    "recordingUrl": "https://wiqx72ju5d.execute-api.us-east-1.amazonaws.com/Prod/",
-    "recordingUrlEndPoint": "https://chime.tutorac.org/?meetingId="
+    "recordingUrl": "http://localhost:5000/recording/"
 }

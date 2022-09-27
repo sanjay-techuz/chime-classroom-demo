@@ -1,9 +1,9 @@
 import { client } from "./client";
 
-export async function stopRecording(recordingArn: string): Promise<any> {
+export async function stopRecording(mediaPipelineId: string): Promise<any> {
 
   const res = await client({
-    url: `recording?recordingAction=stop&taskId=${recordingArn}`,
+    url: `stopRecording?mediaPipelineId=${mediaPipelineId}`,
     method: "post",
   });
 
