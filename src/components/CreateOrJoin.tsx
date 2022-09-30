@@ -149,12 +149,8 @@ export default function CreateOrJoin() {
             <FormattedMessage id="CreateOrJoin.continueButton" />
           </button>
         </form>
-        <Link className={cx('CreateOrJoin_loginLink')} to={routes.LOGIN}>
-          {state.classMode === ClassMode.Teacher ? (
-            <FormattedMessage id="CreateOrJoin.notTeacherLink" />
-          ) : (
-            <FormattedMessage id="CreateOrJoin.notStudentLink" />
-          )}
+        <Link className={cx('CreateOrJoin_mainLink')} to={routes.MAIN}>
+          {<FormattedMessage id="CreateOrJoin.back" />}
         </Link>
       </div>
     </div>

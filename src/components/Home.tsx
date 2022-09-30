@@ -19,7 +19,7 @@ export default function Home() {
       {state.classMode ? (
         <Redirect to={routes.CREATE_OR_JOIN} />
       ) : (
-        <Redirect to={routes.LOGIN} />
+        <Redirect to={routes.MAIN} />
       )}
     </div>
   );

@@ -8,7 +8,7 @@ import App from './components/App';
 import Classroom from './components/Classroom';
 import CreateOrJoin from './components/CreateOrJoin';
 import Home from './components/Home';
-import Login from './components/Login';
+import Main from './components/Main';
 import routes from './constants/routes.json';
 import getUIStateContext from './context/getUIStateContext';
 import MeetingStatusProvider from './providers/MeetingStatusProvider';
@@ -25,7 +25,7 @@ export default function Routes() {
   }) => {
     return (
       <Route path={path}>
-        {state.classMode ? children : <Redirect to={routes.LOGIN} />}
+        {state.classMode ? children : <Redirect to={routes.MAIN} />}
       </Route>
     );
   };
@@ -41,8 +41,8 @@ export default function Routes() {
         <PrivateRoute path={routes.CREATE_OR_JOIN}>
           <CreateOrJoin />
         </PrivateRoute>
-        <Route path={routes.LOGIN}>
-          <Login />
+        <Route path={routes.MAIN}>
+          <Main />
         </Route>
         <Route path={routes.HOME}>
           <Home />

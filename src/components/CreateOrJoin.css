@@ -62,7 +62,7 @@
   background: var(--color_cod_gray_medium);
 }
 
-.CreateOrJoin_loginLink {
+.CreateOrJoin_mainLink {
   display: inline-block;
   color: var(--color_tundora);
   background: var(--color_alabaster);
@@ -73,7 +73,7 @@
   margin-top: 0.5rem;
 }
 
-.CreateOrJoin_loginLink:hover {
+.CreateOrJoin_mainLink:hover {
   text-decoration: underline;
 }
 

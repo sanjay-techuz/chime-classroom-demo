@@ -2,32 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 export default {
-  'Login.title': `Tell me about you`,
-  'Login.teacherTitle': `Teachers can`,
-  'Login.teacherDescription1': `Create a classroom`,
-  'Login.teacherDescription2': `Share audio, video, and screen`,
-  'Login.teacherDescription3': `Send chat messages`,
-  'Login.teacherDescription4': `Toggle focus:`,
-  'Login.teacherToggleDescription1': `Focus mutes all students`,
-  'Login.teacherToggleDescription2': `Focus turns off student chat`,
-  'Login.teacherButton': `I'm a teacher`,
-
-  'Login.studentTitle': `Students can`,
-  'Login.studentDescription1': `Join a classroom`,
-  'Login.studentDescription2': `Share video`,
-  'Login.studentDescription3': `Raise hand`,
-  'Login.studentDescription4': `When focus is off:`,
-  'Login.studentToggleDescription1': `Unmute and share audio`,
-  'Login.studentToggleDescription2': `Send chat messages`,
-  'Login.studentButton': `I'm a student`,
+  'Main.title': `Create/Join meeting`,
+  'Main.joinButton': `Join meeting`,
+  'Main.createButton': `Create meeting`,
 
   'CreateOrJoin.teacherTitle': `Create or join a classroom`,
   'CreateOrJoin.studentTitle': `Join a classroom`,
   'CreateOrJoin.titlePlaceholder': `Enter Meeting id`,
   'CreateOrJoin.namePlaceholder': `Enter your name`,
   'CreateOrJoin.continueButton': `Continue`,
-  'CreateOrJoin.notTeacherLink': `Not a teacher? Click here.`,
-  'CreateOrJoin.notStudentLink': `Not a student? Click here.`,
+  'CreateOrJoin.back': `Back`,
   'CreateOrJoin.classRoomDoesNotExist': `Classroom does not exist`,
   'CreateOrJoin.serverError': `Server error`,
 

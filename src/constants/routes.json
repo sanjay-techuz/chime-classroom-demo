@@ -1,6 +1,6 @@
 {
   "HOME": "/",
-  "LOGIN": "/login",
+  "MAIN": "/main",
   "CREATE_OR_JOIN": "/create-or-join",
   "CLASSROOM": "/classroom"
 }
