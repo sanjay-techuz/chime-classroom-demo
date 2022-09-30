@@ -1,4 +1,4 @@
 {
-    "getBaseUrl": "https://2yw2oltffl.execute-api.us-east-1.amazonaws.com/Prod/",
+    "getBaseUrl": "https://r1wfw5tx5k.execute-api.us-east-1.amazonaws.com/Prod/",
     "recordingUrl": "http://localhost:5000/recording/"
 }
