@@ -11,8 +11,6 @@ import getChimeContext from '../context/getChimeContext';
 import getUIStateContext from '../context/getUIStateContext';
 import ClassMode from '../enums/ClassMode';
 import useFocusMode from '../hooks/useFocusMode';
-import useMuteUnmuteAttendee from '../hooks/useMuteUnmuteAttendee';
-import useRemoteAttendeeRemove from '../hooks/useRemoteAttendeeRemove';
 import styles from './ChatInput.css';
 import MessageTopic from '../enums/MessageTopic';
 
@@ -31,8 +29,6 @@ export default React.memo(function ChatInput(props: Props) {
   const [inputText, setInputText] = useState('');
   const [raised, setRaised] = useState(false);
   const focusMode = useFocusMode();
-  const remoteMuteUnmute = useMuteUnmuteAttendee();
-  const remoteAttendeeRemove = useRemoteAttendeeRemove();
   const intl = useIntl();
 
   useEffect(() => {
@@ -56,9 +52,6 @@ export default React.memo(function ChatInput(props: Props) {
     }
   }, [raised, chime?.configuration]);
 
-  useEffect(() => {
-    console.log(remoteMuteUnmute, remoteAttendeeRemove);
-  },[])
 
   return (
     <div className={cx('chatInput')}>

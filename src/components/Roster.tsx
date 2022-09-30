@@ -97,11 +97,36 @@ export default function Roster() {
                   </span>
                 </div>
               )}
-              {videoAttendees.has(attendeeId) && (
-                <div className={cx('Roster_video')}>
-                  <i className={cx('fas fa-video')} />
+              {(
+                (state.classMode === ClassMode.Teacher && attendeeId !== localUserId) ? 
+                <Tooltip
+                tooltip={
+                  videoAttendees.has(attendeeId)
+                    ? intl.formatMessage({ id: 'Controls.turnOffVideoTooltip' })
+                    : intl.formatMessage({ id: 'Controls.turnOnVideoTooltip' })
+                }
+              >
+                <div className={cx('Roster_video')} style={{cursor:'pointer'}} onClick={() => {
+                  const focus = videoAttendees.has(attendeeId);
+                  chime?.sendMessage(MessageTopic.RemoteVideoOnOff, { focus: !focus, targetId: attendeeId });
+                }}>
+                  {videoAttendees.has(attendeeId) ? (
+                    <i className={cx('fas fa-video')} />
+                  ) : (
+                    <i className={cx('fas fa-video-slash')} />
+                  )}
                 </div>
+              </Tooltip>
+              :
+              <div className={cx('Roster_muted')}>
+                {videoAttendees.has(attendeeId) ? (
+                    <i className={cx('fas fa-video')} />
+                  ) : (
+                    <i className={cx('fas fa-video-slash')} />
+                  )}
+              </div>
               )}
+
               {typeof rosterAttendee.muted === 'boolean' && (
                 (state.classMode === ClassMode.Teacher && attendeeId !== localUserId) ? 
                 <Tooltip

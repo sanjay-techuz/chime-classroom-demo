@@ -8,7 +8,8 @@ enum MessageTopic {
   DismissHand = 'dismiss-hand',
   Focus = 'focus',
   RemoteMuteUnmute = 'remote-mute-unmute',
-  RemoveAttendee = 'remove-attendee'
+  RemoveAttendee = 'remove-attendee',
+  RemoteVideoOnOff = 'remote-video-on-off'
 }
 
 export default MessageTopic;

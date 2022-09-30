@@ -14,6 +14,7 @@ import getUIStateContext from "../context/getUIStateContext";
 import ClassMode from "../enums/ClassMode";
 import MeetingStatus from "../enums/MeetingStatus";
 import ViewMode from "../enums/ViewMode";
+import useRemoteControl from "../hooks/useRemoteControl";
 import Chat from "./Chat";
 import styles from "./Classroom.css";
 import ContentVideo from "./ContentVideo";
@@ -40,6 +41,8 @@ export default function Classroom() {
   const [openRightBar, setOpenRightBar] = useState(true);
   const intl = useIntl();
 
+
+  useRemoteControl();
   const stopContentShare = async () => {
     setIsModeTransitioning(true);
     await new Promise((resolve) => setTimeout(resolve, 200));
