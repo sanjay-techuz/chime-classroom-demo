@@ -29,9 +29,15 @@ export default function useRaisedHandAttendees() {
       topic: MessageTopic.RaiseHand,
       callback
     };
+    const dismissHandMessageUpdateCallback = {
+      topic: MessageTopic.DismissHand,
+      callback
+    };
     chime?.subscribeToMessageUpdate(raiseHandMessageUpdateCallback);
+    chime?.subscribeToMessageUpdate(dismissHandMessageUpdateCallback);
     return () => {
       chime?.unsubscribeFromMessageUpdate(raiseHandMessageUpdateCallback);
+      chime?.subscribeToMessageUpdate(dismissHandMessageUpdateCallback);
     };
   }, []);
   return raisedHandAttendees;
