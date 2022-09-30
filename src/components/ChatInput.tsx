@@ -9,12 +9,12 @@ import { useIntl } from 'react-intl';
 import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
 import getChimeContext from '../context/getChimeContext';
 import getUIStateContext from '../context/getUIStateContext';
-import ClassMode from '../enums/ClassMode';
 import useFocusMode from '../hooks/useFocusMode';
 import useMuteUnmuteAttendee from '../hooks/useMuteUnmuteAttendee';
 import useRemoteAttendeeRemove from '../hooks/useRemoteAttendeeRemove';
 import styles from './ChatInput.css';
 import MessageTopic from '../enums/MessageTopic';
+import useMakeHost from '../hooks/useMakeHost';
 
 const cx = classNames.bind(styles);
 
@@ -33,6 +33,7 @@ export default React.memo(function ChatInput(props: Props) {
   const focusMode = useFocusMode();
   const remoteMuteUnmute = useMuteUnmuteAttendee();
   const remoteAttendeeRemove = useRemoteAttendeeRemove();
+  const makeHost = useMakeHost();
   const intl = useIntl();
 
   useEffect(() => {
@@ -57,7 +58,7 @@ export default React.memo(function ChatInput(props: Props) {
   }, [raised, chime?.configuration]);
 
   useEffect(() => {
-    console.log(remoteMuteUnmute, remoteAttendeeRemove);
+    console.log(remoteMuteUnmute, remoteAttendeeRemove,makeHost);
   },[])
 
   return (
@@ -76,7 +77,7 @@ export default React.memo(function ChatInput(props: Props) {
           }}
           onKeyUp={event => {
             event.preventDefault();
-            if (focusMode && state.classMode === ClassMode.Student) {
+            if (focusMode && !chime?.isHost) {
               return;
             }
             if (event.keyCode === 13) {
@@ -94,7 +95,7 @@ export default React.memo(function ChatInput(props: Props) {
           }}
           placeholder={intl.formatMessage({ id: 'ChatInput.inputPlaceholder' })}
         />
-        {state.classMode === ClassMode.Student && (
+        {!chime?.isHost && (
           <button
             type="button"
             className={cx('raiseHandButton', {

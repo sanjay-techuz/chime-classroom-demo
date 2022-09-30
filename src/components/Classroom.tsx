@@ -11,9 +11,10 @@ import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getMeetingStatusContext from "../context/getMeetingStatusContext";
 import getUIStateContext from "../context/getUIStateContext";
-import ClassMode from "../enums/ClassMode";
+import useNextAttendee from '../hooks/useNextAttendee';
 import MeetingStatus from "../enums/MeetingStatus";
 import ViewMode from "../enums/ViewMode";
+import { changeHost } from "../services";
 import Chat from "./Chat";
 import styles from "./Classroom.css";
 import ContentVideo from "./ContentVideo";
@@ -38,6 +39,7 @@ export default function Classroom() {
   const [viewMode, setViewMode] = useState(ViewMode.Room);
   const [isModeTransitioning, setIsModeTransitioning] = useState(false);
   const [openRightBar, setOpenRightBar] = useState(true);
+  const nextAttendeeId = useNextAttendee();
   const intl = useIntl();
 
   const stopContentShare = async () => {
@@ -75,7 +77,9 @@ export default function Classroom() {
         // eslint-disable-next-line
         event.returnValue = true;
         try {
-          await chime?.leaveRoom(state.classMode === ClassMode.Teacher);
+          await changeHost(chime?.title, nextAttendeeId,true);
+          await chime?.leaveRoom(false);
+          // await chime?.leaveRoom(state.classMode === ClassMode.Teacher);
         } catch (error) {
           // eslint-disable-next-line
           console.error(error);

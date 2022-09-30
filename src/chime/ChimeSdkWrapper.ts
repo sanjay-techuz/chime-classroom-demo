@@ -48,6 +48,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
 
   region: string | null = null;
 
+  isHost: boolean | null = null;
+
   meetingRecorderName: string = "Unknown";
 
   supportedChimeRegions: RegionType[] = [
@@ -246,8 +248,19 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     this.audioVideo?.addDeviceChangeObserver(this);
 
     this.audioVideo?.realtimeSubscribeToAttendeeIdPresence(
-      (presentAttendeeId: string, present: boolean): void => {
+      async(presentAttendeeId: string, present: boolean): Promise<void> => {
         if (!present) {
+          console.log("🎁🎁🎁🎁🎁",present,this.roster[presentAttendeeId])
+          if(this.roster[presentAttendeeId]?.host){
+            const response = await fetch(
+              `${commonob.getBaseUrl}attendee?title=${encodeURIComponent(
+                this.title
+              )}&attendee=${encodeURIComponent(this.meetingSession?.configuration.credentials?.attendeeId)}`
+            );
+            const json = await response.json();
+            this.isHost = json.AttendeeInfo?.Host === "true" ? true : false || false;
+            this.roster[this.meetingSession?.configuration.credentials?.attendeeId].host = json.AttendeeInfo?.Host === "true" ? true : false || false;
+          }
           delete this.roster[presentAttendeeId];
           this.publishRosterUpdate.cancel();
           this.publishRosterUpdate();
@@ -299,6 +312,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
                 )}&attendee=${encodeURIComponent(attendeeId)}`
               );
               const json = await response.json();
+              // console.log("$$$$$$$$",json);
               
               if(this.roster[this.meetingSession?.configuration.credentials?.attendeeId]?.name === this.meetingRecorderName){
                 this.audioVideo?.realtimeMuteLocalAudio();
@@ -311,6 +325,12 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
                 return;
               }
               this.roster[attendeeId].name = json.AttendeeInfo?.Name || '';
+              this.roster[attendeeId].host = json.AttendeeInfo?.Host === "true" ? true : false || false;
+              console.log(attendeeId,this.meetingSession?.configuration.credentials?.attendeeId,attendeeId === this.meetingSession?.configuration.credentials?.attendeeId)
+              if(attendeeId === this.meetingSession?.configuration.credentials?.attendeeId){
+                console.log(json.AttendeeInfo?.Host,json.AttendeeInfo?.Host === "true" ? true : false || false)
+                this.isHost = json.AttendeeInfo?.Host === "true" ? true : false || false;
+              }
 
               shouldPublishImmediately = true;
             }

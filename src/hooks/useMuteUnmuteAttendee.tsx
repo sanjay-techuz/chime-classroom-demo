@@ -19,7 +19,7 @@ export default function useMuteUnmuteAttendee() {
 
   useEffect(() => {
     const callback = (message: DataMessage) => {
-      if (state.classMode === ClassMode.Teacher) {
+      if (chime?.isHost) {
         return;
       }
       const { focus, targetId } = message.json();

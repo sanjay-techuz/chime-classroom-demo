@@ -60,6 +60,7 @@ export default {
   'Controls.removeAttendee': `Remove Attendee`,
   'Controls.startRecordingScreenTooltip': `Start recording`,
   'Controls.stopRecordingScreenTooltip': `stop recording`,
+  'Controls.makeHostTooltip': `Make host`,
 
   'ChatInput.inputPlaceholder': `Type a chat message`,
   'ChatInput.raiseHandAriaLabel': `Raise hand`,

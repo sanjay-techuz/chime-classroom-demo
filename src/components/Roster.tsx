@@ -16,7 +16,7 @@ import RosterAttendeeType from '../types/RosterAttendeeType';
 import styles from './Roster.css';
 import MessageTopic from '../enums/MessageTopic';
 import Tooltip from './Tooltip';
-import ClassMode from '../enums/ClassMode';
+import { changeHost, getAttendee } from '../services';
 
 const cx = classNames.bind(styles);
 
@@ -72,6 +72,18 @@ export default function Roster() {
     });
   }
 
+  const makeHost = async(targetId: string) => {
+    try{
+      await changeHost(chime?.title,targetId,true);
+      await changeHost(chime?.title,localUserId,false);
+      const res = await getAttendee(chime?.title,localUserId);
+      chime.isHost = res.AttendeeInfo?.Host === "true" ? true : false || false;
+      chime?.sendMessage(MessageTopic.MakeHost, { focus: true, targetId: targetId });
+    }catch(err){
+      console.log(err);
+    }
+  }
+
   return (
     <div className={cx('Roster_roster')}>
       {attendeeIds &&
@@ -97,13 +109,21 @@ export default function Roster() {
                   </span>
                 </div>
               )}
+              {(chime?.isHost && attendeeId !== localUserId) &&
+                <Tooltip
+                tooltip={intl.formatMessage({ id: 'Controls.makeHostTooltip' })}
+              >
+                <div className={cx('Roster_make_host')} onClick={()=> makeHost(attendeeId)}>
+                  <i className={cx('fas fa-bookmark')} />
+                </div>
+                </Tooltip>}
               {videoAttendees.has(attendeeId) && (
                 <div className={cx('Roster_video')}>
                   <i className={cx('fas fa-video')} />
                 </div>
               )}
               {typeof rosterAttendee.muted === 'boolean' && (
-                (state.classMode === ClassMode.Teacher && attendeeId !== localUserId) ? 
+                (chime?.isHost && attendeeId !== localUserId) ? 
                 <Tooltip
                 tooltip={
                   rosterAttendee.muted
@@ -151,7 +171,7 @@ export default function Roster() {
                 )}
               </div>
               )}
-              {state.classMode === ClassMode.Teacher && attendeeId !== localUserId && ( 
+              {chime?.isHost && attendeeId !== localUserId && ( 
                 <Tooltip
                 tooltip={intl.formatMessage({ id: 'Controls.removeAttendee' })}
               >

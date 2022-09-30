@@ -8,7 +8,6 @@ import { DataMessage } from 'amazon-chime-sdk-js';
 import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
 import getChimeContext from '../context/getChimeContext';
 import getUIStateContext from '../context/getUIStateContext';
-import ClassMode from '../enums/ClassMode';
 import MessageTopic from '../enums/MessageTopic';
 
 export default function useFocusMode() {
@@ -17,7 +16,7 @@ export default function useFocusMode() {
   const [state] = useContext(getUIStateContext());
   useEffect(() => {
     const callback = (message: DataMessage) => {
-      if (state.classMode === ClassMode.Teacher) {
+      if (chime?.isHost) {
         return;
       }
       const { focus } = message.json();

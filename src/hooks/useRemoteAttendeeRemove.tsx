@@ -9,7 +9,6 @@ import { DataMessage } from 'amazon-chime-sdk-js';
 import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
 import getChimeContext from '../context/getChimeContext';
 import getUIStateContext from '../context/getUIStateContext';
-import ClassMode from '../enums/ClassMode';
 import MessageTopic from '../enums/MessageTopic';
 
 export default function useRemoteAttendeeRemove() {
@@ -21,7 +20,7 @@ export default function useRemoteAttendeeRemove() {
 
   useEffect(() => {
     const callback = (message: DataMessage) => {
-      if (state.classMode === ClassMode.Teacher) {
+      if (chime?.isHost) {
         return;
       }
       const { focus, targetId } = message.json();

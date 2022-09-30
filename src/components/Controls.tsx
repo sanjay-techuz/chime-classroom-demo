@@ -15,8 +15,9 @@ import ClassMode from '../enums/ClassMode';
 import ViewMode from '../enums/ViewMode';
 import styles from './Controls.css';
 import Tooltip from './Tooltip';
+import useNextAttendee from '../hooks/useNextAttendee';
 import MessageTopic from '../enums/MessageTopic';
-import { startRecording, stopRecording } from '../services';
+import { changeHost, startRecording, stopRecording } from '../services';
 import localStorageKeys from '../constants/localStorageKeys.json';
 
 const cx = classNames.bind(styles);
@@ -42,6 +43,7 @@ export default function Controls(props: Props) {
   const [recording, setRecording] = useState(false);
   const [mediaPipelineId, setMediaPipelineId] = useState('');
   const [videoStatus, setVideoStatus] = useState(VideoStatus.Disabled);
+  const nextAttendeeId = useNextAttendee();
   const intl = useIntl();
 
   useEffect(() => {
@@ -90,7 +92,7 @@ export default function Controls(props: Props) {
       <div className={cx('Controls_micMuted')}>
         <FormattedMessage id="Controls.micMutedInScreenViewMode" />
       </div>
-      {state.classMode === ClassMode.Teacher && viewMode === ViewMode.Room && (
+      {chime?.isHost && viewMode === ViewMode.Room && (
         <Tooltip
           tooltip={
             focus
@@ -216,7 +218,7 @@ export default function Controls(props: Props) {
             </button>
           </Tooltip>
         )}
-        {  state.classMode === ClassMode.Teacher && (
+        {  chime?.isHost && (
           <Tooltip
             tooltip={recording ? intl.formatMessage({ id: 'Controls.stopRecordingScreenTooltip' }) : intl.formatMessage({ id: 'Controls.startRecordingScreenTooltip' })}
           >
@@ -236,7 +238,7 @@ export default function Controls(props: Props) {
       {viewMode !== ViewMode.ScreenShare && (
         <Tooltip
           tooltip={
-            state.classMode === ClassMode.Teacher
+            chime?.isHost 
               ? intl.formatMessage({ id: 'Controls.endClassroomTooltip' })
               : intl.formatMessage({ id: 'Controls.leaveClassroomTooltip' })
           }
