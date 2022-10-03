@@ -24,6 +24,7 @@ import DeviceSwitcher from "./DeviceSwitcher";
 import Error from "./Error";
 import LoadingSpinner from "./LoadingSpinner";
 import LocalVideo from "./LocalVideo";
+import CheckMediaPermissions from "./CheckMediaPermissions";
 import RemoteVideoGroup from "./RemoteVideoGroup";
 import Roster from "./Roster";
 import Tooltip from "./Tooltip";
@@ -36,6 +37,7 @@ export default function Classroom() {
   const [state] = useContext(getUIStateContext());
   const { meetingStatus, errorMessage } = useContext(getMeetingStatusContext());
   const [isContentShareEnabled, setIsContentShareEnabled] = useState(false);
+  const [tryToReload, setTryToReload] = useState(true);
   const [viewMode, setViewMode] = useState(ViewMode.Room);
   const [isModeTransitioning, setIsModeTransitioning] = useState(false);
   const [openRightBar, setOpenRightBar] = useState(true);
@@ -93,7 +95,12 @@ export default function Classroom() {
   }
 
   return (
-    <div
+    <>
+      <CheckMediaPermissions isRetry={()=> {
+        setTryToReload(false);
+        setTryToReload(true);
+      }} />
+     {tryToReload && <div
       className={cx("ClassRoom_classroom", {
         ClassRoom_roomMode: viewMode === ViewMode.Room,
         ClassRoom_screenShareMode: viewMode === ViewMode.ScreenShare,
@@ -173,6 +180,7 @@ export default function Classroom() {
           </>
         </>
       )}
-    </div>
+    </div>}
+    </>
   );
 }

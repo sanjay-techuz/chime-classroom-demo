@@ -3,5 +3,6 @@
   "INVITED_URL": "invited_url",
   "CURRENT_MEETING_ID": "currentMeetingID",
   "CURRENT_ATTENDEE_ID": "currentAtendeeId",
-  "CURRENT_RECORDER_ID": "recorderId"
+  "CURRENT_RECORDER_ID": "recorderId",
+  "MEETING_CONFIG": "meetingConfig"
 }

@@ -160,7 +160,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       );
       return;
     }
-
+    if (!localStorage.getItem(localStorageKeys.MEETING_CONFIG)){
     const response = await fetch(
       `${commonob.getBaseUrl}join?title=${encodeURIComponent(
         title
@@ -188,6 +188,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
         })
       );
     }
+    localStorage.setItem(localStorageKeys.MEETING_CONFIG,JSON.stringify(JoinInfo));
+
     this.configuration = new MeetingSessionConfiguration(
       JoinInfo.Meeting,
       JoinInfo.Attendee
@@ -204,11 +206,29 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     this.meetingId = JoinInfo.Meeting.MeetingId;
     localStorage.setItem(localStorageKeys.CURRENT_MEETING_ID, JoinInfo.Meeting.MeetingId);
     localStorage.setItem(localStorageKeys.CURRENT_ATTENDEE_ID, JoinInfo.Attendee.AttendeeId);
+  }else{
+    const joinInfo = JSON.parse(localStorage.getItem(localStorageKeys.MEETING_CONFIG));
+    this.configuration = new MeetingSessionConfiguration(
+      joinInfo.Meeting,
+      joinInfo.Attendee
+    );
+    if (optionalFeature === OptionalFeature.Simulcast) {
+      this.configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
+      this.configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = true;
+    }
+    await this.initializeMeetingSession(this.configuration);
+
+    this.title = title;
+    this.name = name;
+    this.region = region;
+    this.meetingId = joinInfo.Meeting.MeetingId;
+  }
   };
 
   initializeMeetingSession = async (
     configuration: MeetingSessionConfiguration
   ): Promise<void> => {
+    console.log("🚅🚅🚅🚅",configuration)
     const logger = new ConsoleLogger('SDK', LogLevel.OFF);
     const deviceController = new DefaultDeviceController(logger);
     this.meetingSession = new DefaultMeetingSession(

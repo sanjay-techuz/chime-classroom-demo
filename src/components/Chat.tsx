@@ -16,6 +16,7 @@ import MessageTopic from '../enums/MessageTopic';
 import RosterAttendeeType from '../types/RosterAttendeeType';
 import localStorageKeys from '../constants/localStorageKeys.json'
 import { createPrivateChannel } from '../utils';
+import useRemoteControl from '../hooks/useRemoteControl';
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +35,7 @@ export default function Chat() {
     chatAttendeeIds = Object.keys(roster).filter((attendeeId: string) => attendeeId !== localUserId);
     chatAttendeeIds = chatAttendeeIds.filter((attendeeId: string) => attendeeId !== localStorage.getItem(localStorageKeys.CURRENT_RECORDER_ID));
   }
-
+  useRemoteControl();
   useEffect(() => {
     const realTimeMessages: DataMessage[] = [];
     const callback = (message: DataMessage) => {

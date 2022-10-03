@@ -89,7 +89,7 @@ export default function MeetingStatusProvider(props: Props) {
   return (
     <MeetingStatusContext.Provider value={meetingStatus}>
       {/* eslint-disable-next-line */}
-      <audio ref={audioElement} style={{ display: 'none' }} />
+      <audio id="audioElement" ref={audioElement} style={{ display: 'none' }} />
       {children}
     </MeetingStatusContext.Provider>
   );
