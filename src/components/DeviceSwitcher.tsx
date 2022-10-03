@@ -58,6 +58,10 @@ export default function DeviceSwitcher() {
           !deviceSwitcherState.audioOutputDevices.length
         }
         onChange={async (selectedDevice: DeviceType) => {
+          // eslint-disable-next-line prettier/prettier
+          if (!chime?.browserBehavior.supportsSetSinkId()) {
+            return;
+          }
           await chime?.chooseAudioOutputDevice(selectedDevice);
         }}
         placeholder={

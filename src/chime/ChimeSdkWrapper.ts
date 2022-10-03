@@ -14,7 +14,8 @@ import {
   LogLevel,
   MeetingSession,
   MeetingSessionConfiguration,
-  DefaultActiveSpeakerPolicy
+  DefaultActiveSpeakerPolicy,
+  DefaultBrowserBehavior
 } from 'amazon-chime-sdk-js';
 import { useIntl } from 'react-intl';
 import throttle from 'lodash/throttle';
@@ -49,6 +50,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
   region: string | null = null;
 
   meetingRecorderName: string = "Unknown";
+
+  browserBehavior = new DefaultBrowserBehavior();
 
   supportedChimeRegions: RegionType[] = [
     { label: 'United States (N. Virginia)', value: 'us-east-1' },
@@ -355,7 +358,13 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       }
     );
 
-    const audioInputs = await this.audioVideo?.listAudioInputDevices();
+    const audioInputs =
+    (await this.audioVideo?.listAudioInputDevices()) || [];
+  const audioOutputs =
+    (await this.audioVideo?.listAudioOutputDevices()) || [];
+  const videoInputs =
+    (await this.audioVideo?.listVideoInputDevices()) || [];
+
     if (audioInputs && audioInputs.length > 0 && audioInputs[0].deviceId) {
       this.currentAudioInputDevice = {
         label: audioInputs[0].label,
@@ -364,8 +373,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       await this.audioVideo?.chooseAudioInputDevice(audioInputs[0].deviceId);
     }
 
-    const audioOutputs = await this.audioVideo?.listAudioOutputDevices();
-    if (audioOutputs && audioOutputs.length > 0 && audioOutputs[0].deviceId) {
+    if (audioOutputs && audioOutputs.length > 0 && audioOutputs[0].deviceId &&
+      this.browserBehavior.supportsSetSinkId()) {
       this.currentAudioOutputDevice = {
         label: audioOutputs[0].label,
         value: audioOutputs[0].deviceId
@@ -373,7 +382,6 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       await this.audioVideo?.chooseAudioOutputDevice(audioOutputs[0].deviceId);
     }
 
-    const videoInputs = await this.audioVideo?.listVideoInputDevices();
     if (videoInputs && videoInputs.length > 0 && videoInputs[0].deviceId) {
       this.currentVideoInputDevice = {
         label: videoInputs[0].label,
@@ -443,15 +451,21 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     try {
       await this.audioVideo?.chooseAudioInputDevice(device.value);
       this.currentAudioInputDevice = device;
+      this.publishDevicesUpdated();
     } catch (error) {
       this.logError(error);
     }
   };
 
   chooseAudioOutputDevice = async (device: DeviceType) => {
+    if (this.browserBehavior.supportsSetSinkId()) {
+      return;
+    }
+
     try {
       await this.audioVideo?.chooseAudioOutputDevice(device.value);
       this.currentAudioOutputDevice = device;
+      this.publishDevicesUpdated();
     } catch (error) {
       this.logError(error);
     }
@@ -461,6 +475,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     try {
       await this.audioVideo?.chooseVideoInputDevice(device.value);
       this.currentVideoInputDevice = device;
+      this.publishDevicesUpdated();
     } catch (error) {
       this.logError(error);
     }
