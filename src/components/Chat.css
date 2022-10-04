@@ -23,15 +23,15 @@
   height: 25%;
 }
 
-.Chat_right_Wrapper{
+.Chat_right_Wrapper {
   float: right;
 }
 
-.Chat_left_Wrapper{
+.Chat_left_Wrapper {
   float: left;
 }
 
-.Chat_reciever_messageWrapper{
+.Chat_reciever_messageWrapper {
   padding: 0.5rem 1.25rem;
   width: 100%;
   height: 25%;
@@ -67,7 +67,7 @@
   flex: 0 0 auto;
 }
 
-.Chat_attendee_list{
+.Chat_attendee_list {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -84,24 +84,24 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .Chat_attendee_list {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
-.Chat_initials{
+.Chat_initials {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 40px;
   width: 40px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 4px;
   color: black;
   margin: 2px;
   cursor: pointer;
 }
 
-.Chat_active_initials{
+.Chat_active_initials {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -109,7 +109,7 @@
   width: 40px;
   background-color: #1a1919fc;
   border-radius: 4px;
-  color: #FFFFFF;
+  color: #ffffff;
   margin: 2px;
   cursor: pointer;
 }

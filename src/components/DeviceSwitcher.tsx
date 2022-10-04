@@ -1,17 +1,17 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import classNames from 'classnames/bind';
-import React, { useContext } from 'react';
-import Dropdown from 'react-dropdown';
-import { useIntl } from 'react-intl';
+import classNames from "classnames/bind";
+import React, { useContext } from "react";
+import Dropdown from "react-dropdown";
+import { useIntl } from "react-intl";
 
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import useDevices from '../hooks/useDevices';
-import DeviceType from '../types/DeviceType';
-import styles from './DeviceSwitcher.css';
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import useDevices from "../hooks/useDevices";
+import DeviceType from "../types/DeviceType";
+import styles from "./DeviceSwitcher.css";
 
 const cx = classNames.bind(styles);
 
@@ -21,13 +21,13 @@ export default function DeviceSwitcher() {
   const deviceSwitcherState = useDevices();
 
   return (
-    <div className={cx('DeviceSwitcher_deviceList')}>
+    <div className={cx("DeviceSwitcher_deviceList")}>
       <Dropdown
-        className={cx('DeviceSwitcher_dropdown')}
-        controlClassName={cx('DeviceSwitcher_control')}
-        placeholderClassName={cx('DeviceSwitcher_placeholder')}
-        menuClassName={cx('DeviceSwitcher_menu')}
-        arrowClassName={cx('DeviceSwitcher_arrow')}
+        className={cx("DeviceSwitcher_dropdown")}
+        controlClassName={cx("DeviceSwitcher_control")}
+        placeholderClassName={cx("DeviceSwitcher_placeholder")}
+        menuClassName={cx("DeviceSwitcher_menu")}
+        arrowClassName={cx("DeviceSwitcher_arrow")}
         value={deviceSwitcherState.currentAudioInputDevice || undefined}
         options={deviceSwitcherState.audioInputDevices || ([] as DeviceType[])}
         disabled={
@@ -40,17 +40,17 @@ export default function DeviceSwitcher() {
         placeholder={
           deviceSwitcherState.currentAudioInputDevice
             ? intl.formatMessage({
-                id: 'DeviceSwitcher.noAudioInputPlaceholder'
+                id: "DeviceSwitcher.noAudioInputPlaceholder",
               })
-            : ''
+            : ""
         }
       />
       <Dropdown
-        className={cx('DeviceSwitcher_dropdown')}
-        controlClassName={cx('DeviceSwitcher_control')}
-        placeholderClassName={cx('DeviceSwitcher_placeholder')}
-        menuClassName={cx('DeviceSwitcher_menu')}
-        arrowClassName={cx('DeviceSwitcher_arrow')}
+        className={cx("DeviceSwitcher_dropdown")}
+        controlClassName={cx("DeviceSwitcher_control")}
+        placeholderClassName={cx("DeviceSwitcher_placeholder")}
+        menuClassName={cx("DeviceSwitcher_menu")}
+        arrowClassName={cx("DeviceSwitcher_arrow")}
         value={deviceSwitcherState.currentAudioOutputDevice || undefined}
         options={deviceSwitcherState.audioOutputDevices || ([] as DeviceType[])}
         disabled={
@@ -67,17 +67,17 @@ export default function DeviceSwitcher() {
         placeholder={
           deviceSwitcherState.currentAudioOutputDevice
             ? intl.formatMessage({
-                id: 'DeviceSwitcher.noAudioOutputPlaceholder'
+                id: "DeviceSwitcher.noAudioOutputPlaceholder",
               })
-            : ''
+            : ""
         }
       />
       <Dropdown
-        className={cx('DeviceSwitcher_dropdown')}
-        controlClassName={cx('DeviceSwitcher_control')}
-        placeholderClassName={cx('DeviceSwitcher_placeholder')}
-        menuClassName={cx('DeviceSwitcher_menu')}
-        arrowClassName={cx('DeviceSwitcher_arrow')}
+        className={cx("DeviceSwitcher_dropdown")}
+        controlClassName={cx("DeviceSwitcher_control")}
+        placeholderClassName={cx("DeviceSwitcher_placeholder")}
+        menuClassName={cx("DeviceSwitcher_menu")}
+        arrowClassName={cx("DeviceSwitcher_arrow")}
         value={deviceSwitcherState.currentVideoInputDevice || undefined}
         options={deviceSwitcherState.videoInputDevices || ([] as DeviceType[])}
         disabled={
@@ -90,9 +90,9 @@ export default function DeviceSwitcher() {
         placeholder={
           deviceSwitcherState.currentVideoInputDevice
             ? intl.formatMessage({
-                id: 'DeviceSwitcher.noVideoInputPlaceholder'
+                id: "DeviceSwitcher.noVideoInputPlaceholder",
               })
-            : ''
+            : ""
         }
       />
     </div>

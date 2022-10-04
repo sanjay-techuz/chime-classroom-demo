@@ -45,11 +45,13 @@
   padding: 1rem;
 }
 
-.Controls_controls.Controls_screenShareMode.Controls_audioMuted.Controls_videoEnabled .Controls_micMuted {
+.Controls_controls.Controls_screenShareMode.Controls_audioMuted.Controls_videoEnabled
+  .Controls_micMuted {
   display: flex;
 }
 
-.Controls_controls.Controls_screenShareMode.Controls_Controls_audioMuted.Controls_videoEnabled .Controls_muteButton {
+.Controls_controls.Controls_screenShareMode.Controls_Controls_audioMuted.Controls_videoEnabled
+  .Controls_muteButton {
   background-color: var(--color_thunderbird);
 }
 
@@ -89,6 +91,6 @@
   background: var(--color_thunderbird) !important;
 }
 
-.Controls_recordRedButton{
+.Controls_recordRedButton {
   color: rgb(255 106 106) !important;
 }

@@ -4,7 +4,7 @@
 enum MeetingStatus {
   Loading,
   Succeeded,
-  Failed
+  Failed,
 }
 
 export default MeetingStatus;

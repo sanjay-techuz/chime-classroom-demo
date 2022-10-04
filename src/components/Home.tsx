@@ -1,21 +1,21 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import classNames from 'classnames/bind';
-import React, { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import classNames from "classnames/bind";
+import React, { useContext } from "react";
+import { Redirect } from "react-router-dom";
 
-import routes from '../constants/routes.json';
-import getUIStateContext from '../context/getUIStateContext';
-import styles from './Home.css';
+import routes from "../constants/routes.json";
+import getUIStateContext from "../context/getUIStateContext";
+import styles from "./Home.css";
 
 const cx = classNames.bind(styles);
 
 export default function Home() {
   const [state] = useContext(getUIStateContext());
   return (
-    <div className={cx('Home_home')}>
+    <div className={cx("Home_home")}>
       {state.classMode ? (
         <Redirect to={routes.CREATE_OR_JOIN} />
       ) : (

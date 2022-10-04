@@ -1,8 +1,8 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
@@ -10,9 +10,5 @@ type Props = {
 
 export default function App(props: Props) {
   const { children } = props;
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

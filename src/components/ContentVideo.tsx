@@ -1,14 +1,14 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import { DefaultModality, VideoTileState } from 'amazon-chime-sdk-js';
-import classNames from 'classnames/bind';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { DefaultModality, VideoTileState } from "amazon-chime-sdk-js";
+import classNames from "classnames/bind";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import styles from './ContentVideo.css';
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import styles from "./ContentVideo.css";
 
 const cx = classNames.bind(styles);
 
@@ -48,7 +48,7 @@ export default function ContentVideo(props: Props) {
 
         chime?.audioVideo?.bindVideoElement(
           tileState.tileId,
-          (videoElement.current as unknown) as HTMLVideoElement
+          videoElement.current as unknown as HTMLVideoElement
         );
 
         if (tileState.active) {
@@ -64,7 +64,7 @@ export default function ContentVideo(props: Props) {
           contentTileIds.delete(tileId);
           setEnabled(contentTileIds.size > 0);
         }
-      }
+      },
     });
   }, []);
 
@@ -76,8 +76,8 @@ export default function ContentVideo(props: Props) {
   }, [enabled]);
 
   return (
-    <div className={cx('ContentVideo_contentVideo')}>
-      <video muted ref={videoElement} className={cx('ContentVideo_video')} />
+    <div className={cx("ContentVideo_contentVideo")}>
+      <video muted ref={videoElement} className={cx("ContentVideo_video")} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 enum Size {
   Small,
   Medium,
-  Large
+  Large,
 }
 
 export default Size;

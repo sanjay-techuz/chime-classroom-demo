@@ -1,14 +1,14 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import { VideoTileState } from 'amazon-chime-sdk-js';
-import classNames from 'classnames/bind';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { VideoTileState } from "amazon-chime-sdk-js";
+import classNames from "classnames/bind";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import styles from './LocalVideo.css';
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import styles from "./LocalVideo.css";
 
 const cx = classNames.bind(styles);
 
@@ -30,20 +30,20 @@ export default function LocalVideo() {
         }
         chime?.audioVideo?.bindVideoElement(
           tileState.tileId,
-          (videoElement.current as unknown) as HTMLVideoElement
+          videoElement.current as unknown as HTMLVideoElement
         );
         setEnabled(tileState.active);
-      }
+      },
     });
   }, []);
 
   return (
     <div
-      className={cx('LocalVideo_localVideo', {
-        enabled
+      className={cx("LocalVideo_localVideo", {
+        enabled,
       })}
     >
-      <video muted ref={videoElement} className={cx('LocalVideo_video')} />
+      <video muted ref={videoElement} className={cx("LocalVideo_video")} />
     </div>
   );
 }

@@ -3,7 +3,7 @@
 
 enum ViewMode {
   Room,
-  ScreenShare
+  ScreenShare,
 }
 
 export default ViewMode;

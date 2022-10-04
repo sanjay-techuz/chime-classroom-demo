@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 enum OptionalFeature {
-  None = '',
-  Simulcast = 'simulcast'
+  None = "",
+  Simulcast = "simulcast",
 }
 
 export default OptionalFeature;

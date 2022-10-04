@@ -1,13 +1,13 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
 
-import { DataMessage } from 'amazon-chime-sdk-js';
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import MessageTopic from '../enums/MessageTopic';
+import { DataMessage } from "amazon-chime-sdk-js";
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import MessageTopic from "../enums/MessageTopic";
 
 export default function useRaisedHandAttendees() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -27,11 +27,11 @@ export default function useRaisedHandAttendees() {
     };
     const raiseHandMessageUpdateCallback = {
       topic: MessageTopic.RaiseHand,
-      callback
+      callback,
     };
     const dismissHandMessageUpdateCallback = {
       topic: MessageTopic.DismissHand,
-      callback
+      callback,
     };
     chime?.subscribeToMessageUpdate(raiseHandMessageUpdateCallback);
     chime?.subscribeToMessageUpdate(dismissHandMessageUpdateCallback);

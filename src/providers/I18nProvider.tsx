@@ -1,16 +1,16 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import React, { ReactNode } from 'react';
-import { IntlProvider } from 'react-intl';
+import React, { ReactNode } from "react";
+import { IntlProvider } from "react-intl";
 
-import enUS from '../i18n/en-US';
+import enUS from "../i18n/en-US";
 
-const DEFAULT_LOCALE = 'en-US';
+const DEFAULT_LOCALE = "en-US";
 
 const messages = {
-  [DEFAULT_LOCALE]: enUS
+  [DEFAULT_LOCALE]: enUS,
 };
 
 type Props = {

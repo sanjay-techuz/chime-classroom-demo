@@ -1,31 +1,30 @@
-
-.CopyInfo_id{
-    display: flex;
+.CopyInfo_id {
+  display: flex;
 }
 
 .CopyInfo_title {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    padding: 5px;
-  }
-
-.CopyInfo_copy_meeting_id{
-    cursor: pointer;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  padding: 5px;
 }
 
-.CopyInfo_url{
-    display: flex;
+.CopyInfo_copy_meeting_id {
+  cursor: pointer;
 }
 
-.CopyInfo_url_btn{
-    background-color: #FFFFFF;
-    cursor: pointer;
-    color: black;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    width: 90%;
+.CopyInfo_url {
+  display: flex;
+}
+
+.CopyInfo_url_btn {
+  background-color: #ffffff;
+  cursor: pointer;
+  color: black;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  width: 90%;
 }

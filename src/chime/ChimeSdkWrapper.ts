@@ -1,6 +1,6 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
 import {
   AsyncScheduler,
@@ -15,20 +15,20 @@ import {
   MeetingSession,
   MeetingSessionConfiguration,
   DefaultActiveSpeakerPolicy,
-  DefaultBrowserBehavior
-} from 'amazon-chime-sdk-js';
-import { useIntl } from 'react-intl';
-import throttle from 'lodash/throttle';
+  DefaultBrowserBehavior,
+} from "amazon-chime-sdk-js";
+import { useIntl } from "react-intl";
+import throttle from "lodash/throttle";
 
-import DeviceType from '../types/DeviceType';
-import FullDeviceInfoType from '../types/FullDeviceInfoType';
-import MessageUpdateCallbackType from '../types/MessageUpdateCallbackType';
-import RegionType from '../types/RegionType';
-import RosterType from '../types/RosterType';
-import commonob from '../constants/common.json'
-import OptionalFeature from '../enums/OptionalFeature';
-import localStorageKeys from '../constants/localStorageKeys.json';
-import { stopRecording } from '../services';
+import DeviceType from "../types/DeviceType";
+import FullDeviceInfoType from "../types/FullDeviceInfoType";
+import MessageUpdateCallbackType from "../types/MessageUpdateCallbackType";
+import RegionType from "../types/RegionType";
+import RosterType from "../types/RosterType";
+import commonob from "../constants/common.json";
+import OptionalFeature from "../enums/OptionalFeature";
+import localStorageKeys from "../constants/localStorageKeys.json";
+import { stopRecording } from "../services";
 
 export default class ChimeSdkWrapper implements DeviceChangeObserver {
   intl = useIntl();
@@ -54,20 +54,20 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
   browserBehavior = new DefaultBrowserBehavior();
 
   supportedChimeRegions: RegionType[] = [
-    { label: 'United States (N. Virginia)', value: 'us-east-1' },
-    { label: 'Japan (Tokyo)', value: 'ap-northeast-1' },
-    { label: 'Singapore', value: 'ap-southeast-1' },
-    { label: 'Australia (Sydney)', value: 'ap-southeast-2' },
-    { label: 'Canada', value: 'ca-central-1' },
-    { label: 'Germany (Frankfurt)', value: 'eu-central-1' },
-    { label: 'Sweden (Stockholm)', value: 'eu-north-1' },
-    { label: 'Ireland', value: 'eu-west-1' },
-    { label: 'United Kingdom (London)', value: 'eu-west-2' },
-    { label: 'France (Paris)', value: 'eu-west-3' },
-    { label: 'Brazil (São Paulo)', value: 'sa-east-1' },
-    { label: 'United States (Ohio)', value: 'us-east-2' },
-    { label: 'United States (N. California)', value: 'us-west-1' },
-    { label: 'United States (Oregon)', value: 'us-west-2' }
+    { label: "United States (N. Virginia)", value: "us-east-1" },
+    { label: "Japan (Tokyo)", value: "ap-northeast-1" },
+    { label: "Singapore", value: "ap-southeast-1" },
+    { label: "Australia (Sydney)", value: "ap-southeast-2" },
+    { label: "Canada", value: "ca-central-1" },
+    { label: "Germany (Frankfurt)", value: "eu-central-1" },
+    { label: "Sweden (Stockholm)", value: "eu-north-1" },
+    { label: "Ireland", value: "eu-west-1" },
+    { label: "United Kingdom (London)", value: "eu-west-2" },
+    { label: "France (Paris)", value: "eu-west-3" },
+    { label: "Brazil (São Paulo)", value: "sa-east-1" },
+    { label: "United States (Ohio)", value: "us-east-2" },
+    { label: "United States (N. California)", value: "us-west-1" },
+    { label: "United States (Oregon)", value: "us-west-2" },
   ];
 
   currentAudioInputDevice: DeviceType | null = null;
@@ -82,9 +82,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
 
   videoInputDevices: DeviceType[] = [];
 
-  devicesUpdatedCallbacks: ((
-    fullDeviceInfo: FullDeviceInfoType
-  ) => void)[] = [];
+  devicesUpdatedCallbacks: ((fullDeviceInfo: FullDeviceInfoType) => void)[] =
+    [];
 
   roster: RosterType = {};
 
@@ -125,13 +124,13 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     let region: string;
     try {
       const response = await fetch(`https://nearest-media-region.l.chime.aws`, {
-        method: 'GET'
+        method: "GET",
       });
       const json = await response.json();
       if (json.error) {
         throw new Error(
           `${this.intl.formatMessage({
-            id: 'CreateOrJoin.serverError'
+            id: "CreateOrJoin.serverError",
           })}: ${json.error}`
         );
       }
@@ -160,76 +159,89 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       );
       return;
     }
-    if (!localStorage.getItem(localStorageKeys.MEETING_CONFIG)){
-    const response = await fetch(
-      `${commonob.getBaseUrl}join?title=${encodeURIComponent(
-        title
-      )}&name=${encodeURIComponent(name)}&region=${encodeURIComponent(
-        region
-      )}&role=${encodeURIComponent(role)}`,
-      {
-        method: 'POST'
+    if (!localStorage.getItem(localStorageKeys.MEETING_CONFIG)) {
+      const response = await fetch(
+        `${commonob.getBaseUrl}join?title=${encodeURIComponent(
+          title
+        )}&name=${encodeURIComponent(name)}&region=${encodeURIComponent(
+          region
+        )}&role=${encodeURIComponent(role)}`,
+        {
+          method: "POST",
+        }
+      );
+      const json = await response.json();
+      if (json.error) {
+        throw new Error(
+          `${this.intl.formatMessage({
+            id: "CreateOrJoin.serverError",
+          })}: ${json.error}`
+        );
       }
-    );
-    const json = await response.json();
-    if (json.error) {
-      throw new Error(
-        `${this.intl.formatMessage({
-          id: 'CreateOrJoin.serverError'
-        })}: ${json.error}`
+
+      const { JoinInfo } = json;
+      if (!JoinInfo) {
+        throw new Error(
+          this.intl.formatMessage({
+            id: "CreateOrJoin.classRoomDoesNotExist",
+          })
+        );
+      }
+      localStorage.setItem(
+        localStorageKeys.MEETING_CONFIG,
+        JSON.stringify(JoinInfo)
       );
-    }
 
-    const { JoinInfo } = json;
-    if (!JoinInfo) {
-      throw new Error(
-        this.intl.formatMessage({
-          id: 'CreateOrJoin.classRoomDoesNotExist'
-        })
+      this.configuration = new MeetingSessionConfiguration(
+        JoinInfo.Meeting,
+        JoinInfo.Attendee
       );
-    }
-    localStorage.setItem(localStorageKeys.MEETING_CONFIG,JSON.stringify(JoinInfo));
+      if (optionalFeature === OptionalFeature.Simulcast) {
+        this.configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
+        this.configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers =
+          true;
+      }
+      await this.initializeMeetingSession(this.configuration);
 
-    this.configuration = new MeetingSessionConfiguration(
-      JoinInfo.Meeting,
-      JoinInfo.Attendee
-    );
-    if (optionalFeature === OptionalFeature.Simulcast) {
-      this.configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
-      this.configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = true;
-    }
-    await this.initializeMeetingSession(this.configuration);
+      this.title = title;
+      this.name = name;
+      this.region = region;
+      this.meetingId = JoinInfo.Meeting.MeetingId;
+      localStorage.setItem(
+        localStorageKeys.CURRENT_MEETING_ID,
+        JoinInfo.Meeting.MeetingId
+      );
+      localStorage.setItem(
+        localStorageKeys.CURRENT_ATTENDEE_ID,
+        JoinInfo.Attendee.AttendeeId
+      );
+    } else {
+      const joinInfo = JSON.parse(
+        localStorage.getItem(localStorageKeys.MEETING_CONFIG)
+      );
+      this.configuration = new MeetingSessionConfiguration(
+        joinInfo.Meeting,
+        joinInfo.Attendee
+      );
+      if (optionalFeature === OptionalFeature.Simulcast) {
+        this.configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
+        this.configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers =
+          true;
+      }
+      await this.initializeMeetingSession(this.configuration);
 
-    this.title = title;
-    this.name = name;
-    this.region = region;
-    this.meetingId = JoinInfo.Meeting.MeetingId;
-    localStorage.setItem(localStorageKeys.CURRENT_MEETING_ID, JoinInfo.Meeting.MeetingId);
-    localStorage.setItem(localStorageKeys.CURRENT_ATTENDEE_ID, JoinInfo.Attendee.AttendeeId);
-  }else{
-    const joinInfo = JSON.parse(localStorage.getItem(localStorageKeys.MEETING_CONFIG));
-    this.configuration = new MeetingSessionConfiguration(
-      joinInfo.Meeting,
-      joinInfo.Attendee
-    );
-    if (optionalFeature === OptionalFeature.Simulcast) {
-      this.configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
-      this.configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = true;
+      this.title = title;
+      this.name = name;
+      this.region = region;
+      this.meetingId = joinInfo.Meeting.MeetingId;
     }
-    await this.initializeMeetingSession(this.configuration);
-
-    this.title = title;
-    this.name = name;
-    this.region = region;
-    this.meetingId = joinInfo.Meeting.MeetingId;
-  }
   };
 
   initializeMeetingSession = async (
     configuration: MeetingSessionConfiguration
   ): Promise<void> => {
-    console.log("🚅🚅🚅🚅",configuration)
-    const logger = new ConsoleLogger('SDK', LogLevel.OFF);
+    console.log("🚅🚅🚅🚅", configuration);
+    const logger = new ConsoleLogger("SDK", LogLevel.OFF);
     const deviceController = new DefaultDeviceController(logger);
     this.meetingSession = new DefaultMeetingSession(
       configuration,
@@ -243,7 +255,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       (mediaDeviceInfo: MediaDeviceInfo) => {
         this.audioInputDevices.push({
           label: mediaDeviceInfo.label,
-          value: mediaDeviceInfo.deviceId
+          value: mediaDeviceInfo.deviceId,
         });
       }
     );
@@ -252,7 +264,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       (mediaDeviceInfo: MediaDeviceInfo) => {
         this.audioOutputDevices.push({
           label: mediaDeviceInfo.label,
-          value: mediaDeviceInfo.deviceId
+          value: mediaDeviceInfo.deviceId,
         });
       }
     );
@@ -261,7 +273,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       (mediaDeviceInfo: MediaDeviceInfo) => {
         this.videoInputDevices.push({
           label: mediaDeviceInfo.label,
-          value: mediaDeviceInfo.deviceId
+          value: mediaDeviceInfo.deviceId,
         });
       }
     );
@@ -301,7 +313,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
             let shouldPublishImmediately = false;
 
             if (!this.roster[attendeeId]) {
-              this.roster[attendeeId] = { name: '' };
+              this.roster[attendeeId] = { name: "" };
             }
             if (volume !== null) {
               this.roster[attendeeId].volume = Math.round(volume * 100);
@@ -315,25 +327,42 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
               );
             }
 
-            if (this.title && attendeeId && !this.roster[attendeeId].name && attendeeId !== localStorage.getItem(localStorageKeys.CURRENT_RECORDER_ID)) {
+            if (
+              this.title &&
+              attendeeId &&
+              !this.roster[attendeeId].name &&
+              attendeeId !==
+                localStorage.getItem(localStorageKeys.CURRENT_RECORDER_ID)
+            ) {
               const response = await fetch(
                 `${commonob.getBaseUrl}attendee?title=${encodeURIComponent(
                   this.title
                 )}&attendee=${encodeURIComponent(attendeeId)}`
               );
               const json = await response.json();
-              
-              if(this.roster[this.meetingSession?.configuration.credentials?.attendeeId]?.name === this.meetingRecorderName){
+
+              if (
+                this.roster[
+                  this.meetingSession?.configuration.credentials?.attendeeId
+                ]?.name === this.meetingRecorderName
+              ) {
                 this.audioVideo?.realtimeMuteLocalAudio();
               }
 
-              if(json.AttendeeInfo.Name === this.meetingRecorderName && attendeeId !== this.meetingSession?.configuration.credentials?.attendeeId){
-                localStorage.setItem(localStorageKeys.CURRENT_RECORDER_ID,attendeeId);
+              if (
+                json.AttendeeInfo.Name === this.meetingRecorderName &&
+                attendeeId !==
+                  this.meetingSession?.configuration.credentials?.attendeeId
+              ) {
+                localStorage.setItem(
+                  localStorageKeys.CURRENT_RECORDER_ID,
+                  attendeeId
+                );
                 delete this.roster[presentAttendeeId];
                 this.publishRosterUpdate();
                 return;
               }
-              this.roster[attendeeId].name = json.AttendeeInfo?.Name || '';
+              this.roster[attendeeId].name = json.AttendeeInfo?.Name || "";
 
               shouldPublishImmediately = true;
             }
@@ -350,11 +379,11 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     this.audioVideo.subscribeToActiveSpeakerDetector(
       new DefaultActiveSpeakerPolicy(),
       (attendeeIds: string[]): void => {
-        Object.keys(this.roster).forEach(attendeeId => {
+        Object.keys(this.roster).forEach((attendeeId) => {
           this.roster[attendeeId].active = false;
         });
 
-        attendeeIds.some(attendeeId => {
+        attendeeIds.some((attendeeId) => {
           if (this.roster[attendeeId]) {
             this.roster[attendeeId].active = true;
             return true; // only show the most active speaker
@@ -372,32 +401,34 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     }
 
     window.addEventListener(
-      'unhandledrejection',
+      "unhandledrejection",
       (event: PromiseRejectionEvent) => {
         this.logError(event.reason);
       }
     );
 
-    const audioInputs =
-    (await this.audioVideo?.listAudioInputDevices()) || [];
-  const audioOutputs =
-    (await this.audioVideo?.listAudioOutputDevices()) || [];
-  const videoInputs =
-    (await this.audioVideo?.listVideoInputDevices()) || [];
+    const audioInputs = (await this.audioVideo?.listAudioInputDevices()) || [];
+    const audioOutputs =
+      (await this.audioVideo?.listAudioOutputDevices()) || [];
+    const videoInputs = (await this.audioVideo?.listVideoInputDevices()) || [];
 
     if (audioInputs && audioInputs.length > 0 && audioInputs[0].deviceId) {
       this.currentAudioInputDevice = {
         label: audioInputs[0].label,
-        value: audioInputs[0].deviceId
+        value: audioInputs[0].deviceId,
       };
       await this.audioVideo?.chooseAudioInputDevice(audioInputs[0].deviceId);
     }
 
-    if (audioOutputs && audioOutputs.length > 0 && audioOutputs[0].deviceId &&
-      this.browserBehavior.supportsSetSinkId()) {
+    if (
+      audioOutputs &&
+      audioOutputs.length > 0 &&
+      audioOutputs[0].deviceId &&
+      this.browserBehavior.supportsSetSinkId()
+    ) {
       this.currentAudioOutputDevice = {
         label: audioOutputs[0].label,
-        value: audioOutputs[0].deviceId
+        value: audioOutputs[0].deviceId,
       };
       await this.audioVideo?.chooseAudioOutputDevice(audioOutputs[0].deviceId);
     }
@@ -405,7 +436,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     if (videoInputs && videoInputs.length > 0 && videoInputs[0].deviceId) {
       this.currentVideoInputDevice = {
         label: videoInputs[0].label,
-        value: videoInputs[0].deviceId
+        value: videoInputs[0].deviceId,
       };
       await this.audioVideo?.chooseVideoInputDevice(null);
     }
@@ -429,8 +460,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
           Date.now(),
           topic,
           new TextEncoder().encode(data),
-          this.meetingSession?.configuration.credentials?.attendeeId || '',
-          this.meetingSession?.configuration.credentials?.externalUserId || ''
+          this.meetingSession?.configuration.credentials?.attendeeId || "",
+          this.meetingSession?.configuration.credentials?.externalUserId || ""
         )
       );
     });
@@ -450,7 +481,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
         await fetch(
           `${commonob.getBaseUrl}end?title=${encodeURIComponent(this.title)}`,
           {
-            method: 'POST'
+            method: "POST",
           }
         );
       }
@@ -519,7 +550,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       }
       this.audioInputDevices.push({
         label: mediaDeviceInfo.label,
-        value: mediaDeviceInfo.deviceId
+        value: mediaDeviceInfo.deviceId,
       });
     });
     if (!hasCurrentDevice) {
@@ -541,7 +572,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       }
       this.audioOutputDevices.push({
         label: mediaDeviceInfo.label,
-        value: mediaDeviceInfo.deviceId
+        value: mediaDeviceInfo.deviceId,
       });
     });
     if (!hasCurrentDevice) {
@@ -563,7 +594,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       }
       this.videoInputDevices.push({
         label: mediaDeviceInfo.label,
-        value: mediaDeviceInfo.deviceId
+        value: mediaDeviceInfo.deviceId,
       });
     });
     if (!hasCurrentDevice) {
@@ -603,7 +634,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
           currentVideoInputDevice: this.currentVideoInputDevice,
           audioInputDevices: this.audioInputDevices,
           audioOutputDevices: this.audioOutputDevices,
-          videoInputDevices: this.videoInputDevices
+          videoInputDevices: this.videoInputDevices,
         });
       }
     );

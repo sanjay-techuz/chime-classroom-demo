@@ -1,26 +1,26 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
 import {
   MeetingSessionStatus,
-  MeetingSessionStatusCode
-} from 'amazon-chime-sdk-js';
+  MeetingSessionStatusCode,
+} from "amazon-chime-sdk-js";
 import React, {
   ReactNode,
   useContext,
   useEffect,
   useRef,
-  useState
-} from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+  useState,
+} from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import getMeetingStatusContext from '../context/getMeetingStatusContext';
-import getUIStateContext from '../context/getUIStateContext';
-import ClassMode from '../enums/ClassMode';
-import MeetingStatus from '../enums/MeetingStatus';
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import getMeetingStatusContext from "../context/getMeetingStatusContext";
+import getUIStateContext from "../context/getUIStateContext";
+import ClassMode from "../enums/ClassMode";
+import MeetingStatus from "../enums/MeetingStatus";
 
 type Props = {
   children: ReactNode;
@@ -34,7 +34,7 @@ export default function MeetingStatusProvider(props: Props) {
     meetingStatus: MeetingStatus;
     errorMessage?: string;
   }>({
-    meetingStatus: MeetingStatus.Loading
+    meetingStatus: MeetingStatus.Loading,
   });
   const [state] = useContext(getUIStateContext());
   const history = useHistory();
@@ -45,15 +45,15 @@ export default function MeetingStatusProvider(props: Props) {
     const start = async () => {
       try {
         await chime?.createRoom(
-          query.get('title'),
-          query.get('name'),
-          query.get('region'),
-          state.classMode === ClassMode.Student ? 'student' : 'teacher',
-          query.get('optionalFeature')
+          query.get("title"),
+          query.get("name"),
+          query.get("region"),
+          state.classMode === ClassMode.Student ? "student" : "teacher",
+          query.get("optionalFeature")
         );
 
         setMeetingStatus({
-          meetingStatus: MeetingStatus.Succeeded
+          meetingStatus: MeetingStatus.Succeeded,
         });
 
         chime?.audioVideo?.addObserver({
@@ -62,15 +62,14 @@ export default function MeetingStatusProvider(props: Props) {
               sessionStatus.statusCode() ===
               MeetingSessionStatusCode.AudioCallEnded
             ) {
-              history.push('/');
-              if(state.classMode === ClassMode.Teacher){
+              history.push("/");
+              if (state.classMode === ClassMode.Teacher) {
                 chime?.leaveRoom(true);
-              }else{
+              } else {
                 chime?.leaveRoom(false);
               }
-              
             }
-          }
+          },
         });
 
         await chime?.joinRoom(audioElement.current);
@@ -79,7 +78,7 @@ export default function MeetingStatusProvider(props: Props) {
         console.error(error);
         setMeetingStatus({
           meetingStatus: MeetingStatus.Failed,
-          errorMessage: error.message
+          errorMessage: error.message,
         });
       }
     };
@@ -89,7 +88,7 @@ export default function MeetingStatusProvider(props: Props) {
   return (
     <MeetingStatusContext.Provider value={meetingStatus}>
       {/* eslint-disable-next-line */}
-      <audio id="audioElement" ref={audioElement} style={{ display: 'none' }} />
+      <audio id="audioElement" ref={audioElement} style={{ display: "none" }} />
       {children}
     </MeetingStatusContext.Provider>
   );

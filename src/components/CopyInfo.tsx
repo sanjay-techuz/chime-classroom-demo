@@ -31,7 +31,9 @@ export default function CopyInfo() {
   const copyMeetingUrl = () => {
     setIsMeetingUrlCoppied(true);
     const url = new URL(window.location.href);
-    const meetingUrl = `${url.origin}/?meetingId=${encodeURIComponent(chime?.title)}`
+    const meetingUrl = `${url.origin}/?meetingId=${encodeURIComponent(
+      chime?.title
+    )}`;
     navigator.clipboard.writeText(meetingUrl);
     setTimeout(() => {
       setIsMeetingUrlCoppied(false);

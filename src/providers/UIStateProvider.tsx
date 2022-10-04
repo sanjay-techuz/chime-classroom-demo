@@ -1,21 +1,21 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import React, { ReactNode, useReducer } from 'react';
+import React, { ReactNode, useReducer } from "react";
 
 import getUIStateContext, {
   initialState,
   SetClassModeActon,
-  StateType
-} from '../context/getUIStateContext';
+  StateType,
+} from "../context/getUIStateContext";
 
 const reducer = (state: StateType, action: SetClassModeActon): StateType => {
   switch (action.type) {
-    case 'SET_CLASS_MODE':
+    case "SET_CLASS_MODE":
       return {
         ...state,
-        classMode: action.payload.classMode
+        classMode: action.payload.classMode,
       };
     default:
       throw new Error();

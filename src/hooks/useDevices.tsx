@@ -1,12 +1,12 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
 
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import FullDeviceInfoType from '../types/FullDeviceInfoType';
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import FullDeviceInfoType from "../types/FullDeviceInfoType";
 
 export default function useDevices() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -16,12 +16,12 @@ export default function useDevices() {
     currentVideoInputDevice: chime?.currentVideoInputDevice,
     audioInputDevices: chime?.audioInputDevices,
     audioOutputDevices: chime?.audioOutputDevices,
-    videoInputDevices: chime?.videoInputDevices
+    videoInputDevices: chime?.videoInputDevices,
   });
   useEffect(() => {
     const devicesUpdatedCallback = (fullDeviceInfo: FullDeviceInfoType) => {
       setDeviceUpdated({
-        ...fullDeviceInfo
+        ...fullDeviceInfo,
       });
     };
 

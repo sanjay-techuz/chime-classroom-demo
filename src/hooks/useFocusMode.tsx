@@ -1,15 +1,15 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
 
-import { DataMessage } from 'amazon-chime-sdk-js';
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import getUIStateContext from '../context/getUIStateContext';
-import ClassMode from '../enums/ClassMode';
-import MessageTopic from '../enums/MessageTopic';
+import { DataMessage } from "amazon-chime-sdk-js";
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import getUIStateContext from "../context/getUIStateContext";
+import ClassMode from "../enums/ClassMode";
+import MessageTopic from "../enums/MessageTopic";
 
 export default function useFocusMode() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());

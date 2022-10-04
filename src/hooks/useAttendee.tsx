@@ -1,13 +1,13 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
 
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import RosterType from '../types/RosterType';
-import RosterAttendeeType from '../types/RosterAttendeeType';
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import RosterType from "../types/RosterType";
+import RosterAttendeeType from "../types/RosterAttendeeType";
 
 export default function useAttendee(attendeeId: string) {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());

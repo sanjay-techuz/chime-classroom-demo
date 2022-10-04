@@ -1,2 +1,2 @@
-export * from './startRecording';
-export * from './stopRecording';
+export * from "./startRecording";
+export * from "./stopRecording";

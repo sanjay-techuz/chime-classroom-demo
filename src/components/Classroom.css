@@ -12,7 +12,7 @@
 }
 
 .ClassRoom_classroom.isModeTransitioning::after {
-  content: '';
+  content: "";
   position: fixed;
   top: 0;
   right: 0;
@@ -48,7 +48,8 @@
   overflow: hidden;
 }
 
-.ClassRoom_classroom.ClassRoom_roomMode.isContentShareEnabled .ClassRoom_remoteVideoGroupWrapper {
+.ClassRoom_classroom.ClassRoom_roomMode.isContentShareEnabled
+  .ClassRoom_remoteVideoGroupWrapper {
   flex: 0 0 auto;
 }
 
@@ -143,19 +144,19 @@
   backdrop-filter: blur(0.5rem);
 }
 
-.ClassRoom_right_close{
+.ClassRoom_right_close {
   position: absolute;
   cursor: pointer;
   right: 1%;
 }
 
-.ClassRoom_right_open{
+.ClassRoom_right_open {
   position: absolute;
   cursor: pointer;
   right: 1%;
   top: 1%;
 }
 
-.Classroom_right_none{
+.Classroom_right_none {
   display: none;
 }

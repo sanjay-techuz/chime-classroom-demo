@@ -1,12 +1,12 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
 
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import RosterType from '../types/RosterType';
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import RosterType from "../types/RosterType";
 
 export default function useRoster() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -14,7 +14,7 @@ export default function useRoster() {
   useEffect(() => {
     const callback = (newRoster: RosterType) => {
       setRoster({
-        ...newRoster
+        ...newRoster,
       } as RosterType);
     };
     chime?.subscribeToRosterUpdate(callback);

@@ -1,20 +1,20 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import { VideoTileState } from 'amazon-chime-sdk-js';
-import classNames from 'classnames/bind';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { VideoTileState } from "amazon-chime-sdk-js";
+import classNames from "classnames/bind";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
 
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import ViewMode from '../enums/ViewMode';
-import Size from '../enums/Size';
-import useRaisedHandAttendees from '../hooks/useRaisedHandAttendees';
-import RemoteVideo from './RemoteVideo';
-import styles from './RemoteVideoGroup.css';
-import useRoster from '../hooks/useRoster';
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import ViewMode from "../enums/ViewMode";
+import Size from "../enums/Size";
+import useRaisedHandAttendees from "../hooks/useRaisedHandAttendees";
+import RemoteVideo from "./RemoteVideo";
+import styles from "./RemoteVideoGroup.css";
+import useRoster from "../hooks/useRoster";
 
 const cx = classNames.bind(styles);
 const MAX_REMOTE_VIDEOS = 16;
@@ -47,7 +47,7 @@ export default function RemoteVideoGroup(props: Props) {
         return index;
       }
     }
-    throw new Error('no tiles are available');
+    throw new Error("no tiles are available");
   };
 
   const releaseVideoIndex = (tileId: number): number => {
@@ -81,20 +81,20 @@ export default function RemoteVideoGroup(props: Props) {
           tileState.tileId,
           videoElements[index]
         );
-        setVisibleIndices(previousVisibleIndices => ({
+        setVisibleIndices((previousVisibleIndices) => ({
           ...previousVisibleIndices,
           [index]: {
-            boundAttendeeId: tileState.boundAttendeeId
-          }
+            boundAttendeeId: tileState.boundAttendeeId,
+          },
         }));
       },
       videoTileWasRemoved: (tileId: number): void => {
         const index = releaseVideoIndex(tileId);
-        setVisibleIndices(previousVisibleIndices => ({
+        setVisibleIndices((previousVisibleIndices) => ({
           ...previousVisibleIndices,
-          [index]: null
+          [index]: null,
         }));
-      }
+      },
     });
   }, []);
 
@@ -111,17 +111,17 @@ export default function RemoteVideoGroup(props: Props) {
   return (
     <div
       className={cx(
-        'RemoteVideoGroup_remoteVideoGroup',
+        "RemoteVideoGroup_remoteVideoGroup",
         `RemoteVideoGroup_remoteVideoGroup-${numberOfVisibleIndices}`,
         {
           roomMode: viewMode === ViewMode.Room,
           screenShareMode: viewMode === ViewMode.ScreenShare,
-          isContentShareEnabled
+          isContentShareEnabled,
         }
       )}
     >
       {numberOfVisibleIndices === 0 && (
-        <div className={cx('RemoteVideoGroup_instruction')}>
+        <div className={cx("RemoteVideoGroup_instruction")}>
           <FormattedMessage id="RemoteVideoGroup.noVideo" />
         </div>
       )}

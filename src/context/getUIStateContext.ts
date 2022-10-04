@@ -1,10 +1,10 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { Dispatch } from 'react';
+import React, { Dispatch } from "react";
 
-import localStorageKeys from '../constants/localStorageKeys.json';
-import ClassMode from '../enums/ClassMode';
+import localStorageKeys from "../constants/localStorageKeys.json";
+import ClassMode from "../enums/ClassMode";
 
 export interface StateType {
   classMode: ClassMode | null;
@@ -21,7 +21,7 @@ export interface SetClassModeActon extends Action {
 }
 
 let classMode: ClassMode =
-  localStorage.getItem(localStorageKeys.CLASS_MODE) === 'Teacher'
+  localStorage.getItem(localStorageKeys.CLASS_MODE) === "Teacher"
     ? ClassMode.Teacher
     : ClassMode.Student;
 if (!classMode) {
@@ -30,12 +30,12 @@ if (!classMode) {
 }
 
 export const initialState: StateType = {
-  classMode
+  classMode,
 };
 
 const context = React.createContext<[StateType, Dispatch<SetClassModeActon>]>([
   initialState,
-  (): void => {}
+  (): void => {},
 ]);
 
 export default function getUIStateContext() {
