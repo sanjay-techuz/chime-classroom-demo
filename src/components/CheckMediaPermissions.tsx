@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useIntl } from 'react-intl';
 
 import {
 	Accordion,
@@ -40,14 +40,12 @@ type Props = {
   };
 export default function CheckMediaPermissions(props: Props) {
 	const { isRetry } = props;
-
 	const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-	const [showDialog, setShowDialog] = useState<DialogType | null>(null);
 	const [state] = useContext(getUIStateContext());
-
+	const intl = useIntl();
+	const [showDialog, setShowDialog] = useState<DialogType | null>(null);
 	const [audioAllowed, setAudioAllowed] = useState<boolean>(false);
 	const [videoAllowed, setVideoAllowed] = useState<boolean>(false);
-
 	const [errorDetails, setErrorDetails] = useState<
 		MediaPermissionsError | undefined
 	>();
@@ -191,11 +189,10 @@ export default function CheckMediaPermissions(props: Props) {
 		return (
 			<div className={cx('CheckMediaPermissions_Dialog')}>
 				<Typography variant="h5">
-					Allow App to use your camera and microphone
+				{intl.formatMessage({ id: 'checkeMediaPermmissions.allowMicCamera' })}
 				</Typography>
 				<Typography variant="subtitle1">
-					App needs access to your camera and microphone so that other
-					participants can see and hear you.
+				{intl.formatMessage({ id: 'checkeMediaPermmissions.needAccessMicCamera' })}					
 				</Typography>
 			</div>
 		);
@@ -205,13 +202,13 @@ export default function CheckMediaPermissions(props: Props) {
 		return (
 			<div className={cx('CheckMediaPermissions_Dialog')}>
 				<Typography variant="h5">
-					Camera and microphone are blocked
+					{intl.formatMessage({ id: 'checkeMediaPermmissions.blockedMicCamera'})}
 				</Typography>
 				<Typography>
-					App requires access to your camera and microphone.{' '}
+				{intl.formatMessage({ id: 'checkeMediaPermmissions.requiredMicCamera'})}{' '}
 					{browser.getBrowserName() !== 'Safari' && (
 						<Typography>
-							Click the camera blocked icon{' '}
+							{intl.formatMessage({ id: 'checkeMediaPermmissions.cameraBlockedIcon'})}{' '}
 							<img
 								alt="icon"
 								src={
@@ -219,7 +216,7 @@ export default function CheckMediaPermissions(props: Props) {
 								}
 								style={{ display: 'inline' }}
 							/>{' '}
-							in your browser's address bar.
+							{intl.formatMessage({ id: 'checkeMediaPermmissions.browserAddressBar'})}
 						</Typography>
 					)}
 				</Typography>
@@ -240,11 +237,10 @@ export default function CheckMediaPermissions(props: Props) {
 		return (
 			<div className={cx('CheckMediaPermissions_Dialog')}>
 				<Typography variant="h5">
-					Can't use your camera or microphone
+					{intl.formatMessage({ id: 'checkeMediaPermmissions.cantUseMic'})}
 				</Typography>
 				<Typography>
-					Your browser might not have access to your camera or
-					microphone. To fix this problem, open{' '}
+				{intl.formatMessage({ id: 'checkeMediaPermmissions.browserMightNotHaveAccess'})}{' '}
 					{
 						// @ts-ignore
 						settingsDataByOS[browser.getOSName()] ? (
@@ -279,12 +275,10 @@ export default function CheckMediaPermissions(props: Props) {
 		return (
 			<div className={cx('CheckMediaPermissions_Dialog')}>
 				<Typography variant="h5">
-					Can't start your camera or microphone
+				{intl.formatMessage({ id: 'checkeMediaPermmissions.cantStartCameraMicrophone'})}
 				</Typography>
 				<Typography>
-					Another application (Zoom, Webex) or browser tab (Google
-					Meet, Messenger Video) might already be using your webcam.
-					Please turn off other cameras before proceeding.
+					{intl.formatMessage({ id: 'checkeMediaPermmissions.anotherApplication' })}
 				</Typography>
 				{_renderErrorMessage()}
 				{_renderTryAgain()}

@@ -6,6 +6,19 @@ export default {
   'Main.joinButton': `Join meeting`,
   'Main.createButton': `Create meeting`,
 
+  'checkeMediaPermmissions.allowMicCamera': `Allow App to use your camera and microphone`,
+  'checkeMediaPermmissions.needAccessMicCamera': `App needs access to your camera and microphone so that other
+  participants can see and hear you.`,
+  'checkeMediaPermmissions.blockedMicCamera': `Camera and microphone are blocked`,
+  'checkeMediaPermmissions.requiredMicCamera': `App requires access to your camera and microphone.`,
+  'checkeMediaPermmissions.cameraBlockedIcon': `Click the camera blocked icon`,
+  'checkeMediaPermmissions.browserAddressBar': `in your browser's address bar.`,
+  'checkeMediaPermmissions.cantUseMic': `Can't use your camera or microphone`,
+  'checkeMediaPermmissions.browserMightNotHaveAccess': `Your browser might not have access to your camera or microphone. To fix this problem, open`,
+  'checkeMediaPermmissions.cantStartCameraMicrophone': `Can't start your camera or microphone`,
+  'checkeMediaPermmissions.anotherApplication': `Another application (Zoom, Webex) or browser tab (Google Meet, Messenger Video) might already be using your webcam. Please turn off other cameras before proceeding.`,
+
+
   'CreateOrJoin.teacherTitle': `Create or join a classroom`,
   'CreateOrJoin.studentTitle': `Join a classroom`,
   'CreateOrJoin.titlePlaceholder': `Enter Meeting id`,
