@@ -3,6 +3,9 @@
 
 import { Option } from 'react-dropdown';
 
-type DeviceType = Option;
+type DeviceType = {
+    name: string;
+    value: string;
+};
 
 export default DeviceType;

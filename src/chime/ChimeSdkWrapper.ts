@@ -204,6 +204,9 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     this.name = name;
     this.region = region;
     this.meetingId = JoinInfo.Meeting.MeetingId;
+    if(JoinInfo.Attendee.host){
+      localStorage.setItem('hostId', JoinInfo.Attendee.AttendeeId);
+    }
     localStorage.setItem(localStorageKeys.CURRENT_MEETING_ID, JoinInfo.Meeting.MeetingId);
     localStorage.setItem(localStorageKeys.CURRENT_ATTENDEE_ID, JoinInfo.Attendee.AttendeeId);
   }else{
@@ -242,7 +245,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     (await this.audioVideo?.listAudioInputDevices()).forEach(
       (mediaDeviceInfo: MediaDeviceInfo) => {
         this.audioInputDevices.push({
-          label: mediaDeviceInfo.label,
+          name: mediaDeviceInfo.label,
           value: mediaDeviceInfo.deviceId
         });
       }
@@ -251,7 +254,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     (await this.audioVideo?.listAudioOutputDevices()).forEach(
       (mediaDeviceInfo: MediaDeviceInfo) => {
         this.audioOutputDevices.push({
-          label: mediaDeviceInfo.label,
+          name: mediaDeviceInfo.label,
           value: mediaDeviceInfo.deviceId
         });
       }
@@ -260,7 +263,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     (await this.audioVideo?.listVideoInputDevices()).forEach(
       (mediaDeviceInfo: MediaDeviceInfo) => {
         this.videoInputDevices.push({
-          label: mediaDeviceInfo.label,
+          name: mediaDeviceInfo.label,
           value: mediaDeviceInfo.deviceId
         });
       }
@@ -387,7 +390,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
 
     if (audioInputs && audioInputs.length > 0 && audioInputs[0].deviceId) {
       this.currentAudioInputDevice = {
-        label: audioInputs[0].label,
+        name: audioInputs[0].label,
         value: audioInputs[0].deviceId
       };
       await this.audioVideo?.chooseAudioInputDevice(audioInputs[0].deviceId);
@@ -396,7 +399,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     if (audioOutputs && audioOutputs.length > 0 && audioOutputs[0].deviceId &&
       this.browserBehavior.supportsSetSinkId()) {
       this.currentAudioOutputDevice = {
-        label: audioOutputs[0].label,
+        name: audioOutputs[0].label,
         value: audioOutputs[0].deviceId
       };
       await this.audioVideo?.chooseAudioOutputDevice(audioOutputs[0].deviceId);
@@ -404,7 +407,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
 
     if (videoInputs && videoInputs.length > 0 && videoInputs[0].deviceId) {
       this.currentVideoInputDevice = {
-        label: videoInputs[0].label,
+        name: videoInputs[0].label,
         value: videoInputs[0].deviceId
       };
       await this.audioVideo?.chooseVideoInputDevice(null);
@@ -478,7 +481,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
   };
 
   chooseAudioOutputDevice = async (device: DeviceType) => {
-    if (this.browserBehavior.supportsSetSinkId()) {
+    if (!this.browserBehavior.supportsSetSinkId()) {
       return;
     }
 
@@ -518,7 +521,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
         hasCurrentDevice = true;
       }
       this.audioInputDevices.push({
-        label: mediaDeviceInfo.label,
+        name: mediaDeviceInfo.label,
         value: mediaDeviceInfo.deviceId
       });
     });
@@ -540,7 +543,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
         hasCurrentDevice = true;
       }
       this.audioOutputDevices.push({
-        label: mediaDeviceInfo.label,
+        name: mediaDeviceInfo.label,
         value: mediaDeviceInfo.deviceId
       });
     });
@@ -562,7 +565,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
         hasCurrentDevice = true;
       }
       this.videoInputDevices.push({
-        label: mediaDeviceInfo.label,
+        name: mediaDeviceInfo.label,
         value: mediaDeviceInfo.deviceId
       });
     });

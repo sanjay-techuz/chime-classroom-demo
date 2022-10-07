@@ -6,9 +6,12 @@ import classNames from "classnames/bind";
 import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
 
+import { Box, Button, IconButton, Tooltip, Typography } from "@mui/material";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
-import Tooltip from "./Tooltip";
+// import Tooltip from "./Tooltip";
 import styles from "./CopyInfo.css";
 
 const cx = classNames.bind(styles);
@@ -17,6 +20,7 @@ export default function CopyInfo() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const [isMeetingCoppied, setIsMeetingCoppied] = useState(false);
   const [isMeetingUrlCoppied, setIsMeetingUrlCoppied] = useState(false);
+  const url = new URL(window.location.href);
 
   const intl = useIntl();
 
@@ -30,43 +34,74 @@ export default function CopyInfo() {
 
   const copyMeetingUrl = () => {
     setIsMeetingUrlCoppied(true);
-    const url = new URL(window.location.href);
-    const meetingUrl = `${url.origin}/?meetingId=${encodeURIComponent(chime?.title)}`
+    const meetingUrl = `${url.origin}/?meetingId=${encodeURIComponent(
+      chime?.title
+    )}`;
     navigator.clipboard.writeText(meetingUrl);
     setTimeout(() => {
       setIsMeetingUrlCoppied(false);
     }, 5000);
   };
 
+  const copyMeetingInfo = () => {
+    setIsMeetingUrlCoppied(true);
+    const meetingInfo = `To join the video meeting, click this link: ${url.origin}/?meetingId=${encodeURIComponent(chime?.title)}.`;
+    navigator.clipboard.writeText(meetingInfo);
+    setTimeout(() => {
+      setIsMeetingUrlCoppied(false);
+    }, 5000);
+  };
+
   return (
-    <div className={cx("CopyInfo_home")}>
-      <div className={cx("CopyInfo_id")}>
-        <div className={cx("CopyInfo_title")}>Meeting Id: </div>
-        <div className={cx("CopyInfo_title")}>
-          {chime?.title} {` `}{" "}
-          <Tooltip
-            tooltip={
-              !isMeetingCoppied
-                ? intl.formatMessage({ id: "Copyinfo.copyMeetingId" })
-                : intl.formatMessage({
-                    id: "Copyinfo.coppiedMeetingId",
-                  })
-            }
-          >
-            <span
-              className={cx("CopyInfo_copy_meeting_id")}
-              onClick={copyMeetinId}
-            >
-              <i className="fas fa-copy"></i>
-            </span>
-          </Tooltip>
-        </div>
-      </div>
-      <div className={cx("CopyInfo_url")}>
-        <div className={cx("CopyInfo_url_btn")} onClick={copyMeetingUrl}>
-          {isMeetingUrlCoppied ? "Coppied" : "Copy Meeting Url"}
-        </div>
-      </div>
-    </div>
+    <Box
+      sx={{
+        width: "100%",
+        height: 400,
+        maxWidth: 360,
+        bgcolor: "background.paper",
+        padding: "10px",
+      }}
+    >
+      <Typography variant="subtitle1" display="block" gutterBottom>
+        Meeting Id: {chime?.title} {` `}{" "}
+        <Tooltip
+          title={
+            !isMeetingCoppied
+              ? intl.formatMessage({ id: "Copyinfo.copyMeetingId" })
+              : intl.formatMessage({
+                  id: "Copyinfo.coppiedMeetingId",
+                })
+          }
+          placement="bottom"
+        >
+          <IconButton onClick={copyMeetinId}>
+            <ContentCopyIcon />
+          </IconButton>
+        </Tooltip>
+      </Typography>
+      <Typography variant="subtitle1" display="block" gutterBottom>
+        {`${url.origin}/?meetingId=${encodeURIComponent(chime?.title)}`}
+        <Tooltip
+          title={
+            !isMeetingCoppied
+              ? intl.formatMessage({ id: "Copyinfo.copyMeetingId" })
+              : intl.formatMessage({
+                  id: "Copyinfo.coppiedMeetingId",
+                })
+          }
+          placement="bottom"
+        >
+          <IconButton onClick={copyMeetingUrl}>
+            <ContentCopyIcon />
+          </IconButton>
+        </Tooltip>
+      </Typography>
+      <Button onClick={copyMeetingInfo}>
+          <IconButton sx={{ ml: '10px', color:"#1976d2"}}>
+            <ContentCopyIcon />
+          </IconButton>
+          Copy Meeting Info
+      </Button>
+    </Box>
   );
 }
