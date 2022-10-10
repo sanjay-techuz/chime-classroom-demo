@@ -49,6 +49,7 @@ export default {
   'Controls.turnOnVideoTooltip': `Turn on video`,
   'Controls.turnOffVideoTooltip': `Turn off video`,
   'Controls.shareScreenTooltip': `Share screen`,
+  'Controls.shareScreenStopTooltip': `Stop screen share`,
   'Controls.endClassroomTooltip': `End classroom`,
   'Controls.leaveClassroomTooltip': `Leave classroom`,
   'Controls.micMutedInScreenViewMode': `Mic muted`,
@@ -57,6 +58,8 @@ export default {
   'Controls.removeAttendee': `Remove Attendee`,
   'Controls.startRecordingScreenTooltip': `Start recording`,
   'Controls.stopRecordingScreenTooltip': `stop recording`,
+  'Controls.Chat': `Chat`,
+
 
   'ChatInput.inputPlaceholder': `Type a chat message`,
   'ChatInput.raiseHandAriaLabel': `Raise hand`,

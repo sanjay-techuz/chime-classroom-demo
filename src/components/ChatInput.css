@@ -11,13 +11,13 @@
 
 .form {
   display: flex;
-  background-color: var(--color_tundora);
+  background-color: #1a3551;
   border-radius: 0.25rem;
 }
 
 .input {
   flex: 1 1 auto;
-  color: var(--color_alabaster);
+  color: #FFF;
   background-color: transparent;
   outline: none;
   border: none;
@@ -25,9 +25,9 @@
   padding: 0.75rem 0.5rem;
 }
 
-.input::placeholder {
+/* .input::placeholder {
   color: var(--color_silver_chalice);
-}
+} */
 
 .raiseHandButton {
   flex: 0 0 auto;

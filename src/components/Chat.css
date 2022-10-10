@@ -15,6 +15,18 @@
   flex: 1 1 auto;
   overflow-y: auto;
   padding-top: 0.5rem;
+  max-height: 560px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.Chat_messages::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.Chat_messages {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .Chat_sender_messageWrapper {

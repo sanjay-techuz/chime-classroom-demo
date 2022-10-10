@@ -30,6 +30,8 @@ import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ArrowBackIosNewSharpIcon from '@mui/icons-material/ArrowBackIosNewSharp';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -256,8 +258,12 @@ export default function Classroom() {
     setLeftDrawerOpen(!leftDrawerOpen);
   };
 
-  const handleDrawerRightToggle = () => {
-    setRightDrawerOpen(!rightDrawerOpen);
+  const openDrawerRightToggle = () => {
+    setRightDrawerOpen(true);
+  };
+
+  const closeDrawerRightToggle = () => {
+    setRightDrawerOpen(false);
   };
 
   window.addEventListener("resize", () => {
@@ -309,7 +315,9 @@ export default function Classroom() {
                     edge="start"
                     onClick={handleDrawerLeftToggle}
                   >
+                    {leftDrawerOpen && <KeyboardArrowLeftIcon /> }
                     <PeopleAltOutlinedIcon />
+                    {!leftDrawerOpen && <KeyboardArrowRightIcon />}
                   </IconButton>
                   <Typography
                     variant="h6"
@@ -340,12 +348,12 @@ export default function Classroom() {
                   >
                     <MenuItem onClick={() => {
                       setTab(3);
-                      handleDrawerRightToggle();
+                      openDrawerRightToggle();
                       handleClose();
                     }}>Meeting info</MenuItem>
                     <MenuItem onClick={() => {
                       setTab(2);
-                      handleDrawerRightToggle();
+                      openDrawerRightToggle();
                       handleClose();
                     }}>Device settings</MenuItem>
                     <MenuItem onClick={() => {
@@ -402,15 +410,19 @@ export default function Classroom() {
                     "& .MuiDrawer-paper": {
                       boxSizing: "border-box",
                       width: drawerWidth,
+                      overflow:"hidden"
                     },
                   }}
                   open={rightDrawerOpen}
-                  onClose={handleDrawerRightToggle}
+                  onClose={() => {
+                    setTab(0);
+                    closeDrawerRightToggle();
+                  }}
                 >
                   <ListItem>
                     <ListItemIcon onClick={() => {
                       setTab(0);
-                      handleDrawerRightToggle();
+                      closeDrawerRightToggle();
                       handleClose();
                     }}>
                       <Avatar sx={{ bgcolor: '#FFF', border: '1px solid black', color:"black", cursor:'pointer'}}>
@@ -426,7 +438,12 @@ export default function Classroom() {
                     </ListItemText>
                   </ListItem>
                   <Divider />
-                  {tab === 1 && <Chat />}
+                  <div className={cx("ClassRoom_chat_parent_div",{
+                    ClassRoom_chat_parent_div_open: tab === 1,
+                    ClassRoom_chat_parent_div_close: tab !== 1
+                  })}>
+                  <Chat />
+                  </div>
                   {tab === 2 && <DeviceSwitcher />}
                   {tab === 3 && <CopyInfo />}
                 </Drawer>
@@ -440,25 +457,39 @@ export default function Classroom() {
                 mobileview={isMobileView}
                 background={"#1a3551"}
               >
-                <Box
+                {/* <Box
                   sx={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     margin: "auto",
                   }}
-                >
+                > */}
                   <Controls
                     viewMode={viewMode}
-                    onClickShareButton={async () => {
+                    tab={tab}
+                    onClickShareButton={async (flag:boolean) => {
                       try {
-                        await chime?.audioVideo?.startContentShareFromScreenCapture();
+                        if(flag){
+                          await chime?.audioVideo?.startContentShareFromScreenCapture();
+                        }else{
+                          await chime?.audioVideo?.stopContentShare();
+                        }
                       } catch (err) {
                         console.log("err.....", err);
                       }
                     }}
+                    onClickChatButton={(flag:boolean) => {
+                      if(flag){
+                        openDrawerRightToggle();
+                        setTab(1);
+                      }else{
+                        closeDrawerRightToggle();
+                        setTab(0);
+                      }
+                    }}
                   />
-                </Box>
+                {/* </Box> */}
               </AppBar>
             </Box>
           )}
