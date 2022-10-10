@@ -10,6 +10,7 @@ import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getUIStateContext from "../context/getUIStateContext";
 import getMeetingStatusContext from "../context/getMeetingStatusContext";
+import getGlobalVarContext from '../context/getGlobalVarContext';
 import ClassMode from "../enums/ClassMode";
 import MessageTopic from "../enums/MessageTopic";
 import MeetingStatus from "../enums/MeetingStatus";
@@ -17,6 +18,7 @@ import MeetingStatus from "../enums/MeetingStatus";
 export default function useRemoteControl() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { meetingStatus } = useContext(getMeetingStatusContext());
+  const { updateGlobalVar } = useContext(getGlobalVarContext());
   const [state] = useContext(getUIStateContext());
   const history = useHistory();
   const localUserId =
@@ -64,8 +66,10 @@ export default function useRemoteControl() {
               );
               if (focus) {
                 chime?.audioVideo?.startLocalVideoTile();
+                updateGlobalVar("localVideo",true);
               } else {
                 chime?.audioVideo?.stopLocalVideoTile();
+                updateGlobalVar("localVideo",false);
               }
             } catch (error) {
               console.error(error);

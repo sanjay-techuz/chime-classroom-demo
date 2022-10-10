@@ -31,6 +31,7 @@ import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import routes from "../constants/routes.json";
 import getChimeContext from "../context/getChimeContext";
 import getUIStateContext from "../context/getUIStateContext";
+import getGlobalVarContext from '../context/getGlobalVarContext';
 import ClassMode from "../enums/ClassMode";
 import ViewMode from "../enums/ViewMode";
 import styles from "./Controls.css";
@@ -58,6 +59,7 @@ type Props = {
 export default function Controls(props: Props) {
   const { viewMode, onClickShareButton, onClickChatButton, tab } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
+  const { globalVar } = useContext(getGlobalVarContext());
   const [state] = useContext(getUIStateContext());
   const history = useHistory();
   const [muted, setMuted] = useState(false);
@@ -90,6 +92,11 @@ export default function Controls(props: Props) {
       setOpenChat(false);
     }
   }, [tab]);
+
+  useEffect(() => {
+    const localVideo = globalVar?.localVideo;
+    setVideoStatus(localVideo ? VideoStatus.Enabled : VideoStatus.Disabled)
+  },[globalVar])
 
   const handleRecording = async () => {
     setRecording(!recording);

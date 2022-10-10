@@ -11,6 +11,7 @@ import Home from './components/Home';
 import Main from './components/Main';
 import routes from './constants/routes.json';
 import getUIStateContext from './context/getUIStateContext';
+import GlobalVarProvider from './providers/GlobalVarProvider';
 import MeetingStatusProvider from './providers/MeetingStatusProvider';
 
 export default function Routes() {
@@ -34,9 +35,11 @@ export default function Routes() {
     <App>
       <Switch>
         <PrivateRoute path={routes.CLASSROOM}>
+          <GlobalVarProvider>
           <MeetingStatusProvider>
             <Classroom />
           </MeetingStatusProvider>
+          </GlobalVarProvider>
         </PrivateRoute>
         <PrivateRoute path={routes.CREATE_OR_JOIN}>
           <CreateOrJoin />

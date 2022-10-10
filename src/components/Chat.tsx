@@ -160,6 +160,7 @@ export default function Chat() {
               ?.join("");
             return (
               <Avatar
+              key={chatAttdId}
                 sx={{
                   bgcolor:
                     activeChatAttendee === chatAttdId ? green[500] : "#142230",
