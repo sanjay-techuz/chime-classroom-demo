@@ -31,10 +31,11 @@ type Props = {
   viewMode: ViewMode;
   isContentShareEnabled: boolean;
   isGridView: boolean;
+  isScreenShareView: boolean;
 };
 
 export default function RemoteVideoGroup(props: Props) {
-  const { viewMode, isContentShareEnabled, isGridView } = props;
+  const { viewMode, isContentShareEnabled, isGridView, isScreenShareView } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { updateGlobalVar } = useContext(getGlobalVarContext());
   const [visibleIndices, setVisibleIndices] = useState<{
@@ -42,12 +43,15 @@ export default function RemoteVideoGroup(props: Props) {
   }>({});
   const raisedHandAttendees = useRaisedHandAttendees();
   const roster = useRoster();
-  const attdLength = Object.keys(roster);
   const videoElements: HTMLVideoElement[] = [];
   const tiles: { [index: number]: number } = {};
   const currentUser = chime?.configuration.credentials.attendeeId;
   const [videoAttendees, setVideoAttendees] = useState(new Set());
   const [attendeeIdFullScreen, setAttendeeIdFullScreen] = useState("");
+  const [gridViewRosterSize, setGridViewRosterView] = useState({
+    width:"",
+    height:""
+  });
 
   const acquireVideoIndex = (tileId: number): number => {
     for (let index = 0; index < MAX_REMOTE_VIDEOS; index += 1) {
@@ -180,6 +184,7 @@ export default function RemoteVideoGroup(props: Props) {
 
   // get height and width of tileview from class for responsive view --sanjay balai
   function reorganize() {
+    const attdLength = Object.keys(roster);
     let window_height = document.getElementById("tileView");
     let elHeight = window_height?.clientHeight - 50;
     let maxCols = 7;
@@ -198,7 +203,8 @@ export default function RemoteVideoGroup(props: Props) {
     let dd = 100 / cols - 1;
     let Twidth = `${dd}%`;
     let Theight = `${elHeight / row}px`;
-    return { width: Twidth, height: Theight };
+    setGridViewRosterView({width: Twidth, height: Theight})
+    // return { width: Twidth, height: Theight };
   }
 
   // find the number of attendee join --sanjay balai
@@ -226,6 +232,20 @@ export default function RemoteVideoGroup(props: Props) {
   }
   const attendeeIds = removeSelfAttendeeId(activeAttendee, selfAttendeeId);
 
+  useEffect(() => {
+    reorganize();
+  },[isGridView])
+  
+  useEffect(() => {
+    const callback = () => {
+      reorganize();
+    };
+    chime?.subscribeToRosterUpdate(callback);
+    return () => {
+      chime?.unsubscribeFromRosterUpdate(callback);
+    };
+  }, []);
+
   return (
     <div
       id="tileView"
@@ -235,7 +255,7 @@ export default function RemoteVideoGroup(props: Props) {
         {
           roomMode: viewMode === ViewMode.Room,
           screenShareMode: viewMode === ViewMode.ScreenShare,
-          isContentShareEnabled,
+          disabled: isScreenShareView,
         }
       )}
     >
@@ -251,8 +271,8 @@ export default function RemoteVideoGroup(props: Props) {
       )} */}
         <div
           style={{
-            width: reorganize().width,
-            height: reorganize().height,
+            width: gridViewRosterSize.width,
+            height: gridViewRosterSize.height,
             margin: "0.50%",
           }}
           className={cx("RemoteVideoGroup_attendeeRosterView", {
@@ -280,16 +300,17 @@ export default function RemoteVideoGroup(props: Props) {
                   !isGridView && attendeeIdFullScreen === attendeeId,
                 notActiveSpeakerView:
                   !isGridView && attendeeIdFullScreen !== attendeeId,
+                  defaultRosterSize: !isGridView
               })}
               style={
                 isGridView
                   ? {
-                      width: reorganize().width,
-                      height: reorganize().height,
+                      width: gridViewRosterSize.width,
+                      height: gridViewRosterSize.height,
                       margin: "0.50%",
                       display: visibleIndex ? "block" : "none",
                     }
-                  : { width: "100%", height: "100%" }
+                  : {}
               }
             >
               <RemoteVideo
@@ -337,8 +358,8 @@ export default function RemoteVideoGroup(props: Props) {
                   isGridView
                     ? {
                         display: !videoAttendees.has(key) ? "flex" : "none",
-                        width: reorganize().width,
-                        height: reorganize().height,
+                        width: gridViewRosterSize.width,
+                        height: gridViewRosterSize.height,
                         margin: "0.50%",
                       }
                     : { width: "100%", height: "100%" }

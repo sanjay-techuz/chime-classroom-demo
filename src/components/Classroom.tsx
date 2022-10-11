@@ -185,6 +185,7 @@ export default function Classroom() {
   const { activeSpeakerAttendeeId } = globalVar;
   const { meetingStatus, errorMessage } = useContext(getMeetingStatusContext());
   const [isContentShareEnabled, setIsContentShareEnabled] = useState(false);
+  const [isScreenShareView, setIsScreenShareView] = useState(false);
 
   const [tryToReload, setTryToReload] = useState(true);
   const [viewMode, setViewMode] = useState(ViewMode.Room);
@@ -229,6 +230,7 @@ export default function Classroom() {
         await stopContentShare();
       }
       setIsContentShareEnabled(enabled);
+      setIsScreenShareView(enabled);
     },
     [viewMode]
   );
@@ -360,6 +362,7 @@ export default function Classroom() {
                     <MenuItem onClick={() => {
                       // setTab(0);
                       setIsGridView(!isGridView)
+                      setIsScreenShareView(false);
                       handleClose();
                     }}>{isGridView ? "Active speaker view" : "Grid view"}</MenuItem>
                   </Menu>
@@ -387,7 +390,17 @@ export default function Classroom() {
                 <Main rightopen={rightDrawerOpen} leftopen={leftDrawerOpen} mobileview={isMobileView}>
                 <DrawerHeader />
                   <div className={cx("ClassRoom_left")}>
-                    <div className={cx("ClassRoom_contentVideoWrapper")}>
+                    <div 
+                    className={cx("ClassRoom_contentVideoWrapper",{
+                      isContentShareEnabled,
+                      screenShareView: !isScreenShareView,
+                      screenShareViewDrawerOpen: !isScreenShareView && leftDrawerOpen
+                    })}
+                    onClick={() => {
+                      setIsScreenShareView(true);
+                      setIsGridView(false);
+                    }}
+                    >
                       <ContentVideo
                         onContentShareEnabled={onContentShareEnabled}
                       />
@@ -397,6 +410,7 @@ export default function Classroom() {
                         viewMode={viewMode}
                         isContentShareEnabled={isContentShareEnabled}
                         isGridView={isGridView}
+                        isScreenShareView={isScreenShareView}
                       />
                     </div>
                     {/* <div className={cx("ClassRoom_localVideoWrapper")}>

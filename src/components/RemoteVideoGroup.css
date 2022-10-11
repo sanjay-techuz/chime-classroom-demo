@@ -6,10 +6,15 @@
  .RemoteVideoGroup_remoteVideoGroup {
   display: flex;
   position: relative;
-  height: calc(100% - 120px);
+  height: 100%;
   grid-gap: 0.25rem;
   width: 100%;
 }
+
+.RemoteVideoGroup_remoteVideoGroup.disabled{
+  display: none !important;
+}
+
 .RemoteVideoGroup_attendeeTileView{
   position: relative;
   margin: auto;
@@ -152,4 +157,9 @@
 
 .notActiveSpeakerView{
   display: none;
+}
+
+.defaultRosterSize{
+  width: 100%;
+  height: 100%;
 }
