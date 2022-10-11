@@ -193,10 +193,7 @@ export default function Chat() {
             }
 
             if (message.senderAttendeeId === localUserId) {
-              const avtr = chime?.roster[message.senderAttendeeId]?.name
-                ?.replace(/[^a-zA-Z- ]/g, "")
-                .match(/\b\w/g)
-                ?.join("");
+              const avtr = nameInitials(chime?.roster[message.senderAttendeeId]?.name);
               return (
                 <ListItem
                   key={message.timestampMs}
@@ -224,10 +221,7 @@ export default function Chat() {
                 </ListItem>
               );
             } else {
-              const avtr = chime?.roster[message.senderAttendeeId]?.name
-                ?.replace(/[^a-zA-Z- ]/g, "")
-                .match(/\b\w/g)
-                ?.join("");
+              const avtr = nameInitials(chime?.roster[message.senderAttendeeId]?.name);
               return (
                 <ListItem
                   key={message.timestampMs}

@@ -21,6 +21,7 @@ import useRoster from "../hooks/useRoster";
 import RosterAttendeeType from "../types/RosterAttendeeType";
 import RosterLayout from "./RosterLayout";
 import LocalVideo from "./LocalVideo";
+import { rosterSize } from "../utils/rosterSize";
 
 const cx = classNames.bind(styles);
 const MAX_REMOTE_VIDEOS = 16;
@@ -184,26 +185,10 @@ export default function RemoteVideoGroup(props: Props) {
   // get height and width of tileview from class for responsive view --sanjay balai
   function reorganize() {
     const attdLength = Object.keys(roster);
-    let window_height = document.getElementById("tileView");
-    let elHeight = window_height?.clientHeight - 50;
-    let maxCols = 7;
-    let numPeople = attdLength.length;
-
-    let cols = 1;
-    for (cols; cols <= maxCols; cols++) {
-      if (numPeople <= cols * cols) {
-        break;
-      }
-    }
-    let row = Math.ceil(numPeople / cols);
-    if (row === 1) {
-      row = 1.5;
-    }
-    let dd = 100 / cols - 1;
-    let Twidth = `${dd}%`;
-    let Theight = `${elHeight / row}px`;
-    setGridViewRosterView({ width: Twidth, height: Theight });
-    // return { width: Twidth, height: Theight };
+    const window_height = document.getElementById("tileView");
+    const elHeight = window_height?.clientHeight - 50;
+    const size = rosterSize(elHeight,attdLength.length);
+    setGridViewRosterView({ ...size });
   }
 
   // find the number of attendee join --sanjay balai
