@@ -4,39 +4,32 @@
 
 import classNames from "classnames/bind";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 import Modal from "react-modal";
 
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-
-import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
-import MailIcon from "@mui/icons-material/Mail";
-import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import { Avatar } from "@mui/material";
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ArrowBackIosNewSharpIcon from '@mui/icons-material/ArrowBackIosNewSharp';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import {
+  Avatar,
+  Box,
+  Divider,
+  Drawer,
+  IconButton,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getMeetingStatusContext from "../context/getMeetingStatusContext";
-import getGlobalVarContext from '../context/getGlobalVarContext';
+import getGlobalVarContext from "../context/getGlobalVarContext";
 import getUIStateContext from "../context/getUIStateContext";
 import ClassMode from "../enums/ClassMode";
 import MeetingStatus from "../enums/MeetingStatus";
@@ -50,132 +43,15 @@ import CopyInfo from "./CopyInfo";
 import DeviceSwitcher from "./DeviceSwitcher";
 import Error from "./Error";
 import LoadingSpinner from "./LoadingSpinner";
-import LocalVideo from "./LocalVideo";
 import CheckMediaPermissions from "./CheckMediaPermissions";
 import RemoteVideoGroup from "./RemoteVideoGroup";
 import Roster from "./Roster";
-import Tooltip from "./Tooltip";
+import Main from "../custom/classroom/Main";
+import AppBar from "../custom/classroom/AppBar";
+import DrawerHeader from "../custom/classroom/DrawerHeader";
 
 const cx = classNames.bind(styles);
 const drawerWidth = 290;
-
-interface AppBarProps extends MuiAppBarProps {
-  leftopen?: boolean;
-  rightopen?: boolean;
-  anchor?: string;
-  mobileview?: boolean;
-  background?: string;
-}
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
-  leftopen?: boolean;
-  rightopen?: boolean;
-  mobileview?: boolean;
-}>(({ theme, leftopen, rightopen, mobileview}) => ({
-  flexGrow: 1,
-  padding: theme.spacing(3),
-  backgroundColor: '#142230 !important',
-  // transition: theme.transitions.create("margin", {
-  //   easing: theme.transitions.easing.sharp,
-  //   duration: theme.transitions.duration.leavingScreen,
-  // }),
-  marginLeft: `0`,
-  marginRight: `0`,
-  width: "100%",
-  height:"100%",
-  ...(leftopen &&
-    !rightopen && !mobileview && {
-      width: `calc(100% - ${drawerWidth}px)`,
-      // transition: theme.transitions.create("margin", {
-      //   easing: theme.transitions.easing.easeOut,
-      //   duration: theme.transitions.duration.enteringScreen,
-      // }),
-      marginLeft: `${drawerWidth}px`,
-    }),
-  ...(!leftopen &&
-    rightopen && !mobileview && {
-      width: `calc(100% - ${drawerWidth}px)`,
-      // transition: theme.transitions.create("margin", {
-      //   easing: theme.transitions.easing.easeIn,
-      //   duration: theme.transitions.duration.enteringScreen,
-      // }),
-      marginRight: `${drawerWidth}px`,
-    }),
-  ...(leftopen &&
-    rightopen && !mobileview && {
-      width: `calc(100% - ${drawerWidth + drawerWidth}px)`,
-      marginLeft: `${drawerWidth}px`,
-      marginRight: `${drawerWidth}px`,
-    }),
-  ...(!leftopen &&
-    !rightopen && {
-      width: `100%`,
-      height: `100%`,
-      marginLeft: `0`,
-      marginRight: `0`,
-    }),
-}));
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme, leftopen, rightopen, anchor, mobileview, background }) => ({
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(leftopen &&
-    !rightopen &&
-    !mobileview && {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: `${drawerWidth}px`,
-      transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  ...(rightopen &&
-    !leftopen &&
-    !mobileview && {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginRight: `${drawerWidth}px`,
-      transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  ...(rightopen &&
-    leftopen &&
-    !mobileview && {
-      width: `calc(100% - ${drawerWidth + drawerWidth}px)`,
-      marginLeft: `${drawerWidth}px`,
-      marginRight: `${drawerWidth}px`,
-      transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  ...(anchor === "top" && {
-    top: 0,
-    bottom: "auto",
-  }),
-  ...(anchor === "bottom" && {
-    top: "auto",
-    bottom: 0,
-  }),
-  backgroundColor: `${background} !important`,
-  boxShadow: 'none'
-}));
-
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-  minHeight: '36px !important'
-}));
 
 export default function Classroom() {
   Modal.setAppElement("body");
@@ -196,8 +72,6 @@ export default function Classroom() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isGridView, setIsGridView] = useState(false);
   const open = Boolean(anchorEl);
-
-  const intl = useIntl();
 
   useRemoteControl();
 
@@ -286,7 +160,6 @@ export default function Classroom() {
     setAnchorEl(null);
   };
 
-
   return (
     <>
       <CheckMediaPermissions
@@ -296,13 +169,13 @@ export default function Classroom() {
         }}
       />
       {tryToReload && (
-        <Box sx={{ display: "flex", width:'100%', height:'100%' }}>
+        <Box sx={{ display: "flex", width: "100%", height: "100%" }}>
           {meetingStatus === MeetingStatus.Loading && <LoadingSpinner />}
           {meetingStatus === MeetingStatus.Failed && (
             <Error errorMessage={errorMessage} />
           )}
           {meetingStatus === MeetingStatus.Succeeded && (
-            <Box sx={{ display: "flex",width:'100%', height:'100%' }}>
+            <Box sx={{ display: "flex", width: "100%", height: "100%" }}>
               <AppBar
                 position="fixed"
                 leftopen={leftDrawerOpen}
@@ -310,6 +183,7 @@ export default function Classroom() {
                 anchor="top"
                 mobileview={isMobileView}
                 background={"#142230"}
+                drawerWidth={drawerWidth}
               >
                 <Toolbar>
                   <IconButton
@@ -318,14 +192,14 @@ export default function Classroom() {
                     edge="start"
                     onClick={handleDrawerLeftToggle}
                   >
-                    {leftDrawerOpen && <KeyboardArrowLeftIcon /> }
+                    {leftDrawerOpen && <KeyboardArrowLeftIcon />}
                     <PeopleAltOutlinedIcon />
                     {!leftDrawerOpen && <KeyboardArrowRightIcon />}
                   </IconButton>
                   <Typography
                     variant="h6"
                     noWrap
-                    sx={{ flexGrow: 1, textTransform:"capitalize" }}
+                    sx={{ flexGrow: 1, textTransform: "capitalize" }}
                     component="div"
                     align="center"
                   >
@@ -338,7 +212,11 @@ export default function Classroom() {
                     // onClick={handleDrawerRightToggle}
                     onClick={handleClick}
                   >
-                    <Avatar sx={{ bgcolor: '#142230', border: '1px solid #FFF'}}><MoreVertOutlinedIcon /></Avatar>
+                    <Avatar
+                      sx={{ bgcolor: "#142230", border: "1px solid #FFF" }}
+                    >
+                      <MoreVertOutlinedIcon />
+                    </Avatar>
                   </IconButton>
                   <Menu
                     id="basic-menu"
@@ -346,25 +224,37 @@ export default function Classroom() {
                     open={open}
                     onClose={handleClose}
                     MenuListProps={{
-                      'aria-labelledby': 'basic-button',
+                      "aria-labelledby": "basic-button",
                     }}
                   >
-                    <MenuItem onClick={() => {
-                      setTab(3);
-                      openDrawerRightToggle();
-                      handleClose();
-                    }}>Meeting info</MenuItem>
-                    <MenuItem onClick={() => {
-                      setTab(2);
-                      openDrawerRightToggle();
-                      handleClose();
-                    }}>Device settings</MenuItem>
-                    <MenuItem onClick={() => {
-                      // setTab(0);
-                      setIsGridView(!isGridView)
-                      setIsScreenShareView(false);
-                      handleClose();
-                    }}>{isGridView ? "Active speaker view" : "Grid view"}</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        setTab(3);
+                        openDrawerRightToggle();
+                        handleClose();
+                      }}
+                    >
+                      Meeting info
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        setTab(2);
+                        openDrawerRightToggle();
+                        handleClose();
+                      }}
+                    >
+                      Device settings
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        // setTab(0);
+                        setIsGridView(!isGridView);
+                        setIsScreenShareView(false);
+                        handleClose();
+                      }}
+                    >
+                      {isGridView ? "Active speaker view" : "Grid view"}
+                    </MenuItem>
                   </Menu>
                 </Toolbar>
               </AppBar>
@@ -387,19 +277,25 @@ export default function Classroom() {
                 >
                   <Roster />
                 </Drawer>
-                <Main rightopen={rightDrawerOpen} leftopen={leftDrawerOpen} mobileview={isMobileView}>
-                <DrawerHeader />
+                <Main
+                  rightopen={rightDrawerOpen}
+                  leftopen={leftDrawerOpen}
+                  mobileview={isMobileView}
+                  drawerWidth={drawerWidth}
+                >
+                  <DrawerHeader />
                   <div className={cx("ClassRoom_left")}>
-                    <div 
-                    className={cx("ClassRoom_contentVideoWrapper",{
-                      isContentShareEnabled,
-                      screenShareView: !isScreenShareView,
-                      screenShareViewDrawerOpen: !isScreenShareView && leftDrawerOpen
-                    })}
-                    onClick={() => {
-                      setIsScreenShareView(true);
-                      setIsGridView(false);
-                    }}
+                    <div
+                      className={cx("ClassRoom_contentVideoWrapper", {
+                        isContentShareEnabled,
+                        screenShareView: !isScreenShareView,
+                        screenShareViewDrawerOpen:
+                          !isScreenShareView && leftDrawerOpen,
+                      })}
+                      onClick={() => {
+                        setIsScreenShareView(true);
+                        setIsGridView(false);
+                      }}
                     >
                       <ContentVideo
                         onContentShareEnabled={onContentShareEnabled}
@@ -427,7 +323,7 @@ export default function Classroom() {
                     "& .MuiDrawer-paper": {
                       boxSizing: "border-box",
                       width: drawerWidth,
-                      overflow:"hidden"
+                      overflow: "hidden",
                     },
                   }}
                   open={rightDrawerOpen}
@@ -437,29 +333,40 @@ export default function Classroom() {
                   }}
                 >
                   <ListItem>
-                    <ListItemIcon onClick={() => {
-                      setTab(0);
-                      closeDrawerRightToggle();
-                      handleClose();
-                    }}>
-                      <Avatar sx={{ bgcolor: '#FFF', border: '1px solid black', color:"black", cursor:'pointer'}}>
+                    <ListItemIcon
+                      onClick={() => {
+                        setTab(0);
+                        closeDrawerRightToggle();
+                        handleClose();
+                      }}
+                    >
+                      <Avatar
+                        sx={{
+                          bgcolor: "#FFF",
+                          border: "1px solid black",
+                          color: "black",
+                          cursor: "pointer",
+                        }}
+                      >
                         <ArrowBackIosNewSharpIcon />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText>
                       <Typography variant="h5">
-                      {tab === 1 && 'Chat'}
-                    {tab === 2 && 'Device settings'}
-                    {tab === 3 && 'Meeting info'}
+                        {tab === 1 && "Chat"}
+                        {tab === 2 && "Device settings"}
+                        {tab === 3 && "Meeting info"}
                       </Typography>
                     </ListItemText>
                   </ListItem>
                   <Divider />
-                  <div className={cx("ClassRoom_chat_parent_div",{
-                    ClassRoom_chat_parent_div_open: tab === 1,
-                    ClassRoom_chat_parent_div_close: tab !== 1
-                  })}>
-                  <Chat />
+                  <div
+                    className={cx("ClassRoom_chat_parent_div", {
+                      ClassRoom_chat_parent_div_open: tab === 1,
+                      ClassRoom_chat_parent_div_close: tab !== 1,
+                    })}
+                  >
+                    <Chat />
                   </div>
                   {tab === 2 && <DeviceSwitcher />}
                   {tab === 3 && <CopyInfo />}
@@ -473,6 +380,7 @@ export default function Classroom() {
                 sx={{ height: "100px" }}
                 mobileview={isMobileView}
                 background={"#1a3551"}
+                drawerWidth={drawerWidth}
               >
                 {/* <Box
                   sx={{
@@ -482,30 +390,30 @@ export default function Classroom() {
                     margin: "auto",
                   }}
                 > */}
-                  <Controls
-                    viewMode={viewMode}
-                    tab={tab}
-                    onClickShareButton={async (flag:boolean) => {
-                      try {
-                        if(flag){
-                          await chime?.audioVideo?.startContentShareFromScreenCapture();
-                        }else{
-                          await chime?.audioVideo?.stopContentShare();
-                        }
-                      } catch (err) {
-                        console.log("err.....", err);
+                <Controls
+                  viewMode={viewMode}
+                  tab={tab}
+                  onClickShareButton={async (flag: boolean) => {
+                    try {
+                      if (flag) {
+                        await chime?.audioVideo?.startContentShareFromScreenCapture();
+                      } else {
+                        await chime?.audioVideo?.stopContentShare();
                       }
-                    }}
-                    onClickChatButton={(flag:boolean) => {
-                      if(flag){
-                        openDrawerRightToggle();
-                        setTab(1);
-                      }else{
-                        closeDrawerRightToggle();
-                        setTab(0);
-                      }
-                    }}
-                  />
+                    } catch (err) {
+                      console.log("err.....", err);
+                    }
+                  }}
+                  onClickChatButton={(flag: boolean) => {
+                    if (flag) {
+                      openDrawerRightToggle();
+                      setTab(1);
+                    } else {
+                      closeDrawerRightToggle();
+                      setTab(0);
+                    }
+                  }}
+                />
                 {/* </Box> */}
               </AppBar>
             </Box>

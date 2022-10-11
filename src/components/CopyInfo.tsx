@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 /* eslint-disable  */
 
-import classNames from "classnames/bind";
 import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
 
@@ -11,10 +10,6 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
-// import Tooltip from "./Tooltip";
-import styles from "./CopyInfo.css";
-
-const cx = classNames.bind(styles);
 
 export default function CopyInfo() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -45,7 +40,9 @@ export default function CopyInfo() {
 
   const copyMeetingInfo = () => {
     setIsMeetingUrlCoppied(true);
-    const meetingInfo = `To join the video meeting, click this link: ${url.origin}/?meetingId=${encodeURIComponent(chime?.title)}.`;
+    const meetingInfo = `To join the video meeting, click this link: ${
+      url.origin
+    }/?meetingId=${encodeURIComponent(chime?.title)}.`;
     navigator.clipboard.writeText(meetingInfo);
     setTimeout(() => {
       setIsMeetingUrlCoppied(false);
@@ -83,7 +80,7 @@ export default function CopyInfo() {
         {`${url.origin}/?meetingId=${encodeURIComponent(chime?.title)}`}
         <Tooltip
           title={
-            !isMeetingCoppied
+            !isMeetingUrlCoppied
               ? intl.formatMessage({ id: "Copyinfo.copyMeetingId" })
               : intl.formatMessage({
                   id: "Copyinfo.coppiedMeetingId",
@@ -97,10 +94,10 @@ export default function CopyInfo() {
         </Tooltip>
       </Typography>
       <Button onClick={copyMeetingInfo}>
-          <IconButton sx={{ ml: '10px', color:"#1976d2"}}>
-            <ContentCopyIcon />
-          </IconButton>
-          Copy Meeting Info
+        <IconButton sx={{ ml: "10px", color: "#1976d2" }}>
+          <ContentCopyIcon />
+        </IconButton>
+        Copy Meeting Info
       </Button>
     </Box>
   );

@@ -7,27 +7,25 @@ import classNames from "classnames/bind";
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import Box from "@mui/material/Box";
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import { green, grey, indigo, pink } from '@mui/material/colors';
-import Badge from '@mui/material/Badge';
-import { styled } from '@mui/material/styles';
-import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined';
-import MicOffOutlinedIcon from '@mui/icons-material/MicOffOutlined';
-import VideocamIcon from '@mui/icons-material/Videocam';
-import VideocamOffIcon from '@mui/icons-material/VideocamOff';
-import MicIcon from '@mui/icons-material/Mic';
-import MicOffIcon from '@mui/icons-material/MicOff';
-import PersonRemoveAlt1Icon from '@mui/icons-material/PersonRemoveAlt1';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import { Grid, Typography } from "@mui/material";
-import Tooltip from '@mui/material/Tooltip';
-
+import {
+  Avatar,
+  Badge,
+  Box,
+  ListItem,
+  ListItemIcon,
+  ListItemAvatar,
+  Tooltip,
+  ListItemText,
+} from "@mui/material";
+import { green, grey, indigo, pink } from "@mui/material/colors";
+import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
+import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
+import VideocamIcon from "@mui/icons-material/Videocam";
+import VideocamOffIcon from "@mui/icons-material/VideocamOff";
+import MicIcon from "@mui/icons-material/Mic";
+import MicOffIcon from "@mui/icons-material/MicOff";
+import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -38,20 +36,9 @@ import RosterAttendeeType from "../types/RosterAttendeeType";
 import styles from "./Roster.css";
 import MessageTopic from "../enums/MessageTopic";
 import ClassMode from "../enums/ClassMode";
+import SmallAvatar from "../custom/roster/SmallAvatar";
 
 const cx = classNames.bind(styles);
-
-const SmallAvatar = styled(Avatar,{ shouldForwardProp: (prop) => prop !== "open" })<{
-  bgcolor?: any;
-}>(({ theme, bgcolor }) => ({
-  width: 22,
-  height: 22,
-  border: `2px solid ${theme.palette.background.paper}`,
-  display: 'flex',
-  alignItems:'center',
-  justifyContent:'center',
-  backgroundColor: bgcolor
-}));
 
 export default function Roster() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -115,140 +102,193 @@ export default function Roster() {
         bgcolor: "background.paper",
       }}
     >
-      <Box sx={{ paddingTop: '25px', color: grey[600]}}>
+      <Box sx={{ paddingTop: "25px", color: grey[600] }}>
         <ListItem>
-            <ListItemText>Users{` (${attendeeIds.length})`}</ListItemText>
-            <ListItemIcon sx={{ minWidth: '30px'}}><SettingsOutlinedIcon /></ListItemIcon>
+          <ListItemText>Users{` (${attendeeIds.length})`}</ListItemText>
+          <ListItemIcon sx={{ minWidth: "30px" }}>
+            <SettingsOutlinedIcon />
+          </ListItemIcon>
         </ListItem>
       </Box>
       {attendeeIds &&
         attendeeIds.map((attendeeId: string) => {
           const rosterAttendee: RosterAttendeeType = roster[attendeeId];
-          const initials = rosterAttendee?.name?.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g)?.join('');
-          const attendeeName = `${rosterAttendee.name}` + (attendeeId === localUserId ?  ` (You${attendeeId === localStorage.getItem('hostId')   ? ', Presenter)' : ')'}` : `${attendeeId === localStorage.getItem('hostId') ? ', Presenter)' : ''}`);
+          const initials = rosterAttendee?.name
+            ?.replace(/[^a-zA-Z- ]/g, "")
+            .match(/\b\w/g)
+            ?.join("");
+          const attendeeName =
+            `${rosterAttendee.name}` +
+            (attendeeId === localUserId
+              ? ` (You${
+                  attendeeId === localStorage.getItem("hostId")
+                    ? ", Presenter)"
+                    : ")"
+                }`
+              : `${
+                  attendeeId === localStorage.getItem("hostId")
+                    ? ", Presenter)"
+                    : ""
+                }`);
           return (
-            <ListItem key={attendeeId} component="div" >
+            <ListItem key={attendeeId} component="div">
               <ListItemAvatar>
-              <Badge
+                <Badge
                   overlap="circular"
-                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                   badgeContent={
-                    <SmallAvatar bgcolor={rosterAttendee?.muted ? pink[500] : indigo[900]}>{rosterAttendee?.muted ? <MicOffOutlinedIcon sx={{ fontSize: '14px' }} /> : <MicNoneOutlinedIcon sx={{ fontSize: '14px' }} />}</SmallAvatar>
+                    <SmallAvatar
+                      bgcolor={rosterAttendee?.muted ? pink[500] : indigo[900]}
+                    >
+                      {rosterAttendee?.muted ? (
+                        <MicOffOutlinedIcon sx={{ fontSize: "14px" }} />
+                      ) : (
+                        <MicNoneOutlinedIcon sx={{ fontSize: "14px" }} />
+                      )}
+                    </SmallAvatar>
                   }
                 >
-                <Avatar sx={{ bgcolor: green[500] }} variant="rounded">{initials}</Avatar>
-              </Badge>
+                  <Avatar sx={{ bgcolor: green[500] }} variant="rounded">
+                    {initials}
+                  </Avatar>
+                </Badge>
               </ListItemAvatar>
-                <ListItemText primary={`${attendeeName}`} sx={{ textTransform:"capitalize"}} />
-                <ListItemIcon sx={{ minWidth: '30px'}}>
+              <ListItemText
+                primary={`${attendeeName}`}
+                sx={{ textTransform: "capitalize" }}
+              />
+              <ListItemIcon sx={{ minWidth: "30px" }}>
                 {raisedHandAttendees.has(attendeeId) && (
-                <div className={cx('Roster_raisedHand')}>
-                  <span
-                    role="img"
-                    aria-label={intl.formatMessage(
-                      {
-                        id: 'Roster.raiseHandAriaLabel'
-                      },
-                      {
-                        name: rosterAttendee.name
-                      }
-                    )}
-                  >
-                    ✋
-                  </span>
-                </div>
-              )}
-                </ListItemIcon>
-                <ListItemIcon  sx={{ minWidth: '30px'}}>
-                {typeof rosterAttendee.muted === 'boolean' && (
-                (state.classMode === ClassMode.Teacher && attendeeId !== localUserId) ?
-                <Tooltip
-                title={
-                  rosterAttendee.muted
-                    ? intl.formatMessage({ id: 'Controls.unmuteTooltip' })
-                    : intl.formatMessage({ id: 'Controls.muteTooltip' })
-                }
-                placement='bottom'
-              >
-                <div className={cx('Roster_muted')} style={{cursor:'pointer'}} onClick={() => {
-                  const mute = rosterAttendee.muted;
-                  chime?.sendMessage(MessageTopic.RemoteMuteUnmute, { focus: !mute, targetId: attendeeId });
-                }}>
-                  {rosterAttendee.muted ? (
-                    <MicOffIcon />
-                  ) : (
-                    <MicIcon />
-                  )}
-                </div>
-              </Tooltip>
-              :
-              <div className={cx('Roster_muted')}>
-                {rosterAttendee.muted ? (
-                  <MicOffIcon />
-                ) : (
-                  <MicIcon />
+                  <div className={cx("Roster_raisedHand")}>
+                    <span
+                      role="img"
+                      aria-label={intl.formatMessage(
+                        {
+                          id: "Roster.raiseHandAriaLabel",
+                        },
+                        {
+                          name: rosterAttendee.name,
+                        }
+                      )}
+                    >
+                      ✋
+                    </span>
+                  </div>
                 )}
-              </div>
-              )}
-                </ListItemIcon>
+              </ListItemIcon>
+              <ListItemIcon sx={{ minWidth: "30px" }}>
+                {typeof rosterAttendee.muted === "boolean" &&
+                  (state.classMode === ClassMode.Teacher &&
+                  attendeeId !== localUserId ? (
+                    <Tooltip
+                      title={
+                        rosterAttendee.muted
+                          ? intl.formatMessage({ id: "Controls.unmuteTooltip" })
+                          : intl.formatMessage({ id: "Controls.muteTooltip" })
+                      }
+                      placement="bottom"
+                    >
+                      <div
+                        className={cx("Roster_muted")}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          const mute = rosterAttendee.muted;
+                          chime?.sendMessage(MessageTopic.RemoteMuteUnmute, {
+                            focus: !mute,
+                            targetId: attendeeId,
+                          });
+                        }}
+                      >
+                        {rosterAttendee.muted ? <MicOffIcon /> : <MicIcon />}
+                      </div>
+                    </Tooltip>
+                  ) : (
+                    <div className={cx("Roster_muted")}>
+                      {rosterAttendee.muted ? <MicOffIcon /> : <MicIcon />}
+                    </div>
+                  ))}
+              </ListItemIcon>
 
-                <ListItemIcon  sx={{ minWidth: '30px'}}>
-                {(
-                (state.classMode === ClassMode.Teacher && attendeeId !== localUserId) ?
-                <Tooltip
-                title={
-                  videoAttendees.has(attendeeId)
-                    ? intl.formatMessage({ id: 'Controls.turnOffVideoTooltip' })
-                    : intl.formatMessage({ id: 'Controls.turnOnVideoTooltip' })
-                }
-                placement='bottom'
-              >
-                <div className={cx('Roster_video')} style={{cursor:'pointer'}} onClick={() => {
-                  const focus = videoAttendees.has(attendeeId);
-                  chime?.sendMessage(MessageTopic.RemoteVideoOnOff, { focus: !focus, targetId: attendeeId });
-                }}>
-                  {videoAttendees.has(attendeeId) ? (
-                    <VideocamIcon />
-                  ) : (
-                    <VideocamOffIcon />
+              <ListItemIcon sx={{ minWidth: "30px" }}>
+                {state.classMode === ClassMode.Teacher &&
+                attendeeId !== localUserId ? (
+                  <Tooltip
+                    title={
+                      videoAttendees.has(attendeeId)
+                        ? intl.formatMessage({
+                            id: "Controls.turnOffVideoTooltip",
+                          })
+                        : intl.formatMessage({
+                            id: "Controls.turnOnVideoTooltip",
+                          })
+                    }
+                    placement="bottom"
+                  >
+                    <div
+                      className={cx("Roster_video")}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        const focus = videoAttendees.has(attendeeId);
+                        chime?.sendMessage(MessageTopic.RemoteVideoOnOff, {
+                          focus: !focus,
+                          targetId: attendeeId,
+                        });
+                      }}
+                    >
+                      {videoAttendees.has(attendeeId) ? (
+                        <VideocamIcon />
+                      ) : (
+                        <VideocamOffIcon />
+                      )}
+                    </div>
+                  </Tooltip>
+                ) : (
+                  <div className={cx("Roster_muted")}>
+                    {videoAttendees.has(attendeeId) ? (
+                      <VideocamIcon />
+                    ) : (
+                      <VideocamOffIcon />
+                    )}
+                  </div>
+                )}
+              </ListItemIcon>
+              <ListItemIcon sx={{ minWidth: "30px" }}>
+                {state.classMode === ClassMode.Teacher &&
+                  attendeeId !== localUserId && (
+                    <Tooltip
+                      title={intl.formatMessage({
+                        id: "Controls.removeAttendee",
+                      })}
+                      placement="bottom"
+                    >
+                      <div
+                        className={cx("Roster_muted")}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          if (
+                            confirm(
+                              intl.formatMessage(
+                                { id: "Roster.sureRemove" },
+                                { name: rosterAttendee.name }
+                              )
+                            )
+                          ) {
+                            chime?.sendMessage(MessageTopic.RemoveAttendee, {
+                              focus: true,
+                              targetId: attendeeId,
+                            });
+                          }
+                        }}
+                      >
+                        <PersonRemoveAlt1Icon />
+                      </div>
+                    </Tooltip>
                   )}
-                </div>
-              </Tooltip>
-              :
-              <div className={cx('Roster_muted')}>
-                {videoAttendees.has(attendeeId) ? (
-                    <VideocamIcon />
-                  ) : (
-                    <VideocamOffIcon />
-                  )}
-              </div>
-              )}
-                </ListItemIcon>
-                <ListItemIcon  sx={{ minWidth: '30px'}}>
-                {state.classMode === ClassMode.Teacher && attendeeId !== localUserId && (
-                <Tooltip
-                title={intl.formatMessage({ id: 'Controls.removeAttendee' })}
-                placement='bottom'
-              >
-                <div className={cx('Roster_muted')} style={{cursor:'pointer'}} onClick={() => {
-                  if (confirm(intl.formatMessage({ id: 'Roster.sureRemove'},{ name : rosterAttendee.name}))) {
-                    chime?.sendMessage(MessageTopic.RemoveAttendee, { focus: true, targetId: attendeeId });
-                  }
-                }}>
-                  <PersonRemoveAlt1Icon />
-                </div>
-              </Tooltip>)}
-                </ListItemIcon>
+              </ListItemIcon>
             </ListItem>
           );
         })}
     </Box>
-
-
-
-
-
-
 
     // <div className={cx('Roster_roster')}>
     //   {attendeeIds &&

@@ -10,16 +10,14 @@ import { DataMessage } from "amazon-chime-sdk-js";
 import {
   Avatar,
   Box,
-  Button,
-  IconButton,
+  ImageList,
   ListItem,
   ListItemText,
+  ListItemAvatar,
   Paper,
-  Tooltip,
   Typography,
 } from "@mui/material";
-import ImageList from "@mui/material/ImageList";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
+import { green } from "@mui/material/colors";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -31,7 +29,6 @@ import RosterAttendeeType from "../types/RosterAttendeeType";
 import localStorageKeys from "../constants/localStorageKeys.json";
 import { createPrivateChannel } from "../utils";
 import useRemoteControl from "../hooks/useRemoteControl";
-import { green } from "@mui/material/colors";
 
 const cx = classNames.bind(styles);
 
@@ -123,8 +120,8 @@ export default function Chat() {
           width: "100%",
           height: "10%",
           display: "flex",
-          alignItems:'center',
-          borderBottom: "1px solid #142230"
+          alignItems: "center",
+          borderBottom: "1px solid #142230",
         }}
       >
         <ImageList
@@ -160,7 +157,7 @@ export default function Chat() {
               ?.join("");
             return (
               <Avatar
-              key={chatAttdId}
+                key={chatAttdId}
                 sx={{
                   bgcolor:
                     activeChatAttendee === chatAttdId ? green[500] : "#142230",
@@ -231,34 +228,34 @@ export default function Chat() {
               );
             } else {
               const avtr = chime?.roster[message.senderAttendeeId]?.name
-              ?.replace(/[^a-zA-Z- ]/g, "")
-              .match(/\b\w/g)
-              ?.join("");
+                ?.replace(/[^a-zA-Z- ]/g, "")
+                .match(/\b\w/g)
+                ?.join("");
               return (
                 <ListItem
-                key={message.timestampMs}
-                component="div"
-                sx={{
-                  flexDirection: "row",
-                }}
-              >
-                <ListItemAvatar>
-                  <Avatar sx={{ bgcolor: "#142230" }} variant="rounded">
-                    {avtr}
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  sx={{ mr: 2, textAlign: "left", fontSize: "14px" }}
+                  key={message.timestampMs}
+                  component="div"
+                  sx={{
+                    flexDirection: "row",
+                  }}
                 >
-                  {chime?.roster[message.senderAttendeeId]?.name},{` `}
-                  <Typography variant="caption">
-                    {moment(message.timestampMs).format("h:mm A")}
-                  </Typography>
-                  <Paper elevation={0}>
-                    <Typography variant="body1">{messageString}</Typography>
-                  </Paper>
-                </ListItemText>
-              </ListItem>
+                  <ListItemAvatar>
+                    <Avatar sx={{ bgcolor: "#142230" }} variant="rounded">
+                      {avtr}
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    sx={{ mr: 2, textAlign: "left", fontSize: "14px" }}
+                  >
+                    {chime?.roster[message.senderAttendeeId]?.name},{` `}
+                    <Typography variant="caption">
+                      {moment(message.timestampMs).format("h:mm A")}
+                    </Typography>
+                    <Paper elevation={0}>
+                      <Typography variant="body1">{messageString}</Typography>
+                    </Paper>
+                  </ListItemText>
+                </ListItem>
               );
             }
           })}

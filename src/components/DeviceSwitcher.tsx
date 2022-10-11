@@ -2,15 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 /* eslint-disable  */
 
-import classNames from "classnames/bind";
-import React, { useContext, useEffect } from "react";
-import { useIntl } from "react-intl";
+import React, { useContext } from "react";
 
-import Box from "@mui/material/Box";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { FormLabel } from "@mui/material";
+import { Box, FormControl, FormLabel, MenuItem, Select } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -30,7 +24,7 @@ export default function DeviceSwitcher() {
       }}
     >
       <FormControl sx={{ m: 1, minWidth: 260 }}>
-        <FormLabel >Microphone:</FormLabel>
+        <FormLabel>Microphone:</FormLabel>
         <Select
           value={deviceSwitcherState?.currentAudioInputDevice?.value}
           onChange={async (event: any) => {
@@ -55,8 +49,8 @@ export default function DeviceSwitcher() {
             })}
         </Select>
       </FormControl>
-      <FormControl  sx={{ m: 1, minWidth: 260 }}>
-      <FormLabel >Speaker:</FormLabel>
+      <FormControl sx={{ m: 1, minWidth: 260 }}>
+        <FormLabel>Speaker:</FormLabel>
         <Select
           value={deviceSwitcherState.currentAudioOutputDevice?.value}
           onChange={async (event: any) => {
@@ -86,15 +80,14 @@ export default function DeviceSwitcher() {
             })}
         </Select>
       </FormControl>
-      <FormControl  sx={{ m: 1, minWidth: 260 }}>
-      <FormLabel >Camera:</FormLabel>
+      <FormControl sx={{ m: 1, minWidth: 260 }}>
+        <FormLabel>Camera:</FormLabel>
         <Select
           value={deviceSwitcherState.currentVideoInputDevice?.value}
           onChange={async (event: any) => {
-            const selectedDevice =
-              deviceSwitcherState.videoInputDevices.filter(
-                (item) => item.value === event.target.value
-              );
+            const selectedDevice = deviceSwitcherState.videoInputDevices.filter(
+              (item) => item.value === event.target.value
+            );
             if (selectedDevice && selectedDevice.length > 0) {
               await chime?.chooseVideoInputDevice(selectedDevice[0]);
             }

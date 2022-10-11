@@ -8,7 +8,6 @@ import {
 } from "amazon-chime-sdk-js";
 import classNames from "classnames/bind";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -35,7 +34,8 @@ type Props = {
 };
 
 export default function RemoteVideoGroup(props: Props) {
-  const { viewMode, isContentShareEnabled, isGridView, isScreenShareView } = props;
+  const { viewMode, isContentShareEnabled, isGridView, isScreenShareView } =
+    props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { updateGlobalVar } = useContext(getGlobalVarContext());
   const [visibleIndices, setVisibleIndices] = useState<{
@@ -49,8 +49,8 @@ export default function RemoteVideoGroup(props: Props) {
   const [videoAttendees, setVideoAttendees] = useState(new Set());
   const [attendeeIdFullScreen, setAttendeeIdFullScreen] = useState("");
   const [gridViewRosterSize, setGridViewRosterView] = useState({
-    width:"",
-    height:""
+    width: "",
+    height: "",
   });
 
   const acquireVideoIndex = (tileId: number): number => {
@@ -84,7 +84,6 @@ export default function RemoteVideoGroup(props: Props) {
   );
 
   const activeSpeakerCallback = (attendeeIds) => {
-    // console.log('💫💫💫💫💫',attendeeIds)
     //remove selfAttendeeId when Speaker active   --sanjay balai
     if (attendeeIds.length) {
       let selfAttendeeId = currentUser;
@@ -203,7 +202,7 @@ export default function RemoteVideoGroup(props: Props) {
     let dd = 100 / cols - 1;
     let Twidth = `${dd}%`;
     let Theight = `${elHeight / row}px`;
-    setGridViewRosterView({width: Twidth, height: Theight})
+    setGridViewRosterView({ width: Twidth, height: Theight });
     // return { width: Twidth, height: Theight };
   }
 
@@ -234,8 +233,8 @@ export default function RemoteVideoGroup(props: Props) {
 
   useEffect(() => {
     reorganize();
-  },[isGridView])
-  
+  }, [isGridView]);
+
   useEffect(() => {
     const callback = () => {
       reorganize();
@@ -300,7 +299,7 @@ export default function RemoteVideoGroup(props: Props) {
                   !isGridView && attendeeIdFullScreen === attendeeId,
                 notActiveSpeakerView:
                   !isGridView && attendeeIdFullScreen !== attendeeId,
-                  defaultRosterSize: !isGridView
+                defaultRosterSize: !isGridView,
               })}
               style={
                 isGridView

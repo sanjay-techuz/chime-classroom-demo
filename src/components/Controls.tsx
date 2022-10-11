@@ -2,19 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 /* eslint-disable  */
 
-import classNames from "classnames/bind";
 import React, { useContext, useEffect, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { useHistory } from "react-router-dom";
 
-import {
-  Avatar,
-  Box,
-  Button,
-  IconButton,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Tooltip } from "@mui/material";
+import { pink } from "@mui/material/colors";
 import AutoModeIcon from "@mui/icons-material/AutoMode";
 import KeyboardVoiceOutlinedIcon from "@mui/icons-material/KeyboardVoiceOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
@@ -31,17 +24,11 @@ import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import routes from "../constants/routes.json";
 import getChimeContext from "../context/getChimeContext";
 import getUIStateContext from "../context/getUIStateContext";
-import getGlobalVarContext from '../context/getGlobalVarContext';
+import getGlobalVarContext from "../context/getGlobalVarContext";
 import ClassMode from "../enums/ClassMode";
 import ViewMode from "../enums/ViewMode";
-import styles from "./Controls.css";
-// import Tooltip from './Tooltip';
 import MessageTopic from "../enums/MessageTopic";
 import { startRecording, stopRecording } from "../services";
-import localStorageKeys from "../constants/localStorageKeys.json";
-import { pink } from "@mui/material/colors";
-
-const cx = classNames.bind(styles);
 
 enum VideoStatus {
   Disabled,
@@ -107,8 +94,8 @@ export default function Controls(props: Props) {
   }, [tab]);
 
   useEffect(() => {
-    setVideoStatus(localVideo ? VideoStatus.Enabled : VideoStatus.Disabled)
-  },[localVideo])
+    setVideoStatus(localVideo ? VideoStatus.Enabled : VideoStatus.Disabled);
+  }, [localVideo]);
 
   const handleRecording = async () => {
     setRecording(!recording);

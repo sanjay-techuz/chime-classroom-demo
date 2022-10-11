@@ -22,12 +22,13 @@ type Props = {
   isContentShareEnabled: boolean;
 };
 
-export default function LocalVideo(props:Props) {
+export default function LocalVideo(props: Props) {
   const { viewMode, size, isContentShareEnabled } = props;
   const [enabled, setEnabled] = useState(false);
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const videoElement = useRef(null);
-  const attendeeId = chime?.meetingSession?.configuration?.credentials?.attendeeId;
+  const attendeeId =
+    chime?.meetingSession?.configuration?.credentials?.attendeeId;
   const name = chime?.name;
 
   useEffect(() => {
@@ -52,26 +53,27 @@ export default function LocalVideo(props:Props) {
 
   return (
     <>
-        <div
-          className={cx("LocalVideo_localVideo", {
-            disabled: !enabled,
-          })}
-        >
-          <video muted ref={videoElement} className={cx("LocalVideo_video")} />
-          <VideoNameplate
-            viewMode={viewMode}
-            size={size}
-            isContentShareEnabled={isContentShareEnabled}
-            attendeeId={attendeeId}
-          />
-        </div>
+      <div
+        className={cx("LocalVideo_localVideo", {
+          disabled: !enabled,
+        })}
+      >
+        <video muted ref={videoElement} className={cx("LocalVideo_video")} />
+        <VideoNameplate
+          viewMode={viewMode}
+          size={size}
+          isContentShareEnabled={isContentShareEnabled}
+          attendeeId={attendeeId}
+        />
+      </div>
       {!enabled && (
-        <LocalRoster 
-        viewMode={viewMode}
-        size={size}
-        isContentShareEnabled={isContentShareEnabled}
-        attendeeId={attendeeId}
-        name={name}  />
+        <LocalRoster
+          viewMode={viewMode}
+          size={size}
+          isContentShareEnabled={isContentShareEnabled}
+          attendeeId={attendeeId}
+          name={name}
+        />
       )}
     </>
   );
