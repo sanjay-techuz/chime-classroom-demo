@@ -10,6 +10,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
+import { clipBoard } from "../utils";
 
 export default function CopyInfo() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -21,7 +22,7 @@ export default function CopyInfo() {
 
   const copyMeetinId = () => {
     setIsMeetingCoppied(true);
-    navigator.clipboard.writeText(chime?.title);
+    clipBoard(chime?.title);
     setTimeout(() => {
       setIsMeetingCoppied(false);
     }, 5000);
@@ -32,7 +33,7 @@ export default function CopyInfo() {
     const meetingUrl = `${url.origin}/?meetingId=${encodeURIComponent(
       chime?.title
     )}`;
-    navigator.clipboard.writeText(meetingUrl);
+    clipBoard(meetingUrl);
     setTimeout(() => {
       setIsMeetingUrlCoppied(false);
     }, 5000);
@@ -43,7 +44,7 @@ export default function CopyInfo() {
     const meetingInfo = `To join the video meeting, click this link: ${
       url.origin
     }/?meetingId=${encodeURIComponent(chime?.title)}.`;
-    navigator.clipboard.writeText(meetingInfo);
+    clipBoard(meetingInfo);
     setTimeout(() => {
       setIsMeetingUrlCoppied(false);
     }, 5000);

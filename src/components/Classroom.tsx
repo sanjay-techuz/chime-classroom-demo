@@ -247,7 +247,6 @@ export default function Classroom() {
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        // setTab(0);
                         setIsGridView(!isGridView);
                         setIsScreenShareView(false);
                         handleClose();
@@ -309,11 +308,6 @@ export default function Classroom() {
                         isScreenShareView={isScreenShareView}
                       />
                     </div>
-                    {/* <div className={cx("ClassRoom_localVideoWrapper")}>
-                      <div className={cx("ClassRoom_localVideo")}>
-                        <LocalVideo />
-                      </div>
-                    </div> */}
                   </div>
                 </Main>
                 <Drawer
@@ -382,14 +376,6 @@ export default function Classroom() {
                 background={"#1a3551"}
                 drawerWidth={drawerWidth}
               >
-                {/* <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    margin: "auto",
-                  }}
-                > */}
                 <Controls
                   viewMode={viewMode}
                   tab={tab}
@@ -414,94 +400,11 @@ export default function Classroom() {
                     }
                   }}
                 />
-                {/* </Box> */}
               </AppBar>
             </Box>
           )}
         </Box>
       )}
-
-      {/* {tryToReload && <div
-      className={cx("ClassRoom_classroom", {
-        ClassRoom_roomMode: viewMode === ViewMode.Room,
-        ClassRoom_screenShareMode: viewMode === ViewMode.ScreenShare,
-        isModeTransitioning,
-        isContentShareEnabled,
-      })}
-    >
-      {meetingStatus === MeetingStatus.Loading && <LoadingSpinner />}
-      {meetingStatus === MeetingStatus.Failed && (
-        <Error errorMessage={errorMessage} />
-      )}
-      {meetingStatus === MeetingStatus.Succeeded && (
-        <>
-          <>
-            <div className={cx("ClassRoom_left")}>
-              <div className={cx("ClassRoom_contentVideoWrapper")}>
-                <ContentVideo onContentShareEnabled={onContentShareEnabled} />
-              </div>
-              <div className={cx("ClassRoom_remoteVideoGroupWrapper")}>
-                <RemoteVideoGroup
-                  viewMode={viewMode}
-                  isContentShareEnabled={isContentShareEnabled}
-                />
-              </div>
-              <div className={cx("ClassRoom_localVideoWrapper")}>
-                <div className={cx("ClassRoom_controls")}>
-                  <Controls
-                    viewMode={viewMode}
-                    onClickShareButton={async () => {
-                      try {
-                        await chime?.audioVideo?.startContentShareFromScreenCapture();
-                      } catch (err) {
-                        console.log("err.....", err);
-                      }
-                    }}
-                  />
-                </div>
-                <div className={cx("ClassRoom_localVideo")}>
-                  <LocalVideo />
-                </div>
-              </div>
-            </div>
-
-            <div className={cx("ClassRoom_right",{
-              Classroom_right_none: !openRightBar
-            })}>
-              <div className={cx("ClassRoom_titleWrapper")}>
-                <Tooltip
-                    tooltip={intl.formatMessage({ id: 'Classroom.closeRightMenu' })}
-                  >
-                <div className={cx('ClassRoom_right_close')} onClick={() => setOpenRightBar(false)}><i className="fas fa-2x fa-times" /></div>
-                </Tooltip>
-                <div className={cx("ClassRoom_label")}>
-                  <FormattedMessage id="Classroom.classroom" />
-                </div>
-                <CopyInfo />
-              </div>
-              <div className={cx("ClassRoom_deviceSwitcher")}>
-                <DeviceSwitcher />
-              </div>
-              <div className={cx("ClassRoom_roster")}>
-                <Roster />
-              </div>
-              <div className={cx("ClassRoom_chat")}>
-                <Chat />
-              </div>
-            </div>
-            
-            {
-              !openRightBar && (<Tooltip
-                tooltip={intl.formatMessage({ id: 'Classroom.openRightMenu' })}
-              >
-                <div className={cx('ClassRoom_right_open')} onClick={() => setOpenRightBar(true)}><i className="fas fa-2x fa-bars" /></div>
-              </Tooltip>  
-              )
-            }                    
-          </>
-        </>
-      )}
-    </div>} */}
     </>
   );
 }

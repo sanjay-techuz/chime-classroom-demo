@@ -21,7 +21,7 @@ import useRoster from "../hooks/useRoster";
 import RosterAttendeeType from "../types/RosterAttendeeType";
 import RosterLayout from "./RosterLayout";
 import LocalVideo from "./LocalVideo";
-import { rosterSize } from "../utils/rosterSize";
+import { rosterSize } from "../utils";
 
 const cx = classNames.bind(styles);
 const MAX_REMOTE_VIDEOS = 16;
@@ -87,13 +87,13 @@ export default function RemoteVideoGroup(props: Props) {
   const activeSpeakerCallback = (attendeeIds) => {
     //remove selfAttendeeId when Speaker active   --sanjay balai
     if (attendeeIds.length) {
-      let selfAttendeeId = currentUser;
+      const selfAttendeeId = currentUser;
       function removeSelfAttendeeId(arr, value) {
         return arr.filter(function (id) {
           return id != value;
         });
       }
-      let activeAttendee = removeSelfAttendeeId(attendeeIds, selfAttendeeId);
+      const activeAttendee = removeSelfAttendeeId(attendeeIds, selfAttendeeId);
 
       if (activeAttendee.length) {
         // checks whether attendee is UnMute then only set as Active Speaker --sanjay balai
@@ -208,7 +208,7 @@ export default function RemoteVideoGroup(props: Props) {
   }
 
   // remove self attendee for roster layout --sanjay balai
-  let selfAttendeeId = currentUser;
+  const selfAttendeeId = currentUser;
   function removeSelfAttendeeId(arr, value) {
     return arr.filter(function (id) {
       return id != value;

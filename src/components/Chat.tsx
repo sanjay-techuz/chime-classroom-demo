@@ -151,7 +151,7 @@ export default function Chat() {
           </Avatar>
           {chatAttendeeIds.map((chatAttdId: string) => {
             const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
-            const initials = nameInitials(rosterAttendee?.name);              
+            const initials = nameInitials(rosterAttendee?.name);
             return (
               <Avatar
                 key={chatAttdId}
@@ -193,7 +193,9 @@ export default function Chat() {
             }
 
             if (message.senderAttendeeId === localUserId) {
-              const avtr = nameInitials(chime?.roster[message.senderAttendeeId]?.name);
+              const avtr = nameInitials(
+                chime?.roster[message.senderAttendeeId]?.name
+              );
               return (
                 <ListItem
                   key={message.timestampMs}
@@ -221,7 +223,9 @@ export default function Chat() {
                 </ListItem>
               );
             } else {
-              const avtr = nameInitials(chime?.roster[message.senderAttendeeId]?.name);
+              const avtr = nameInitials(
+                chime?.roster[message.senderAttendeeId]?.name
+              );
               return (
                 <ListItem
                   key={message.timestampMs}
@@ -257,86 +261,5 @@ export default function Chat() {
         </div>
       </Box>
     </Box>
-    // <div className={cx('Chat_chat')}>
-    //   <div className={cx('Chat_attendee_list')}>
-    //   <span className={cx('Chat_initials',{
-    //         Chat_active_initials: activeChatAttendee === MessageTopic.PublicChannel
-    //       })} onClick={() => {
-    //     setActiveChatAttendee(MessageTopic.PublicChannel);
-    //     setActiveChannel(MessageTopic.PublicChannel);
-    //   }
-    //     }>All</span>
-    //     {chatAttendeeIds.map((chatAttdId: string) => {
-    //     const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
-    //     const initials = rosterAttendee?.name?.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g)?.join('')
-    //     return (
-    //       <span key={`${new Date().getTime()}_${chatAttdId}`} className={cx('Chat_initials',{
-    //         Chat_active_initials: activeChatAttendee === chatAttdId
-    //       })} onClick={() => {
-    //         setActiveChatAttendee(chatAttdId);
-    //         setActiveChannel(createPrivateChannel(localUserId, chatAttdId))
-    //       }}>{initials}</span>
-    //     )
-    //   })}
-    //   </div>
-    //   <div className={cx('Chat_messages')}>
-    //     {filterMessage.map(message => {
-    //       let messageString: string;
-    //       if (message.topic === MessageTopic.GroupChat) {
-    //         messageString = JSON.parse(new TextDecoder().decode(message.data)).sendingMessage;
-    //       } else if (message.topic === MessageTopic.RaiseHand) {
-    //         messageString = `✋`;
-    //       }
-
-    //       if(message.senderAttendeeId === localUserId){
-    //         return (
-    //           <div
-    //             key={message.timestampMs}
-    //             className={cx('Chat_sender_messageWrapper', {
-    //               Chat_raiseHand: message.topic === MessageTopic.RaiseHand
-    //             })}
-    //           >
-    //             <div className={cx('Chat_right_Wrapper')}>
-    //             <div className={cx('Chat_senderWrapper')}>
-    //               <div className={cx('Chat_senderName')}>
-    //                 {chime?.roster[message.senderAttendeeId]?.name}
-    //               </div>
-    //               <div className={cx('Chat_date')}>
-    //                 {moment(message.timestampMs).format('h:mm A')}
-    //               </div>
-    //             </div>
-    //             <div className={cx('Chat_message')}>{messageString}</div>
-    //             </div>
-    //           </div>
-    //         );
-    //       }else{
-    //         return (
-    //           <div
-    //             key={message.timestampMs}
-    //             className={cx('Chat_reciever_messageWrapper', {
-    //               Chat_raiseHand: message.topic === MessageTopic.RaiseHand
-    //             })}
-    //           >
-    //           <div className={cx('Chat_left_Wrapper')}>
-    //             <div className={cx('Chat_senderWrapper')}>
-    //               <div className={cx('Chat_senderName')}>
-    //                 {chime?.roster[message.senderAttendeeId]?.name}
-    //               </div>
-    //               <div className={cx('Chat_date')}>
-    //                 {moment(message.timestampMs).format('h:mm A')}
-    //               </div>
-    //             </div>
-    //             <div className={cx('Chat_message')}>{messageString}</div>
-    //             </div>
-    //           </div>
-    //         );
-    //       }
-    //     })}
-    //     <div className="bottom" ref={bottomElement} />
-    //   </div>
-    //   <div className={cx('Chat_chatInput')}>
-    //     <ChatInput activeChannel={activeChannel} />
-    //   </div>
-    // </div>
   );
 }
