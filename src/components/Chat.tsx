@@ -27,7 +27,7 @@ import ChatInput from "./ChatInput";
 import MessageTopic from "../enums/MessageTopic";
 import RosterAttendeeType from "../types/RosterAttendeeType";
 import localStorageKeys from "../constants/localStorageKeys.json";
-import { createPrivateChannel } from "../utils";
+import { createPrivateChannel, nameInitials } from "../utils";
 import useRemoteControl from "../hooks/useRemoteControl";
 
 const cx = classNames.bind(styles);
@@ -151,10 +151,7 @@ export default function Chat() {
           </Avatar>
           {chatAttendeeIds.map((chatAttdId: string) => {
             const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
-            const initials = rosterAttendee?.name
-              ?.replace(/[^a-zA-Z- ]/g, "")
-              .match(/\b\w/g)
-              ?.join("");
+            const initials = nameInitials(rosterAttendee?.name);              
             return (
               <Avatar
                 key={chatAttdId}

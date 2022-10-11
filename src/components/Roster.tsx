@@ -37,6 +37,7 @@ import styles from "./Roster.css";
 import MessageTopic from "../enums/MessageTopic";
 import ClassMode from "../enums/ClassMode";
 import SmallAvatar from "../custom/roster/SmallAvatar";
+import { nameInitials } from "../utils";
 
 const cx = classNames.bind(styles);
 
@@ -113,10 +114,7 @@ export default function Roster() {
       {attendeeIds &&
         attendeeIds.map((attendeeId: string) => {
           const rosterAttendee: RosterAttendeeType = roster[attendeeId];
-          const initials = rosterAttendee?.name
-            ?.replace(/[^a-zA-Z- ]/g, "")
-            .match(/\b\w/g)
-            ?.join("");
+          const initials = nameInitials(rosterAttendee?.name);
           const attendeeName =
             `${rosterAttendee.name}` +
             (attendeeId === localUserId

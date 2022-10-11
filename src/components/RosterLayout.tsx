@@ -10,6 +10,7 @@ import ViewMode from "../enums/ViewMode";
 import Size from "../enums/Size";
 import VideoNameplate from "./VideoNameplate";
 import styles from "./RosterLayout.css";
+import { nameInitials } from "../utils";
 
 const cx = classNames.bind(styles);
 
@@ -34,10 +35,7 @@ export default function RosterLayout(props: Props) {
     isContentShareEnabled,
     name,
   } = props;
-  const initials = name
-    ?.replace(/[^a-zA-Z- ]/g, "")
-    .match(/\b\w/g)
-    ?.join("");
+  const initials = nameInitials(name);
   return (
     <div
       className={cx("RosterLayout_remoteVideo", {
