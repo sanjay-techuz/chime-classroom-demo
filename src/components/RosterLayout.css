@@ -13,7 +13,7 @@
     height: 100%;
     width: 100%;
     border-radius: 0.25rem;
-    color: #FFF;
+    color: var(--pure_white_color);
   }
   
   .RosterLayout_remoteVideo.activeSpeaker {
@@ -24,8 +24,8 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: #FFF;
-    color: #1a3551;
+    background-color: var(--pure_white_color);
+    color: var(--secondary_blue_color);
     display: flex;
     align-items: center;
     justify-content: center;

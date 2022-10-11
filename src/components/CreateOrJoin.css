@@ -8,8 +8,8 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: var(--color_mine_shaft_dark);
-  background: var(--color_mine_shaft_light);
+  color: var(--primary_blue_color);
+  background: var(--primary_blue_color);
 }
 
 .CreateOrJoin_title {
@@ -52,14 +52,14 @@
   font-size: 1.1rem;
   font-weight: 500;
   color: var(--color_alabaster);
-  background: var(--color_mine_shaft_light);
+  background: var(--primary_blue_color);
   cursor: pointer;
   transition: background-color 0.15s;
   user-select: none;
 }
 
 .CreateOrJoin_button:hover {
-  background: var(--color_cod_gray_medium);
+  background: var(--secondary_blue_color);
 }
 
 .CreateOrJoin_mainLink {
@@ -93,7 +93,7 @@
   border-radius: 0.25rem;
   padding: 0 1rem;
   height: 2.75rem;
-  color: var(--color_mine_shaft_light);
+  color: var(--primary_blue_color);
   display: flex;
   align-items: center;
 }

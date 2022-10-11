@@ -143,8 +143,8 @@
 
 .RemoteVideoGroup_attendeeRosterView{
   display: flex;
-  background-color: #1a3551;
-  color: #FFFFFF;
+  background-color: var(--secondary_blue_color);
+  color: var(--pure_white_color);
   align-items: center;
   justify-content: center;
   border-radius: 0.25rem;

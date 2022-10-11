@@ -17,7 +17,6 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { green } from "@mui/material/colors";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -121,7 +120,7 @@ export default function Chat() {
           height: "10%",
           display: "flex",
           alignItems: "center",
-          borderBottom: "1px solid #142230",
+          borderBottom: "1px solid var(--primary_blue_color)",
         }}
       >
         <ImageList
@@ -138,8 +137,8 @@ export default function Chat() {
             sx={{
               bgcolor:
                 activeChatAttendee === MessageTopic.PublicChannel
-                  ? green[500]
-                  : "#142230",
+                  ? "var(--color_green)"
+                  : "var(--primary_blue_color)",
             }}
             variant="rounded"
             onClick={() => {
@@ -157,7 +156,7 @@ export default function Chat() {
                 key={chatAttdId}
                 sx={{
                   bgcolor:
-                    activeChatAttendee === chatAttdId ? green[500] : "#142230",
+                    activeChatAttendee === chatAttdId ? "var(--color_green)" : "var(--primary_blue_color)",
                 }}
                 variant="rounded"
                 onClick={() => {
@@ -205,7 +204,7 @@ export default function Chat() {
                   }}
                 >
                   <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: green[500] }} variant="rounded">
+                    <Avatar sx={{ bgcolor: "var(--color_green)" }} variant="rounded">
                       {avtr}
                     </Avatar>
                   </ListItemAvatar>
@@ -235,7 +234,7 @@ export default function Chat() {
                   }}
                 >
                   <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: "#142230" }} variant="rounded">
+                    <Avatar sx={{ bgcolor: "var(--primary_blue_color)" }} variant="rounded">
                       {avtr}
                     </Avatar>
                   </ListItemAvatar>

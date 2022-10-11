@@ -169,7 +169,7 @@ export default function Classroom() {
         }}
       />
       {tryToReload && (
-        <Box sx={{ display: "flex", width: "100%", height: "100%" }}>
+        <Box sx={{ display: "flex", width: "100%", height: "100%", alignItems:"center", justifyContent:"center" }}>
           {meetingStatus === MeetingStatus.Loading && <LoadingSpinner />}
           {meetingStatus === MeetingStatus.Failed && (
             <Error errorMessage={errorMessage} />
@@ -182,7 +182,7 @@ export default function Classroom() {
                 rightopen={rightDrawerOpen}
                 anchor="top"
                 mobileview={isMobileView}
-                background={"#142230"}
+                background={"var(--primary_blue_color)"}
                 drawerWidth={drawerWidth}
               >
                 <Toolbar>
@@ -213,7 +213,7 @@ export default function Classroom() {
                     onClick={handleClick}
                   >
                     <Avatar
-                      sx={{ bgcolor: "#142230", border: "1px solid #FFF" }}
+                      sx={{ bgcolor: "var(--primary_blue_color)", border: "1px solid var(--pure_white_color)" }}
                     >
                       <MoreVertOutlinedIcon />
                     </Avatar>
@@ -336,9 +336,9 @@ export default function Classroom() {
                     >
                       <Avatar
                         sx={{
-                          bgcolor: "#FFF",
-                          border: "1px solid black",
-                          color: "black",
+                          bgcolor: "var(--pure_white_color)",
+                          border: "1px solid var(--color_black)",
+                          color: "var(--color_black)",
                           cursor: "pointer",
                         }}
                       >
@@ -373,7 +373,7 @@ export default function Classroom() {
                 anchor="bottom"
                 sx={{ height: "100px" }}
                 mobileview={isMobileView}
-                background={"#1a3551"}
+                background={"var(--secondary_blue_color)"}
                 drawerWidth={drawerWidth}
               >
                 <Controls

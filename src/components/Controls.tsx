@@ -7,7 +7,6 @@ import { useIntl } from "react-intl";
 import { useHistory } from "react-router-dom";
 
 import { Avatar, Box, Tooltip } from "@mui/material";
-import { pink } from "@mui/material/colors";
 import AutoModeIcon from "@mui/icons-material/AutoMode";
 import KeyboardVoiceOutlinedIcon from "@mui/icons-material/KeyboardVoiceOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
@@ -171,15 +170,15 @@ export default function Controls(props: Props) {
               sx={
                 focus
                   ? {
-                      bgcolor: "#FFF",
-                      border: "1px solid #1a3551",
-                      color: "#1a3551",
+                      bgcolor: "var(--pure_white_color)",
+                      border: "1px solid var(--secondary_blue_color)",
+                      color: "var(--secondary_blue_color)",
                       cursor: "pointer",
                     }
                   : {
-                      bgcolor: "#1a3551",
-                      border: "1px solid #FFF",
-                      color: "#FFF",
+                      bgcolor: "var(--secondary_blue_color)",
+                      border: "1px solid var(--pure_white_color)",
+                      color: "var(--pure_white_color)",
                       cursor: "pointer",
                     }
               }
@@ -209,15 +208,15 @@ export default function Controls(props: Props) {
             sx={
               muted
                 ? {
-                    bgcolor: "#FFF",
-                    border: "1px solid #1a3551",
-                    color: "#1a3551",
+                    bgcolor: "var(--pure_white_color)",
+                    border: "1px solid var(--secondary_blue_color)",
+                    color: "var(--secondary_blue_color)",
                     cursor: "pointer",
                   }
                 : {
-                    bgcolor: "#1a3551",
-                    border: "1px solid #FFF",
-                    color: "#FFF",
+                    bgcolor: "var(--secondary_blue_color)",
+                    border: "1px solid var(--pure_white_color)",
+                    color: "var(--pure_white_color)",
                     cursor: "pointer",
                   }
             }
@@ -263,15 +262,15 @@ export default function Controls(props: Props) {
             sx={
               videoStatus === VideoStatus.Enabled
                 ? {
-                    bgcolor: "#FFF",
-                    border: "1px solid #1a3551",
-                    color: "#1a3551",
+                    bgcolor: "var(--pure_white_color)",
+                    border: "1px solid var(--secondary_blue_color)",
+                    color: "var(--secondary_blue_color)",
                     cursor: "pointer",
                   }
                 : {
-                    bgcolor: "#1a3551",
-                    border: "1px solid #FFF",
-                    color: "#FFF",
+                    bgcolor: "var(--secondary_blue_color)",
+                    border: "1px solid var(--pure_white_color)",
+                    color: "var(--pure_white_color)",
                     cursor: "pointer",
                   }
             }
@@ -301,15 +300,15 @@ export default function Controls(props: Props) {
             sx={
               openChat
                 ? {
-                    bgcolor: "#FFF",
-                    border: "1px solid #1a3551",
-                    color: "#1a3551",
+                    bgcolor: "var(--pure_white_color)",
+                    border: "1px solid var(--secondary_blue_color)",
+                    color: "var(--secondary_blue_color)",
                     cursor: "pointer",
                   }
                 : {
-                    bgcolor: "#1a3551",
-                    border: "1px solid #FFF",
-                    color: "#FFF",
+                    bgcolor: "var(--secondary_blue_color)",
+                    border: "1px solid var(--pure_white_color)",
+                    color: "var(--pure_white_color)",
                     cursor: "pointer",
                   }
             }
@@ -338,15 +337,15 @@ export default function Controls(props: Props) {
               sx={
                 isScreenShared
                   ? {
-                      bgcolor: "#FFF",
-                      border: "1px solid #1a3551",
-                      color: "#1a3551",
+                      bgcolor: "var(--pure_white_color)",
+                      border: "1px solid var(--secondary_blue_color)",
+                      color: "var(--secondary_blue_color)",
                       cursor: "pointer",
                     }
                   : {
-                      bgcolor: "#1a3551",
-                      border: "1px solid #FFF",
-                      color: "#FFF",
+                      bgcolor: "var(--secondary_blue_color)",
+                      border: "1px solid var(--pure_white_color)",
+                      color: "var(--pure_white_color)",
                       cursor: "pointer",
                     }
               }
@@ -378,15 +377,15 @@ export default function Controls(props: Props) {
               sx={
                 recording
                   ? {
-                      bgcolor: "#FFF",
-                      border: "1px solid #1a3551",
-                      color: pink[500],
+                      bgcolor: "var(--pure_white_color)",
+                      border: "1px solid var(--secondary_blue_color)",
+                      color: "var(--color_pink)",
                       cursor: "pointer",
                     }
                   : {
-                      bgcolor: "#1a3551",
-                      border: "1px solid #FFF",
-                      color: "#FFF",
+                      bgcolor: "var(--secondary_blue_color)",
+                      border: "1px solid var(--pure_white_color)",
+                      color: "var(--pure_white_color)",
                       cursor: "pointer",
                     }
               }
@@ -409,9 +408,9 @@ export default function Controls(props: Props) {
               history.push(routes.HOME);
             }}
             sx={{
-              bgcolor: "#1a3551",
-              border: "1px solid #FFF",
-              color: "#FFF",
+              bgcolor: "var(--secondary_blue_color)",
+              border: "1px solid var(--pure_white_color)",
+              color: "var(--pure_white_color)",
               cursor: "pointer",
             }}
           >

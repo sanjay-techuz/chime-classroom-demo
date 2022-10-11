@@ -11,13 +11,13 @@
 
 .form {
   display: flex;
-  background-color: #1a3551;
+  background-color: var(--secondary_blue_color);
   border-radius: 0.25rem;
 }
 
 .input {
   flex: 1 1 auto;
-  color: #FFF;
+  color: var(--pure_white_color);
   background-color: transparent;
   outline: none;
   border: none;

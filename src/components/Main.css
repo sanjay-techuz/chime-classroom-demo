@@ -11,7 +11,7 @@
 }
 
 .Main_content {
-  color: var(--color_mine_shaft_dark);
+  color: var(--primary_blue_color);
   width: var(--screen_picker_width);
   background-color: var(--color_alabaster);
   border-radius: 0.25rem;
@@ -54,7 +54,7 @@
   font-size: 1.1rem;
   font-weight: 500;
   color: var(--color_alabaster);
-  background: var(--color_mine_shaft_light);
+  background: var(--primary_blue_color);
   cursor: pointer;
   transition: background-color 0.15s;
   user-select: none;
@@ -62,5 +62,5 @@
 }
 
 .Main_selection button:hover {
-  background: var(--color_cod_gray_medium);
+  background: var(--secondary_blue_color);
 }

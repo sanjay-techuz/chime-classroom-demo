@@ -8,7 +8,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
 }>(({ theme, leftopen, rightopen, mobileview, drawerWidth }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
-  backgroundColor: "#142230 !important",
+  backgroundColor: "var(--primary_blue_color) !important",
   // transition: theme.transitions.create("margin", {
   //   easing: theme.transitions.easing.sharp,
   //   duration: theme.transitions.duration.leavingScreen,

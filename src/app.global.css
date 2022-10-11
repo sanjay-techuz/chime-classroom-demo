@@ -26,7 +26,13 @@
    --color_thunderbird: #d62f12;
    --color_black_medium_opacity: rgba(0, 0, 0, 0.6);
    --color_black_low_opacity: rgba(0, 0, 0, 0.25);
-   --color_green: #09ff00;
+   --color_green: #4caf50;
+
+   --primary_blue_color: #142230;
+   --secondary_blue_color: #1a3551;
+   --pure_white_color: #FFF;
+   --color_pink: #e91e63;
+   --color_grey: #757575;
  }
  
  *,
@@ -38,7 +44,7 @@
  body {
    position: relative;
    color: var(--color_alabaster);
-   background-color: var(--color_mine_shaft_light);
+   background-color: var(--primary_blue_color);
    height: 100vh;
    margin: 0;
    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

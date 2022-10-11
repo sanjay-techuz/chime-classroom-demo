@@ -17,7 +17,6 @@ import {
   Tooltip,
   ListItemText,
 } from "@mui/material";
-import { green, grey, indigo, pink } from "@mui/material/colors";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
 import VideocamIcon from "@mui/icons-material/Videocam";
@@ -103,7 +102,7 @@ export default function Roster() {
         bgcolor: "background.paper",
       }}
     >
-      <Box sx={{ paddingTop: "25px", color: grey[600] }}>
+      <Box sx={{ paddingTop: "25px", color: "var(--color_grey)" }}>
         <ListItem>
           <ListItemText>Users{` (${attendeeIds.length})`}</ListItemText>
           <ListItemIcon sx={{ minWidth: "30px" }}>
@@ -136,7 +135,7 @@ export default function Roster() {
                   anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                   badgeContent={
                     <SmallAvatar
-                      bgcolor={rosterAttendee?.muted ? pink[500] : indigo[900]}
+                      bgcolor={rosterAttendee?.muted ? "var(--color_pink)" : "var(--secondary_blue_color)"}
                     >
                       {rosterAttendee?.muted ? (
                         <MicOffOutlinedIcon sx={{ fontSize: "14px" }} />
@@ -146,7 +145,7 @@ export default function Roster() {
                     </SmallAvatar>
                   }
                 >
-                  <Avatar sx={{ bgcolor: green[500] }} variant="rounded">
+                  <Avatar sx={{ bgcolor: "var(--color_green)" }} variant="rounded">
                     {initials}
                   </Avatar>
                 </Badge>

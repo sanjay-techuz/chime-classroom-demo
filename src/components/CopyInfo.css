@@ -19,9 +19,9 @@
 }
 
 .CopyInfo_url_btn{
-    background-color: #FFFFFF;
+    background-color: var(--pure_white_color);
     cursor: pointer;
-    color: black;
+    color: var(--color_black);
     padding: 5px;
     display: flex;
     align-items: center;
