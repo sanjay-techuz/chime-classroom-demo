@@ -36,6 +36,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getMeetingStatusContext from "../context/getMeetingStatusContext";
+import getGlobalVarContext from '../context/getGlobalVarContext';
 import getUIStateContext from "../context/getUIStateContext";
 import ClassMode from "../enums/ClassMode";
 import MeetingStatus from "../enums/MeetingStatus";
@@ -180,17 +181,19 @@ export default function Classroom() {
   Modal.setAppElement("body");
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const [state] = useContext(getUIStateContext());
+  const { globalVar } = useContext(getGlobalVarContext());
+  const { activeSpeakerAttendeeId } = globalVar;
   const { meetingStatus, errorMessage } = useContext(getMeetingStatusContext());
   const [isContentShareEnabled, setIsContentShareEnabled] = useState(false);
+
   const [tryToReload, setTryToReload] = useState(true);
   const [viewMode, setViewMode] = useState(ViewMode.Room);
   const [isMobileView, setIsMobileView] = useState(false);
   const [tab, setTab] = useState(0);
-  const [isModeTransitioning, setIsModeTransitioning] = useState(false);
-  const [openRightBar, setOpenRightBar] = useState(true);
   const [leftDrawerOpen, setLeftDrawerOpen] = React.useState(false);
   const [rightDrawerOpen, setRightDrawerOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [isGridView, setIsGridView] = useState(false);
   const open = Boolean(anchorEl);
 
   const intl = useIntl();
@@ -206,7 +209,6 @@ export default function Classroom() {
   }, []);
 
   const stopContentShare = async () => {
-    setIsModeTransitioning(true);
     await new Promise((resolve) => setTimeout(resolve, 200));
     try {
       chime?.audioVideo?.stopContentShare();
@@ -215,7 +217,6 @@ export default function Classroom() {
       console.error(error);
     } finally {
       setViewMode(ViewMode.Room);
-      setIsModeTransitioning(false);
     }
   };
 
@@ -322,11 +323,11 @@ export default function Classroom() {
                   <Typography
                     variant="h6"
                     noWrap
-                    sx={{ flexGrow: 1 }}
+                    sx={{ flexGrow: 1, textTransform:"capitalize" }}
                     component="div"
                     align="center"
                   >
-                    Persistent drawer
+                    {chime?.roster[activeSpeakerAttendeeId]?.name}
                   </Typography>
                   <IconButton
                     color="inherit"
@@ -358,8 +359,9 @@ export default function Classroom() {
                     }}>Device settings</MenuItem>
                     <MenuItem onClick={() => {
                       // setTab(0);
+                      setIsGridView(!isGridView)
                       handleClose();
-                    }}>Grid View</MenuItem>
+                    }}>{isGridView ? "Active speaker view" : "Grid view"}</MenuItem>
                   </Menu>
                 </Toolbar>
               </AppBar>
@@ -394,13 +396,14 @@ export default function Classroom() {
                       <RemoteVideoGroup
                         viewMode={viewMode}
                         isContentShareEnabled={isContentShareEnabled}
+                        isGridView={isGridView}
                       />
                     </div>
-                    <div className={cx("ClassRoom_localVideoWrapper")}>
+                    {/* <div className={cx("ClassRoom_localVideoWrapper")}>
                       <div className={cx("ClassRoom_localVideo")}>
                         <LocalVideo />
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </Main>
                 <Drawer

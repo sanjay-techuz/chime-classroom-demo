@@ -15,12 +15,19 @@ export default function GlobalVarProvider(props: Props) {
   const GlobalVarContext = getGlobalVarContext();
   const [globalVar, setGlobalVar] = useState({
       localVideo:false,
+      activeSpeakerAttendeeId:"",
   });
 
   const updateGlobalVar = (key,value) => {
     switch (key){
         case("localVideo"):
-        setGlobalVar((oldData) => ({ ...oldData, localVideo: value }))
+          setGlobalVar((oldData) => ({ ...oldData, localVideo: value }));
+          break;
+        case("activeSpeakerAttendeeId"):
+          setGlobalVar((oldData) => ({ ...oldData, activeSpeakerAttendeeId: value }))
+          break;
+        default:
+          break;
     }
   }
 

@@ -139,7 +139,7 @@ export default function Roster() {
                 <Avatar sx={{ bgcolor: green[500] }} variant="rounded">{initials}</Avatar>
               </Badge>
               </ListItemAvatar>
-                <ListItemText primary={`${attendeeName}`} />
+                <ListItemText primary={`${attendeeName}`} sx={{ textTransform:"capitalize"}} />
                 <ListItemIcon sx={{ minWidth: '30px'}}>
                 {raisedHandAttendees.has(attendeeId) && (
                 <div className={cx('Roster_raisedHand')}>

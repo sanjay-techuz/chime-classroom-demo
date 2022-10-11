@@ -60,6 +60,7 @@ export default function Controls(props: Props) {
   const { viewMode, onClickShareButton, onClickChatButton, tab } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
+  const { localVideo } = globalVar;
   const [state] = useContext(getUIStateContext());
   const history = useHistory();
   const [muted, setMuted] = useState(false);
@@ -75,12 +76,24 @@ export default function Controls(props: Props) {
     const callback = (localMuted: boolean) => {
       setMuted(localMuted);
     };
+
+    const screenShareCb = {
+      contentShareDidStart: () => {
+        setIsScreenShared(true);
+      },
+      contentShareDidStop: () => {
+        setIsScreenShared(false);
+      },
+    };
+
     chime?.audioVideo?.realtimeSubscribeToMuteAndUnmuteLocalAudio(callback);
+    chime?.audioVideo?.addContentShareObserver(screenShareCb);
     return () => {
       if (chime && chime?.audioVideo) {
         chime?.audioVideo?.realtimeUnsubscribeToMuteAndUnmuteLocalAudio(
           callback
         );
+        chime?.audioVideo?.removeContentShareObserver(screenShareCb);
       }
     };
   }, []);
@@ -94,9 +107,8 @@ export default function Controls(props: Props) {
   }, [tab]);
 
   useEffect(() => {
-    const localVideo = globalVar?.localVideo;
     setVideoStatus(localVideo ? VideoStatus.Enabled : VideoStatus.Disabled)
-  },[globalVar])
+  },[localVideo])
 
   const handleRecording = async () => {
     setRecording(!recording);
@@ -332,10 +344,8 @@ export default function Controls(props: Props) {
               onClick={() => {
                 if (!isScreenShared) {
                   onClickShareButton(true);
-                  setIsScreenShared(true);
                 } else {
                   onClickShareButton(false);
-                  setIsScreenShared(false);
                 }
               }}
               sx={

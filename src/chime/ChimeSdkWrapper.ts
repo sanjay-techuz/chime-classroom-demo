@@ -350,22 +350,22 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       }
     );
 
-    this.audioVideo.subscribeToActiveSpeakerDetector(
-      new DefaultActiveSpeakerPolicy(),
-      (attendeeIds: string[]): void => {
-        Object.keys(this.roster).forEach(attendeeId => {
-          this.roster[attendeeId].active = false;
-        });
+    // this.audioVideo.subscribeToActiveSpeakerDetector(
+    //   new DefaultActiveSpeakerPolicy(),
+    //   (attendeeIds: string[]): void => {
+    //     Object.keys(this.roster).forEach(attendeeId => {
+    //       this.roster[attendeeId].active = false;
+    //     });
 
-        attendeeIds.some(attendeeId => {
-          if (this.roster[attendeeId]) {
-            this.roster[attendeeId].active = true;
-            return true; // only show the most active speaker
-          }
-          return false;
-        });
-      }
-    );
+    //     attendeeIds.some(attendeeId => {
+    //       if (this.roster[attendeeId]) {
+    //         this.roster[attendeeId].active = true;
+    //         return true; // only show the most active speaker
+    //       }
+    //       return false;
+    //     });
+    //   }
+    // );
   };
 
   joinRoom = async (element: HTMLAudioElement | null): Promise<void> => {

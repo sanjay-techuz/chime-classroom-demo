@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-.RemoteVideo_remoteVideo {
+ .RemoteVideo_remoteVideo {
   display: none;
   position: relative;
   background: transparent;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .RemoteVideo_remoteVideo.roomMode {

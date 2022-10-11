@@ -63,6 +63,7 @@
   white-space: nowrap;
   overflow: auto;
   text-overflow: ellipsis;
+  text-transform: capitalize;
 }
 
 .VideoNameplate_muted {
