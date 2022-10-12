@@ -5,7 +5,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   rightopen?: boolean;
   mobileview?: boolean;
   drawerWidth?: number;
-}>(({ theme, leftopen, rightopen, mobileview, drawerWidth }) => ({
+}>(({ theme, leftopen, rightopen, mobileview, drawerWidth = 0 }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
   backgroundColor: "var(--primary_blue_color) !important",

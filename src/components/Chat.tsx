@@ -43,10 +43,10 @@ export default function Chat() {
   );
   const bottomElement = useRef(null);
   const roster = useRoster();
-  const localUserId: string =
+  const localUserId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
 
-  let chatAttendeeIds;
+  let chatAttendeeIds: Array<string> = [];
   if (chime?.meetingSession && roster) {
     chatAttendeeIds = Object.keys(roster).filter(
       (attendeeId: string) => attendeeId !== localUserId
@@ -92,7 +92,7 @@ export default function Chat() {
   }, [messages]);
 
   useEffect(() => {
-    const filteredArry = [];
+    const filteredArry: DataMessage[] = [];
     messages.forEach((message) => {
       if (message.topic === MessageTopic.GroupChat) {
         const msgObj = JSON.parse(new TextDecoder().decode(message.data));
@@ -162,7 +162,7 @@ export default function Chat() {
                 onClick={() => {
                   setActiveChatAttendee(chatAttdId);
                   setActiveChannel(
-                    createPrivateChannel(localUserId, chatAttdId)
+                    createPrivateChannel(localUserId as string, chatAttdId)
                   );
                 }}
               >
@@ -182,7 +182,7 @@ export default function Chat() {
       >
         <div className={cx("Chat_messages")}>
           {filterMessage.map((message) => {
-            let messageString: string;
+            let messageString: string = "";
             if (message.topic === MessageTopic.GroupChat) {
               messageString = JSON.parse(
                 new TextDecoder().decode(message.data)

@@ -74,7 +74,7 @@ export default function MeetingStatusProvider(props: Props) {
         });
 
         await chime?.joinRoom(audioElement.current);
-      } catch (error) {
+      } catch (error: any) {
         // eslint-disable-next-line
         console.error(error);
         setMeetingStatus({

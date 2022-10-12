@@ -1,15 +1,15 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import classNames from 'classnames/bind';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import classNames from "classnames/bind";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import ViewMode from '../enums/ViewMode';
-import Size from '../enums/Size';
-import VideoNameplate from './VideoNameplate';
-import styles from './RemoteVideo.css';
+import ViewMode from "../enums/ViewMode";
+import Size from "../enums/Size";
+import VideoNameplate from "./VideoNameplate";
+import styles from "./RemoteVideo.css";
 
 const cx = classNames.bind(styles);
 
@@ -34,18 +34,18 @@ export default function RemoteVideo(props: Props) {
     attendeeId,
     raisedHand,
     activeSpeaker,
-    isContentShareEnabled
+    isContentShareEnabled,
   } = props;
   return (
     <div
-      className={cx('RemoteVideo_remoteVideo', {
+      className={cx("RemoteVideo_remoteVideo", {
         roomMode: viewMode === ViewMode.Room,
         screenShareMode: viewMode === ViewMode.ScreenShare,
         enabled,
-        activeSpeaker
+        activeSpeaker,
       })}
     >
-      <video muted ref={videoElementRef} className={cx('RemoteVideo_video')} />
+      <video muted ref={videoElementRef} className={cx("RemoteVideo_video")} />
       <VideoNameplate
         viewMode={viewMode}
         size={size}
@@ -53,11 +53,11 @@ export default function RemoteVideo(props: Props) {
         attendeeId={attendeeId}
       />
       {raisedHand && (
-        <div className={cx('RemoteVideo_raisedHand')}>
+        <div className={cx("RemoteVideo_raisedHand")}>
           <span
             role="img"
             aria-label={intl.formatMessage({
-              id: 'RemoteVideo.raiseHandAriaLabel'
+              id: "RemoteVideo.raiseHandAriaLabel",
             })}
           >
             ✋

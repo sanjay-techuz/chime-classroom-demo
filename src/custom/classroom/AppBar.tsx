@@ -1,5 +1,5 @@
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 
 interface AppBarProps extends MuiAppBarProps {
   leftopen?: boolean;
@@ -20,7 +20,7 @@ const AppBar = styled(MuiAppBar, {
     anchor,
     mobileview,
     background,
-    drawerWidth,
+    drawerWidth = 0,
   }) => ({
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,

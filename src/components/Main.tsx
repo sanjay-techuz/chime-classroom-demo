@@ -1,17 +1,17 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import classNames from 'classnames/bind';
-import React, { useContext, useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { useHistory } from 'react-router-dom';
+import classNames from "classnames/bind";
+import React, { useContext, useEffect } from "react";
+import { FormattedMessage } from "react-intl";
+import { useHistory } from "react-router-dom";
 
-import localStorageKeys from '../constants/localStorageKeys.json';
-import routes from '../constants/routes.json';
-import getUIStateContext from '../context/getUIStateContext';
-import ClassMode from '../enums/ClassMode';
-import styles from './Main.css';
+import localStorageKeys from "../constants/localStorageKeys.json";
+import routes from "../constants/routes.json";
+import getUIStateContext from "../context/getUIStateContext";
+import ClassMode from "../enums/ClassMode";
+import styles from "./Main.css";
 
 const cx = classNames.bind(styles);
 
@@ -22,21 +22,21 @@ export default function Main() {
   useEffect(() => {
     localStorage.clear();
     dispatch({
-      type: 'SET_CLASS_MODE',
+      type: "SET_CLASS_MODE",
       payload: {
-        classMode: null
-      }
+        classMode: null,
+      },
     });
   }, []);
 
   return (
-    <div className={cx('Main_main')}>
-      <div className={cx('Main_content')}>
-        <h1 className={cx('Main_title')}>
+    <div className={cx("Main_main")}>
+      <div className={cx("Main_content")}>
+        <h1 className={cx("Main_title")}>
           <FormattedMessage id="Main.title" />
         </h1>
-        <div className={cx('Main_selection')}>
-          <div className={cx('Main_teacher')}>
+        <div className={cx("Main_selection")}>
+          <div className={cx("Main_teacher")}>
             <button
               type="button"
               onClick={() => {
@@ -45,10 +45,10 @@ export default function Main() {
                   ClassMode.Teacher
                 );
                 dispatch({
-                  type: 'SET_CLASS_MODE',
+                  type: "SET_CLASS_MODE",
                   payload: {
-                    classMode: ClassMode.Teacher
-                  }
+                    classMode: ClassMode.Teacher,
+                  },
                 });
                 history.push(routes.CREATE_OR_JOIN);
               }}
@@ -56,7 +56,7 @@ export default function Main() {
               <FormattedMessage id="Main.createButton" />
             </button>
           </div>
-          <div className={cx('Main_student')}>
+          <div className={cx("Main_student")}>
             <button
               type="button"
               onClick={() => {
@@ -65,10 +65,10 @@ export default function Main() {
                   ClassMode.Student
                 );
                 dispatch({
-                  type: 'SET_CLASS_MODE',
+                  type: "SET_CLASS_MODE",
                   payload: {
-                    classMode: ClassMode.Student
-                  }
+                    classMode: ClassMode.Student,
+                  },
                 });
                 history.push(routes.CREATE_OR_JOIN);
               }}

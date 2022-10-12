@@ -14,7 +14,7 @@ import {
   LogLevel,
   MeetingSession,
   MeetingSessionConfiguration,
-  DefaultActiveSpeakerPolicy,
+  // DefaultActiveSpeakerPolicy,
   DefaultBrowserBehavior
 } from 'amazon-chime-sdk-js';
 import { useIntl } from 'react-intl';
@@ -28,7 +28,6 @@ import RosterType from '../types/RosterType';
 import commonob from '../constants/common.json'
 import OptionalFeature from '../enums/OptionalFeature';
 import localStorageKeys from '../constants/localStorageKeys.json';
-import { stopRecording } from '../services';
 
 export default class ChimeSdkWrapper implements DeviceChangeObserver {
   intl = useIntl();
@@ -210,7 +209,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     localStorage.setItem(localStorageKeys.CURRENT_MEETING_ID, JoinInfo.Meeting.MeetingId);
     localStorage.setItem(localStorageKeys.CURRENT_ATTENDEE_ID, JoinInfo.Attendee.AttendeeId);
   }else{
-    const joinInfo = JSON.parse(localStorage.getItem(localStorageKeys.MEETING_CONFIG));
+    const joinInfo = JSON.parse(localStorage.getItem(localStorageKeys.MEETING_CONFIG) as string);
     this.configuration = new MeetingSessionConfiguration(
       joinInfo.Meeting,
       joinInfo.Attendee
@@ -326,7 +325,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
               );
               const json = await response.json();
               
-              if(this.roster[this.meetingSession?.configuration.credentials?.attendeeId]?.name === this.meetingRecorderName){
+              if(this.roster[this.meetingSession?.configuration.credentials?.attendeeId as string]?.name === this.meetingRecorderName){
                 this.audioVideo?.realtimeMuteLocalAudio();
               }
 
@@ -441,8 +440,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
 
   leaveRoom = async (end: boolean): Promise<void> => {
     try {
-      this.audioVideo.chooseVideoInputDevice(null);
-      this.audioVideo.stopLocalVideoTile();
+      this.audioVideo?.chooseVideoInputDevice(null);
+      this.audioVideo?.stopLocalVideoTile();
       this.audioVideo?.stop();
     } catch (error) {
       this.logError(error);
@@ -666,7 +665,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
    * Utilities
    * ====================================================================
    */
-  private logError = (error: Error) => {
+  private logError = (error: any) => {
     // eslint-disable-next-line
     console.error(error);
   };

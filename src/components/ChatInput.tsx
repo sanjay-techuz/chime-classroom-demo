@@ -1,18 +1,18 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable  */ 
+/* eslint-disable  */
 
-import classNames from 'classnames/bind';
-import React, { useContext, useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
+import classNames from "classnames/bind";
+import React, { useContext, useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
-import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
-import getChimeContext from '../context/getChimeContext';
-import getUIStateContext from '../context/getUIStateContext';
-import ClassMode from '../enums/ClassMode';
-import useFocusMode from '../hooks/useFocusMode';
-import styles from './ChatInput.css';
-import MessageTopic from '../enums/MessageTopic';
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
+import getUIStateContext from "../context/getUIStateContext";
+import ClassMode from "../enums/ClassMode";
+import useFocusMode from "../hooks/useFocusMode";
+import styles from "./ChatInput.css";
+import MessageTopic from "../enums/MessageTopic";
 
 const cx = classNames.bind(styles);
 
@@ -26,7 +26,7 @@ export default React.memo(function ChatInput(props: Props) {
   const { activeChannel } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const [state] = useContext(getUIStateContext());
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
   const [raised, setRaised] = useState(false);
   const focusMode = useFocusMode();
   const intl = useIntl();
@@ -52,22 +52,21 @@ export default React.memo(function ChatInput(props: Props) {
     }
   }, [raised, chime?.configuration]);
 
-
   return (
-    <div className={cx('chatInput')}>
+    <div className={cx("chatInput")}>
       <form
-        onSubmit={event => {
+        onSubmit={(event) => {
           event.preventDefault();
         }}
-        className={cx('form')}
+        className={cx("form")}
       >
         <input
-          className={cx('input')}
+          className={cx("input")}
           value={inputText}
-          onChange={event => {
+          onChange={(event) => {
             setInputText(event.target.value);
           }}
-          onKeyUp={event => {
+          onKeyUp={(event) => {
             event.preventDefault();
             if (focusMode && state.classMode === ClassMode.Student) {
               return;
@@ -76,22 +75,25 @@ export default React.memo(function ChatInput(props: Props) {
               const sendingMessage = inputText.trim();
               const msgObject = {
                 sendingMessage,
-                channel: activeChannel
-              }
+                channel: activeChannel,
+              };
               const attendeeId = chime?.configuration?.credentials?.attendeeId;
-              if (sendingMessage !== '' && attendeeId) {
-                chime?.sendMessage(MessageTopic.GroupChat, JSON.stringify(msgObject));
-                setInputText('');
+              if (sendingMessage !== "" && attendeeId) {
+                chime?.sendMessage(
+                  MessageTopic.GroupChat,
+                  JSON.stringify(msgObject)
+                );
+                setInputText("");
               }
             }
           }}
-          placeholder={intl.formatMessage({ id: 'ChatInput.inputPlaceholder' })}
+          placeholder={intl.formatMessage({ id: "ChatInput.inputPlaceholder" })}
         />
         {state.classMode === ClassMode.Student && (
           <button
             type="button"
-            className={cx('raiseHandButton', {
-              raised
+            className={cx("raiseHandButton", {
+              raised,
             })}
             onClick={() => {
               setRaised(!raised);
@@ -100,7 +102,7 @@ export default React.memo(function ChatInput(props: Props) {
             <span
               role="img"
               aria-label={intl.formatMessage({
-                id: 'ChatInput.raiseHandAriaLabel'
+                id: "ChatInput.raiseHandAriaLabel",
               })}
             >
               ✋

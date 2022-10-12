@@ -107,7 +107,7 @@ export default function Controls(props: Props) {
       }
     } else {
       try {
-        const result = await startRecording(chime?.meetingId);
+        const result = await startRecording(chime?.meetingId as string);
         console.log(result);
         setMediaPipelineId(result.MediaPipelineId);
       } catch (err) {

@@ -1,4 +1,4 @@
-export function nameInitials(name: string) {
+export function nameInitials(name?: string) {
   let initials;
   if (name) {
     initials = name

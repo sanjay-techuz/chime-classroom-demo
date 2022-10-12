@@ -63,7 +63,7 @@ export default function LocalVideo(props: Props) {
           viewMode={viewMode}
           size={size}
           isContentShareEnabled={isContentShareEnabled}
-          attendeeId={attendeeId}
+          attendeeId={attendeeId as string}
         />
       </div>
       {!enabled && (
@@ -71,8 +71,8 @@ export default function LocalVideo(props: Props) {
           viewMode={viewMode}
           size={size}
           isContentShareEnabled={isContentShareEnabled}
-          attendeeId={attendeeId}
-          name={name}
+          attendeeId={attendeeId as string}
+          name={name as string}
         />
       )}
     </>

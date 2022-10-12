@@ -46,7 +46,7 @@ export default function RemoteVideoGroup(props: Props) {
   const roster = useRoster();
   const videoElements: HTMLVideoElement[] = [];
   const tiles: { [index: number]: number } = {};
-  const currentUser = chime?.configuration.credentials.attendeeId;
+  const currentUser = chime?.configuration?.credentials?.attendeeId;
   const [videoAttendees, setVideoAttendees] = useState(new Set());
   const [attendeeIdFullScreen, setAttendeeIdFullScreen] = useState("");
   const [gridViewRosterSize, setGridViewRosterView] = useState({
@@ -84,12 +84,15 @@ export default function RemoteVideoGroup(props: Props) {
     0
   );
 
-  const activeSpeakerCallback = (attendeeIds) => {
+  const activeSpeakerCallback = (attendeeIds: Array<string>) => {
     //remove selfAttendeeId when Speaker active   --sanjay balai
     if (attendeeIds.length) {
       const selfAttendeeId = currentUser;
-      function removeSelfAttendeeId(arr, value) {
-        return arr.filter(function (id) {
+      function removeSelfAttendeeId(
+        arr: Array<string>,
+        value: string | null | undefined
+      ) {
+        return arr.filter(function (id: string) {
           return id != value;
         });
       }
@@ -186,9 +189,11 @@ export default function RemoteVideoGroup(props: Props) {
   function reorganize() {
     const attdLength = Object.keys(roster);
     const window_height = document.getElementById("tileView");
-    const elHeight = window_height?.clientHeight - 50;
-    const size = rosterSize(elHeight,attdLength.length);
-    setGridViewRosterView({ ...size });
+    if (window_height) {
+      const elHeight = window_height?.clientHeight - 50;
+      const size = rosterSize(elHeight, attdLength.length);
+      setGridViewRosterView({ ...size });
+    }
   }
 
   // find the number of attendee join --sanjay balai
@@ -209,8 +214,8 @@ export default function RemoteVideoGroup(props: Props) {
 
   // remove self attendee for roster layout --sanjay balai
   const selfAttendeeId = currentUser;
-  function removeSelfAttendeeId(arr, value) {
-    return arr.filter(function (id) {
+  function removeSelfAttendeeId(arr: any[], value: string | null | undefined) {
+    return arr.filter(function (id: any) {
       return id != value;
     });
   }
@@ -318,7 +323,7 @@ export default function RemoteVideoGroup(props: Props) {
             </div>
           );
         })}
-        {attendeeIds.map((key: string, index: number) => {
+        {attendeeIds.map((key: string) => {
           let rosterAttendee: RosterAttendeeType = {};
 
           if (roster) {
@@ -358,7 +363,7 @@ export default function RemoteVideoGroup(props: Props) {
                   raisedHand={raisedHand}
                   activeSpeaker={activeSpeaker}
                   isContentShareEnabled={isContentShareEnabled}
-                  name={rosterAttendee.name}
+                  name={rosterAttendee?.name || ""}
                 />
               </div>
             );

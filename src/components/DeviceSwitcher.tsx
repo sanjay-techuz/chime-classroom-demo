@@ -28,9 +28,10 @@ export default function DeviceSwitcher() {
         <Select
           value={deviceSwitcherState?.currentAudioInputDevice?.value}
           onChange={async (event: any) => {
-            const selectedDevice = deviceSwitcherState.audioInputDevices.filter(
-              (item) => item.value === event.target.value
-            );
+            const selectedDevice =
+              deviceSwitcherState?.audioInputDevices?.filter(
+                (item) => item.value === event.target.value
+              );
             if (selectedDevice && selectedDevice.length > 0) {
               await chime?.chooseAudioInputDevice(selectedDevice[0]);
             }
@@ -59,7 +60,7 @@ export default function DeviceSwitcher() {
               return;
             }
             const selectedDevice =
-              deviceSwitcherState.audioOutputDevices.filter(
+              deviceSwitcherState?.audioOutputDevices?.filter(
                 (item) => item.value === event.target.value
               );
             if (selectedDevice && selectedDevice.length > 0) {
@@ -85,9 +86,10 @@ export default function DeviceSwitcher() {
         <Select
           value={deviceSwitcherState.currentVideoInputDevice?.value}
           onChange={async (event: any) => {
-            const selectedDevice = deviceSwitcherState.videoInputDevices.filter(
-              (item) => item.value === event.target.value
-            );
+            const selectedDevice =
+              deviceSwitcherState?.videoInputDevices?.filter(
+                (item) => item.value === event.target.value
+              );
             if (selectedDevice && selectedDevice.length > 0) {
               await chime?.chooseVideoInputDevice(selectedDevice[0]);
             }

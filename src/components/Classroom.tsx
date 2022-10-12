@@ -169,7 +169,15 @@ export default function Classroom() {
         }}
       />
       {tryToReload && (
-        <Box sx={{ display: "flex", width: "100%", height: "100%", alignItems:"center", justifyContent:"center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           {meetingStatus === MeetingStatus.Loading && <LoadingSpinner />}
           {meetingStatus === MeetingStatus.Failed && (
             <Error errorMessage={errorMessage} />
@@ -213,7 +221,10 @@ export default function Classroom() {
                     onClick={handleClick}
                   >
                     <Avatar
-                      sx={{ bgcolor: "var(--primary_blue_color)", border: "1px solid var(--pure_white_color)" }}
+                      sx={{
+                        bgcolor: "var(--primary_blue_color)",
+                        border: "1px solid var(--pure_white_color)",
+                      }}
                     >
                       <MoreVertOutlinedIcon />
                     </Avatar>

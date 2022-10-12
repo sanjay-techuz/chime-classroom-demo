@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 /* eslint-disable  */ 
 
-import React, { ReactNode, useState, useReducer,useEffect } from 'react';
+import React, { ReactNode, useState } from 'react';
 import getGlobalVarContext from '../context/getGlobalVarContext';
 
 type Props = {
@@ -18,7 +18,7 @@ export default function GlobalVarProvider(props: Props) {
       activeSpeakerAttendeeId:"",
   });
 
-  const updateGlobalVar = (key,value) => {
+  const updateGlobalVar = (key: string,value: any) => {
     switch (key){
         case("localVideo"):
           setGlobalVar((oldData) => ({ ...oldData, localVideo: value }));
