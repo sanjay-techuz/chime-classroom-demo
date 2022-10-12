@@ -20,10 +20,11 @@ let timeoutId: number;
 
 type Props = {
   activeChannel: string;
+  activeChatAttendee?: string;
 };
 
 export default React.memo(function ChatInput(props: Props) {
-  const { activeChannel } = props;
+  const { activeChannel, activeChatAttendee } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const [state] = useContext(getUIStateContext());
   const [inputText, setInputText] = useState("");
@@ -76,6 +77,7 @@ export default React.memo(function ChatInput(props: Props) {
               const msgObject = {
                 sendingMessage,
                 channel: activeChannel,
+                targetId: activeChatAttendee,
               };
               const attendeeId = chime?.configuration?.credentials?.attendeeId;
               if (sendingMessage !== "" && attendeeId) {

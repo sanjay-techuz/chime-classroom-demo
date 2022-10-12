@@ -16,10 +16,12 @@ import {
   ListItemAvatar,
   Paper,
   Typography,
+  Badge,
 } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
+import getGlobalVarContext from "../context/getGlobalVarContext";
 import useRoster from "../hooks/useRoster";
 import styles from "./Chat.css";
 import ChatInput from "./ChatInput";
@@ -28,11 +30,18 @@ import RosterAttendeeType from "../types/RosterAttendeeType";
 import localStorageKeys from "../constants/localStorageKeys.json";
 import { createPrivateChannel, nameInitials } from "../utils";
 import useRemoteControl from "../hooks/useRemoteControl";
+import SmallAvatar from "../custom/roster/SmallAvatar";
 
 const cx = classNames.bind(styles);
-
+var chatPannelOpen = false;
+var grpCnt = 0;
+var gbRoster: any;
+var currentChannel: string = MessageTopic.PublicChannel;
+var publicChannelCnt = 0;
 export default function Chat() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
+  const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
+  const { isChatOpen } = globalVar;
   const [messages, setMessages] = useState<DataMessage[]>([]);
   const [filterMessage, setFilterMessage] = useState<DataMessage[]>([]);
   const [activeChannel, setActiveChannel] = useState<string>(
@@ -48,6 +57,7 @@ export default function Chat() {
 
   let chatAttendeeIds: Array<string> = [];
   if (chime?.meetingSession && roster) {
+    gbRoster = roster;
     chatAttendeeIds = Object.keys(roster).filter(
       (attendeeId: string) => attendeeId !== localUserId
     );
@@ -58,9 +68,70 @@ export default function Chat() {
     );
   }
   useRemoteControl();
+
+  useEffect(() => {
+    chatPannelOpen = isChatOpen;
+  }, [isChatOpen]);
+
+  const messageCounter = async (message: DataMessage) => {
+    if (message.topic === MessageTopic.GroupChat) {
+      const msgObj = JSON.parse(new TextDecoder().decode(message.data));
+      if (message.senderAttendeeId !== localUserId) {
+        if (!chatPannelOpen) {
+          if (msgObj.channel === currentChannel) {
+            if (msgObj.channel !== MessageTopic.PublicChannel) {
+              if (msgObj.targetId === localUserId) {
+                chime?.updateChatMessageCounter(
+                  message.senderAttendeeId,
+                  gbRoster[message.senderAttendeeId].msgCount + 1
+                );
+                grpCnt = grpCnt + 1;
+                updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
+              }
+            } else {
+              publicChannelCnt = publicChannelCnt + 1;
+              updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
+            }
+          } else {
+            if (msgObj.channel !== MessageTopic.PublicChannel) {
+              if (msgObj.targetId === localUserId) {
+                chime?.updateChatMessageCounter(
+                  message.senderAttendeeId,
+                  gbRoster[message.senderAttendeeId].msgCount + 1
+                );
+                grpCnt = grpCnt + 1;
+                updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
+              }
+            } else {
+              publicChannelCnt = publicChannelCnt + 1;
+              updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
+            }
+          }
+        } else {
+          if (msgObj.channel !== currentChannel) {
+            if (msgObj.channel !== MessageTopic.PublicChannel) {
+              if (msgObj.targetId === localUserId) {
+                chime?.updateChatMessageCounter(
+                  message.senderAttendeeId,
+                  gbRoster[message.senderAttendeeId].msgCount + 1
+                );
+                grpCnt = grpCnt + 1;
+                updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
+              }
+            } else {
+              publicChannelCnt = publicChannelCnt + 1;
+              updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
+            }
+          }
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     const realTimeMessages: DataMessage[] = [];
     const callback = (message: DataMessage) => {
+      messageCounter(message);
       realTimeMessages.push(message);
       setMessages(realTimeMessages.slice() as DataMessage[]);
     };
@@ -80,6 +151,11 @@ export default function Chat() {
     return () => {
       chime?.unsubscribeFromMessageUpdate(chatMessageUpdateCallback);
       chime?.unsubscribeFromMessageUpdate(raiseHandMessageUpdateCallback);
+      chatPannelOpen = false;
+      grpCnt = 0;
+      gbRoster = [];
+      currentChannel = MessageTopic.PublicChannel;
+      publicChannelCnt = 0;
     };
   }, []);
 
@@ -133,41 +209,91 @@ export default function Chat() {
             margin: 0,
           }}
         >
-          <Avatar
-            sx={{
-              bgcolor:
-                activeChatAttendee === MessageTopic.PublicChannel
-                  ? "var(--color_green)"
-                  : "var(--primary_blue_color)",
-            }}
-            variant="rounded"
-            onClick={() => {
-              setActiveChatAttendee(MessageTopic.PublicChannel);
-              setActiveChannel(MessageTopic.PublicChannel);
-            }}
+          <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            badgeContent={
+              <SmallAvatar
+                sx={{
+                  display: publicChannelCnt === 0 ? "none" : "flex",
+                  fontSize: publicChannelCnt <= 99 ? "1rem" : "0.6rem",
+                }}
+                bgcolor={"var(--color_pink)"}
+              >
+                {publicChannelCnt <= 99 ? publicChannelCnt : "99+"}
+              </SmallAvatar>
+            }
           >
-            All
-          </Avatar>
+            <Avatar
+              sx={{
+                bgcolor:
+                  activeChatAttendee === MessageTopic.PublicChannel
+                    ? "var(--color_green)"
+                    : "var(--primary_blue_color)",
+              }}
+              variant="rounded"
+              onClick={() => {
+                setActiveChatAttendee(MessageTopic.PublicChannel);
+                setActiveChannel(MessageTopic.PublicChannel);
+                currentChannel = MessageTopic.PublicChannel;
+                publicChannelCnt = 0;
+                updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
+              }}
+            >
+              All
+            </Avatar>
+          </Badge>
           {chatAttendeeIds.map((chatAttdId: string) => {
             const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
             const initials = nameInitials(rosterAttendee?.name);
+            const msgCount = rosterAttendee?.msgCount
+              ? rosterAttendee?.msgCount
+              : 0;
             return (
-              <Avatar
-                key={chatAttdId}
-                sx={{
-                  bgcolor:
-                    activeChatAttendee === chatAttdId ? "var(--color_green)" : "var(--primary_blue_color)",
-                }}
-                variant="rounded"
-                onClick={() => {
-                  setActiveChatAttendee(chatAttdId);
-                  setActiveChannel(
-                    createPrivateChannel(localUserId as string, chatAttdId)
-                  );
-                }}
+              <Badge
+                overlap="circular"
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                badgeContent={
+                  <SmallAvatar
+                    sx={{
+                      display: msgCount === 0 ? "none" : "flex",
+                      fontSize: msgCount <= 99 ? "1rem" : "0.6rem",
+                    }}
+                    bgcolor={"var(--color_pink)"}
+                  >
+                    {msgCount <= 99 ? msgCount : "99+"}
+                  </SmallAvatar>
+                }
               >
-                {initials}
-              </Avatar>
+                <Avatar
+                  key={chatAttdId}
+                  sx={{
+                    bgcolor:
+                      activeChatAttendee === chatAttdId
+                        ? "var(--color_green)"
+                        : "var(--primary_blue_color)",
+                  }}
+                  variant="rounded"
+                  onClick={() => {
+                    setActiveChatAttendee(chatAttdId);
+                    grpCnt = grpCnt - msgCount;
+                    chime?.updateChatMessageCounter(chatAttdId, 0);
+                    setActiveChannel(
+                      createPrivateChannel(localUserId as string, chatAttdId)
+                    );
+                    currentChannel = createPrivateChannel(
+                      localUserId as string,
+                      chatAttdId
+                    );
+                    updateGlobalVar(
+                      "groupChatCounter",
+                      grpCnt + publicChannelCnt
+                    );
+                  }}
+                >
+                  {initials}
+                </Avatar>
+              </Badge>
             );
           })}
         </ImageList>
@@ -204,7 +330,10 @@ export default function Chat() {
                   }}
                 >
                   <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: "var(--color_green)" }} variant="rounded">
+                    <Avatar
+                      sx={{ bgcolor: "var(--color_green)" }}
+                      variant="rounded"
+                    >
                       {avtr}
                     </Avatar>
                   </ListItemAvatar>
@@ -234,7 +363,10 @@ export default function Chat() {
                   }}
                 >
                   <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: "var(--primary_blue_color)" }} variant="rounded">
+                    <Avatar
+                      sx={{ bgcolor: "var(--primary_blue_color)" }}
+                      variant="rounded"
+                    >
                       {avtr}
                     </Avatar>
                   </ListItemAvatar>
@@ -256,7 +388,10 @@ export default function Chat() {
           <div className="bottom" ref={bottomElement} />
         </div>
         <div className={cx("Chat_chatInput")}>
-          <ChatInput activeChannel={activeChannel} />
+          <ChatInput
+            activeChannel={activeChannel}
+            activeChatAttendee={activeChatAttendee}
+          />
         </div>
       </Box>
     </Box>

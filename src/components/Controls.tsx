@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useHistory } from "react-router-dom";
 
-import { Avatar, Box, Tooltip } from "@mui/material";
+import { Avatar, Badge, Box, Tooltip } from "@mui/material";
 import AutoModeIcon from "@mui/icons-material/AutoMode";
 import KeyboardVoiceOutlinedIcon from "@mui/icons-material/KeyboardVoiceOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
@@ -28,6 +28,7 @@ import ClassMode from "../enums/ClassMode";
 import ViewMode from "../enums/ViewMode";
 import MessageTopic from "../enums/MessageTopic";
 import { startRecording, stopRecording } from "../services";
+import SmallAvatar from "../custom/roster/SmallAvatar";
 
 enum VideoStatus {
   Disabled,
@@ -46,7 +47,7 @@ export default function Controls(props: Props) {
   const { viewMode, onClickShareButton, onClickChatButton, tab } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
-  const { localVideo } = globalVar;
+  const { localVideo, groupChatCounter } = globalVar;
   const [state] = useContext(getUIStateContext());
   const history = useHistory();
   const [muted, setMuted] = useState(false);
@@ -287,34 +288,50 @@ export default function Controls(props: Props) {
           title={intl.formatMessage({ id: "Controls.Chat" })}
           placement="bottom"
         >
-          <Avatar
-            onClick={() => {
-              if (!openChat) {
-                onClickChatButton(true);
-                setOpenChat(true);
-              } else {
-                onClickChatButton(false);
-                setOpenChat(false);
-              }
-            }}
-            sx={
-              openChat
-                ? {
-                    bgcolor: "var(--pure_white_color)",
-                    border: "1px solid var(--secondary_blue_color)",
-                    color: "var(--secondary_blue_color)",
-                    cursor: "pointer",
-                  }
-                : {
-                    bgcolor: "var(--secondary_blue_color)",
-                    border: "1px solid var(--pure_white_color)",
-                    color: "var(--pure_white_color)",
-                    cursor: "pointer",
-                  }
+          <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            badgeContent={
+              <SmallAvatar
+                sx={{
+                  display: groupChatCounter === 0 ? "none" : "flex",
+                  fontSize: groupChatCounter <= 99 ? "1rem" : "0.6rem",
+                }}
+                bgcolor={"var(--color_pink)"}
+              >
+                {groupChatCounter <= 99 ? groupChatCounter : "99+"}
+              </SmallAvatar>
             }
           >
-            {openChat ? <CommentOutlinedIcon /> : <CommentIcon />}
-          </Avatar>
+            <Avatar
+              onClick={() => {
+                if (!openChat) {
+                  onClickChatButton(true);
+                  setOpenChat(true);
+                } else {
+                  onClickChatButton(false);
+                  setOpenChat(false);
+                }
+              }}
+              sx={
+                openChat
+                  ? {
+                      bgcolor: "var(--pure_white_color)",
+                      border: "1px solid var(--secondary_blue_color)",
+                      color: "var(--secondary_blue_color)",
+                      cursor: "pointer",
+                    }
+                  : {
+                      bgcolor: "var(--secondary_blue_color)",
+                      border: "1px solid var(--pure_white_color)",
+                      color: "var(--pure_white_color)",
+                      cursor: "pointer",
+                    }
+              }
+            >
+              {openChat ? <CommentOutlinedIcon /> : <CommentIcon />}
+            </Avatar>
+          </Badge>
         </Tooltip>
 
         {viewMode !== ViewMode.ScreenShare && (

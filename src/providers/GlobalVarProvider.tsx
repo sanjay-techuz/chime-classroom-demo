@@ -16,6 +16,8 @@ export default function GlobalVarProvider(props: Props) {
   const [globalVar, setGlobalVar] = useState({
       localVideo:false,
       activeSpeakerAttendeeId:"",
+      isChatOpen:false,
+      groupChatCounter:0,
   });
 
   const updateGlobalVar = (key: string,value: any) => {
@@ -26,6 +28,12 @@ export default function GlobalVarProvider(props: Props) {
         case("activeSpeakerAttendeeId"):
           setGlobalVar((oldData) => ({ ...oldData, activeSpeakerAttendeeId: value }))
           break;
+        case("isChatOpen"):
+          setGlobalVar((oldData) => ({ ...oldData, isChatOpen: value }))
+          break;
+        case("groupChatCounter"):
+          setGlobalVar((oldData) => ({ ...oldData, groupChatCounter: value }))
+          break;                   
         default:
           break;
     }

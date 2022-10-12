@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 type RosterAttendeeType = {
+  msgCount?: number;
   name?: string;
   muted?: boolean;
   signalStrength?: number;

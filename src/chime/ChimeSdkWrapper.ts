@@ -336,6 +336,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
                 return;
               }
               this.roster[attendeeId].name = json.AttendeeInfo?.Name || '';
+              this.roster[attendeeId].msgCount = 0;
 
               shouldPublishImmediately = true;
             }
@@ -366,6 +367,12 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     //   }
     // );
   };
+
+  // UPDATE MESSAGE COUNTER FOR PURTICULAR ATTENDEE
+  updateChatMessageCounter = (attendeeId: string, count: number) => { 
+      this.roster[attendeeId].msgCount = count;
+      this.publishRosterUpdate();
+  }
 
   joinRoom = async (element: HTMLAudioElement | null): Promise<void> => {
     if (!element) {

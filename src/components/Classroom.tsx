@@ -57,7 +57,7 @@ export default function Classroom() {
   Modal.setAppElement("body");
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const [state] = useContext(getUIStateContext());
-  const { globalVar } = useContext(getGlobalVarContext());
+  const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
   const { activeSpeakerAttendeeId } = globalVar;
   const { meetingStatus, errorMessage } = useContext(getMeetingStatusContext());
   const [isContentShareEnabled, setIsContentShareEnabled] = useState(false);
@@ -159,6 +159,14 @@ export default function Classroom() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    if(tab === 1){
+      updateGlobalVar("isChatOpen", true);
+    }else{
+      updateGlobalVar("isChatOpen", false);
+    }
+  },[tab])
 
   return (
     <>
