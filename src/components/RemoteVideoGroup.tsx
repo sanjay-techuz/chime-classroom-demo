@@ -38,7 +38,8 @@ export default function RemoteVideoGroup(props: Props) {
   const { viewMode, isContentShareEnabled, isGridView, isScreenShareView } =
     props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  const { updateGlobalVar } = useContext(getGlobalVarContext());
+  const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
+  const { isMobileView } = globalVar;
   const [visibleIndices, setVisibleIndices] = useState<{
     [index: string]: { boundAttendeeId: string };
   }>({});
@@ -191,7 +192,7 @@ export default function RemoteVideoGroup(props: Props) {
     const window_height = document.getElementById("tileView");
     if (window_height) {
       const elHeight = window_height?.clientHeight - 50;
-      const size = rosterSize(elHeight, attdLength.length);
+      const size = rosterSize(elHeight, attdLength.length, isMobileView);
       setGridViewRosterView({ ...size });
     }
   }

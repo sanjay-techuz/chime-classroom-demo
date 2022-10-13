@@ -33,6 +33,8 @@
   display: none;
   flex: 1 1 auto;
   overflow-y: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .ClassRoom_contentVideoWrapper.isContentShareEnabled {
@@ -41,6 +43,7 @@
 
 .ClassRoom_contentVideoWrapper.screenShareView {
   width: 15%;
+  height: auto;
   position: absolute;
   z-index: 10000;
   left: 0;

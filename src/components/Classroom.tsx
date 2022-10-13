@@ -80,10 +80,12 @@ export default function Classroom() {
   useRemoteControl();
 
   useEffect(() => {
-    if (window.innerWidth < 600) {
+    if (window.innerWidth < 1100) {
       setIsMobileView(true);
+      updateGlobalVar("isMobileView",true);
     } else {
       setIsMobileView(false);
+      updateGlobalVar("isMobileView",false);
     }
   }, []);
 
@@ -150,10 +152,12 @@ export default function Classroom() {
   window.addEventListener("resize", () => {
     // We execute the same script as before
 
-    if (window.innerWidth < 600) {
+    if (window.innerWidth < 1100) {
       setIsMobileView(true);
+      updateGlobalVar("isMobileView",true);
     } else {
       setIsMobileView(false);
+      updateGlobalVar("isMobileView",false);
     }
   });
 
@@ -400,7 +404,7 @@ export default function Classroom() {
                   </div>
                 </Main>
                 <Drawer
-                  variant={isMobileView ? "temporary" : "persistent"}
+                  variant={"persistent"}
                   anchor="right"
                   sx={{
                     "& .MuiDrawer-paper": {
