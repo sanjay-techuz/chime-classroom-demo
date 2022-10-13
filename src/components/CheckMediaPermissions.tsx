@@ -169,7 +169,7 @@ export default function CheckMediaPermissions(props: Props) {
             id="panel1a-header"
           >
             <Typography variant="caption" style={{ color: "red" }}>
-              Error Details
+              {intl.formatMessage({ id: "checkeMediaPermmissions.errorDetails"})}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>

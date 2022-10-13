@@ -5,6 +5,7 @@
 import classNames from "classnames/bind";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
+import { useIntl } from "react-intl";
 
 import {
   Avatar,
@@ -57,6 +58,8 @@ export default function Classroom() {
   Modal.setAppElement("body");
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const [state] = useContext(getUIStateContext());
+  const intl = useIntl();
+
   const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
   const { activeSpeakerAttendeeId } = globalVar;
   const { meetingStatus, errorMessage } = useContext(getMeetingStatusContext());
@@ -253,7 +256,7 @@ export default function Classroom() {
                         handleClose();
                       }}
                     >
-                      Meeting info
+                      {intl.formatMessage({ id: "Classroom.meetingInfo"})}
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
@@ -262,7 +265,7 @@ export default function Classroom() {
                         handleClose();
                       }}
                     >
-                      Device settings
+                      {intl.formatMessage({ id: "Classroom.deviceSettings"})}
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
@@ -271,7 +274,7 @@ export default function Classroom() {
                         handleClose();
                       }}
                     >
-                      {isGridView ? "Active speaker view" : "Grid view"}
+                      {isGridView ? intl.formatMessage({ id: "Classroom.activeSpeakerView"}) : intl.formatMessage({ id: "Classroom.gridView"})}
                     </MenuItem>
                   </Menu>
                 </Toolbar>
@@ -366,9 +369,9 @@ export default function Classroom() {
                     </ListItemIcon>
                     <ListItemText>
                       <Typography variant="h5">
-                        {tab === 1 && "Chat"}
-                        {tab === 2 && "Device settings"}
-                        {tab === 3 && "Meeting info"}
+                        {tab === 1 && intl.formatMessage({ id: "Classroom.chat"})}
+                        {tab === 2 && intl.formatMessage({ id: "Classroom.deviceSettings"})}
+                        {tab === 3 && intl.formatMessage({ id: "Classroom.meetingInfo"})}
                       </Typography>
                     </ListItemText>
                   </ListItem>

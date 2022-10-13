@@ -17,6 +17,7 @@ export default {
   'checkeMediaPermmissions.browserMightNotHaveAccess': `Your browser might not have access to your camera or microphone. To fix this problem, open`,
   'checkeMediaPermmissions.cantStartCameraMicrophone': `Can't start your camera or microphone`,
   'checkeMediaPermmissions.anotherApplication': `Another application (Zoom, Webex) or browser tab (Google Meet, Messenger Video) might already be using your webcam. Please turn off other cameras before proceeding.`,
+  'checkeMediaPermmissions.errorDetails': `Error Details`,
 
 
   'CreateOrJoin.teacherTitle': `Create or join a classroom`,
@@ -31,13 +32,26 @@ export default {
   'Classroom.classroom': `Classroom`,
   'Classroom.closeRightMenu': `Close menu`,
   'Classroom.openRightMenu': `Open menu`,
+  'Classroom.meetingInfo': `Meeting info`,
+  'Classroom.deviceSettings': `Device settings`,
+  'Classroom.activeSpeakerView': `Active speaker view`,
+  'Classroom.gridView': `Grid view`,
+  'Classroom.chat': `Chat`,
+
 
   'Copyinfo.copyMeetingId': `Copy`,
   'Copyinfo.coppiedMeetingId': `Coppied`,
+  'Copyinfo.meetingId': `Meeting Id:`,
+  'Copyinfo.copyMeetingInfo': `Copy Meeting Info`,
+
+  'Error.takeMeHome': `Take me home`,
 
 
   'RemoteVideoGroup.noVideo': `No one is sharing video`,
 
+  'DeviceSwitcher.microphone': `Microphone:`,
+  'DeviceSwitcher.speaker': `Speaker:`,
+  'DeviceSwitcher.camera': `Camera`,
   'DeviceSwitcher.noAudioInputPlaceholder': `No microphone`,
   'DeviceSwitcher.noAudioOutputPlaceholder': `No speaker`,
   'DeviceSwitcher.noVideoInputPlaceholder': `No video device`,
@@ -60,11 +74,13 @@ export default {
   'Controls.stopRecordingScreenTooltip': `stop recording`,
   'Controls.Chat': `Chat`,
 
+  'Chat.all': `All`,
 
   'ChatInput.inputPlaceholder': `Type a chat message`,
   'ChatInput.raiseHandAriaLabel': `Raise hand`,
 
   'Roster.raiseHandAriaLabel': `Raised hand by {name}`,
+  'Roster.users': `Users`,
   'Roster.sureRemove': `Are you sure to remove {name} from meeting ?`,
 
   'RemoteVideo.raiseHandAriaLabel': `Raised hand`,

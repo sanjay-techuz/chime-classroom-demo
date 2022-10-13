@@ -3,6 +3,7 @@
 /* eslint-disable  */
 
 import React, { useContext } from "react";
+import { useIntl } from 'react-intl';
 
 import { Box, FormControl, FormLabel, MenuItem, Select } from "@mui/material";
 
@@ -13,6 +14,7 @@ import useDevices from "../hooks/useDevices";
 export default function DeviceSwitcher() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const deviceSwitcherState = useDevices();
+  const intl = useIntl();
 
   return (
     <Box
@@ -24,7 +26,7 @@ export default function DeviceSwitcher() {
       }}
     >
       <FormControl sx={{ m: 1, minWidth: 260 }}>
-        <FormLabel>Microphone:</FormLabel>
+        <FormLabel>{intl.formatMessage({ id: "DeviceSwitcher.microphone"})}</FormLabel>
         <Select
           value={deviceSwitcherState?.currentAudioInputDevice?.value}
           onChange={async (event: any) => {
@@ -51,7 +53,7 @@ export default function DeviceSwitcher() {
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: 260 }}>
-        <FormLabel>Speaker:</FormLabel>
+        <FormLabel>{intl.formatMessage({ id: "DeviceSwitcher.speaker"})}</FormLabel>
         <Select
           value={deviceSwitcherState.currentAudioOutputDevice?.value}
           onChange={async (event: any) => {
@@ -82,7 +84,7 @@ export default function DeviceSwitcher() {
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: 260 }}>
-        <FormLabel>Camera:</FormLabel>
+        <FormLabel>{intl.formatMessage({ id: "DeviceSwitcher.camera"})}</FormLabel>
         <Select
           value={deviceSwitcherState.currentVideoInputDevice?.value}
           onChange={async (event: any) => {

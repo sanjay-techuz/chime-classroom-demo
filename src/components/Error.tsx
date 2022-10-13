@@ -5,6 +5,7 @@
 import classNames from "classnames/bind";
 import React, { ReactNode, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useIntl } from 'react-intl';
 
 import routes from "../constants/routes.json";
 import localStorageKeys from "../constants/localStorageKeys.json";
@@ -18,6 +19,8 @@ type Props = {
 
 export default function Error(props: Props) {
   const { errorMessage } = props;
+  const intl = useIntl();
+
   useEffect(() => {
     localStorage.removeItem(localStorageKeys.INVITED_URL);
   }, []);
@@ -28,7 +31,7 @@ export default function Error(props: Props) {
         {errorMessage || "Something went wrong"}
       </div>
       <Link className={cx("Error_goHomeLink")} to={routes.HOME}>
-        Take me home
+        {intl.formatMessage({ id: "Error.takeMeHome"})}
       </Link>
     </div>
   );

@@ -61,7 +61,7 @@ export default function CopyInfo() {
       }}
     >
       <Typography variant="subtitle1" display="block" gutterBottom>
-        Meeting Id: {chime?.title} {` `}{" "}
+        {intl.formatMessage({ id: "Copyinfo.meetingId"})} {chime?.title} {` `}{" "}
         <Tooltip
           title={
             !isMeetingCoppied
@@ -98,7 +98,7 @@ export default function CopyInfo() {
         <IconButton sx={{ ml: "10px", color: "#1976d2" }}>
           <ContentCopyIcon />
         </IconButton>
-        Copy Meeting Info
+        {intl.formatMessage({ id: "Copyinfo.copyMeetingInfo"})}
       </Button>
     </Box>
   );

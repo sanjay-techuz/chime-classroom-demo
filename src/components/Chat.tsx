@@ -6,6 +6,7 @@ import classNames from "classnames/bind";
 import moment from "moment";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { DataMessage } from "amazon-chime-sdk-js";
+import { useIntl } from "react-intl";
 
 import {
   Avatar,
@@ -40,6 +41,8 @@ var currentChannel: string = MessageTopic.PublicChannel;
 var publicChannelCnt = 0;
 export default function Chat() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
+  const intl = useIntl();
+
   const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
   const { isChatOpen } = globalVar;
   const [messages, setMessages] = useState<DataMessage[]>([]);
@@ -230,6 +233,7 @@ export default function Chat() {
                   activeChatAttendee === MessageTopic.PublicChannel
                     ? "var(--color_green)"
                     : "var(--primary_blue_color)",
+                cursor:"pointer"
               }}
               variant="rounded"
               onClick={() => {
@@ -240,7 +244,7 @@ export default function Chat() {
                 updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
               }}
             >
-              All
+              {intl.formatMessage({ id: "Chat.all"})}
             </Avatar>
           </Badge>
           {chatAttendeeIds.map((chatAttdId: string) => {

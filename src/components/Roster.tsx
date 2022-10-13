@@ -104,7 +104,7 @@ export default function Roster() {
     >
       <Box sx={{ paddingTop: "25px", color: "var(--color_grey)" }}>
         <ListItem>
-          <ListItemText>Users{` (${attendeeIds.length})`}</ListItemText>
+          <ListItemText>{intl.formatMessage({ id:"Roster.users" })}{` (${attendeeIds.length})`}</ListItemText>
           <ListItemIcon sx={{ minWidth: "30px" }}>
             <SettingsOutlinedIcon />
           </ListItemIcon>
