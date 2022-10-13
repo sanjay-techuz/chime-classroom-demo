@@ -425,8 +425,8 @@ export default function Controls(props: Props) {
               history.push(routes.HOME);
             }}
             sx={{
-              bgcolor: "var(--secondary_blue_color)",
-              border: "1px solid var(--pure_white_color)",
+              bgcolor: "var(--color_thunderbird)",
+              // border: "1px solid var(--pure_white_color)",
               color: "var(--pure_white_color)",
               cursor: "pointer",
             }}

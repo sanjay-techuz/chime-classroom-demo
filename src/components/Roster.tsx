@@ -16,6 +16,7 @@ import {
   ListItemAvatar,
   Tooltip,
   ListItemText,
+  Typography,
 } from "@mui/material";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
@@ -24,7 +25,6 @@ import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -104,29 +104,16 @@ export default function Roster() {
     >
       <Box sx={{ paddingTop: "25px", color: "var(--color_grey)" }}>
         <ListItem>
-          <ListItemText>{intl.formatMessage({ id:"Roster.users" })}{` (${attendeeIds.length})`}</ListItemText>
-          <ListItemIcon sx={{ minWidth: "30px" }}>
-            <SettingsOutlinedIcon />
-          </ListItemIcon>
+          <ListItemText>
+            {intl.formatMessage({ id: "Roster.users" })}
+            {` (${attendeeIds.length})`}
+          </ListItemText>
         </ListItem>
       </Box>
       {attendeeIds &&
         attendeeIds.map((attendeeId: string) => {
           const rosterAttendee: RosterAttendeeType = roster[attendeeId];
           const initials = nameInitials(rosterAttendee?.name);
-          const attendeeName =
-            `${rosterAttendee.name}` +
-            (attendeeId === localUserId
-              ? ` (You${
-                  attendeeId === localStorage.getItem("hostId")
-                    ? ", Presenter)"
-                    : ")"
-                }`
-              : `${
-                  attendeeId === localStorage.getItem("hostId")
-                    ? ", Presenter)"
-                    : ""
-                }`);
           return (
             <ListItem key={attendeeId} component="div">
               <ListItemAvatar>
@@ -158,7 +145,26 @@ export default function Roster() {
                 </Badge>
               </ListItemAvatar>
               <ListItemText
-                primary={`${attendeeName}`}
+                primary={
+                  <>
+                    <Typography sx={{ width: "100px" }}>
+                      {rosterAttendee.name}
+                    </Typography>
+                    <Typography sx={{ fontSize: "0.8rem", width: "100px" }}>
+                      {attendeeId === localUserId
+                        ? ` (You${
+                            attendeeId === localStorage.getItem("hostId")
+                              ? ", Presenter)"
+                              : ")"
+                          }`
+                        : `${
+                            attendeeId === localStorage.getItem("hostId")
+                              ? ", Presenter)"
+                              : ""
+                          }`}
+                    </Typography>
+                  </>
+                }
                 sx={{ textTransform: "capitalize" }}
               />
               <ListItemIcon sx={{ minWidth: "30px" }}>
