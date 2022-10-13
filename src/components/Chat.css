@@ -17,6 +17,11 @@
   padding-top: 0.5rem;
   max-height: 560px;
 }
+@media (min-height:800px) {
+  .Chat_messages {
+    max-height: 660px;
+  }
+}
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .Chat_messages::-webkit-scrollbar {

@@ -37,6 +37,8 @@ export default {
   'Classroom.activeSpeakerView': `Active speaker view`,
   'Classroom.gridView': `Grid view`,
   'Classroom.chat': `Chat`,
+  'Classroom.exitFullScreen': `Exit full screen`,
+  'Classroom.fullScreen': `Full screen`,
 
 
   'Copyinfo.copyMeetingId': `Copy`,
