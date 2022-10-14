@@ -30,7 +30,7 @@ export default function Error(props: Props) {
       <div className={cx("Error_errorMessage")}>
         {errorMessage || "Something went wrong"}
       </div>
-      <Link className={cx("Error_goHomeLink")} to={routes.HOME}>
+      <Link className={cx("Error_goHomeLink")} to={routes.MAIN}>
         {intl.formatMessage({ id: "Error.takeMeHome"})}
       </Link>
     </div>

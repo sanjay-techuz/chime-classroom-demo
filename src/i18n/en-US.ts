@@ -87,4 +87,6 @@ export default {
 
   'RemoteVideo.raiseHandAriaLabel': `Raised hand`,
 
+  "ThankyouPage.message": "Thanks for join a meeting."
+
 };

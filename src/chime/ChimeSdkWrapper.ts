@@ -157,6 +157,9 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
           `title=${title} name=${name} region=${region} role=${role} must exist`
         )
       );
+      throw new Error(
+        `Provide valid meeting details`
+      )
       return;
     }
     if (!localStorage.getItem(localStorageKeys.MEETING_CONFIG)){
@@ -239,6 +242,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       deviceController
     );
     this.audioVideo = this.meetingSession.audioVideo;
+    // set video local video quality 180p,360p,720p
+    // this.audioVideo.chooseVideoInputQuality(1280, 720, 15,1400);
 
     this.audioInputDevices = [];
     (await this.audioVideo?.listAudioInputDevices()).forEach(

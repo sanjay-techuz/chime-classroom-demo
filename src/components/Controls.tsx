@@ -422,7 +422,7 @@ export default function Controls(props: Props) {
           <Avatar
             onClick={() => {
               chime?.leaveRoom(state.classMode === ClassMode.Teacher);
-              history.push(routes.HOME);
+              history.push(routes.MAIN);
             }}
             sx={{
               bgcolor: "var(--color_thunderbird)",

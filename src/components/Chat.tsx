@@ -276,6 +276,7 @@ export default function Chat() {
                       activeChatAttendee === chatAttdId
                         ? "var(--color_green)"
                         : "var(--primary_blue_color)",
+                        cursor:"pointer"
                   }}
                   variant="rounded"
                   onClick={() => {
