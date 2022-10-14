@@ -19,6 +19,7 @@ export default function DeviceSwitcher() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const intl = useIntl();
   const deviceSwitcherState = useDevices();
+  
 
   return (
     <div className={cx('DeviceSwitcher_deviceList')}>
