@@ -19,6 +19,7 @@ export default function GlobalVarProvider(props: Props) {
       isChatOpen:false,
       groupChatCounter:0,
       isMobileView: false,
+      userInfo: {}
   });
 
   const updateGlobalVar = (key: string,value: any) => {
@@ -37,7 +38,10 @@ export default function GlobalVarProvider(props: Props) {
           break;
         case("isMobileView"):
           setGlobalVar((oldData) => ({ ...oldData, isMobileView: value }))
-          break;                               
+          break;
+        case("userInfo"):
+          setGlobalVar((oldData) => ({ ...oldData, userInfo: value }))
+          break;                                          
         default:
           break;
     }

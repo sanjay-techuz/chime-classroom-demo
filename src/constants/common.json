@@ -1,4 +1,5 @@
 {
     "getBaseUrl": "https://r1wfw5tx5k.execute-api.us-east-1.amazonaws.com/Prod/",
-    "recordingUrl": "http://localhost:5000/recording/"
+    "recordingUrl": "http://localhost:5000/recording/",
+    "domain": "https://tutorac.org/meeting/"
 }

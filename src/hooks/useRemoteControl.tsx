@@ -14,6 +14,7 @@ import getGlobalVarContext from '../context/getGlobalVarContext';
 import ClassMode from "../enums/ClassMode";
 import MessageTopic from "../enums/MessageTopic";
 import MeetingStatus from "../enums/MeetingStatus";
+import common from "../constants/common.json";
 
 export default function useRemoteControl() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -51,7 +52,8 @@ export default function useRemoteControl() {
           if (targetId === localUserId) {
             if (focus) {
               chime?.leaveRoom(false);
-              history.push("/");
+              window.location.href = `${common.domain}complete`
+              // history.push("/");
             }
           }
           break;

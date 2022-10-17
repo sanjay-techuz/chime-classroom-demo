@@ -21,6 +21,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import routes from "../constants/routes.json";
+import common from "../constants/common.json";
 import getChimeContext from "../context/getChimeContext";
 import getUIStateContext from "../context/getUIStateContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
@@ -47,7 +48,7 @@ export default function Controls(props: Props) {
   const { viewMode, onClickShareButton, onClickChatButton, tab } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
-  const { localVideo, groupChatCounter } = globalVar;
+  const { localVideo, groupChatCounter, userInfo } = globalVar;
   const [state] = useContext(getUIStateContext());
   const history = useHistory();
   const [muted, setMuted] = useState(false);
@@ -422,7 +423,12 @@ export default function Controls(props: Props) {
           <Avatar
             onClick={() => {
               chime?.leaveRoom(state.classMode === ClassMode.Teacher);
-              history.push(routes.MAIN);
+              if(state.classMode === ClassMode.Teacher){
+                window.location.href = `${common.domain}complete?id=${userInfo.teacherId}`
+              }else{
+                window.location.href = `${common.domain}complete`
+              }
+              // history.push(routes.MAIN);
             }}
             sx={{
               bgcolor: "var(--color_thunderbird)",

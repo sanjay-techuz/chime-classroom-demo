@@ -21,6 +21,7 @@ import getMeetingStatusContext from '../context/getMeetingStatusContext';
 import getUIStateContext from '../context/getUIStateContext';
 import ClassMode from '../enums/ClassMode';
 import MeetingStatus from '../enums/MeetingStatus';
+import common from "../constants/common.json";
 
 type Props = {
   children: ReactNode;
@@ -41,13 +42,24 @@ export default function MeetingStatusProvider(props: Props) {
   const query = new URLSearchParams(useLocation().search);
   const audioElement = useRef(null);
 
+  const meetingName = query.get('meetingName') || query.get('meetingID') || "";
+  const meetingID = query.get('meetingID') || "";
+  const id = query.get('id') || "";
+  const batchId = query.get('batchId') || "";
+  const userName = query.get('userName') || "";
+  const mode = query.get('mode') || "";
+  const userID = query.get('userID') || "";
+
   useEffect(() => {
     const start = async () => {
       try {
         await chime?.createRoom(
-          query.get('title'),
-          query.get('name'),
-          query.get('region'),
+          meetingName,
+          meetingID,
+          id,
+          batchId,
+          userName,
+          userID,
           state.classMode === ClassMode.Student ? 'student' : 'teacher',
           query.get('optionalFeature')
         );
@@ -62,11 +74,13 @@ export default function MeetingStatusProvider(props: Props) {
               sessionStatus.statusCode() ===
               MeetingSessionStatusCode.AudioCallEnded
             ) {
-              history.push('/');
+              // history.push('/');
               if(state.classMode === ClassMode.Teacher){
                 chime?.leaveRoom(true);
+                window.location.href = `${common.domain}complete?id=${id}`;
               }else{
                 chime?.leaveRoom(false);
+                window.location.href = `${common.domain}complete`;
               }
               
             }

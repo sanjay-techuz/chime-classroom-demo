@@ -6,6 +6,7 @@ import classNames from "classnames/bind";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router-dom";
 
 import {
   Avatar,
@@ -50,6 +51,7 @@ import Roster from "./Roster";
 import Main from "../custom/classroom/Main";
 import AppBar from "../custom/classroom/AppBar";
 import DrawerHeader from "../custom/classroom/DrawerHeader";
+import common from "../constants/common.json";
 
 const cx = classNames.bind(styles);
 const drawerWidth = 290;
@@ -76,8 +78,29 @@ export default function Classroom() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isGridView, setIsGridView] = useState(false);
   const open = Boolean(anchorEl);
+  const query = new URLSearchParams(useLocation().search);
+  const teacherId = query.get("id") || "";
+  const meetingName = query.get('meetingName') || query.get('meetingID') || "";
+  const meetingID = query.get('meetingID') || "";
+  const batchId = query.get('batchId') || "";
+  const userName = query.get('userName') || "";
+  const mode = query.get('mode') || "";
+  const userID = query.get('userID') || "";
 
   useRemoteControl();
+
+  useEffect(() => {
+    const info = {
+      teacherId,
+      meetingID,
+      meetingName,
+      batchId,
+      userName,
+      mode,
+      userID
+    }
+    updateGlobalVar("userInfo",info)
+  },[meetingID]);
 
   useEffect(() => {
     if (window.innerWidth < 1100) {
@@ -124,6 +147,11 @@ export default function Classroom() {
         event.returnValue = true;
         try {
           await chime?.leaveRoom(state.classMode === ClassMode.Teacher);
+          if(state.classMode === ClassMode.Teacher){
+            window.location.href = `${common.domain}complete?id=${teacherId}`
+          }else{
+            window.location.href = `${common.domain}complete`
+          }
         } catch (error) {
           // eslint-disable-next-line
           console.error(error);

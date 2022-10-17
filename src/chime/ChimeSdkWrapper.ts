@@ -145,16 +145,19 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
   };
 
   createRoom = async (
-    title: string | null,
-    name: string | null,
-    region: string | null,
+    meetingName: string,
+    meetingID: string | null,
+    id: string,
+    batchId: string,
+    userName: string | null,
+    userID: string,
     role: string | null,
     optionalFeature: string | null
   ): Promise<void> => {
-    if (!title || !name || !region || !role) {
+    if (!meetingID || !userName || !role) {
       this.logError(
         new Error(
-          `title=${title} name=${name} region=${region} role=${role} must exist`
+          `title=${meetingID} name=${userName} role=${role} must exist`
         )
       );
       throw new Error(
@@ -164,11 +167,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     }
     if (!localStorage.getItem(localStorageKeys.MEETING_CONFIG)){
     const response = await fetch(
-      `${commonob.getBaseUrl}join?title=${encodeURIComponent(
-        title
-      )}&name=${encodeURIComponent(name)}&region=${encodeURIComponent(
-        region
-      )}&role=${encodeURIComponent(role)}`,
+      `${commonob.getBaseUrl}join?title=${encodeURIComponent(meetingID)}&name=${encodeURIComponent(userName)}&region=${encodeURIComponent("us-east-1")}&role=${encodeURIComponent(role)}&meetingName=${encodeURIComponent(meetingName)}&id=${encodeURIComponent(id)}&batchId=${encodeURIComponent(batchId)}&userID=${encodeURIComponent(userID)}`,
       {
         method: 'POST'
       }
@@ -202,9 +201,9 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     }
     await this.initializeMeetingSession(this.configuration);
 
-    this.title = title;
-    this.name = name;
-    this.region = region;
+    this.title = meetingID;
+    this.name = userName;
+    this.region = 'us-east-1';
     this.meetingId = JoinInfo.Meeting.MeetingId;
     if(JoinInfo.Attendee.host){
       localStorage.setItem('hostId', JoinInfo.Attendee.AttendeeId);
@@ -223,9 +222,9 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     }
     await this.initializeMeetingSession(this.configuration);
 
-    this.title = title;
-    this.name = name;
-    this.region = region;
+    this.title = meetingID;
+    this.name = userName;
+    this.region = 'us-east-1';
     this.meetingId = joinInfo.Meeting.MeetingId;
   }
   };

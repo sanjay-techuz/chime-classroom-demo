@@ -85,11 +85,7 @@ export default function CreateOrJoin() {
             event.preventDefault();
             if (title && name && region) {
               history.push(
-                `/classroom?title=${encodeURIComponent(
-                  title
-                )}&name=${encodeURIComponent(name)}&region=${
-                  region.value
-                }&optionalFeature=${optionalFeature}`
+                `/classroom?meetingID=${encodeURIComponent(title)}&userName=${encodeURIComponent(name)}&mode=${encodeURIComponent("ap")}&optionalFeature=${optionalFeature}`
               );
             }
           }}
