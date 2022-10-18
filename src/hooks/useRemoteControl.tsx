@@ -3,7 +3,7 @@
 /* eslint-disable  */
 
 import { useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { DataMessage } from "amazon-chime-sdk-js";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -21,7 +21,7 @@ export default function useRemoteControl() {
   const { meetingStatus } = useContext(getMeetingStatusContext());
   const { updateGlobalVar } = useContext(getGlobalVarContext());
   const [state] = useContext(getUIStateContext());
-  const history = useHistory();
+  // const history = useHistory();
   const localUserId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
 

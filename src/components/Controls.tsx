@@ -4,7 +4,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import { Avatar, Badge, Box, Tooltip } from "@mui/material";
 import AutoModeIcon from "@mui/icons-material/AutoMode";
@@ -20,7 +20,7 @@ import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import CommentIcon from "@mui/icons-material/Comment";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import routes from "../constants/routes.json";
+// import routes from "../constants/routes.json";
 import common from "../constants/common.json";
 import getChimeContext from "../context/getChimeContext";
 import getUIStateContext from "../context/getUIStateContext";
@@ -50,7 +50,7 @@ export default function Controls(props: Props) {
   const { globalVar } = useContext(getGlobalVarContext());
   const { localVideo, groupChatCounter, userInfo } = globalVar;
   const [state] = useContext(getUIStateContext());
-  const history = useHistory();
+  // const history = useHistory();
   const [muted, setMuted] = useState(false);
   const [focus, setFocus] = useState(false);
   const [isScreenShared, setIsScreenShared] = useState(false);

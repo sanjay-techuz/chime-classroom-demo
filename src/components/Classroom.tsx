@@ -32,8 +32,8 @@ import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getMeetingStatusContext from "../context/getMeetingStatusContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
-import getUIStateContext from "../context/getUIStateContext";
-import ClassMode from "../enums/ClassMode";
+// import getUIStateContext from "../context/getUIStateContext";
+// import ClassMode from "../enums/ClassMode";
 import MeetingStatus from "../enums/MeetingStatus";
 import ViewMode from "../enums/ViewMode";
 import useRemoteControl from "../hooks/useRemoteControl";
@@ -51,7 +51,7 @@ import Roster from "./Roster";
 import Main from "../custom/classroom/Main";
 import AppBar from "../custom/classroom/AppBar";
 import DrawerHeader from "../custom/classroom/DrawerHeader";
-import common from "../constants/common.json";
+// import common from "../constants/common.json";
 
 const cx = classNames.bind(styles);
 const drawerWidth = 290;
@@ -59,7 +59,7 @@ const drawerWidth = 290;
 export default function Classroom() {
   Modal.setAppElement("body");
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  const [state] = useContext(getUIStateContext());
+  // const [state] = useContext(getUIStateContext());
   const intl = useIntl();
 
   const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
@@ -138,32 +138,32 @@ export default function Classroom() {
     [viewMode]
   );
 
-  if (process.env.NODE_ENV === "production") {
-    useEffect(() => {
-      // Recommend using "onbeforeunload" over "addEventListener"
-      window.onbeforeunload = async (event: BeforeUnloadEvent) => {
-        // Prevent the window from closing immediately
-        // eslint-disable-next-line
-        event.returnValue = true;
-        try {
-          await chime?.leaveRoom(state.classMode === ClassMode.Teacher);
-          if(state.classMode === ClassMode.Teacher){
-            window.location.href = `${common.domain}complete?id=${teacherId}`
-          }else{
-            window.location.href = `${common.domain}complete`
-          }
-        } catch (error) {
-          // eslint-disable-next-line
-          console.error(error);
-        } finally {
-          window.onbeforeunload = null;
-        }
-      };
-      return () => {
-        window.onbeforeunload = null;
-      };
-    }, []);
-  }
+  // if (process.env.NODE_ENV === "production") {
+  //   useEffect(() => {
+  //     // Recommend using "onbeforeunload" over "addEventListener"
+  //     window.onbeforeunload = async (event: BeforeUnloadEvent) => {
+  //       // Prevent the window from closing immediately
+  //       // eslint-disable-next-line
+  //       event.returnValue = true;
+  //       try {
+  //         await chime?.leaveRoom(state.classMode === ClassMode.Teacher);
+  //         if(state.classMode === ClassMode.Teacher){
+  //           window.location.href = `${common.domain}complete?id=${teacherId}`
+  //         }else{
+  //           window.location.href = `${common.domain}complete`
+  //         }
+  //       } catch (error) {
+  //         // eslint-disable-next-line
+  //         console.error(error);
+  //       } finally {
+  //         window.onbeforeunload = null;
+  //       }
+  //     };
+  //     return () => {
+  //       window.onbeforeunload = null;
+  //     };
+  //   }, []);
+  // }
 
   const handleDrawerLeftToggle = () => {
     setLeftDrawerOpen(!leftDrawerOpen);

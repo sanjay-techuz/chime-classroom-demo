@@ -13,7 +13,7 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
 import getChimeContext from '../context/getChimeContext';
@@ -38,7 +38,7 @@ export default function MeetingStatusProvider(props: Props) {
     meetingStatus: MeetingStatus.Loading
   });
   const [state] = useContext(getUIStateContext());
-  const history = useHistory();
+  // const history = useHistory();
   const query = new URLSearchParams(useLocation().search);
   const audioElement = useRef(null);
 
@@ -47,7 +47,7 @@ export default function MeetingStatusProvider(props: Props) {
   const id = query.get('id') || "";
   const batchId = query.get('batchId') || "";
   const userName = query.get('userName') || "";
-  const mode = query.get('mode') || "";
+  // const mode = query.get('mode') || "";
   const userID = query.get('userID') || "";
 
   useEffect(() => {
