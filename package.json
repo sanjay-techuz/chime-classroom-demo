@@ -144,7 +144,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx}",
-    "lint": "eslint --fix src/**/*.{js,jsx,ts,tsx}"
+    "lint": "eslint --fix src/**/*.{js,jsx,ts,tsx}",
+    "deploy": "rsync -avz --progress -e \"ssh -i pem/tutorac.pem\" build/* ubuntu@3.128.148.82:/opt/chime/build/"
   },
   "eslintConfig": {
     "extends": [
