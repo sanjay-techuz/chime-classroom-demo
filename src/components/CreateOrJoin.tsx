@@ -4,88 +4,94 @@
 
 import classNames from "classnames/bind";
 import React, { useContext, useEffect, useState } from "react";
-import Dropdown, { Option } from "react-dropdown";
+// import Dropdown, { Option } from "react-dropdown";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import routes from "../constants/routes.json";
-import getChimeContext from "../context/getChimeContext";
+// import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+// import routes from "../constants/routes.json";
+// import getChimeContext from "../context/getChimeContext";
 import getUIStateContext from "../context/getUIStateContext";
 import ClassMode from "../enums/ClassMode";
-import RegionType from "../types/RegionType";
+// import RegionType from "../types/RegionType";
 import styles from "./CreateOrJoin.css";
-import OptionalFeature from "../enums/OptionalFeature";
-import localStorageKeys from "../constants/localStorageKeys.json";
+// import OptionalFeature from "../enums/OptionalFeature";
+// import localStorageKeys from "../constants/localStorageKeys.json";
 
 const cx = classNames.bind(styles);
 
-const optionalFeatures = [
-  { label: "None", value: OptionalFeature.None },
-  { label: "Enable Simulcast For Chrome", value: OptionalFeature.Simulcast },
-];
+// const optionalFeatures = [
+//   { label: "None", value: OptionalFeature.None },
+//   { label: "Enable Simulcast For Chrome", value: OptionalFeature.Simulcast },
+// ];
 
 export default function CreateOrJoin() {
-  const chime = useContext(getChimeContext()) as ChimeSdkWrapper;
+  // const chime = useContext(getChimeContext()) as ChimeSdkWrapper;
   const [state] = useContext(getUIStateContext());
   const [title, setTitle] = useState(
     state.classMode === ClassMode.Teacher ? uuidv4().substring(0, 8) : ""
   );
   const [name, setName] = useState("");
-  const [region, setRegion] = useState<RegionType | undefined>(undefined);
-  const [optionalFeature, setOptionalFeature] = useState("");
+  // const [region, setRegion] = useState<RegionType | undefined>(undefined);
+  // const [optionalFeature, setOptionalFeature] = useState("");
   const history = useHistory();
   const intl = useIntl();
-  const invitedUrl = localStorage.getItem(localStorageKeys.INVITED_URL);
+  const query = new URLSearchParams(useLocation().search);
+
+  // const invitedUrl = localStorage.getItem(localStorageKeys.INVITED_URL);
+  const meetingID = query.get("meetingID") || "";
 
   useEffect(() => {
-    if (invitedUrl) {
-      let isRecordingUrl =
-        invitedUrl.split("&")[1] == "record=true" ? true : false;
-      const url = new URL(invitedUrl);
-      const urlParams = new URLSearchParams(url.search);
-      const meetingParam = urlParams.get("meetingId");
-      if (meetingParam && !isRecordingUrl) {
-        setTitle(meetingParam);
-      }
-      if (meetingParam && isRecordingUrl) {
-        history.push(
-          `/classroom?title=${encodeURIComponent(
-            meetingParam
-          )}&name=Unknown&region=us-east-1`
-        );
-      }
+    // if (invitedUrl) {
+    //   let isRecordingUrl =
+    //     invitedUrl.split("&")[1] == "record=true" ? true : false;
+    //   const url = new URL(invitedUrl);
+    //   const urlParams = new URLSearchParams(url.search);
+    //   const meetingParam = urlParams.get("meetingId");
+    //   if (meetingParam && !isRecordingUrl) {
+    //     setTitle(meetingParam);
+    //   }
+    //   if (meetingParam && isRecordingUrl) {
+    //     history.push(
+    //       `/classroom?title=${encodeURIComponent(
+    //         meetingParam
+    //       )}&name=Unknown&region=us-east-1`
+    //     );
+    //   }
 
-      if (meetingParam) {
-      }
+    //   if (meetingParam) {
+    //   }
+    // }
+    if(meetingID){
+      setTitle(meetingID);
     }
   }, []);
 
-  useEffect(() => {
-    setOptionalFeature(optionalFeatures[0].value);
-    (async () => {
-      setRegion(await chime?.lookupClosestChimeRegion());
-    })();
-  }, []);
+  // useEffect(() => {
+  //   setOptionalFeature(optionalFeatures[0].value);
+  //   (async () => {
+  //     setRegion(await chime?.lookupClosestChimeRegion());
+  //   })();
+  // }, []);
 
   return (
     <div className={cx("CreateOrJoin_createOrJoin")}>
       <div className={cx("CreateOrJoin_formWrapper")}>
         <h1 className={cx("CreateOrJoin_title")}>
-          {state.classMode === ClassMode.Teacher ? (
+          {/* {state.classMode === ClassMode.Teacher ? (
             <FormattedMessage id="CreateOrJoin.teacherTitle" />
-          ) : (
+          ) : ( */}
             <FormattedMessage id="CreateOrJoin.studentTitle" />
-          )}
+          {/* )} */}
         </h1>
         <form
           className={cx("CreateOrJoin_form")}
           onSubmit={(event) => {
             event.preventDefault();
-            if (title && name && region) {
+            if (title && name) {
               history.push(
-                `/classroom?meetingID=${encodeURIComponent(title)}&userName=${encodeURIComponent(name)}&mode=${encodeURIComponent("ap")}&optionalFeature=${optionalFeature}`
+                `/classroom?meetingID=${encodeURIComponent(title)}&userName=${encodeURIComponent(name)}&mode=${encodeURIComponent("ap")}`
               );
             }
           }}
@@ -109,7 +115,7 @@ export default function CreateOrJoin() {
               id: "CreateOrJoin.namePlaceholder",
             })}
           />
-          {state.classMode === ClassMode.Teacher && (
+          {/* {state.classMode === ClassMode.Teacher && (
             <div className={cx("CreateOrJoin_regionsList")}>
               <Dropdown
                 className={cx("CreateOrJoin_dropdown")}
@@ -144,15 +150,15 @@ export default function CreateOrJoin() {
               }}
               placeholder={optionalFeatures[0].label}
             />
-          </div>
+          </div> */}
 
           <button className={cx("CreateOrJoin_button")} type="submit">
             <FormattedMessage id="CreateOrJoin.continueButton" />
           </button>
         </form>
-        <Link className={cx("CreateOrJoin_mainLink")} to={routes.MAIN}>
+        {/* <Link className={cx("CreateOrJoin_mainLink")} to={routes.MAIN}>
           {<FormattedMessage id="CreateOrJoin.back" />}
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

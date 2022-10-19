@@ -30,7 +30,7 @@ export default function CopyInfo() {
 
   const copyMeetingUrl = () => {
     setIsMeetingUrlCoppied(true);
-    const meetingUrl: string = `${url.origin}/?meetingId=${encodeURIComponent(
+    const meetingUrl: string = `${url.origin}/?meetingID=${encodeURIComponent(
       chime?.title as string
     )}`;
     clipBoard(meetingUrl);
@@ -43,7 +43,7 @@ export default function CopyInfo() {
     setIsMeetingUrlCoppied(true);
     const meetingInfo: string = `To join the video meeting, click this link: ${
       url.origin
-    }/?meetingId=${encodeURIComponent(chime?.title as string)}.`;
+    }/?meetingID=${encodeURIComponent(chime?.title as string)}.`;
     clipBoard(meetingInfo);
     setTimeout(() => {
       setIsMeetingUrlCoppied(false);
@@ -78,7 +78,7 @@ export default function CopyInfo() {
         </Tooltip>
       </Typography>
       <Typography variant="subtitle1" display="block" gutterBottom>
-        {`${url.origin}/?meetingId=${encodeURIComponent(chime?.title as string)}`}
+        {`${url.origin}/?meetingID=${encodeURIComponent(chime?.title as string)}`}
         <Tooltip
           title={
             !isMeetingUrlCoppied

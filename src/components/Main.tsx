@@ -41,8 +41,8 @@ export default function Main() {
     //   },
     // });
     console.log(meetingID, userName, mode);
-    if (!meetingID || !userName || !mode) {
-      history.push(routes.CREATE_OR_JOIN);
+    if (!userName || !mode) {
+      history.push(`${routes.CREATE_OR_JOIN}?meetingID=${encodeURIComponent(meetingID)}`);
     } else {
       if (mode) {
         dispatch({
