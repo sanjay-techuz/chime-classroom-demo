@@ -24,7 +24,7 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
-import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
+// import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -262,7 +262,7 @@ export default function Roster() {
                   </div>
                 )}
               </ListItemIcon>
-              <ListItemIcon sx={{ minWidth: "30px" }}>
+              {/* <ListItemIcon sx={{ minWidth: "30px" }}>
                 {state.classMode === ClassMode.Teacher &&
                   attendeeId !== localUserId && (
                     <Tooltip
@@ -294,7 +294,7 @@ export default function Roster() {
                       </div>
                     </Tooltip>
                   )}
-              </ListItemIcon>
+              </ListItemIcon> */}
             </ListItem>
           );
         })}
