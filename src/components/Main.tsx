@@ -52,15 +52,39 @@ export default function Main() {
           },
         });
       }
-      if (mode === "mp") {
-        history.push(
-          `/classroom?meetingName=${encodeURIComponent(meetingName)}&meetingID=${encodeURIComponent(meetingID)}&id=${encodeURIComponent(id)}&batchId=${encodeURIComponent(batchId)}&userName=${encodeURIComponent(userName)}&mode=${encodeURIComponent(mode)}`
-        );
-      } else {
-        history.push(
-          `/classroom?meetingID=${encodeURIComponent(meetingID)}&batchId=${encodeURIComponent(batchId)}&userName=${encodeURIComponent(userName)}&mode=${encodeURIComponent(mode)}&userID=${encodeURIComponent(userID)}`
-        );
+      let url = "/classroom?"
+      if(meetingID){
+        url = url + `&meetingID=${encodeURIComponent(meetingID)}`;
       }
+      if(userName){
+        url = url + `&userName=${encodeURIComponent(userName)}`;
+      }
+      if(mode){
+        url = url + `&mode=${encodeURIComponent(mode)}`;
+      }
+      if(id){
+        url = url + `&id=${encodeURIComponent(id)}`;
+      }
+      if(userID){
+        url = url + `&userID=${encodeURIComponent(userID)}`;
+      }
+      if(batchId){
+        url = url + `&batchId=${encodeURIComponent(batchId)}`;
+      }
+      if(meetingName){
+        url = url + `&meetingName=${encodeURIComponent(meetingName)}`;
+      }
+      console.log("🏁🏁🏁🏁🏁",url);
+      history.push(url);
+      // if (mode === "mp") {
+      //   history.push(
+      //     `/classroom?meetingName=${encodeURIComponent(meetingName)}&meetingID=${encodeURIComponent(meetingID)}&userName=${encodeURIComponent(userName)}&mode=${encodeURIComponent(mode)}&id=${encodeURIComponent(id)}&batchId=${encodeURIComponent(batchId)}`
+      //   );
+      // } else {
+      //   history.push(
+      //     `/classroom?meetingID=${encodeURIComponent(meetingID)}&userName=${encodeURIComponent(userName)}&mode=${encodeURIComponent(mode)}&userID=${encodeURIComponent(userID)}&batchId=${encodeURIComponent(batchId)}`
+      //   );
+      // }
 
       // history.push(`/classroom?title=${encodeURIComponent(title)}&name=${encodeURIComponent(name)}&region=${encodeURIComponent(region)}&optionalFeature=${optionalFeature}`);
     }
