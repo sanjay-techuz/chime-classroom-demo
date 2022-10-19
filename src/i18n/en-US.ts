@@ -75,6 +75,8 @@ export default {
   'Controls.startRecordingScreenTooltip': `Start recording`,
   'Controls.stopRecordingScreenTooltip': `stop recording`,
   'Controls.Chat': `Chat`,
+  'Controls.EndMeeting': `End meeting`,
+  'Controls.LeaveMeeting': `Leave meeting`,
 
   'Chat.all': `All`,
 

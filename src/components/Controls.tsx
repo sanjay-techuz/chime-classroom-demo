@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 // import { useHistory } from "react-router-dom";
 
-import { Avatar, Badge, Box, Tooltip } from "@mui/material";
+import { Avatar, Badge, Box, MenuItem, Popover, Tooltip } from "@mui/material";
 import AutoModeIcon from "@mui/icons-material/AutoMode";
 import KeyboardVoiceOutlinedIcon from "@mui/icons-material/KeyboardVoiceOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
@@ -59,6 +59,8 @@ export default function Controls(props: Props) {
   const [mediaPipelineId, setMediaPipelineId] = useState("");
   const [videoStatus, setVideoStatus] = useState(VideoStatus.Disabled);
   const intl = useIntl();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
   useEffect(() => {
     const callback = (localMuted: boolean) => {
@@ -116,6 +118,13 @@ export default function Controls(props: Props) {
         console.error(err);
       }
     }
+  };
+
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -412,6 +421,36 @@ export default function Controls(props: Props) {
             </Avatar>
           </Tooltip>
         )}
+        <Popover
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          >   
+          {state.classMode === ClassMode.Teacher && <MenuItem
+            onClick={() => {
+              chime?.leaveRoom(true);
+              window.location.href = `${common.domain}complete?id=${userInfo.teacherId}`;
+            }}
+          >
+            {intl.formatMessage({ id: "Controls.EndMeeting"})}
+          </MenuItem>}
+          <MenuItem
+            onClick={() => {
+              chime?.leaveRoom(false);
+              window.location.href = `${common.domain}complete`;
+            }}
+          >
+            {intl.formatMessage({ id: "Controls.LeaveMeeting"})}
+          </MenuItem>
+        </Popover>
         <Tooltip
           title={
             state.classMode === ClassMode.Teacher
@@ -421,15 +460,7 @@ export default function Controls(props: Props) {
           placement="bottom"
         >
           <Avatar
-            onClick={() => {
-              chime?.leaveRoom(state.classMode === ClassMode.Teacher);
-              if(state.classMode === ClassMode.Teacher){
-                window.location.href = `${common.domain}complete?id=${userInfo.teacherId}`
-              }else{
-                window.location.href = `${common.domain}complete`
-              }
-              // history.push(routes.MAIN);
-            }}
+            onClick={handleClick}
             sx={{
               bgcolor: "var(--color_thunderbird)",
               // border: "1px solid var(--pure_white_color)",
