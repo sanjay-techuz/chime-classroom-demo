@@ -3,8 +3,10 @@
 /* eslint-disable  */
 
 import classNames from "classnames/bind";
-import React from "react";
+import React, { useContext } from "react";
 
+import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
+import getChimeContext from "../context/getChimeContext";
 import ViewMode from "../enums/ViewMode";
 import useAttendee from "../hooks/useAttendee";
 import Size from "../enums/Size";
@@ -20,7 +22,9 @@ type Props = {
 };
 
 export default function VideoNameplate(props: Props) {
-  const { viewMode, size, attendeeId, isContentShareEnabled } = props;
+  const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
+  const localUserId =
+  chime?.meetingSession?.configuration?.credentials?.attendeeId;  const { viewMode, size, attendeeId, isContentShareEnabled } = props;
   if (!attendeeId) {
     return <></>;
   }
@@ -42,7 +46,7 @@ export default function VideoNameplate(props: Props) {
         isContentShareEnabled,
       })}
     >
-      <div className={cx("VideoNameplate_name")}>{name}</div>
+      <div className={cx("VideoNameplate_name")}>{localUserId === attendeeId ? "You" : name}</div>
       <div className={cx("VideoNameplate_muted")}>
         {muted ? (
           <i className="fas fa-microphone-slash" />

@@ -349,8 +349,13 @@ export default function Chat() {
                     <Typography variant="caption">
                       {moment(message.timestampMs).format("h:mm A")}
                     </Typography>
-                    <Paper elevation={0}>
-                      <Typography variant="body1">{messageString}</Typography>
+                    <Paper elevation={0} sx={{
+                      color:"var(--color_grey)"
+                    }}>
+                      <Typography sx={{
+                        overflowWrap: "anywhere",
+                        minWidth: "75px"
+                      }} variant="body1">{messageString}</Typography>
                     </Paper>
                   </ListItemText>
                 </ListItem>
@@ -382,8 +387,13 @@ export default function Chat() {
                     <Typography variant="caption">
                       {moment(message.timestampMs).format("h:mm A")}
                     </Typography>
-                    <Paper elevation={0}>
-                      <Typography variant="body1">{messageString}</Typography>
+                    <Paper elevation={0} sx={{
+                        color:"var(--color_grey)"
+                    }}>
+                      <Typography sx={{
+                        overflowWrap: "anywhere",
+                        minWidth:"75px"
+                      }} variant="body1">{messageString}</Typography>
                     </Paper>
                   </ListItemText>
                 </ListItem>
