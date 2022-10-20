@@ -8,7 +8,8 @@ import { useIntl } from "react-intl";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
-import getUIStateContext from "../context/getUIStateContext";
+import getGlobalVarContext from "../context/getGlobalVarContext";
+// import getUIStateContext from "../context/getUIStateContext";
 import ClassMode from "../enums/ClassMode";
 import useFocusMode from "../hooks/useFocusMode";
 import styles from "./ChatInput.css";
@@ -26,7 +27,9 @@ type Props = {
 export default React.memo(function ChatInput(props: Props) {
   const { activeChannel, activeChatAttendee } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  const [state] = useContext(getUIStateContext());
+  const { globalVar } = useContext(getGlobalVarContext());
+  const { classMode } = globalVar;
+  // const [state] = useContext(getUIStateContext());
   const [inputText, setInputText] = useState("");
   const [raised, setRaised] = useState(false);
   const focusMode = useFocusMode();
@@ -69,7 +72,7 @@ export default React.memo(function ChatInput(props: Props) {
           }}
           onKeyUp={(event) => {
             event.preventDefault();
-            if (focusMode && state.classMode === ClassMode.Student) {
+            if (focusMode && classMode === ClassMode.Student) {
               return;
             }
             if (event.keyCode === 13) {
@@ -91,7 +94,7 @@ export default React.memo(function ChatInput(props: Props) {
           }}
           placeholder={intl.formatMessage({ id: "ChatInput.inputPlaceholder" })}
         />
-        {state.classMode === ClassMode.Student && (
+        {classMode === ClassMode.Student && (
           <button
             type="button"
             className={cx("raiseHandButton", {

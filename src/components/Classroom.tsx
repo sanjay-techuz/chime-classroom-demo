@@ -51,6 +51,7 @@ import Roster from "./Roster";
 import Main from "../custom/classroom/Main";
 import AppBar from "../custom/classroom/AppBar";
 import DrawerHeader from "../custom/classroom/DrawerHeader";
+import ClassMode from "../enums/ClassMode";
 // import common from "../constants/common.json";
 
 const cx = classNames.bind(styles);
@@ -99,7 +100,10 @@ export default function Classroom() {
       mode,
       userID
     }
-    updateGlobalVar("userInfo",info)
+    updateGlobalVar("userInfo",info);
+    if(mode){
+      updateGlobalVar("classMode", mode === "mp" ? ClassMode.Teacher : ClassMode.Student);
+    }
   },[meetingID]);
 
   useEffect(() => {

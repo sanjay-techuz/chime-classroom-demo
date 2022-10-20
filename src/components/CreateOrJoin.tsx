@@ -3,17 +3,17 @@
 /* eslint-disable  */
 
 import classNames from "classnames/bind";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // import Dropdown, { Option } from "react-dropdown";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useHistory, useLocation } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 
 // import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 // import routes from "../constants/routes.json";
 // import getChimeContext from "../context/getChimeContext";
-import getUIStateContext from "../context/getUIStateContext";
-import ClassMode from "../enums/ClassMode";
+// import getUIStateContext from "../context/getUIStateContext";
+// import ClassMode from "../enums/ClassMode";
 // import RegionType from "../types/RegionType";
 import styles from "./CreateOrJoin.css";
 // import OptionalFeature from "../enums/OptionalFeature";
@@ -28,10 +28,8 @@ const cx = classNames.bind(styles);
 
 export default function CreateOrJoin() {
   // const chime = useContext(getChimeContext()) as ChimeSdkWrapper;
-  const [state] = useContext(getUIStateContext());
-  const [title, setTitle] = useState(
-    state.classMode === ClassMode.Teacher ? uuidv4().substring(0, 8) : ""
-  );
+  // const [state] = useContext(getUIStateContext());
+  const [title, setTitle] = useState('');
   const [name, setName] = useState("");
   // const [region, setRegion] = useState<RegionType | undefined>(undefined);
   // const [optionalFeature, setOptionalFeature] = useState("");

@@ -28,7 +28,8 @@ import MicOffIcon from "@mui/icons-material/MicOff";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
-import getUIStateContext from "../context/getUIStateContext";
+import getGlobalVarContext from "../context/getGlobalVarContext";
+// import getUIStateContext from "../context/getUIStateContext";
 import useRoster from "../hooks/useRoster";
 import useRaisedHandAttendees from "../hooks/useRaisedHandAttendees";
 import RosterAttendeeType from "../types/RosterAttendeeType";
@@ -42,10 +43,12 @@ const cx = classNames.bind(styles);
 
 export default function Roster() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
+  const { globalVar } = useContext(getGlobalVarContext());
+  const { classMode } = globalVar;
   const roster = useRoster();
   const [videoAttendees, setVideoAttendees] = useState(new Set());
   const raisedHandAttendees = useRaisedHandAttendees();
-  const [state] = useContext(getUIStateContext());
+  // const [state] = useContext(getUIStateContext());
   const intl = useIntl();
   const localUserId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
@@ -188,7 +191,7 @@ export default function Roster() {
               </ListItemIcon>
               <ListItemIcon sx={{ minWidth: "30px" }}>
                 {typeof rosterAttendee.muted === "boolean" &&
-                  (state.classMode === ClassMode.Teacher &&
+                  (classMode === ClassMode.Teacher &&
                   attendeeId !== localUserId ? (
                     <Tooltip
                       title={
@@ -220,7 +223,7 @@ export default function Roster() {
               </ListItemIcon>
 
               <ListItemIcon sx={{ minWidth: "30px" }}>
-                {state.classMode === ClassMode.Teacher &&
+                {classMode === ClassMode.Teacher &&
                 attendeeId !== localUserId ? (
                   <Tooltip
                     title={
@@ -263,7 +266,7 @@ export default function Roster() {
                 )}
               </ListItemIcon>
               {/* <ListItemIcon sx={{ minWidth: "30px" }}>
-                {state.classMode === ClassMode.Teacher &&
+                {classMode === ClassMode.Teacher &&
                   attendeeId !== localUserId && (
                     <Tooltip
                       title={intl.formatMessage({

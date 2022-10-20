@@ -8,9 +8,9 @@ import { DataMessage } from "amazon-chime-sdk-js";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
-import getUIStateContext from "../context/getUIStateContext";
+// import getUIStateContext from "../context/getUIStateContext";
 import getMeetingStatusContext from "../context/getMeetingStatusContext";
-import getGlobalVarContext from '../context/getGlobalVarContext';
+import getGlobalVarContext from "../context/getGlobalVarContext";
 import ClassMode from "../enums/ClassMode";
 import MessageTopic from "../enums/MessageTopic";
 import MeetingStatus from "../enums/MeetingStatus";
@@ -19,8 +19,9 @@ import common from "../constants/common.json";
 export default function useRemoteControl() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { meetingStatus } = useContext(getMeetingStatusContext());
-  const { updateGlobalVar } = useContext(getGlobalVarContext());
-  const [state] = useContext(getUIStateContext());
+  const { globalVar,updateGlobalVar } = useContext(getGlobalVarContext());
+  const { classMode } = globalVar;
+  // const [state] = useContext(getUIStateContext());
   // const history = useHistory();
   const localUserId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
@@ -31,7 +32,7 @@ export default function useRemoteControl() {
     }
 
     const callback = async (message: DataMessage) => {
-      if (state.classMode === ClassMode.Teacher) {
+      if (classMode === ClassMode.Teacher) {
         return;
       }
       const { topic } = message;

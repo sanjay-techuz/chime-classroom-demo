@@ -4,6 +4,7 @@
 
 import React, { ReactNode, useState } from 'react';
 import getGlobalVarContext from '../context/getGlobalVarContext';
+import ClassMode from '../enums/ClassMode';
 
 type Props = {
   children: ReactNode;
@@ -19,7 +20,8 @@ export default function GlobalVarProvider(props: Props) {
       isChatOpen:false,
       groupChatCounter:0,
       isMobileView: false,
-      userInfo: {}
+      userInfo: {},
+      classMode: ClassMode.Student
   });
 
   const updateGlobalVar = (key: string,value: any) => {
@@ -41,7 +43,10 @@ export default function GlobalVarProvider(props: Props) {
           break;
         case("userInfo"):
           setGlobalVar((oldData) => ({ ...oldData, userInfo: value }))
-          break;                                          
+          break;
+        case("classMode"):
+          setGlobalVar((oldData) => ({ ...oldData, classMode: value }))
+          break;                                                   
         default:
           break;
     }

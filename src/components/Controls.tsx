@@ -23,7 +23,7 @@ import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 // import routes from "../constants/routes.json";
 import common from "../constants/common.json";
 import getChimeContext from "../context/getChimeContext";
-import getUIStateContext from "../context/getUIStateContext";
+// import getUIStateContext from "../context/getUIStateContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
 import ClassMode from "../enums/ClassMode";
 import ViewMode from "../enums/ViewMode";
@@ -48,8 +48,8 @@ export default function Controls(props: Props) {
   const { viewMode, onClickShareButton, onClickChatButton, tab } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
-  const { localVideo, groupChatCounter, userInfo } = globalVar;
-  const [state] = useContext(getUIStateContext());
+  const { localVideo, groupChatCounter, userInfo, classMode } = globalVar;
+  // const [state] = useContext(getUIStateContext());
   // const history = useHistory();
   const [muted, setMuted] = useState(false);
   const [focus, setFocus] = useState(false);
@@ -151,7 +151,7 @@ export default function Controls(props: Props) {
           maxWidth: 500,
         }}
       >
-        {state.classMode === ClassMode.Teacher && viewMode === ViewMode.Room && (
+        {classMode === ClassMode.Teacher && viewMode === ViewMode.Room && (
           <Tooltip
             title={
               focus
@@ -385,7 +385,7 @@ export default function Controls(props: Props) {
             </Avatar>
           </Tooltip>
         )}
-        {state.classMode === ClassMode.Teacher && (
+        {classMode === ClassMode.Teacher && (
           <Tooltip
             title={
               recording
@@ -434,7 +434,7 @@ export default function Controls(props: Props) {
           open={open}
           onClose={handleClose}
           >   
-          {state.classMode === ClassMode.Teacher && <MenuItem
+          {classMode === ClassMode.Teacher && <MenuItem
             onClick={() => {
               chime?.leaveRoom(true);
               window.location.href = `${common.domain}complete?id=${userInfo.teacherId}`;
@@ -453,7 +453,7 @@ export default function Controls(props: Props) {
         </Popover>
         <Tooltip
           title={
-            state.classMode === ClassMode.Teacher
+            classMode === ClassMode.Teacher
               ? intl.formatMessage({ id: "Controls.endClassroomTooltip" })
               : intl.formatMessage({ id: "Controls.leaveClassroomTooltip" })
           }

@@ -7,17 +7,20 @@ import { useContext, useEffect, useState } from 'react';
 import { DataMessage } from 'amazon-chime-sdk-js';
 import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
 import getChimeContext from '../context/getChimeContext';
-import getUIStateContext from '../context/getUIStateContext';
+// import getUIStateContext from '../context/getUIStateContext';
+import getGlobalVarContext from "../context/getGlobalVarContext";
 import ClassMode from '../enums/ClassMode';
 import MessageTopic from '../enums/MessageTopic';
 
 export default function useFocusMode() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
+  const { globalVar } = useContext(getGlobalVarContext());  
+  const { classMode } = globalVar;
   const [focusMode, setFocusMode] = useState(false);
-  const [state] = useContext(getUIStateContext());
+  // const [state] = useContext(getUIStateContext());
   useEffect(() => {
     const callback = (message: DataMessage) => {
-      if (state.classMode === ClassMode.Teacher) {
+      if (classMode === ClassMode.Teacher) {
         return;
       }
       const { focus } = message.json();

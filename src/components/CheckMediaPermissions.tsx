@@ -22,7 +22,7 @@ import classNames from "classnames/bind";
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
-import getUIStateContext from "../context/getUIStateContext";
+// import getUIStateContext from "../context/getUIStateContext";
 import styles from "./CheckMediaPermissions.css";
 import ClassMode from "../enums/ClassMode";
 
@@ -43,8 +43,8 @@ export default function CheckMediaPermissions(props: Props) {
   const { isRetry } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
-  const { userInfo } = globalVar;
-  const [state] = useContext(getUIStateContext());
+  const { userInfo, classMode } = globalVar;
+  // const [state] = useContext(getUIStateContext());
   const intl = useIntl();
   const [showDialog, setShowDialog] = useState<DialogType | null>(null);
   const [audioAllowed, setAudioAllowed] = useState<boolean>(false);
@@ -137,7 +137,7 @@ export default function CheckMediaPermissions(props: Props) {
                     userInfo.batchId,
                     userInfo.userName,
                     userInfo.userID,
-                    state.classMode === ClassMode.Student
+                    classMode === ClassMode.Student
                       ? "student"
                       : "teacher",
                     null
