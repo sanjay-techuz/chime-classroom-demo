@@ -14,7 +14,7 @@ import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
 import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
 import ScreenShareOutlinedIcon from "@mui/icons-material/ScreenShareOutlined";
 import StopScreenShareOutlinedIcon from "@mui/icons-material/StopScreenShareOutlined";
-import RadioButtonCheckedOutlinedIcon from "@mui/icons-material/RadioButtonCheckedOutlined";
+// import RadioButtonCheckedOutlinedIcon from "@mui/icons-material/RadioButtonCheckedOutlined";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -28,7 +28,7 @@ import getGlobalVarContext from "../context/getGlobalVarContext";
 import ClassMode from "../enums/ClassMode";
 import ViewMode from "../enums/ViewMode";
 import MessageTopic from "../enums/MessageTopic";
-import { startRecording, stopRecording } from "../services";
+// import { startRecording, stopRecording } from "../services";
 import SmallAvatar from "../custom/roster/SmallAvatar";
 
 enum VideoStatus {
@@ -55,8 +55,8 @@ export default function Controls(props: Props) {
   const [focus, setFocus] = useState(false);
   const [isScreenShared, setIsScreenShared] = useState(false);
   const [openChat, setOpenChat] = useState(false);
-  const [recording, setRecording] = useState(false);
-  const [mediaPipelineId, setMediaPipelineId] = useState("");
+  // const [recording, setRecording] = useState(false);
+  // const [mediaPipelineId, setMediaPipelineId] = useState("");
   const [videoStatus, setVideoStatus] = useState(VideoStatus.Disabled);
   const intl = useIntl();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -100,25 +100,25 @@ export default function Controls(props: Props) {
     setVideoStatus(localVideo ? VideoStatus.Enabled : VideoStatus.Disabled);
   }, [localVideo]);
 
-  const handleRecording = async () => {
-    setRecording(!recording);
-    if (recording) {
-      try {
-        const result = await stopRecording(mediaPipelineId);
-        console.log(result);
-      } catch (err) {
-        console.error(err);
-      }
-    } else {
-      try {
-        const result = await startRecording(chime?.meetingId as string);
-        console.log(result);
-        setMediaPipelineId(result.MediaPipelineId);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  };
+  // const handleRecording = async () => {
+  //   setRecording(!recording);
+  //   if (recording) {
+  //     try {
+  //       const result = await stopRecording(mediaPipelineId);
+  //       console.log(result);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   } else {
+  //     try {
+  //       const result = await startRecording(chime?.meetingId as string);
+  //       console.log(result);
+  //       setMediaPipelineId(result.MediaPipelineId);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   }
+  // };
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -385,7 +385,7 @@ export default function Controls(props: Props) {
             </Avatar>
           </Tooltip>
         )}
-        {classMode === ClassMode.Teacher && (
+        {/* {classMode === ClassMode.Teacher && (
           <Tooltip
             title={
               recording
@@ -420,7 +420,7 @@ export default function Controls(props: Props) {
               <RadioButtonCheckedOutlinedIcon />
             </Avatar>
           </Tooltip>
-        )}
+        )} */}
         <Popover
           anchorOrigin={{
             vertical: "top",
