@@ -137,6 +137,7 @@ export default function CheckMediaPermissions(props: Props) {
                     userInfo.batchId,
                     userInfo.userName,
                     userInfo.userID,
+                    userInfo.duration,
                     classMode === ClassMode.Student
                       ? "student"
                       : "teacher",

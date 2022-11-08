@@ -3,7 +3,7 @@
 /* eslint-disable  */
 
 import { useContext, useEffect } from "react";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { DataMessage } from "amazon-chime-sdk-js";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -14,7 +14,8 @@ import getGlobalVarContext from "../context/getGlobalVarContext";
 import ClassMode from "../enums/ClassMode";
 import MessageTopic from "../enums/MessageTopic";
 import MeetingStatus from "../enums/MeetingStatus";
-import common from "../constants/common.json";
+// import common from "../constants/common.json";
+import routes from "../constants/routes.json";
 
 export default function useRemoteControl() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -22,7 +23,7 @@ export default function useRemoteControl() {
   const { globalVar,updateGlobalVar } = useContext(getGlobalVarContext());
   const { classMode } = globalVar;
   // const [state] = useContext(getUIStateContext());
-  // const history = useHistory();
+  const history = useHistory();
   const localUserId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
 
@@ -53,8 +54,8 @@ export default function useRemoteControl() {
           if (targetId === localUserId) {
             if (focus) {
               chime?.leaveRoom(false);
-              window.location.href = `${common.domain}complete`
-              // history.push("/");
+              // window.location.href = `${common.domain}complete`
+              history.push(routes.MAIN);
             }
           }
           break;

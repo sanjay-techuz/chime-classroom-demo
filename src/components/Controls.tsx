@@ -4,7 +4,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { Avatar, Badge, Box, MenuItem, Popover, Tooltip } from "@mui/material";
 import AutoModeIcon from "@mui/icons-material/AutoMode";
@@ -20,8 +20,8 @@ import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import CommentIcon from "@mui/icons-material/Comment";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-// import routes from "../constants/routes.json";
-import common from "../constants/common.json";
+import routes from "../constants/routes.json";
+// import common from "../constants/common.json";
 import getChimeContext from "../context/getChimeContext";
 // import getUIStateContext from "../context/getUIStateContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
@@ -50,7 +50,7 @@ export default function Controls(props: Props) {
   const { globalVar } = useContext(getGlobalVarContext());
   const { localVideo, groupChatCounter, userInfo, classMode } = globalVar;
   // const [state] = useContext(getUIStateContext());
-  // const history = useHistory();
+  const history = useHistory();
   const [muted, setMuted] = useState(false);
   const [focus, setFocus] = useState(false);
   const [isScreenShared, setIsScreenShared] = useState(false);
@@ -437,7 +437,8 @@ export default function Controls(props: Props) {
           {classMode === ClassMode.Teacher && <MenuItem
             onClick={() => {
               chime?.leaveRoom(true);
-              window.location.href = `${common.domain}complete?id=${userInfo.teacherId}`;
+              history.push(`${routes.MAIN}?id=${userInfo.teacherId}`);
+              // window.location.href = `${common.domain}complete?id=${userInfo.teacherId}`;
             }}
           >
             {intl.formatMessage({ id: "Controls.EndMeeting"})}
@@ -445,7 +446,8 @@ export default function Controls(props: Props) {
           <MenuItem
             onClick={() => {
               chime?.leaveRoom(false);
-              window.location.href = `${common.domain}complete`;
+              history.push(routes.MAIN);
+              // window.location.href = `${common.domain}complete`;
             }}
           >
             {intl.formatMessage({ id: "Controls.LeaveMeeting"})}

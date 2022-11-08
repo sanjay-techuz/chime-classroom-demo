@@ -13,7 +13,7 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import ChimeSdkWrapper from '../chime/ChimeSdkWrapper';
 import getChimeContext from '../context/getChimeContext';
@@ -21,7 +21,8 @@ import getMeetingStatusContext from '../context/getMeetingStatusContext';
 import getUIStateContext from '../context/getUIStateContext';
 import ClassMode from '../enums/ClassMode';
 import MeetingStatus from '../enums/MeetingStatus';
-import common from "../constants/common.json";
+// import common from "../constants/common.json";
+import routes from "../constants/routes.json";
 
 type Props = {
   children: ReactNode;
@@ -38,7 +39,7 @@ export default function MeetingStatusProvider(props: Props) {
     meetingStatus: MeetingStatus.Loading
   });
   const [state] = useContext(getUIStateContext());
-  // const history = useHistory();
+  const history = useHistory();
   const query = new URLSearchParams(useLocation().search);
   const audioElement = useRef(null);
 
@@ -49,6 +50,7 @@ export default function MeetingStatusProvider(props: Props) {
   const userName = query.get('userName') || "";
   // const mode = query.get('mode') || "";
   const userID = query.get('userID') || "";
+  const duration = query.get("duration") || "";
 
   useEffect(() => {
     const start = async () => {
@@ -60,6 +62,7 @@ export default function MeetingStatusProvider(props: Props) {
           batchId,
           userName,
           userID,
+          duration,
           state.classMode === ClassMode.Student ? 'student' : 'teacher',
           query.get('optionalFeature')
         );
@@ -77,10 +80,12 @@ export default function MeetingStatusProvider(props: Props) {
               // history.push('/');
               if(state.classMode === ClassMode.Teacher){
                 chime?.leaveRoom(true);
-                window.location.href = `${common.domain}complete?id=${id}`;
+                history.push(`${routes.MAIN}?id=${id}`);
+                // window.location.href = `${common.domain}complete?id=${id}`;
               }else{
                 chime?.leaveRoom(false);
-                window.location.href = `${common.domain}complete`;
+                history.push(routes.MAIN);
+                // window.location.href = `${common.domain}complete`;
               }
               
             }

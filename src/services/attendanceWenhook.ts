@@ -12,7 +12,7 @@ export async function attendanceWenhook(webRes: AttendanceType): Promise<any> {
     const res = await client({
       url: `/bbb-callback`,
       method: "post",
-      data: JSON.stringify(webRes),
+      data: webRes,
     });
     console.log("attendanceWenhook", res.data);
 

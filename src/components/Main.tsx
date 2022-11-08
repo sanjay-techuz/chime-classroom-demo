@@ -31,6 +31,7 @@ export default function Main() {
   const userName = query.get("user_name") || "";
   const mode = query.get("mode") || "";
   const userID = query.get("user_id") || "";
+  const duration = query.get("duration") || "";
 
   useEffect(() => {
     // localStorage.clear();
@@ -73,6 +74,9 @@ export default function Main() {
       }
       if(meetingName){
         url = url + `&meetingName=${encodeURIComponent(meetingName)}`;
+      }
+      if(duration){
+        url = url + `&duration=${encodeURIComponent(duration)}`;
       }
       console.log("🏁🏁🏁🏁🏁",url);
       history.push(url);

@@ -3,13 +3,15 @@
 /* eslint-disable  */
 
 import classNames from "classnames/bind";
-import React, { ReactNode, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { ReactNode, useContext, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useIntl } from 'react-intl';
 
 import routes from "../constants/routes.json";
 import localStorageKeys from "../constants/localStorageKeys.json";
 import styles from "./Error.css";
+import getUIStateContext from "../context/getUIStateContext";
+import ClassMode from "../enums/ClassMode";
 
 const cx = classNames.bind(styles);
 
@@ -20,6 +22,9 @@ type Props = {
 export default function Error(props: Props) {
   const { errorMessage } = props;
   const intl = useIntl();
+    const [state] = useContext(getUIStateContext());
+  const query = new URLSearchParams(useLocation().search);
+  const id = query.get('id') || "";
 
   useEffect(() => {
     localStorage.removeItem(localStorageKeys.INVITED_URL);
@@ -30,7 +35,7 @@ export default function Error(props: Props) {
       <div className={cx("Error_errorMessage")}>
         {errorMessage || "Something went wrong"}
       </div>
-      <Link className={cx("Error_goHomeLink")} to={routes.MAIN}>
+      <Link className={cx("Error_goHomeLink")} to={state.classMode === ClassMode.Teacher ? `${routes.MAIN}?id=${id}` : routes.MAIN}>
         {intl.formatMessage({ id: "Error.takeMeHome"})}
       </Link>
     </div>

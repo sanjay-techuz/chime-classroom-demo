@@ -152,6 +152,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     batchId: string,
     userName: string | null,
     userID: string,
+    duration: string,
     role: string | null,
     optionalFeature: string | null
   ): Promise<void> => {
@@ -168,7 +169,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     }
     if (!localStorage.getItem(localStorageKeys.MEETING_CONFIG)){
     const response = await fetch(
-      `${commonob.getBaseUrl}join?title=${encodeURIComponent(meetingID)}&name=${encodeURIComponent(userName)}&region=${encodeURIComponent("us-east-1")}&role=${encodeURIComponent(role)}&meetingName=${encodeURIComponent(meetingName)}&id=${encodeURIComponent(id)}&batchId=${encodeURIComponent(batchId)}&userID=${encodeURIComponent(userID)}`,
+      `${commonob.getBaseUrl}join?title=${encodeURIComponent(meetingID)}&name=${encodeURIComponent(userName)}&region=${encodeURIComponent("us-east-1")}&role=${encodeURIComponent(role)}&meetingName=${encodeURIComponent(meetingName)}&id=${encodeURIComponent(id)}&batchId=${encodeURIComponent(batchId)}&userID=${encodeURIComponent(userID)}&duration=${encodeURIComponent(duration)}`,
       {
         method: 'POST'
       }
