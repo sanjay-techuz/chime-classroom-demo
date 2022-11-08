@@ -218,7 +218,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
         meetingId: meetingID,
         internal_meeting_id: JoinInfo.Meeting.MeetingId,
         user_id: userID,
-        batch_id: batchId
+        batch_id: batchId,
+        isJoin: true
       }
       
       console.log("🏣🏣🏣🏣",webhookRes)

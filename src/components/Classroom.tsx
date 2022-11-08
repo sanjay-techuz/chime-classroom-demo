@@ -51,6 +51,7 @@ import Roster from "./Roster";
 import Main from "../custom/classroom/Main";
 import AppBar from "../custom/classroom/AppBar";
 import DrawerHeader from "../custom/classroom/DrawerHeader";
+import { attendanceWenhook } from "../services";
 // import common from "../constants/common.json";
 
 const cx = classNames.bind(styles);
@@ -153,6 +154,18 @@ export default function Classroom() {
         event.preventDefault();
         event.returnValue = true;
         try {
+          if(mode !== "mp"){
+            const webhookRes = {
+              meetingId: meetingID,
+              internal_meeting_id: chime?.meetingId || "",
+              user_id: userID,
+              batch_id: batchId,
+              isJoin: false
+            }
+            
+            console.log("🏣🏣🏣🏣",webhookRes)
+            await attendanceWenhook(webhookRes);
+          }
           await chime?.leaveRoom(false);
         } catch (error) {
           // eslint-disable-next-line

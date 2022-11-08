@@ -8,6 +8,7 @@ const client: (arg0: { url: string; method: string; data?: any }) => any = axios
 
 
 export async function attendanceWenhook(webRes: AttendanceType): Promise<any> {
+  console.log("-_-_-_-_-_->>>",webRes);
   try {
     const res = await client({
       url: `/bbb-callback`,

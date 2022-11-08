@@ -16,12 +16,13 @@ import MessageTopic from "../enums/MessageTopic";
 import MeetingStatus from "../enums/MeetingStatus";
 // import common from "../constants/common.json";
 import routes from "../constants/routes.json";
+import { attendanceWenhook } from "../services";
 
 export default function useRemoteControl() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { meetingStatus } = useContext(getMeetingStatusContext());
   const { globalVar,updateGlobalVar } = useContext(getGlobalVarContext());
-  const { classMode } = globalVar;
+  const { userInfo, classMode } = globalVar;
   // const [state] = useContext(getUIStateContext());
   const history = useHistory();
   const localUserId =
@@ -53,6 +54,18 @@ export default function useRemoteControl() {
         case MessageTopic.RemoveAttendee:
           if (targetId === localUserId) {
             if (focus) {
+              if(classMode !== ClassMode.Teacher){
+                const webhookRes = {
+                  meetingId: userInfo.meetingID,
+                  internal_meeting_id: chime?.meetingId || "",
+                  user_id: userInfo.userID,
+                  batch_id: userInfo.batchId,
+                  isJoin: false
+                }
+                
+                console.log("🏣🏣🏣🏣",webhookRes)
+                await attendanceWenhook(webhookRes);
+              }
               chime?.leaveRoom(false);
               // window.location.href = `${common.domain}complete`
               history.push(routes.MAIN);

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 type AttendanceType = {
+    isJoin: boolean;
     meetingId: string,
     internal_meeting_id: string,
     user_id: string,

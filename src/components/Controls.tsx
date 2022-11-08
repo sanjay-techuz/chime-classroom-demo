@@ -30,6 +30,7 @@ import ViewMode from "../enums/ViewMode";
 import MessageTopic from "../enums/MessageTopic";
 // import { startRecording, stopRecording } from "../services";
 import SmallAvatar from "../custom/roster/SmallAvatar";
+import { attendanceWenhook } from "../services";
 
 enum VideoStatus {
   Disabled,
@@ -444,7 +445,19 @@ export default function Controls(props: Props) {
             {intl.formatMessage({ id: "Controls.EndMeeting"})}
           </MenuItem>}
           <MenuItem
-            onClick={() => {
+            onClick={async() => {
+              if(classMode !== ClassMode.Teacher){
+                const webhookRes = {
+                  meetingId: userInfo.meetingID,
+                  internal_meeting_id: chime?.meetingId || "",
+                  user_id: userInfo.userID,
+                  batch_id: userInfo.batchId,
+                  isJoin: false
+                }
+                
+                console.log("🏣🏣🏣🏣",webhookRes)
+                await attendanceWenhook(webhookRes);
+              }
               chime?.leaveRoom(false);
               history.push(routes.MAIN);
               // window.location.href = `${common.domain}complete`;

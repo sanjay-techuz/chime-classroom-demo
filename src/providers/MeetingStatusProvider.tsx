@@ -23,6 +23,7 @@ import ClassMode from '../enums/ClassMode';
 import MeetingStatus from '../enums/MeetingStatus';
 // import common from "../constants/common.json";
 import routes from "../constants/routes.json";
+import { attendanceWenhook } from '../services';
 
 type Props = {
   children: ReactNode;
@@ -72,7 +73,7 @@ export default function MeetingStatusProvider(props: Props) {
         });
 
         chime?.audioVideo?.addObserver({
-          audioVideoDidStop: (sessionStatus: MeetingSessionStatus): void => {
+          audioVideoDidStop: async(sessionStatus: MeetingSessionStatus): Promise<void> => {
             if (
               sessionStatus.statusCode() ===
               MeetingSessionStatusCode.AudioCallEnded
@@ -83,6 +84,17 @@ export default function MeetingStatusProvider(props: Props) {
                 history.push(`${routes.MAIN}?id=${id}`);
                 // window.location.href = `${common.domain}complete?id=${id}`;
               }else{
+                  const webhookRes = {
+                    meetingId: meetingID,
+                    internal_meeting_id: chime?.meetingId || "",
+                    user_id: userID,
+                    batch_id: batchId,
+                    isJoin: false
+                  }
+                  
+                  console.log("🏣🏣🏣🏣",webhookRes)
+                  await attendanceWenhook(webhookRes);
+
                 chime?.leaveRoom(false);
                 history.push(routes.MAIN);
                 // window.location.href = `${common.domain}complete`;
