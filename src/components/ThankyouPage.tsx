@@ -19,7 +19,7 @@ export default function ThankyouPage() {
 
   useEffect(() => {
     console.log("-------->MAIN",state.classMode,common.domain,id);
-    if(state.classMode === ClassMode.Teacher){
+    if(state.classMode === ClassMode.Teacher && id){
       window.location.href = `${common.domain}complete?id=${id}`;
     }else{
       window.location.href = `${common.domain}complete`;
