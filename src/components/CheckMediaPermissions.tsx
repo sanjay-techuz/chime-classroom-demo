@@ -9,7 +9,9 @@ import {
   Dialog,
   Link,
   Typography,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import Bowser from "bowser";
 import {
@@ -318,6 +320,21 @@ export default function CheckMediaPermissions(props: Props) {
     }
   };
   return (
-    <Dialog open={!!showDialog}>{showDialog && _renderDialogContent()}</Dialog>
+    <Dialog open={!!showDialog}>
+      <>
+      {showDialog && _renderDialogContent()}
+      <IconButton 
+        color="inherit"
+        aria-label="close popup"
+        edge="end"
+        onClick={() => {
+          setShowDialog(null);
+        }}
+        sx={{ color: "var(--color_thunderbird)", position:"absolute", right: "15px"}}
+      >
+        <CloseIcon />
+      </IconButton>      
+      </>
+      </Dialog>
   );
 }
