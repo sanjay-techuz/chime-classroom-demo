@@ -22,9 +22,9 @@ type Props = {
 export default function Error(props: Props) {
   const { errorMessage } = props;
   const intl = useIntl();
-    const [state] = useContext(getUIStateContext());
-  const query = new URLSearchParams(useLocation().search);
-  const id = query.get('id') || "";
+  const [state] = useContext(getUIStateContext());
+  const localtion = useLocation();
+  const { id }: any = localtion.state;
 
   useEffect(() => {
     localStorage.removeItem(localStorageKeys.INVITED_URL);

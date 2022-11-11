@@ -18,12 +18,6 @@ export default function Main() {
   const query = new URLSearchParams(useLocation().search);
   const [, dispatch] = useContext(getUIStateContext());
   const history = useHistory();
-  // const title = query.get('title') || "";
-  // const name = query.get('name') || "";
-  // const region = query.get('region') || "us-east-1";
-  // const optionalFeature = query.get('optionalFeature') || "";
-  // const classMode = query.get('classMode') || null;
-
   const meetingName = query.get("meeting_name") || "";
   const meetingID = query.get("meetingID") || "";
   const id = query.get("id") || "";
@@ -34,13 +28,6 @@ export default function Main() {
   const duration = query.get("duration") || "";
 
   useEffect(() => {
-    // localStorage.clear();
-    // dispatch({
-    //   type: "SET_CLASS_MODE",
-    //   payload: {
-    //     classMode: null,
-    //   },
-    // });
     console.log(meetingID, userName, mode);
     if (!userName || !mode) {
       history.push(`${routes.CREATE_OR_JOIN}?meetingID=${encodeURIComponent(meetingID)}`);
@@ -53,44 +40,23 @@ export default function Main() {
           },
         });
       }
-      let url = "/classroom?"
-      if(meetingID){
-        url = url + `&meetingID=${encodeURIComponent(meetingID)}`;
+      let histroyObject = {
+        pathname: '/classroom',
+        search: `?meetingID=${encodeURIComponent(meetingID)}`,
+        state: {
+          meetingID: encodeURIComponent(meetingID),
+          userName: encodeURIComponent(userName),
+          mode: encodeURIComponent(mode),
+          id: encodeURIComponent(id),
+          userID: encodeURIComponent(userID),
+          batchId: encodeURIComponent(batchId),
+          meetingName: encodeURIComponent(meetingName),
+          duration: encodeURIComponent(duration)
+        },
       }
-      if(userName){
-        url = url + `&userName=${encodeURIComponent(userName)}`;
-      }
-      if(mode){
-        url = url + `&mode=${encodeURIComponent(mode)}`;
-      }
-      if(id){
-        url = url + `&id=${encodeURIComponent(id)}`;
-      }
-      if(userID){
-        url = url + `&userID=${encodeURIComponent(userID)}`;
-      }
-      if(batchId){
-        url = url + `&batchId=${encodeURIComponent(batchId)}`;
-      }
-      if(meetingName){
-        url = url + `&meetingName=${encodeURIComponent(meetingName)}`;
-      }
-      if(duration){
-        url = url + `&duration=${encodeURIComponent(duration)}`;
-      }
-      console.log("🏁🏁🏁🏁🏁",url);
-      history.push(url);
-      // if (mode === "mp") {
-      //   history.push(
-      //     `/classroom?meetingName=${encodeURIComponent(meetingName)}&meetingID=${encodeURIComponent(meetingID)}&userName=${encodeURIComponent(userName)}&mode=${encodeURIComponent(mode)}&id=${encodeURIComponent(id)}&batchId=${encodeURIComponent(batchId)}`
-      //   );
-      // } else {
-      //   history.push(
-      //     `/classroom?meetingID=${encodeURIComponent(meetingID)}&userName=${encodeURIComponent(userName)}&mode=${encodeURIComponent(mode)}&userID=${encodeURIComponent(userID)}&batchId=${encodeURIComponent(batchId)}`
-      //   );
-      // }
 
-      // history.push(`/classroom?title=${encodeURIComponent(title)}&name=${encodeURIComponent(name)}&region=${encodeURIComponent(region)}&optionalFeature=${optionalFeature}`);
+      console.log("🏁🏁🏁🏁🏁",histroyObject);
+      history.push(histroyObject);
     }
   }, []);
 

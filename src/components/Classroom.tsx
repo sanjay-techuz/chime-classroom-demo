@@ -79,34 +79,31 @@ export default function Classroom() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isGridView, setIsGridView] = useState(false);
   const open = Boolean(anchorEl);
-  const query = new URLSearchParams(useLocation().search);
-  const teacherId = query.get("id") || "";
-  const meetingName = query.get('meetingName') || query.get('meetingID') || "";
-  const meetingID = query.get('meetingID') || "";
-  const batchId = query.get('batchId') || "";
-  const userName = query.get('userName') || "";
-  const mode = query.get('mode') || "";
-  const userID = query.get('userID') || "";
-  const duration = query.get('duration') || "";
+  const location = useLocation();
+  const locationState = location?.state || null;
 
   useRemoteControl();
 
   useEffect(() => {
-    const info = {
-      teacherId,
-      meetingID,
-      meetingName,
-      batchId,
-      userName,
-      mode,
-      userID,
-      duration
+    if(locationState){
+      const { meetingName, meetingID, id, batchId, userName, mode, userID, duration }: any = locationState;
+      const teacherId =id;
+      const info = {
+        teacherId,
+        meetingID,
+        meetingName,
+        batchId,
+        userName,
+        mode,
+        userID,
+        duration
+      }
+      updateGlobalVar("userInfo",info);
+      if(mode){
+        updateGlobalVar("classMode", mode === "mp" ? ClassMode.Teacher : ClassMode.Student);
+      }
     }
-    updateGlobalVar("userInfo",info);
-    if(mode){
-      updateGlobalVar("classMode", mode === "mp" ? ClassMode.Teacher : ClassMode.Student);
-    }
-  },[meetingID]);
+  },[locationState]);
 
   useEffect(() => {
     if (window.innerWidth < 1100) {
@@ -154,6 +151,7 @@ export default function Classroom() {
         event.preventDefault();
         event.returnValue = true;
         try {
+          const {meetingID, batchId, mode, userID }: any = location.state;
           if(mode !== "mp"){
             const webhookRes = {
               meetingId: meetingID,
