@@ -63,18 +63,24 @@ export default function CheckMediaPermissions(props: Props) {
   videoAllowedRef.current = videoAllowed;
 
   useEffect(() => {
-    checkMediaPermissions();
+    // checkMediaPermissions();
+    checkAudioPermissions();
+    checkVideoPermissions();
   }, []);
 
   useEffect(() => {
-    console.log("audio allowed permission changed: ", audioAllowed);
+    console.log("audio allowed permission changed: ", audioAllowed, videoAllowed);
     if (audioAllowed || videoAllowed) {
+      console.log("audioAllowed===>",audioAllowed);
+      console.log("videoAllowed===>",videoAllowed);
       // set the default devices
       // MediaManager.findMediaDevices();
     }
   }, [audioAllowed, videoAllowed]);
 
   const checkForExplanationDialog = () => {
+    console.log("audioAllowedRef====>",audioAllowedRef.current);
+    console.log("videoAllowedRef====>",videoAllowedRef.current);
     if (
       (!audioAllowedRef.current || !videoAllowedRef.current) &&
       showDialogRef.current === null
@@ -82,18 +88,93 @@ export default function CheckMediaPermissions(props: Props) {
       setShowDialog(DialogType.explanation);
   };
 
-  const checkMediaPermissions = () => {
+  // const checkMediaPermissions = () => {
+  //   // TODO: listen to if there is a change on the audio/video piece?
+  //   return new Promise((resolve) => {
+  //     requestMediaPermissions()
+  //       .then(() => {
+  //         console.log("📸📸📸---🎙️🎙️🎙️🎙️")
+  //         setAudioAllowed(true);
+  //         setVideoAllowed(true);
+  //         setShowDialog(null);
+  //         resolve(true);
+  //       })
+  //       .catch((error: MediaPermissionsError) => {
+  //         console.log("MediaOnboardingDialog: ", error);
+  //         resolve(false);
+  //         if (error.type === MediaPermissionsErrorType.SystemPermissionDenied) {
+  //           // user denied permission
+  //           setShowDialog(DialogType.systemDenied);
+  //         } else if (
+  //           error.type === MediaPermissionsErrorType.UserPermissionDenied
+  //         ) {
+  //           // browser doesn't have access to devices
+  //           setShowDialog(DialogType.userDenied);
+  //         } else if (
+  //           error.type === MediaPermissionsErrorType.CouldNotStartVideoSource
+  //         ) {
+  //           // most likely when other apps or tabs are using the cam/mic (mostly windows)
+  //           setShowDialog(DialogType.trackError);
+  //         } else {
+  //         }
+  //         setErrorDetails(error);
+  //       });
+
+  //     setTimeout(() => {
+  //       checkForExplanationDialog();
+  //     }, 500);
+  //   });
+  // };
+
+  const checkAudioPermissions = () => {
     // TODO: listen to if there is a change on the audio/video piece?
     return new Promise((resolve) => {
-      requestMediaPermissions()
+      requestMediaPermissions({audio: true, video: false})
         .then(() => {
+          console.log("🎙️🎙️🎙️🎙️")
           setAudioAllowed(true);
+          setShowDialog(null);
+          resolve(true);
+        })
+        .catch((error: MediaPermissionsError) => {
+          console.log("AudioOnboardingDialog: ", error);
+          resolve(false);
+          if (error.type === MediaPermissionsErrorType.SystemPermissionDenied) {
+            // user denied permission
+            setShowDialog(DialogType.systemDenied);
+          } else if (
+            error.type === MediaPermissionsErrorType.UserPermissionDenied
+          ) {
+            // browser doesn't have access to devices
+            setShowDialog(DialogType.userDenied);
+          } else if (
+            error.type === MediaPermissionsErrorType.CouldNotStartVideoSource
+          ) {
+            // most likely when other apps or tabs are using the cam/mic (mostly windows)
+            setShowDialog(DialogType.trackError);
+          } else {
+          }
+          setErrorDetails(error);
+        });
+
+      setTimeout(() => {
+        checkForExplanationDialog();
+      }, 500);
+    });
+  };
+
+  const checkVideoPermissions = () => {
+    // TODO: listen to if there is a change on the audio/video piece?
+    return new Promise((resolve) => {
+      requestMediaPermissions({audio: false, video: true})
+        .then(() => {
+          console.log("📸📸📸---")
           setVideoAllowed(true);
           setShowDialog(null);
           resolve(true);
         })
         .catch((error: MediaPermissionsError) => {
-          console.log("MediaOnboardingDialog: ", error);
+          console.log("VideoOnboardingDialog: ", error);
           resolve(false);
           if (error.type === MediaPermissionsErrorType.SystemPermissionDenied) {
             // user denied permission
@@ -129,7 +210,8 @@ export default function CheckMediaPermissions(props: Props) {
               // If on Safari, rechecking permissions results in glitches so just refresh the page
               window.location.reload();
             } else {
-              const isAllowed = await checkMediaPermissions();
+              const isAudioAllowed = await checkAudioPermissions();
+              const isVideoAllowed = await checkVideoPermissions();
               const start = async () => {
                 try {
                   await chime?.createRoom(
@@ -153,7 +235,7 @@ export default function CheckMediaPermissions(props: Props) {
                   console.error(error);
                 }
               };
-              if (isAllowed) {
+              if (isAudioAllowed || isVideoAllowed) {
                 start();
               }
             }

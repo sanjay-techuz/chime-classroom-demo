@@ -25,7 +25,7 @@ export default function DeviceSwitcher() {
         bgcolor: "background.paper",
       }}
     >
-      <FormControl sx={{ m: 1, minWidth: 260 }}>
+      <FormControl sx={{ m: 1, minWidth: 260, maxWidth: 260 }}>
         <FormLabel>{intl.formatMessage({ id: "DeviceSwitcher.microphone"})}</FormLabel>
         <Select
           value={deviceSwitcherState?.currentAudioInputDevice?.value}
@@ -52,7 +52,7 @@ export default function DeviceSwitcher() {
             })}
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 260 }}>
+      <FormControl sx={{ m: 1, minWidth: 260, maxWidth: 260 }}>
         <FormLabel>{intl.formatMessage({ id: "DeviceSwitcher.speaker"})}</FormLabel>
         <Select
           value={deviceSwitcherState.currentAudioOutputDevice?.value}
@@ -83,7 +83,7 @@ export default function DeviceSwitcher() {
             })}
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 260 }}>
+      <FormControl sx={{ m: 1, minWidth: 260, maxWidth: 260 }}>
         <FormLabel>{intl.formatMessage({ id: "DeviceSwitcher.camera"})}</FormLabel>
         <Select
           value={deviceSwitcherState.currentVideoInputDevice?.value}
