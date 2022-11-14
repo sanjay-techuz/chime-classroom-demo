@@ -168,7 +168,7 @@ export default function Chat() {
         behavior: "smooth",
       });
     }, 10);
-  }, [messages]);
+  }, [messages, activeChannel]);
 
   useEffect(() => {
     const filteredArry: DataMessage[] = [];
@@ -332,9 +332,12 @@ export default function Chat() {
                   component="div"
                   sx={{
                     flexDirection: "row-reverse",
+                    alignItems: "flex-start"
                   }}
                 >
-                  <ListItemAvatar>
+                  <ListItemAvatar sx={{
+                    marginTop: "4px"
+                  }}>
                     <Avatar
                       sx={{ bgcolor: "var(--color_green)" }}
                       variant="rounded"
@@ -343,7 +346,7 @@ export default function Chat() {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    sx={{ mr: 2, textAlign: "right", fontSize: "14px" }}
+                    sx={{ mr: 2, mt: 0, textAlign: "right", fontSize: "14px" }}
                   >
                     {chime?.roster[message.senderAttendeeId]?.name},{` `}
                     <Typography variant="caption">
@@ -370,9 +373,12 @@ export default function Chat() {
                   component="div"
                   sx={{
                     flexDirection: "row",
+                    alignItems: "flex-start"
                   }}
                 >
-                  <ListItemAvatar>
+                  <ListItemAvatar sx={{
+                    marginTop: "4px"
+                  }}>
                     <Avatar
                       sx={{ bgcolor: "var(--primary_blue_color)" }}
                       variant="rounded"
@@ -381,7 +387,7 @@ export default function Chat() {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    sx={{ mr: 2, textAlign: "left", fontSize: "14px" }}
+                    sx={{ mr: 2, mt: 0, textAlign: "left", fontSize: "14px" }}
                   >
                     {chime?.roster[message.senderAttendeeId]?.name},{` `}
                     <Typography variant="caption">
