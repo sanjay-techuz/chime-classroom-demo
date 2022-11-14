@@ -93,6 +93,12 @@ export default function useRemoteControl() {
             }
           }
           break;
+        case MessageTopic.Focus:
+            chime?.audioVideo?.realtimeSetCanUnmuteLocalAudio(!focus);
+            if (focus) {
+              chime?.audioVideo?.realtimeMuteLocalAudio();
+            }
+          break;
         default:
           break;
       }
@@ -110,13 +116,20 @@ export default function useRemoteControl() {
       topic: MessageTopic.RemoteVideoOnOff,
       callback,
     };
+    const focusMessageUpdateCallback = { 
+      topic: MessageTopic.Focus, 
+      callback 
+    };
+
     chime?.subscribeToMessageUpdate(remoteMuteUnmuteUpdateCallback);
     chime?.subscribeToMessageUpdate(remoteAttendeeRemoveUpdateCallback);
     chime?.subscribeToMessageUpdate(remoteVideoOnOffUpdateCallback);
+    chime?.subscribeToMessageUpdate(focusMessageUpdateCallback);
     return () => {
       chime?.unsubscribeFromMessageUpdate(remoteMuteUnmuteUpdateCallback);
       chime?.unsubscribeFromMessageUpdate(remoteAttendeeRemoveUpdateCallback);
       chime?.unsubscribeFromMessageUpdate(remoteVideoOnOffUpdateCallback);
+      chime?.unsubscribeFromMessageUpdate(focusMessageUpdateCallback);
     };
   }, [meetingStatus]);
 }
