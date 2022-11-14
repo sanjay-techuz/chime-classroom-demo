@@ -30,7 +30,7 @@ export default function Main() {
   useEffect(() => {
     console.log(meetingID, userName, mode);
     if (!userName || !mode) {
-      history.push(`${routes.CREATE_OR_JOIN}?meetingID=${encodeURIComponent(meetingID)}`);
+      history.push(`${routes.CREATE_OR_JOIN}?meetingID=${meetingID}`);
     } else {
       if (mode) {
         dispatch({
@@ -42,16 +42,16 @@ export default function Main() {
       }
       let histroyObject = {
         pathname: '/classroom',
-        search: `?meetingID=${encodeURIComponent(meetingID)}`,
+        search: `?meetingID=${meetingID}`,
         state: {
-          meetingID: encodeURIComponent(meetingID),
-          userName: encodeURIComponent(userName),
-          mode: encodeURIComponent(mode),
-          id: encodeURIComponent(id),
-          userID: encodeURIComponent(userID),
-          batchId: encodeURIComponent(batchId),
-          meetingName: encodeURIComponent(meetingName),
-          duration: encodeURIComponent(duration)
+          meetingID: meetingID,
+          userName: userName,
+          mode: mode,
+          id: id,
+          userID: userID,
+          batchId: batchId,
+          meetingName: meetingName,
+          duration: duration
         },
       }
 

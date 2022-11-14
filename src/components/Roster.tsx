@@ -150,10 +150,29 @@ export default function Roster() {
               <ListItemText
                 primary={
                   <>
-                    <Typography sx={{ width: "100px" }}>
-                      {rosterAttendee.name}
-                    </Typography>
-                    <Typography sx={{ fontSize: "0.8rem", width: "100px" }}>
+                    <Tooltip title={rosterAttendee.name} placement="bottom">
+                      <Typography
+                        sx={{
+                          width: "100px",
+                          display: "inline-block",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden !important",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {rosterAttendee.name}
+                      </Typography>
+                    </Tooltip>
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        width: "100px",
+                        display: "inline-block",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden !important",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
                       {attendeeId === localUserId
                         ? ` (You${
                             attendeeId === localStorage.getItem("hostId")
