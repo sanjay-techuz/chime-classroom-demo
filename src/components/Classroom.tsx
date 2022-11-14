@@ -57,6 +57,7 @@ import { attendanceWenhook } from "../services";
 const cx = classNames.bind(styles);
 const drawerWidth = 290;
 
+var resizeTo = 0;
 export default function Classroom() {
   Modal.setAppElement("body");
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -113,6 +114,9 @@ export default function Classroom() {
       setIsMobileView(false);
       updateGlobalVar("isMobileView",false);
     }
+    return () => {
+      resizeTo = 0;
+    };  
   }, []);
 
   const stopContentShare = async () => {
@@ -190,9 +194,7 @@ export default function Classroom() {
     setRightDrawerOpen(false);
   };
 
-  window.addEventListener("resize", () => {
-    // We execute the same script as before
-
+  const updateMobileView = () => {
     if (window.innerWidth < 1100) {
       setIsMobileView(true);
       updateGlobalVar("isMobileView",true);
@@ -200,6 +202,13 @@ export default function Classroom() {
       setIsMobileView(false);
       updateGlobalVar("isMobileView",false);
     }
+  }
+
+  window.addEventListener("resize", () => {
+    // We execute the same script as before
+    if(resizeTo) clearTimeout(resizeTo);
+    resizeTo = window.setTimeout(() => updateMobileView(), 500);
+
   });
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
