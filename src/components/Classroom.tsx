@@ -41,7 +41,7 @@ import Chat from "./Chat";
 import styles from "./Classroom.css";
 import ContentVideo from "./ContentVideo";
 import Controls from "./Controls";
-import CopyInfo from "./CopyInfo";
+// import CopyInfo from "./CopyInfo";
 import DeviceSwitcher from "./DeviceSwitcher";
 import Error from "./Error";
 import LoadingSpinner from "./LoadingSpinner";
@@ -365,7 +365,7 @@ export default function Classroom() {
                       "aria-labelledby": "basic-button",
                     }}
                   >
-                    <MenuItem
+                    {/* <MenuItem
                       onClick={() => {
                         setTab(3);
                         openDrawerRightToggle();
@@ -373,7 +373,7 @@ export default function Classroom() {
                       }}
                     >
                       {intl.formatMessage({ id: "Classroom.meetingInfo"})}
-                    </MenuItem>
+                    </MenuItem> */}
                     <MenuItem
                       onClick={() => {
                         setTab(2);
@@ -492,7 +492,7 @@ export default function Classroom() {
                       <Typography variant="h5">
                         {tab === 1 && intl.formatMessage({ id: "Classroom.chat"})}
                         {tab === 2 && intl.formatMessage({ id: "Classroom.deviceSettings"})}
-                        {tab === 3 && intl.formatMessage({ id: "Classroom.meetingInfo"})}
+                        {/* {tab === 3 && intl.formatMessage({ id: "Classroom.meetingInfo"})} */}
                       </Typography>
                     </ListItemText>
                   </ListItem>
@@ -506,7 +506,7 @@ export default function Classroom() {
                     <Chat />
                   </div>
                   {tab === 2 && <DeviceSwitcher />}
-                  {tab === 3 && <CopyInfo />}
+                  {/* {tab === 3 && <CopyInfo />} */}
                 </Drawer>
               </Box>
               <AppBar
