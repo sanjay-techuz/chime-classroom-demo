@@ -18,6 +18,7 @@ import {
   Paper,
   Typography,
   Badge,
+  Tooltip,
 } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -332,12 +333,14 @@ export default function Chat() {
                   component="div"
                   sx={{
                     flexDirection: "row-reverse",
-                    alignItems: "flex-start"
+                    alignItems: "flex-start",
                   }}
                 >
-                  <ListItemAvatar sx={{
-                    marginTop: "4px"
-                  }}>
+                  <ListItemAvatar
+                    sx={{
+                      marginTop: "4px",
+                    }}
+                  >
                     <Avatar
                       sx={{ bgcolor: "var(--color_green)" }}
                       variant="rounded"
@@ -348,17 +351,47 @@ export default function Chat() {
                   <ListItemText
                     sx={{ mr: 2, mt: 0, textAlign: "right", fontSize: "14px" }}
                   >
-                    {chime?.roster[message.senderAttendeeId]?.name},{` `}
-                    <Typography variant="caption">
-                      {moment(message.timestampMs).format("h:mm A")}
-                    </Typography>
-                    <Paper elevation={0} sx={{
-                      color:"var(--color_grey)"
-                    }}>
-                      <Typography sx={{
-                        overflowWrap: "anywhere",
-                        minWidth: "75px"
-                      }} variant="body1">{messageString}</Typography>
+                    <div
+                      style={{
+                        height: "24px",
+                        display: "flex",
+                        alignItems: "flex-end",
+                        justifyContent: "flex-end",
+                      }}
+                    >
+                    <Tooltip title={chime?.roster[message.senderAttendeeId]?.name} placement="bottom">
+                      <span
+                        style={{
+                          width: "100px",
+                          display: "inline-block",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {chime?.roster[message.senderAttendeeId]?.name}
+                      </span>
+                      </Tooltip>
+                      ,{` `}
+                      <Typography variant="caption">
+                        {moment(message.timestampMs).format("h:mm A")}
+                      </Typography>
+                    </div>
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        color: "var(--color_grey)",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          overflowWrap: "anywhere",
+                          minWidth: "75px",
+                        }}
+                        variant="body1"
+                      >
+                        {messageString}
+                      </Typography>
                     </Paper>
                   </ListItemText>
                 </ListItem>
@@ -373,12 +406,14 @@ export default function Chat() {
                   component="div"
                   sx={{
                     flexDirection: "row",
-                    alignItems: "flex-start"
+                    alignItems: "flex-start",
                   }}
                 >
-                  <ListItemAvatar sx={{
-                    marginTop: "4px"
-                  }}>
+                  <ListItemAvatar
+                    sx={{
+                      marginTop: "4px",
+                    }}
+                  >
                     <Avatar
                       sx={{ bgcolor: "var(--primary_blue_color)" }}
                       variant="rounded"
@@ -389,17 +424,47 @@ export default function Chat() {
                   <ListItemText
                     sx={{ mr: 2, mt: 0, textAlign: "left", fontSize: "14px" }}
                   >
-                    {chime?.roster[message.senderAttendeeId]?.name},{` `}
-                    <Typography variant="caption">
-                      {moment(message.timestampMs).format("h:mm A")}
-                    </Typography>
-                    <Paper elevation={0} sx={{
-                        color:"var(--color_grey)"
-                    }}>
-                      <Typography sx={{
-                        overflowWrap: "anywhere",
-                        minWidth:"75px"
-                      }} variant="body1">{messageString}</Typography>
+                    <div
+                      style={{
+                        height: "24px",
+                        display: "flex",
+                        alignItems: "flex-end",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      <Typography variant="caption">
+                        {moment(message.timestampMs).format("h:mm A")}
+                      </Typography>
+                      ,{` `}  
+                      <Tooltip title={chime?.roster[message.senderAttendeeId]?.name} placement="bottom">
+                      <span
+                        style={{
+                          width: "100px",
+                          display: "inline-block",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {chime?.roster[message.senderAttendeeId]?.name}
+                      </span>
+                      </Tooltip>                      
+                    </div>
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        color: "var(--color_grey)",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          overflowWrap: "anywhere",
+                          minWidth: "75px",
+                        }}
+                        variant="body1"
+                      >
+                        {messageString}
+                      </Typography>
                     </Paper>
                   </ListItemText>
                 </ListItem>

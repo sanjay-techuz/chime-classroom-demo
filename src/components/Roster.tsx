@@ -149,7 +149,7 @@ export default function Roster() {
               </ListItemAvatar>
               <ListItemText
                 primary={
-                  <>
+                  <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Tooltip title={rosterAttendee.name} placement="bottom">
                       <Typography
                         sx={{
@@ -185,7 +185,7 @@ export default function Roster() {
                               : ""
                           }`}
                     </Typography>
-                  </>
+                  </span>
                 }
                 sx={{ textTransform: "capitalize" }}
               />
