@@ -222,6 +222,7 @@ export default function CheckMediaPermissions(props: Props) {
                     userInfo.userName,
                     userInfo.userID,
                     userInfo.duration,
+                    userInfo.isRecording,
                     classMode === ClassMode.Student
                       ? "student"
                       : "teacher",

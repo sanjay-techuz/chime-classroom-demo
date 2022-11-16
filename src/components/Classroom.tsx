@@ -87,7 +87,7 @@ export default function Classroom() {
 
   useEffect(() => {
     if(locationState){
-      const { meetingName, meetingID, id, batchId, userName, mode, userID, duration }: any = locationState;
+      const { meetingName, meetingID, id, batchId, userName, mode, userID, duration, isRecording }: any = locationState;
       const teacherId =id;
       const info = {
         teacherId,
@@ -97,7 +97,8 @@ export default function Classroom() {
         userName,
         mode,
         userID,
-        duration
+        duration,
+        isRecording
       }
       updateGlobalVar("userInfo",info);
       if(mode){

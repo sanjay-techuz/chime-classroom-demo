@@ -26,6 +26,7 @@ export default function Main() {
   const mode = query.get("mode") || "";
   const userID = query.get("user_id") || "";
   const duration = query.get("duration") || "";
+  const isRecording = query.get("is_recording") || "";
 
   useEffect(() => {
     console.log(meetingID, userName, mode);
@@ -51,7 +52,8 @@ export default function Main() {
           userID: userID,
           batchId: batchId,
           meetingName: meetingName,
-          duration: duration
+          duration: duration,
+          isRecording: isRecording
         },
       }
 

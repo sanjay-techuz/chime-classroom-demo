@@ -59,6 +59,7 @@ export default function MeetingStatusProvider(props: Props) {
         mode,
         userID,
         duration,
+        isRecording
       }: any = locationState;
       console.log(
         "🙋🙋🙋🙋",
@@ -69,7 +70,8 @@ export default function MeetingStatusProvider(props: Props) {
         userName,
         mode,
         userID,
-        duration
+        duration,
+        isRecording
       );
       const start = async () => {
         try {
@@ -81,6 +83,7 @@ export default function MeetingStatusProvider(props: Props) {
             userName,
             userID,
             duration,
+            isRecording,
             state.classMode === ClassMode.Student ? "student" : "teacher",
             query.get("optionalFeature")
           );
