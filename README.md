@@ -8,14 +8,12 @@ Building a Classroom Application using the Amazon Chime SDK
 
 #### Installation
 ```bash
-#install node module
     npm i
 ```
 
 #### Running
 
 ```bash
-# in the root dir
     npm run start
 ```
 
