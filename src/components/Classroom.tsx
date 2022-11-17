@@ -515,7 +515,7 @@ export default function Classroom() {
                 leftopen={leftDrawerOpen}
                 rightopen={rightDrawerOpen}
                 anchor="bottom"
-                sx={{ height: "100px" }}
+                sx={{ height: "82px" }}
                 mobileview={isMobileView}
                 background={"var(--secondary_blue_color)"}
                 drawerWidth={drawerWidth}
