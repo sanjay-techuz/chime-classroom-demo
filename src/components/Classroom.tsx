@@ -19,6 +19,7 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Snackbar,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -51,6 +52,7 @@ import Roster from "./Roster";
 import Main from "../custom/classroom/Main";
 import AppBar from "../custom/classroom/AppBar";
 import DrawerHeader from "../custom/classroom/DrawerHeader";
+import Alert from "../custom/classroom/Alert";
 import { attendanceWenhook } from "../services";
 // import common from "../constants/common.json";
 
@@ -69,6 +71,8 @@ export default function Classroom() {
   const { meetingStatus, errorMessage } = useContext(getMeetingStatusContext());
   const [isContentShareEnabled, setIsContentShareEnabled] = useState(false);
   const [isScreenShareView, setIsScreenShareView] = useState(false);
+  const [poorConnection, setPoorConnection] = useState(false);
+  const [networkErrors, setNetworkErrors] = useState("");
 
   const [tryToReload, setTryToReload] = useState(true);
   const [viewMode, setViewMode] = useState(ViewMode.Room);
@@ -288,6 +292,46 @@ export default function Classroom() {
     handleClose();
   }
 
+    // OBSERVE INTERNET CONNECTION
+    const observer = {
+      connectionDidBecomePoor: () => {
+        setPoorConnection(true);
+        setNetworkErrors(intl.formatMessage({ id: "Classroom.poorConnection" }));
+        setTimeout(() => {
+          setPoorConnection(false);
+          setNetworkErrors("");
+        }, 15000);
+      },
+      connectionDidSuggestStopVideo: () => {
+        setPoorConnection(true);
+        setNetworkErrors(intl.formatMessage({ id: "Classroom.poorConnection" }));
+        setTimeout(() => {
+          setPoorConnection(false);
+          setNetworkErrors("");
+        }, 15000);
+      },
+      videoSendDidBecomeUnavailable: () => {
+        // Chime SDK allows a total of 25 simultaneous videos per meeting.
+        // If you try to share more video, this method will be called.
+        // See videoAvailabilityDidChange below to find out when it becomes available.
+        setPoorConnection(true);
+        setNetworkErrors(intl.formatMessage({ id: "Classroom.videoTileLimitExceeded" }));
+        setTimeout(() => {
+          setPoorConnection(false);
+          setNetworkErrors("");
+        }, 10000);
+      },
+    };
+  
+    chime?.audioVideo?.addObserver(observer);
+
+    const handleCloseSnackbar = (_event?: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setPoorConnection(false);
+    };
+
   return (
     <>
       <CheckMediaPermissions
@@ -296,6 +340,11 @@ export default function Classroom() {
           setTryToReload(true);
         }}
       />
+      <Snackbar open={poorConnection} onClose={handleCloseSnackbar}  anchorOrigin={{ vertical: "top", horizontal:"center"}}>
+        <Alert onClose={handleCloseSnackbar} severity="warning" sx={{ width: '100%', background: "var(--color_yellow)", color: "var(--color_black)" }}>
+          {networkErrors}
+        </Alert>
+      </Snackbar>
       {tryToReload && (
         <Box
           sx={{

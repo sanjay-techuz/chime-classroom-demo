@@ -39,6 +39,8 @@ export default {
   'Classroom.chat': `Chat`,
   'Classroom.exitFullScreen': `Exit full screen`,
   'Classroom.fullScreen': `Full screen`,
+  'Classroom.poorConnection': `Your connection is poor.we recommended you please turn off your video.`,
+  'Classroom.videoTileLimitExceeded': `Video tile limit exceeded!`,
 
 
   'Copyinfo.copyMeetingId': `Copy`,
