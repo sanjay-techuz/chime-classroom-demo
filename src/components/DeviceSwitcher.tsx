@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 /* eslint-disable  */
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useIntl } from 'react-intl';
 
 import { Box, FormControl, FormLabel, MenuItem, Select } from "@mui/material";
@@ -15,6 +15,21 @@ export default function DeviceSwitcher() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const deviceSwitcherState = useDevices();
   const intl = useIntl();
+  const videoQualityList = [
+    {
+      name: "High quality (720p)",
+      value: ["1280", "720", "30", "1400"]
+    },
+    {
+      name: "Standard quality (360p)",
+      value: ["640", "360", "15", "600"]
+    },
+    {
+      name: "Low quality (180p)",
+      value: ["320", "180", "15", "400"]
+    }
+  ];
+  const [selectedQuality, setSelectedQuality] = useState(videoQualityList[0]);
 
   return (
     <Box
@@ -106,6 +121,51 @@ export default function DeviceSwitcher() {
                   key={`${device.value}`}
                   value={`${device.value}`}
                 >{`${device.name}`}</MenuItem>
+              );
+            })}
+        </Select>
+      </FormControl>
+
+
+      <FormControl sx={{ m: 1, minWidth: 260, maxWidth: 260 }}>
+        <FormLabel>{intl.formatMessage({ id: "DeviceSwitcher.videoQuality"})}</FormLabel>
+        <Select
+          value={selectedQuality?.value}
+          onChange={(event: any) => {
+            if(!event.target.value){
+              return;
+            }
+            const qualityValue = event.target.value.split(",");  
+            if(qualityValue[1] === "720"){
+              setSelectedQuality(videoQualityList[0]);
+            }else if(qualityValue[1] === "360"){
+              setSelectedQuality(videoQualityList[1]);
+            }else{
+              setSelectedQuality(videoQualityList[2]);
+            }
+            // set video local video quality 180p,360p,720p
+            chime?.audioVideo?.chooseVideoInputQuality(qualityValue[0],qualityValue[1],qualityValue[2],qualityValue[3]);
+            chime?.audioVideo?.stopLocalVideoTile();
+            setTimeout(async() => {
+              if (!chime?.currentVideoInputDevice) {
+                throw new Error("currentVideoInputDevice does not exist");
+              }
+              await chime?.chooseVideoInputDevice(
+                chime?.currentVideoInputDevice
+              );
+              chime?.audioVideo?.startLocalVideoTile();
+            },500);
+          }}
+          displayEmpty
+          inputProps={{ "aria-label": "Without label" }}
+        >
+          {
+            videoQualityList.map((quality) => {
+              return (
+                <MenuItem
+                  key={`${quality.value}`}
+                  value={`${quality.value}`}
+                >{`${quality.name}`}</MenuItem>
               );
             })}
         </Select>

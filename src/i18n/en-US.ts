@@ -56,6 +56,7 @@ export default {
   'DeviceSwitcher.microphone': `Microphone:`,
   'DeviceSwitcher.speaker': `Speaker:`,
   'DeviceSwitcher.camera': `Camera`,
+  'DeviceSwitcher.videoQuality': `Video quality`,
   'DeviceSwitcher.noAudioInputPlaceholder': `No microphone`,
   'DeviceSwitcher.noAudioOutputPlaceholder': `No speaker`,
   'DeviceSwitcher.noVideoInputPlaceholder': `No video device`,
