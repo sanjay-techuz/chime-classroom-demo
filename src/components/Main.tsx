@@ -31,7 +31,7 @@ export default function Main() {
   useEffect(() => {
     console.log(meetingID, userName, mode);
     if (!userName || !mode) {
-      history.push(`${routes.CREATE_OR_JOIN}?meetingID=${meetingID}`);
+      history.push(`${routes.CREATE_OR_JOIN}`);
     } else {
       if (mode) {
         dispatch({

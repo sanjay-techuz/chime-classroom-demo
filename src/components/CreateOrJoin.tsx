@@ -3,10 +3,10 @@
 /* eslint-disable  */
 
 import classNames from "classnames/bind";
-import React, { useEffect, useState } from "react";
+import React from "react";
 // import Dropdown, { Option } from "react-dropdown";
-import { FormattedMessage, useIntl } from "react-intl";
-import { useHistory, useLocation } from "react-router-dom";
+// import { FormattedMessage, useIntl } from "react-intl";
+// import { useHistory, useLocation } from "react-router-dom";
 // import { v4 as uuidv4 } from "uuid";
 
 // import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -29,42 +29,42 @@ const cx = classNames.bind(styles);
 export default function CreateOrJoin() {
   // const chime = useContext(getChimeContext()) as ChimeSdkWrapper;
   // const [state] = useContext(getUIStateContext());
-  const [title, setTitle] = useState('');
-  const [name, setName] = useState("");
+  // const [title, setTitle] = useState('');
+  // const [name, setName] = useState("");
   // const [region, setRegion] = useState<RegionType | undefined>(undefined);
   // const [optionalFeature, setOptionalFeature] = useState("");
-  const history = useHistory();
-  const intl = useIntl();
-  const query = new URLSearchParams(useLocation().search);
+  // const history = useHistory();
+  // const intl = useIntl();
+  // const query = new URLSearchParams(useLocation().search);
 
   // const invitedUrl = localStorage.getItem(localStorageKeys.INVITED_URL);
-  const meetingID = query.get("meetingID") || "";
+  // const meetingID = query.get("meetingID") || "";
 
-  useEffect(() => {
-    // if (invitedUrl) {
-    //   let isRecordingUrl =
-    //     invitedUrl.split("&")[1] == "record=true" ? true : false;
-    //   const url = new URL(invitedUrl);
-    //   const urlParams = new URLSearchParams(url.search);
-    //   const meetingParam = urlParams.get("meetingId");
-    //   if (meetingParam && !isRecordingUrl) {
-    //     setTitle(meetingParam);
-    //   }
-    //   if (meetingParam && isRecordingUrl) {
-    //     history.push(
-    //       `/classroom?title=${encodeURIComponent(
-    //         meetingParam
-    //       )}&name=Unknown&region=us-east-1`
-    //     );
-    //   }
+  // useEffect(() => {
+  //   // if (invitedUrl) {
+  //   //   let isRecordingUrl =
+  //   //     invitedUrl.split("&")[1] == "record=true" ? true : false;
+  //   //   const url = new URL(invitedUrl);
+  //   //   const urlParams = new URLSearchParams(url.search);
+  //   //   const meetingParam = urlParams.get("meetingId");
+  //   //   if (meetingParam && !isRecordingUrl) {
+  //   //     setTitle(meetingParam);
+  //   //   }
+  //   //   if (meetingParam && isRecordingUrl) {
+  //   //     history.push(
+  //   //       `/classroom?title=${encodeURIComponent(
+  //   //         meetingParam
+  //   //       )}&name=Unknown&region=us-east-1`
+  //   //     );
+  //   //   }
 
-    //   if (meetingParam) {
-    //   }
-    // }
-    if(meetingID){
-      setTitle(meetingID);
-    }
-  }, []);
+  //   //   if (meetingParam) {
+  //   //   }
+  //   // }
+  //   if(meetingID){
+  //     setTitle(meetingID);
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   setOptionalFeature(optionalFeatures[0].value);
@@ -76,14 +76,15 @@ export default function CreateOrJoin() {
   return (
     <div className={cx("CreateOrJoin_createOrJoin")}>
       <div className={cx("CreateOrJoin_formWrapper")}>
-        <h1 className={cx("CreateOrJoin_title")}>
+        <img src="/logo.svg" alt="" />
+        {/* <h1 className={cx("CreateOrJoin_title")}> */}
           {/* {state.classMode === ClassMode.Teacher ? (
             <FormattedMessage id="CreateOrJoin.teacherTitle" />
           ) : ( */}
-            <FormattedMessage id="CreateOrJoin.studentTitle" />
+            {/* <FormattedMessage id="CreateOrJoin.studentTitle" /> */}
           {/* )} */}
-        </h1>
-        <form
+        {/* </h1> */}
+       {/* <form
           className={cx("CreateOrJoin_form")}
           onSubmit={(event) => {
             event.preventDefault();
@@ -113,47 +114,47 @@ export default function CreateOrJoin() {
               id: "CreateOrJoin.namePlaceholder",
             })}
           />
-          {/* {state.classMode === ClassMode.Teacher && (
-            <div className={cx("CreateOrJoin_regionsList")}>
-              <Dropdown
-                className={cx("CreateOrJoin_dropdown")}
-                controlClassName={cx("CreateOrJoin_control")}
-                placeholderClassName={cx("CreateOrJoin_placeholder")}
-                menuClassName={cx("CreateOrJoin_menu")}
-                arrowClassName={cx("CreateOrJoin_arrow")}
-                value={region}
-                options={
-                  region ? chime?.supportedChimeRegions : ([] as RegionType[])
-                }
-                disabled={!region}
-                onChange={(selectedRegion: RegionType) => {
-                  setRegion(selectedRegion);
-                }}
-                placeholder=""
-              />
-            </div>
-          )}
+          // {state.classMode === ClassMode.Teacher && (
+          //   <div className={cx("CreateOrJoin_regionsList")}>
+          //     <Dropdown
+          //       className={cx("CreateOrJoin_dropdown")}
+          //       controlClassName={cx("CreateOrJoin_control")}
+          //       placeholderClassName={cx("CreateOrJoin_placeholder")}
+          //       menuClassName={cx("CreateOrJoin_menu")}
+          //       arrowClassName={cx("CreateOrJoin_arrow")}
+          //       value={region}
+          //       options={
+          //         region ? chime?.supportedChimeRegions : ([] as RegionType[])
+          //       }
+          //       disabled={!region}
+          //       onChange={(selectedRegion: RegionType) => {
+          //         setRegion(selectedRegion);
+          //       }}
+          //       placeholder=""
+          //     />
+          //   </div>
+          // )}
 
-          <div className={cx("CreateOrJoin_regionsList")}>
-            <Dropdown
-              className={cx("CreateOrJoin_dropdown")}
-              controlClassName={cx("CreateOrJoin_control")}
-              placeholderClassName={cx("CreateOrJoin_placeholder")}
-              menuClassName={cx("CreateOrJoin_menu")}
-              arrowClassName={cx("CreateOrJoin_arrow")}
-              value={optionalFeature}
-              options={optionalFeatures}
-              onChange={(selectedFeature: Option) => {
-                setOptionalFeature(selectedFeature.value);
-              }}
-              placeholder={optionalFeatures[0].label}
-            />
-          </div> */}
+          // <div className={cx("CreateOrJoin_regionsList")}>
+          //   <Dropdown
+          //     className={cx("CreateOrJoin_dropdown")}
+          //     controlClassName={cx("CreateOrJoin_control")}
+          //     placeholderClassName={cx("CreateOrJoin_placeholder")}
+          //     menuClassName={cx("CreateOrJoin_menu")}
+          //     arrowClassName={cx("CreateOrJoin_arrow")}
+          //     value={optionalFeature}
+          //     options={optionalFeatures}
+          //     onChange={(selectedFeature: Option) => {
+          //       setOptionalFeature(selectedFeature.value);
+          //     }}
+          //     placeholder={optionalFeatures[0].label}
+          //   />
+          // </div> 
 
           <button className={cx("CreateOrJoin_button")} type="submit">
             <FormattedMessage id="CreateOrJoin.continueButton" />
           </button>
-        </form>
+        </form>*/}
         {/* <Link className={cx("CreateOrJoin_mainLink")} to={routes.MAIN}>
           {<FormattedMessage id="CreateOrJoin.back" />}
         </Link> */}
