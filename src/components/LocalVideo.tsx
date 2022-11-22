@@ -8,6 +8,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
+import getGlobalVarContext from "../context/getGlobalVarContext";
 import Size from "../enums/Size";
 import ViewMode from "../enums/ViewMode";
 import LocalRoster from "./LocalRoster";
@@ -26,6 +27,7 @@ export default function LocalVideo(props: Props) {
   const { viewMode, size, isContentShareEnabled } = props;
   const [enabled, setEnabled] = useState(false);
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
+  const { updateGlobalVar } = useContext(getGlobalVarContext());
   const videoElement = useRef(null);
   const attendeeId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
@@ -47,6 +49,7 @@ export default function LocalVideo(props: Props) {
           videoElement.current as unknown as HTMLVideoElement
         );
         setEnabled(tileState.active);
+        updateGlobalVar("localVideo",tileState.active);
       },
     });
   }, []);

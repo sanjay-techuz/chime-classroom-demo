@@ -9,10 +9,13 @@ import { Box, FormControl, FormLabel, MenuItem, Select } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
+import getGlobalVarContext from "../context/getGlobalVarContext";
 import useDevices from "../hooks/useDevices";
 
 export default function DeviceSwitcher() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
+  const { globalVar } = useContext(getGlobalVarContext());
+  const { localVideo } = globalVar;
   const deviceSwitcherState = useDevices();
   const intl = useIntl();
   const videoQualityList = [
@@ -145,16 +148,18 @@ export default function DeviceSwitcher() {
             }
             // set video local video quality 180p,360p,720p
             chime?.audioVideo?.chooseVideoInputQuality(qualityValue[0],qualityValue[1],qualityValue[2],qualityValue[3]);
-            chime?.audioVideo?.stopLocalVideoTile();
-            setTimeout(async() => {
-              if (!chime?.currentVideoInputDevice) {
-                throw new Error("currentVideoInputDevice does not exist");
-              }
-              await chime?.chooseVideoInputDevice(
-                chime?.currentVideoInputDevice
-              );
-              chime?.audioVideo?.startLocalVideoTile();
-            },500);
+            if(localVideo){
+              chime?.audioVideo?.stopLocalVideoTile();
+              setTimeout(async() => {
+                if (!chime?.currentVideoInputDevice) {
+                  throw new Error("currentVideoInputDevice does not exist");
+                }
+                await chime?.chooseVideoInputDevice(
+                  chime?.currentVideoInputDevice
+                );
+                chime?.audioVideo?.startLocalVideoTile();
+              },500);
+            }
           }}
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
