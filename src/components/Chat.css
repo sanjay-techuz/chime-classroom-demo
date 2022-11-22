@@ -133,3 +133,32 @@
   margin: 2px;
   cursor: pointer;
 }
+
+.Chat_message_attachments{
+  height: 100px;
+  width: 175px;
+  border-radius: 10px;
+}
+
+.Chat_document_parent{
+  display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.Chat_document_name{
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Chat_document_viewer{
+  display: block !important;
+  width: 600px;
+  height: 600px;
+}

@@ -14,6 +14,17 @@ import ClassMode from "../enums/ClassMode";
 // import useFocusMode from "../hooks/useFocusMode";
 import styles from "./ChatInput.css";
 import MessageTopic from "../enums/MessageTopic";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import { IconButton } from "@mui/material";
+import AWS from "aws-sdk";
+import SendIcon from "@mui/icons-material/Send";
+
+const S3_BUCKET = "chime-message-attachments";
+
+AWS.config.update({
+  accessKeyId: "AKIAUMB57EQBTHOTTM45",
+  secretAccessKey: "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",
+});
 
 const cx = classNames.bind(styles);
 
@@ -32,6 +43,8 @@ export default React.memo(function ChatInput(props: Props) {
   // const [state] = useContext(getUIStateContext());
   const [inputText, setInputText] = useState("");
   const [raised, setRaised] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [selectedFile, setSelectedFile] = useState(null);
   // const focusMode = useFocusMode();
   const intl = useIntl();
 
@@ -56,6 +69,49 @@ export default React.memo(function ChatInput(props: Props) {
     }
   }, [raised, chime?.configuration]);
 
+  const handleFileInput = (e: any) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const uploadFile = (file: any) => {
+    console.log("///////////",file)
+    var upload = new AWS.S3.ManagedUpload({
+      params: {
+        Bucket: S3_BUCKET,
+        Key: file.name,
+        Body: file,
+        ContentDisposition:"inline",
+        ContentType: file.type
+      },
+    }).on("httpUploadProgress", (evt) => {
+      setProgress(Math.round((evt.loaded / evt.total) * 100));
+    });
+
+    var promise = upload.promise();
+
+    promise.then(
+      function (data: any) {
+        console.log(data);
+        setInputText(data.Location);
+        const sendingMessage = data.Location;
+        const msgObject = {
+          sendingMessage,
+          channel: activeChannel,
+          targetId: activeChatAttendee,
+        };
+        const attendeeId = chime?.configuration?.credentials?.attendeeId;
+        if (sendingMessage !== "" && attendeeId) {
+          chime?.sendMessage(MessageTopic.GroupChat, JSON.stringify(msgObject));
+          setInputText("");
+        }
+      },
+      function (err: any) {
+        console.log(err);
+        return err;
+      }
+    );
+  };
+
   return (
     <div className={cx("chatInput")}>
       <form
@@ -70,7 +126,7 @@ export default React.memo(function ChatInput(props: Props) {
           onChange={(event) => {
             setInputText(event.target.value);
           }}
-          onKeyUp={(event) => {
+          onKeyUp={async (event) => {
             event.preventDefault();
             // send message stop on focus on
             // if (focusMode && classMode === ClassMode.Student) {
@@ -95,6 +151,32 @@ export default React.memo(function ChatInput(props: Props) {
           }}
           placeholder={intl.formatMessage({ id: "ChatInput.inputPlaceholder" })}
         />
+        <IconButton color="inherit" sx={{
+              position: "absolute",
+              right: "40px",
+              width: "40px",
+              height: "40px",
+              color:" #FFF",
+              cursor: "pointer"
+        }}>
+          <input type="file" onChange={handleFileInput} style={{
+            opacity: "0",
+            zIndex: "10",
+            position: "absolute",
+            height: "40px",
+            width: "40px"
+          }} />
+          <AttachFileIcon />
+        </IconButton>
+        <IconButton color="inherit" onClick={() => uploadFile(selectedFile)} sx={{
+              width: "40px",
+              height: "40px",
+              color:" #FFF",
+              cursor: "pointer"
+        }}>
+          <SendIcon />
+        </IconButton>
+
         {classMode === ClassMode.Student && (
           <button
             type="button"
