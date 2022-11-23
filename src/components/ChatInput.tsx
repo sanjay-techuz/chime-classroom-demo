@@ -22,8 +22,8 @@ import SendIcon from "@mui/icons-material/Send";
 const S3_BUCKET = "chime-message-attachments";
 
 AWS.config.update({
-  accessKeyId: "AKIAUMB57EQBTHOTTM45",
-  secretAccessKey: "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",
+  accessKeyId: "AWS_ACCESS_KEY_ID",
+  secretAccessKey: "SECRET_ACCESS_KEY",
 });
 
 const cx = classNames.bind(styles);
