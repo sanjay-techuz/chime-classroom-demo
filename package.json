@@ -114,6 +114,7 @@
     "connected-react-router": "^6.6.1",
     "core-js": "^3.6.4",
     "devtron": "^1.4.0",
+    "emoji-picker-react": "^4.4.5",
     "g": "^2.0.1",
     "google-timezones-json": "^1.0.2",
     "history": "^4.10.1",

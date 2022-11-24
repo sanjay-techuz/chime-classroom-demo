@@ -18,6 +18,10 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { IconButton } from "@mui/material";
 import AWS from "aws-sdk";
 import SendIcon from "@mui/icons-material/Send";
+import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
+import EmojiPicker, {
+  EmojiClickData,
+} from "emoji-picker-react";
 
 const S3_BUCKET = "chime-message-attachments";
 
@@ -42,6 +46,7 @@ export default React.memo(function ChatInput(props: Props) {
   const { classMode } = globalVar;
   // const [state] = useContext(getUIStateContext());
   const [inputText, setInputText] = useState("");
+  const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
   const [raised, setRaised] = useState(false);
   const [progress, setProgress] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -112,7 +117,18 @@ export default React.memo(function ChatInput(props: Props) {
     );
   };
 
+  function onClick(emojiData: EmojiClickData, event: MouseEvent) {
+    setInputText(inputText + emojiData.emoji);
+  }
+
   return (
+    <>
+      {openEmojiPicker && <EmojiPicker
+      height={300}
+      width={300}
+          onEmojiClick={onClick}
+          autoFocusSearch={true}
+      />}
     <div className={cx("chatInput")}>
       <form
         onSubmit={(event) => {
@@ -151,6 +167,17 @@ export default React.memo(function ChatInput(props: Props) {
           }}
           placeholder={intl.formatMessage({ id: "ChatInput.inputPlaceholder" })}
         />
+
+        <IconButton onClick={() => setOpenEmojiPicker(!openEmojiPicker)} color="inherit" sx={{
+              position: "absolute",
+              right: "70px",
+              width: "40px",
+              height: "40px",
+              color:" #FFF",
+              cursor: "pointer"
+        }}>
+          <EmojiEmotionsOutlinedIcon />
+        </IconButton>
         <IconButton color="inherit" sx={{
               position: "absolute",
               right: "40px",
@@ -199,5 +226,6 @@ export default React.memo(function ChatInput(props: Props) {
         )}
       </form>
     </div>
+    </>
   );
 });

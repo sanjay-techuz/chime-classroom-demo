@@ -34,8 +34,17 @@
    --color_pink: #e91e63;
    --color_yellow: #ffeb3b;
    --color_grey: #757575;
+
  }
- 
+ .EmojiPickerReact{
+  --epr-emoji-fullsize: 30px !important;
+  --epr-emoji-padding: 2px !important;
+  --epr-category-label-height: 30px !important;
+  --epr-header-padding: 0 !important;
+ }
+ .EmojiPickerReact .epr-preview{
+  display: none !important;
+ }
  *,
  *::before,
  *::after {
