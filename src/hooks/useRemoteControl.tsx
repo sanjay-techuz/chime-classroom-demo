@@ -99,6 +99,10 @@ export default function useRemoteControl() {
               chime?.audioVideo?.realtimeMuteLocalAudio();
             }
           break;
+        case MessageTopic.ScreenSharePermit:
+            updateGlobalVar('screenSharePermit',focus);
+            localStorage.setItem('screenSharePermit', JSON.stringify(focus));
+          break;
         default:
           break;
       }
@@ -120,16 +124,22 @@ export default function useRemoteControl() {
       topic: MessageTopic.Focus, 
       callback 
     };
+    const screenSharePermitMessageUpdateCallback = { 
+      topic: MessageTopic.ScreenSharePermit, 
+      callback 
+    };
 
     chime?.subscribeToMessageUpdate(remoteMuteUnmuteUpdateCallback);
     chime?.subscribeToMessageUpdate(remoteAttendeeRemoveUpdateCallback);
     chime?.subscribeToMessageUpdate(remoteVideoOnOffUpdateCallback);
     chime?.subscribeToMessageUpdate(focusMessageUpdateCallback);
+    chime?.subscribeToMessageUpdate(screenSharePermitMessageUpdateCallback);
     return () => {
       chime?.unsubscribeFromMessageUpdate(remoteMuteUnmuteUpdateCallback);
       chime?.unsubscribeFromMessageUpdate(remoteAttendeeRemoveUpdateCallback);
       chime?.unsubscribeFromMessageUpdate(remoteVideoOnOffUpdateCallback);
       chime?.unsubscribeFromMessageUpdate(focusMessageUpdateCallback);
+      chime?.unsubscribeFromMessageUpdate(screenSharePermitMessageUpdateCallback);
     };
   }, [meetingStatus]);
 }

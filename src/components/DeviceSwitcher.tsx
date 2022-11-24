@@ -2,37 +2,76 @@
 // SPDX-License-Identifier: Apache-2.0
 /* eslint-disable  */
 
-import React, { useContext, useState } from "react";
-import { useIntl } from 'react-intl';
+import React, { useContext, useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
-import { Box, FormControl, FormLabel, MenuItem, Select } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+} from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
 import useDevices from "../hooks/useDevices";
+import MessageTopic from "../enums/MessageTopic";
+import ClassMode from "../enums/ClassMode";
 
 export default function DeviceSwitcher() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  const { globalVar } = useContext(getGlobalVarContext());
-  const { localVideo } = globalVar;
+  const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
+  const { localVideo, classMode, screenSharePermit } = globalVar;
+  const [screenSharePermitValue, setScreenSharePermitValue] = useState(
+    screenSharePermit ? "all" : "host"
+  );
   const deviceSwitcherState = useDevices();
   const intl = useIntl();
   const videoQualityList = [
     {
       name: "High quality (720p)",
-      value: ["1280", "720", "30", "1400"]
+      value: ["1280", "720", "30", "1400"],
     },
     {
       name: "Standard quality (360p)",
-      value: ["640", "360", "15", "600"]
+      value: ["640", "360", "15", "600"],
     },
     {
       name: "Low quality (180p)",
-      value: ["320", "180", "15", "400"]
-    }
+      value: ["320", "180", "15", "400"],
+    },
   ];
   const [selectedQuality, setSelectedQuality] = useState(videoQualityList[0]);
+
+  useEffect(() => {
+    setScreenSharePermitValue(screenSharePermit ? "all" : "host");
+  }, []);
+
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let newFocusState = screenSharePermitValue === "all" ? true : false;
+    setScreenSharePermitValue((event.target as HTMLInputElement).value);
+    newFocusState =
+      (event.target as HTMLInputElement).value === "all" ? true : false;
+
+    updateGlobalVar("screenSharePermit", newFocusState);
+    localStorage.setItem("screenSharePermit", JSON.stringify(newFocusState));
+
+    chime?.sendMessage(MessageTopic.ScreenSharePermit, {
+      focus: newFocusState,
+    });
+    const msgObject = {
+      sendingMessage: newFocusState
+        ? intl.formatMessage({ id: "Controls.hostEnableScreenShare" })
+        : intl.formatMessage({ id: "Controls.hostDisableScreenShare" }),
+      channel: MessageTopic.PublicChannel,
+    };
+    chime?.sendMessage(MessageTopic.GroupChat, JSON.stringify(msgObject));
+  };
 
   return (
     <Box
@@ -44,7 +83,9 @@ export default function DeviceSwitcher() {
       }}
     >
       <FormControl sx={{ m: 1, minWidth: 260, maxWidth: 260 }}>
-        <FormLabel>{intl.formatMessage({ id: "DeviceSwitcher.microphone"})}</FormLabel>
+        <FormLabel>
+          {intl.formatMessage({ id: "DeviceSwitcher.microphone" })}
+        </FormLabel>
         <Select
           value={deviceSwitcherState?.currentAudioInputDevice?.value}
           onChange={async (event: any) => {
@@ -71,7 +112,9 @@ export default function DeviceSwitcher() {
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: 260, maxWidth: 260 }}>
-        <FormLabel>{intl.formatMessage({ id: "DeviceSwitcher.speaker"})}</FormLabel>
+        <FormLabel>
+          {intl.formatMessage({ id: "DeviceSwitcher.speaker" })}
+        </FormLabel>
         <Select
           value={deviceSwitcherState.currentAudioOutputDevice?.value}
           onChange={async (event: any) => {
@@ -102,7 +145,9 @@ export default function DeviceSwitcher() {
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: 260, maxWidth: 260 }}>
-        <FormLabel>{intl.formatMessage({ id: "DeviceSwitcher.camera"})}</FormLabel>
+        <FormLabel>
+          {intl.formatMessage({ id: "DeviceSwitcher.camera" })}
+        </FormLabel>
         <Select
           value={deviceSwitcherState.currentVideoInputDevice?.value}
           onChange={async (event: any) => {
@@ -129,28 +174,34 @@ export default function DeviceSwitcher() {
         </Select>
       </FormControl>
 
-
       <FormControl sx={{ m: 1, minWidth: 260, maxWidth: 260 }}>
-        <FormLabel>{intl.formatMessage({ id: "DeviceSwitcher.videoQuality"})}</FormLabel>
+        <FormLabel>
+          {intl.formatMessage({ id: "DeviceSwitcher.videoQuality" })}
+        </FormLabel>
         <Select
           value={selectedQuality?.value}
           onChange={(event: any) => {
-            if(!event.target.value){
+            if (!event.target.value) {
               return;
             }
-            const qualityValue = event.target.value.split(",");  
-            if(qualityValue[1] === "720"){
+            const qualityValue = event.target.value.split(",");
+            if (qualityValue[1] === "720") {
               setSelectedQuality(videoQualityList[0]);
-            }else if(qualityValue[1] === "360"){
+            } else if (qualityValue[1] === "360") {
               setSelectedQuality(videoQualityList[1]);
-            }else{
+            } else {
               setSelectedQuality(videoQualityList[2]);
             }
             // set video local video quality 180p,360p,720p
-            chime?.audioVideo?.chooseVideoInputQuality(qualityValue[0],qualityValue[1],qualityValue[2],qualityValue[3]);
-            if(localVideo){
+            chime?.audioVideo?.chooseVideoInputQuality(
+              qualityValue[0],
+              qualityValue[1],
+              qualityValue[2],
+              qualityValue[3]
+            );
+            if (localVideo) {
               chime?.audioVideo?.stopLocalVideoTile();
-              setTimeout(async() => {
+              setTimeout(async () => {
                 if (!chime?.currentVideoInputDevice) {
                   throw new Error("currentVideoInputDevice does not exist");
                 }
@@ -158,23 +209,48 @@ export default function DeviceSwitcher() {
                   chime?.currentVideoInputDevice
                 );
                 chime?.audioVideo?.startLocalVideoTile();
-              },500);
+              }, 500);
             }
           }}
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
         >
-          {
-            videoQualityList.map((quality) => {
-              return (
-                <MenuItem
-                  key={`${quality.value}`}
-                  value={`${quality.value}`}
-                >{`${quality.name}`}</MenuItem>
-              );
-            })}
+          {videoQualityList.map((quality) => {
+            return (
+              <MenuItem
+                key={`${quality.value}`}
+                value={`${quality.value}`}
+              >{`${quality.name}`}</MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
+
+      {classMode === ClassMode.Teacher && (
+        <FormControl sx={{ m: 1, minWidth: 260, maxWidth: 260 }}>
+          <FormLabel>
+            {intl.formatMessage({ id: "DeviceSwitcher.screenSharePermit" })}
+          </FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-form-control-label-placement"
+            name="position"
+            value={screenSharePermitValue}
+            onChange={handleRadioChange}
+          >
+            <FormControlLabel
+              value="host"
+              control={<Radio />}
+              label="Host Only"
+            />
+            <FormControlLabel
+              value="all"
+              control={<Radio />}
+              label="All participants"
+            />
+          </RadioGroup>
+        </FormControl>
+      )}
     </Box>
   );
 }

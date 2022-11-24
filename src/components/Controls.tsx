@@ -6,7 +6,19 @@ import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useHistory } from "react-router-dom";
 
-import { Avatar, Badge, Box, MenuItem, Popover, Tooltip } from "@mui/material";
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  MenuItem,
+  Popover,
+  Tooltip,
+} from "@mui/material";
 import AutoModeIcon from "@mui/icons-material/AutoMode";
 import KeyboardVoiceOutlinedIcon from "@mui/icons-material/KeyboardVoiceOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
@@ -49,12 +61,19 @@ export default function Controls(props: Props) {
   const { viewMode, onClickShareButton, onClickChatButton, tab } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
-  const { localVideo, groupChatCounter, userInfo, classMode } = globalVar;
+  const {
+    localVideo,
+    groupChatCounter,
+    userInfo,
+    classMode,
+    screenSharePermit,
+  } = globalVar;
   // const [state] = useContext(getUIStateContext());
   const history = useHistory();
   const [muted, setMuted] = useState(false);
   const [focus, setFocus] = useState(false);
   const [isScreenShared, setIsScreenShared] = useState(false);
+  const [openScreenSharePermit, setOpenScreenSharePermit] = useState(false);
   const [openChat, setOpenChat] = useState(false);
   // const [recording, setRecording] = useState(false);
   // const [mediaPipelineId, setMediaPipelineId] = useState("");
@@ -126,6 +145,10 @@ export default function Controls(props: Props) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleCloseScreenShareDialog = () => {
+    setOpenScreenSharePermit(false);
   };
 
   return (
@@ -345,7 +368,27 @@ export default function Controls(props: Props) {
           </Badge>
         </Tooltip>
 
-        {viewMode !== ViewMode.ScreenShare && (
+        <Dialog
+          open={openScreenSharePermit}
+          onClose={handleCloseScreenShareDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {intl.formatMessage({
+                id: "Controls.screenSharePermitDialogMessage",
+              })}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseScreenShareDialog} autoFocus>
+              {intl.formatMessage({ id: "Controls.dialogOk" })}
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {
           <Tooltip
             title={
               isScreenShared
@@ -356,10 +399,14 @@ export default function Controls(props: Props) {
           >
             <Avatar
               onClick={() => {
-                if (!isScreenShared) {
-                  onClickShareButton(true);
+                if (classMode === ClassMode.Teacher || screenSharePermit) {
+                  if (!isScreenShared) {
+                    onClickShareButton(true);
+                  } else {
+                    onClickShareButton(false);
+                  }
                 } else {
-                  onClickShareButton(false);
+                  setOpenScreenSharePermit(true);
                 }
               }}
               sx={
@@ -385,7 +432,7 @@ export default function Controls(props: Props) {
               )}
             </Avatar>
           </Tooltip>
-        )}
+        }
         {/* {classMode === ClassMode.Teacher && (
           <Tooltip
             title={
@@ -434,28 +481,30 @@ export default function Controls(props: Props) {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          >   
-          {classMode === ClassMode.Teacher && <MenuItem
-            onClick={() => {
-              chime?.leaveRoom(true);
-              history.push(`${routes.MAIN}?id=${userInfo.teacherId}`);
-              // window.location.href = `${common.domain}complete?id=${userInfo.teacherId}`;
-            }}
-          >
-            {intl.formatMessage({ id: "Controls.EndMeeting"})}
-          </MenuItem>}
+        >
+          {classMode === ClassMode.Teacher && (
+            <MenuItem
+              onClick={() => {
+                chime?.leaveRoom(true);
+                history.push(`${routes.MAIN}?id=${userInfo.teacherId}`);
+                // window.location.href = `${common.domain}complete?id=${userInfo.teacherId}`;
+              }}
+            >
+              {intl.formatMessage({ id: "Controls.EndMeeting" })}
+            </MenuItem>
+          )}
           <MenuItem
-            onClick={async() => {
-              if(classMode !== ClassMode.Teacher){
+            onClick={async () => {
+              if (classMode !== ClassMode.Teacher) {
                 const webhookRes = {
                   meetingId: userInfo.meetingID,
                   internal_meeting_id: chime?.meetingId || "",
                   user_id: userInfo.userID,
                   batch_id: userInfo.batchId,
-                  isJoin: false
-                }
-                
-                console.log("🏣🏣🏣🏣",webhookRes)
+                  isJoin: false,
+                };
+
+                console.log("🏣🏣🏣🏣", webhookRes);
                 await attendanceWenhook(webhookRes);
               }
               chime?.leaveRoom(false);
@@ -463,7 +512,7 @@ export default function Controls(props: Props) {
               // window.location.href = `${common.domain}complete`;
             }}
           >
-            {intl.formatMessage({ id: "Controls.LeaveMeeting"})}
+            {intl.formatMessage({ id: "Controls.LeaveMeeting" })}
           </MenuItem>
         </Popover>
         <Tooltip

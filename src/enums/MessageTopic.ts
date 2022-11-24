@@ -9,7 +9,8 @@ enum MessageTopic {
   Focus = 'focus',
   RemoteMuteUnmute = 'remote-mute-unmute',
   RemoveAttendee = 'remove-attendee',
-  RemoteVideoOnOff = 'remote-video-on-off'
+  RemoteVideoOnOff = 'remote-video-on-off',
+  ScreenSharePermit = 'screen-share-permit'
 }
 
 export default MessageTopic;
