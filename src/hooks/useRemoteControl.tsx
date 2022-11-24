@@ -4,6 +4,7 @@
 
 import { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useIntl } from "react-intl";
 import { DataMessage } from "amazon-chime-sdk-js";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -17,10 +18,17 @@ import MeetingStatus from "../enums/MeetingStatus";
 // import common from "../constants/common.json";
 import routes from "../constants/routes.json";
 import { attendanceWenhook } from "../services";
+import { 
+  useNotificationDispatch,
+  Type as NotifType,
+ } from "../providers/NotificationProvider";
 
 export default function useRemoteControl() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { meetingStatus } = useContext(getMeetingStatusContext());
+  const notifDispatch = useNotificationDispatch();
+  const intl = useIntl();
+
   const { globalVar,updateGlobalVar } = useContext(getGlobalVarContext());
   const { userInfo, classMode } = globalVar;
   // const [state] = useContext(getUIStateContext());
@@ -46,8 +54,10 @@ export default function useRemoteControl() {
             chime?.audioVideo?.realtimeSetCanUnmuteLocalAudio(!focus);
             if (focus) {
               chime?.audioVideo?.realtimeMuteLocalAudio();
+              notifDispatch({ type: NotifType.REMOTE_MUTE, payload: { message: intl.formatMessage({ id: "Notification.remoteMute" })} });
             } else {
               chime?.audioVideo?.realtimeUnmuteLocalAudio();
+              notifDispatch({ type: NotifType.REMOTE_UNMUTE, payload: { message: intl.formatMessage({ id: "Notification.remoteUnMute" })} });
             }
           }
           break;
@@ -84,9 +94,12 @@ export default function useRemoteControl() {
               if (focus) {
                 chime?.audioVideo?.startLocalVideoTile();
                 updateGlobalVar("localVideo",true);
+                notifDispatch({ type: NotifType.REMOTE_VIDEO_ENABLED, payload: { message: intl.formatMessage({ id: "Notification.remoteVideoStart" })} });
               } else {
                 chime?.audioVideo?.stopLocalVideoTile();
                 updateGlobalVar("localVideo",false);
+                notifDispatch({ type: NotifType.REMOTE_VIDEO_DISABLED, payload: { message: intl.formatMessage({ id: "Notification.remoteVideoStop" })} });
+
               }
             } catch (error) {
               console.error(error);
@@ -97,11 +110,19 @@ export default function useRemoteControl() {
             chime?.audioVideo?.realtimeSetCanUnmuteLocalAudio(!focus);
             if (focus) {
               chime?.audioVideo?.realtimeMuteLocalAudio();
+              notifDispatch({ type: NotifType.REMOTE_AUTO_FOCUS, payload: { message: intl.formatMessage({ id: "Notification.turnOnFocus" })} });
+            }else{
+              notifDispatch({ type: NotifType.REMOTE_AUTO_FOCUS, payload: { message: intl.formatMessage({ id: "Notification.turnOffFocus" })} });
             }
           break;
         case MessageTopic.ScreenSharePermit:
             updateGlobalVar('screenSharePermit',focus);
             localStorage.setItem('screenSharePermit', JSON.stringify(focus));
+            if (focus) {
+              notifDispatch({ type: NotifType.SCREEN_SHARE_PERMIT, payload: { message: intl.formatMessage({ id: "Notification.screenSharePermit" })} });
+            }else{
+              notifDispatch({ type: NotifType.SCREEN_SHARE_PERMIT, payload: { message: intl.formatMessage({ id: "Notification.screenShareNotPermit" })} });
+            }
           break;
         default:
           break;

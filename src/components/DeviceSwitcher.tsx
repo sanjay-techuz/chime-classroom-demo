@@ -64,13 +64,6 @@ export default function DeviceSwitcher() {
     chime?.sendMessage(MessageTopic.ScreenSharePermit, {
       focus: newFocusState,
     });
-    const msgObject = {
-      sendingMessage: newFocusState
-        ? intl.formatMessage({ id: "Controls.hostEnableScreenShare" })
-        : intl.formatMessage({ id: "Controls.hostDisableScreenShare" }),
-      channel: MessageTopic.PublicChannel,
-    };
-    chime?.sendMessage(MessageTopic.GroupChat, JSON.stringify(msgObject));
   };
 
   return (

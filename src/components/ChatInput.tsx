@@ -11,7 +11,6 @@ import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
 // import getUIStateContext from "../context/getUIStateContext";
 import ClassMode from "../enums/ClassMode";
-// import useFocusMode from "../hooks/useFocusMode";
 import styles from "./ChatInput.css";
 import MessageTopic from "../enums/MessageTopic";
 
@@ -32,7 +31,6 @@ export default React.memo(function ChatInput(props: Props) {
   // const [state] = useContext(getUIStateContext());
   const [inputText, setInputText] = useState("");
   const [raised, setRaised] = useState(false);
-  // const focusMode = useFocusMode();
   const intl = useIntl();
 
   useEffect(() => {
@@ -72,10 +70,6 @@ export default React.memo(function ChatInput(props: Props) {
           }}
           onKeyUp={(event) => {
             event.preventDefault();
-            // send message stop on focus on
-            // if (focusMode && classMode === ClassMode.Student) {
-            //   return;
-            // }
             if (event.keyCode === 13) {
               const sendingMessage = inputText.trim();
               const msgObject = {

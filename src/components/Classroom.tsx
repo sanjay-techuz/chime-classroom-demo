@@ -19,7 +19,6 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  Snackbar,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -33,11 +32,12 @@ import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getMeetingStatusContext from "../context/getMeetingStatusContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
+
 // import getUIStateContext from "../context/getUIStateContext";
 import ClassMode from "../enums/ClassMode";
 import MeetingStatus from "../enums/MeetingStatus";
 import ViewMode from "../enums/ViewMode";
-import useRemoteControl from "../hooks/useRemoteControl";
+// import useRemoteControl from "../hooks/useRemoteControl";
 import Chat from "./Chat";
 import styles from "./Classroom.css";
 import ContentVideo from "./ContentVideo";
@@ -52,8 +52,11 @@ import Roster from "./Roster";
 import Main from "../custom/classroom/Main";
 import AppBar from "../custom/classroom/AppBar";
 import DrawerHeader from "../custom/classroom/DrawerHeader";
-import Alert from "../custom/classroom/Alert";
 import { attendanceWenhook } from "../services";
+import {
+  useNotificationDispatch,
+  Type as NotifType,
+} from "../providers/NotificationProvider";
 // import common from "../constants/common.json";
 
 const cx = classNames.bind(styles);
@@ -65,14 +68,13 @@ export default function Classroom() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   // const [state] = useContext(getUIStateContext());
   const intl = useIntl();
+  const notifDispatch = useNotificationDispatch();
 
   const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
   const { activeSpeakerAttendeeId } = globalVar;
   const { meetingStatus, errorMessage } = useContext(getMeetingStatusContext());
   const [isContentShareEnabled, setIsContentShareEnabled] = useState(false);
   const [isScreenShareView, setIsScreenShareView] = useState(false);
-  const [poorConnection, setPoorConnection] = useState(false);
-  const [networkErrors, setNetworkErrors] = useState("");
 
   const [tryToReload, setTryToReload] = useState(true);
   const [viewMode, setViewMode] = useState(ViewMode.Room);
@@ -87,7 +89,7 @@ export default function Classroom() {
   const location = useLocation();
   const locationState = location?.state || null;
 
-  useRemoteControl();
+  // useRemoteControl();
 
   useEffect(() => {
     if(locationState){
@@ -298,42 +300,31 @@ export default function Classroom() {
     // OBSERVE INTERNET CONNECTION
     const observer = {
       connectionDidBecomePoor: () => {
-        setPoorConnection(true);
-        setNetworkErrors(intl.formatMessage({ id: "Classroom.poorConnection" }));
+        notifDispatch({ type: NotifType.POOR_INTERNET_CONNECTION, payload: { message: intl.formatMessage({ id: "Classroom.poorConnection" })} });
         setTimeout(() => {
-          setPoorConnection(false);
-          setNetworkErrors("");
+          notifDispatch({ type: NotifType.REMOVE_POOR_INTERNET_CONNECTION, payload: 'POOR_INTERNET_CONNECTION' });
         }, 15000);
       },
       connectionDidSuggestStopVideo: () => {
-        setPoorConnection(true);
-        setNetworkErrors(intl.formatMessage({ id: "Classroom.poorConnection" }));
+        notifDispatch({ type: NotifType.POOR_INTERNET_CONNECTION, payload: { message: intl.formatMessage({ id: "Classroom.poorConnection" })} });
         setTimeout(() => {
-          setPoorConnection(false);
-          setNetworkErrors("");
+          notifDispatch({ type: NotifType.REMOVE_POOR_INTERNET_CONNECTION, payload: 'POOR_INTERNET_CONNECTION' });
         }, 15000);
       },
       videoSendDidBecomeUnavailable: () => {
         // Chime SDK allows a total of 25 simultaneous videos per meeting.
         // If you try to share more video, this method will be called.
         // See videoAvailabilityDidChange below to find out when it becomes available.
-        setPoorConnection(true);
-        setNetworkErrors(intl.formatMessage({ id: "Classroom.videoTileLimitExceeded" }));
+        notifDispatch({ type: NotifType.POOR_INTERNET_CONNECTION, payload: { message: intl.formatMessage({ id: "Classroom.videoTileLimitExceeded" })} });
         setTimeout(() => {
-          setPoorConnection(false);
-          setNetworkErrors("");
+          notifDispatch({ type: NotifType.REMOVE_POOR_INTERNET_CONNECTION, payload: 'POOR_INTERNET_CONNECTION' });
         }, 10000);
       },
     };
   
     chime?.audioVideo?.addObserver(observer);
 
-    const handleCloseSnackbar = (_event?: React.SyntheticEvent | Event, reason?: string) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-      setPoorConnection(false);
-    };
+
 
   return (
     <>
@@ -343,11 +334,6 @@ export default function Classroom() {
           setTryToReload(true);
         }}
       />
-      <Snackbar open={poorConnection} onClose={handleCloseSnackbar}  anchorOrigin={{ vertical: "top", horizontal:"center"}}>
-        <Alert onClose={handleCloseSnackbar} severity="warning" sx={{ width: '100%', background: "var(--color_yellow)", color: "var(--color_black)" }}>
-          {networkErrors}
-        </Alert>
-      </Snackbar>
       {tryToReload && (
         <Box
           sx={{

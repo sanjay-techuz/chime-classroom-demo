@@ -97,6 +97,15 @@ export default {
 
   'RemoteVideo.raiseHandAriaLabel': `Raised hand`,
 
-  "ThankyouPage.message": "Thanks for join a meeting."
+  "ThankyouPage.message": "Thanks for join a meeting.",
+
+  "Notification.remoteMute": 'You have been muted by a host',
+  "Notification.remoteUnMute": 'You have been unmuted by a host',
+  "Notification.remoteVideoStart": 'Your video has been started by a host',
+  "Notification.remoteVideoStop": 'Your video has been turned off by a host',
+  "Notification.turnOnFocus": 'Host turn on focus',
+  "Notification.turnOffFocus": 'Host turn off focus',
+  "Notification.screenSharePermit": 'Host enabled screen share for participants',
+  "Notification.screenShareNotPermit": 'Host disabled screen share for participants',
 
 };
