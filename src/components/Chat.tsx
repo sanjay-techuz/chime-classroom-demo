@@ -19,6 +19,7 @@ import {
   Typography,
   Badge,
   Tooltip,
+  IconButton,
 } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -30,9 +31,10 @@ import ChatInput from "./ChatInput";
 import MessageTopic from "../enums/MessageTopic";
 import RosterAttendeeType from "../types/RosterAttendeeType";
 import localStorageKeys from "../constants/localStorageKeys.json";
-import { createPrivateChannel, nameInitials } from "../utils";
+import { clipBoard, createPrivateChannel, nameInitials } from "../utils";
 import useRemoteControl from "../hooks/useRemoteControl";
 import SmallAvatar from "../custom/roster/SmallAvatar";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const cx = classNames.bind(styles);
 var chatPannelOpen = false;
@@ -54,6 +56,7 @@ export default function Chat() {
   const [activeChatAttendee, setActiveChatAttendee] = useState<string>(
     MessageTopic.PublicChannel
   );
+
   const bottomElement = useRef(null);
   const roster = useRoster();
   const localUserId =
@@ -313,7 +316,7 @@ export default function Chat() {
         }}
       >
         <div className={cx("Chat_messages")}>
-          {filterMessage.map((message) => {
+          {filterMessage.map((message, index) => {
             let messageString: string = "";
             if (message.topic === MessageTopic.GroupChat) {
               messageString = JSON.parse(
@@ -334,6 +337,14 @@ export default function Chat() {
                   sx={{
                     flexDirection: "row-reverse",
                     alignItems: "flex-start",
+                  }}
+                  onMouseEnter={() => {
+                    const elem = document.getElementsByClassName(`moreButton_${index}`)[0] as HTMLElement;
+                    elem.style.opacity = "1";
+                  }}
+                  onMouseLeave={() => {
+                    const elem = document.getElementsByClassName(`moreButton_${index}`)[0] as HTMLElement;
+                    elem.style.opacity = "0";
                   }}
                 >
                   <ListItemAvatar
@@ -394,6 +405,17 @@ export default function Chat() {
                       </Typography>
                     </Paper>
                   </ListItemText>
+                  <div className={cx(`moreButton_${index}`)} style={{ opacity:0 }} defaultValue={messageString} >
+                  <Tooltip title={"Copy"} placement="bottom">
+                    <IconButton onClick={() => {
+                        clipBoard(messageString);                         
+                    }} sx={{ padding: "0px !important"}}>
+                      <ContentCopyIcon sx={{
+                        height:"20px !important"
+                      }}/>
+                    </IconButton>
+                  </Tooltip>
+                  </div>
                 </ListItem>
               );
             } else {
@@ -407,6 +429,14 @@ export default function Chat() {
                   sx={{
                     flexDirection: "row",
                     alignItems: "flex-start",
+                  }}
+                  onMouseEnter={() => {
+                    const elem = document.getElementsByClassName(`moreButton_${index}`)[0] as HTMLElement;
+                    elem.style.opacity = "1";
+                  }}
+                  onMouseLeave={() => {
+                    const elem = document.getElementsByClassName(`moreButton_${index}`)[0] as HTMLElement;
+                    elem.style.opacity = "0";
                   }}
                 >
                   <ListItemAvatar
@@ -467,6 +497,17 @@ export default function Chat() {
                       </Typography>
                     </Paper>
                   </ListItemText>
+                  <div className={cx(`moreButton_${index}`)} style={{ opacity:0 }} defaultValue={messageString} >
+                  <Tooltip title={"Copy"} placement="bottom">
+                    <IconButton onClick={() => {
+                        clipBoard(messageString);                         
+                    }} sx={{ padding: "0px !important"}}>
+                      <ContentCopyIcon sx={{
+                        height:"20px !important"
+                      }}/>
+                    </IconButton>
+                  </Tooltip>
+                  </div>
                 </ListItem>
               );
             }
