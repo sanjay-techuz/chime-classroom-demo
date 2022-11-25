@@ -62,6 +62,16 @@
    height: 100%;
    animation: fadeIn 1s;
  }
+
+ .EmojiPickerReact{
+  --epr-emoji-fullsize: 30px !important;
+  --epr-emoji-padding: 2px !important;
+  --epr-category-label-height: 30px !important;
+  --epr-header-padding: 0 !important;
+ }
+ .EmojiPickerReact .epr-preview{
+  display: none !important;
+ }
  
  @keyframes fadeIn {
    0% {

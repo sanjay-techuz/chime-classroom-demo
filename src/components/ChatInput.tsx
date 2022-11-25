@@ -13,6 +13,9 @@ import getGlobalVarContext from "../context/getGlobalVarContext";
 import ClassMode from "../enums/ClassMode";
 import styles from "./ChatInput.css";
 import MessageTopic from "../enums/MessageTopic";
+import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
+import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import { IconButton } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
@@ -30,6 +33,7 @@ export default React.memo(function ChatInput(props: Props) {
   const { classMode } = globalVar;
   // const [state] = useContext(getUIStateContext());
   const [inputText, setInputText] = useState("");
+  const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
   const [raised, setRaised] = useState(false);
   const intl = useIntl();
 
@@ -54,62 +58,95 @@ export default React.memo(function ChatInput(props: Props) {
     }
   }, [raised, chime?.configuration]);
 
+  function onClick(emojiData: EmojiClickData, _event: MouseEvent) {
+    setInputText(inputText + emojiData.emoji);
+  }
+
   return (
-    <div className={cx("chatInput")}>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-        }}
-        className={cx("form")}
-      >
-        <input
-          className={cx("input")}
-          value={inputText}
-          onChange={(event) => {
-            setInputText(event.target.value);
-          }}
-          onKeyUp={(event) => {
-            event.preventDefault();
-            if (event.keyCode === 13) {
-              const sendingMessage = inputText.trim();
-              const msgObject = {
-                sendingMessage,
-                channel: activeChannel,
-                targetId: activeChatAttendee,
-              };
-              const attendeeId = chime?.configuration?.credentials?.attendeeId;
-              if (sendingMessage !== "" && attendeeId) {
-                chime?.sendMessage(
-                  MessageTopic.GroupChat,
-                  JSON.stringify(msgObject)
-                );
-                setInputText("");
-              }
-            }
-          }}
-          placeholder={intl.formatMessage({ id: "ChatInput.inputPlaceholder" })}
+    <>
+      {openEmojiPicker && (
+        <EmojiPicker
+          height={300}
+          width={300}
+          onEmojiClick={onClick}
+          autoFocusSearch={true}
         />
-        {classMode === ClassMode.Student && (
-          <button
-            type="button"
-            className={cx("raiseHandButton", {
-              raised,
+      )}
+      <div className={cx("chatInput")}>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+          }}
+          className={cx("form")}
+        >
+          <input
+            className={cx("input")}
+            value={inputText}
+            onChange={(event) => {
+              setInputText(event.target.value);
+            }}
+            onKeyUp={(event) => {
+              event.preventDefault();
+              if (event.keyCode === 13) {
+                setOpenEmojiPicker(false);
+                const sendingMessage = inputText.trim();
+                const msgObject = {
+                  sendingMessage,
+                  channel: activeChannel,
+                  targetId: activeChatAttendee,
+                };
+                const attendeeId =
+                  chime?.configuration?.credentials?.attendeeId;
+                if (sendingMessage !== "" && attendeeId) {
+                  chime?.sendMessage(
+                    MessageTopic.GroupChat,
+                    JSON.stringify(msgObject)
+                  );
+                  setInputText("");
+                }
+              }
+            }}
+            placeholder={intl.formatMessage({
+              id: "ChatInput.inputPlaceholder",
             })}
-            onClick={() => {
-              setRaised(!raised);
+          />
+
+          <IconButton
+            onClick={() => setOpenEmojiPicker(!openEmojiPicker)}
+            color="inherit"
+            sx={{
+              position: "absolute",
+              right: "40px",
+              width: "40px",
+              height: "40px",
+              color: " #FFF",
+              cursor: "pointer",
             }}
           >
-            <span
-              role="img"
-              aria-label={intl.formatMessage({
-                id: "ChatInput.raiseHandAriaLabel",
+            <EmojiEmotionsOutlinedIcon />
+          </IconButton>
+          {classMode === ClassMode.Student && (
+            <button
+              type="button"
+              className={cx("raiseHandButton", {
+                raised,
               })}
+              onClick={() => {
+                setRaised(!raised);
+              }}
             >
-              ✋
-            </span>
-          </button>
-        )}
-      </form>
-    </div>
+              <span
+                role="img"
+                aria-label={intl.formatMessage({
+                  id: "ChatInput.raiseHandAriaLabel",
+                })}
+              >
+                ✋
+              </span>
+            </button>
+          )}
+        </form>
+      </div>
+    </>
   );
 });
