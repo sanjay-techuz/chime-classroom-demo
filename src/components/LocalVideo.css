@@ -16,6 +16,9 @@
 .LocalVideo_localVideo.disabled {
   display: none !important;
 }
+.LocalVideo_localVideo.activeSpeaker {
+  border: 3px solid var(--color_green);
+}
 
 .LocalVideo_video {
   display: block;

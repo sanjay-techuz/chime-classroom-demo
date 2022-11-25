@@ -150,6 +150,10 @@
   border-radius: 0.25rem;
 }
 
+.RemoteVideoGroup_attendeeRosterView.activeSpeaker{
+  border: 3px solid var(--color_green);
+}
+
 .activeSpeakerView{
   position: absolute !important;
   display: block;

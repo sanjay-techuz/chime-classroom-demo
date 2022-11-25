@@ -8,5 +8,5 @@ export function nameInitials(name?: string) {
   } else {
     initials = "#";
   }
-  return initials;
+  return initials?.toUpperCase();
 }

@@ -88,17 +88,17 @@ export default function RemoteVideoGroup(props: Props) {
   const activeSpeakerCallback = (attendeeIds: Array<string>) => {
     //remove selfAttendeeId when Speaker active   --sanjay balai
     if (attendeeIds.length) {
-      const selfAttendeeId = currentUser;
-      function removeSelfAttendeeId(
-        arr: Array<string>,
-        value: string | null | undefined
-      ) {
-        return arr.filter(function (id: string) {
-          return id != value;
-        });
-      }
-      const activeAttendee = removeSelfAttendeeId(attendeeIds, selfAttendeeId);
-
+      // const selfAttendeeId = currentUser;
+      // function removeSelfAttendeeId(
+      //   arr: Array<string>,
+      //   value: string | null | undefined
+      // ) {
+      //   return arr.filter(function (id: string) {
+      //     return id != value;
+      //   });
+      // }
+      // const activeAttendee = removeSelfAttendeeId(attendeeIds, selfAttendeeId);
+      const activeAttendee = attendeeIds;
       if (activeAttendee.length) {
         // checks whether attendee is UnMute then only set as Active Speaker --sanjay balai
         if (chime?.roster[activeAttendee[0]]?.muted == false) {
@@ -119,6 +119,7 @@ export default function RemoteVideoGroup(props: Props) {
   };
 
   useEffect(() => {
+    updateGlobalVar("activeSpeakerAttendeeId", currentUser);
     // active speaker listner called --sanjay balai
     chime?.audioVideo?.subscribeToActiveSpeakerDetector(
       new DefaultActiveSpeakerPolicy(),
@@ -260,13 +261,22 @@ export default function RemoteVideoGroup(props: Props) {
         </div>
       )} */}
         <div
-          style={{
-            width: gridViewRosterSize.width,
-            height: gridViewRosterSize.height,
-            margin: "0.50%",
-          }}
+            style={
+              isGridView
+                ? {
+                    width: gridViewRosterSize.width,
+                    height: gridViewRosterSize.height,
+                    margin: "0.50%"
+                  }
+                : {}
+            }
           className={cx("RemoteVideoGroup_attendeeRosterView", {
-            notActiveSpeakerView: !isGridView,
+            activeSpeakerView:
+            !isGridView && attendeeIdFullScreen === currentUser,
+          notActiveSpeakerView:
+            !isGridView && attendeeIdFullScreen !== currentUser,
+          defaultRosterSize: !isGridView,
+          activeSpeaker: attendeeIdFullScreen === currentUser
           })}
         >
           <LocalVideo
