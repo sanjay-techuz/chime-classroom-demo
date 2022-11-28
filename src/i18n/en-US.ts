@@ -85,6 +85,8 @@ export default {
   'Controls.Chat': `Chat`,
   'Controls.EndMeeting': `End meeting`,
   'Controls.LeaveMeeting': `Leave meeting`,
+  'Controls.menu': `More`,
+  'Controls.participants': `Participants`,
 
   'Chat.all': `All`,
 

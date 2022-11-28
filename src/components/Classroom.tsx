@@ -13,20 +13,13 @@ import {
   Box,
   Divider,
   Drawer,
-  IconButton,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Menu,
-  MenuItem,
   Toolbar,
   Typography,
 } from "@mui/material";
-import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -82,10 +75,7 @@ export default function Classroom() {
   const [tab, setTab] = useState(0);
   const [leftDrawerOpen, setLeftDrawerOpen] = React.useState(false);
   const [rightDrawerOpen, setRightDrawerOpen] = React.useState(false);
-  const [enterFullScreen, setEnterFullScreen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isGridView, setIsGridView] = useState(false);
-  const open = Boolean(anchorEl);
   const location = useLocation();
   const locationState = location?.state || null;
 
@@ -221,12 +211,6 @@ export default function Classroom() {
 
   });
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   useEffect(() => {
     if(tab === 1){
@@ -236,66 +220,7 @@ export default function Classroom() {
     }
   },[tab])
 
-  document.addEventListener('fullscreenchange', exitHandler, false);
-  document.addEventListener('mozfullscreenchange', exitHandler, false);
-  document.addEventListener('MSFullscreenChange', exitHandler, false);
-  document.addEventListener('webkitfullscreenchange', exitHandler, false);
-  document.addEventListener('keydown',(event)=>{
-    if (event.which == 122) {
-      event.preventDefault();
-      exitHandler
-  }
-  });
 
-  function exitHandler(){
-    const element:any = document;
-    if (element.webkitIsFullScreen === false){
-      setEnterFullScreen(false);
-    }else if (element.mozFullScreen === false){
-      setEnterFullScreen(false);
-    }else if (element.msFullscreenElement === false){
-      setEnterFullScreen(false);
-    }
-    } 
-
-  const handleFullScreen = () => {
-    if(enterFullScreen){
-      setEnterFullScreen(false);
-      const docWithBrowsersExitFunctions = document as Document & {
-        mozCancelFullScreen(): Promise<void>;
-        webkitExitFullscreen(): Promise<void>;
-        msExitFullscreen(): Promise<void>;
-      };
-      if (docWithBrowsersExitFunctions.exitFullscreen) {
-        docWithBrowsersExitFunctions.exitFullscreen();
-      } else if (docWithBrowsersExitFunctions.mozCancelFullScreen) { /* Firefox */
-        docWithBrowsersExitFunctions.mozCancelFullScreen();
-      } else if (docWithBrowsersExitFunctions.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-        docWithBrowsersExitFunctions.webkitExitFullscreen();
-      } else if (docWithBrowsersExitFunctions.msExitFullscreen) { /* IE/Edge */
-        docWithBrowsersExitFunctions.msExitFullscreen();
-      }
-    }else{
-      setEnterFullScreen(true);
-      const docElmWithBrowsersFullScreenFunctions = document.documentElement as HTMLElement & {
-        mozRequestFullScreen(): Promise<void>;
-        webkitRequestFullscreen(): Promise<void>;
-        msRequestFullscreen(): Promise<void>;
-      };
-    
-      if (docElmWithBrowsersFullScreenFunctions.requestFullscreen) {
-        docElmWithBrowsersFullScreenFunctions.requestFullscreen();
-      } else if (docElmWithBrowsersFullScreenFunctions.mozRequestFullScreen) { /* Firefox */
-        docElmWithBrowsersFullScreenFunctions.mozRequestFullScreen();
-      } else if (docElmWithBrowsersFullScreenFunctions.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-        docElmWithBrowsersFullScreenFunctions.webkitRequestFullscreen();
-      } else if (docElmWithBrowsersFullScreenFunctions.msRequestFullscreen) { /* IE/Edge */
-        docElmWithBrowsersFullScreenFunctions.msRequestFullscreen();
-      }
-    
-    }
-    handleClose();
-  }
 
     // OBSERVE INTERNET CONNECTION
     const observer = {
@@ -324,7 +249,15 @@ export default function Classroom() {
   
     chime?.audioVideo?.addObserver(observer);
 
+  const handleDeviceSettings = () => {
+    setTab(2);
+    openDrawerRightToggle();
+  }
 
+  const handleGridView = () => {
+    setIsGridView(!isGridView);
+    setIsScreenShareView(false);
+  }
 
   return (
     <>
@@ -360,16 +293,6 @@ export default function Classroom() {
                 drawerWidth={drawerWidth}
               >
                 <Toolbar>
-                  <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="start"
-                    onClick={handleDrawerLeftToggle}
-                  >
-                    {leftDrawerOpen && <KeyboardArrowLeftIcon />}
-                    <PeopleAltOutlinedIcon />
-                    {!leftDrawerOpen && <KeyboardArrowRightIcon />}
-                  </IconButton>
                   <Typography
                     variant="h6"
                     noWrap
@@ -379,64 +302,6 @@ export default function Classroom() {
                   >
                     {chime?.roster[activeSpeakerAttendeeId]?.name}
                   </Typography>
-                  <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="end"
-                    // onClick={handleDrawerRightToggle}
-                    onClick={handleClick}
-                  >
-                    <Avatar
-                      sx={{
-                        bgcolor: "var(--primary_blue_color)",
-                        border: "1px solid var(--pure_white_color)",
-                      }}
-                    >
-                      <MoreVertOutlinedIcon />
-                    </Avatar>
-                  </IconButton>
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                  >
-                    {/* <MenuItem
-                      onClick={() => {
-                        setTab(3);
-                        openDrawerRightToggle();
-                        handleClose();
-                      }}
-                    >
-                      {intl.formatMessage({ id: "Classroom.meetingInfo"})}
-                    </MenuItem> */}
-                    <MenuItem
-                      onClick={() => {
-                        setTab(2);
-                        openDrawerRightToggle();
-                        handleClose();
-                      }}
-                    >
-                      {intl.formatMessage({ id: "Classroom.deviceSettings"})}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        setIsGridView(!isGridView);
-                        setIsScreenShareView(false);
-                        handleClose();
-                      }}
-                    >
-                      {isGridView ? intl.formatMessage({ id: "Classroom.activeSpeakerView"}) : intl.formatMessage({ id: "Classroom.gridView"})}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleFullScreen}
-                    >
-                      {enterFullScreen ? intl.formatMessage({ id: "Classroom.exitFullScreen"}) : intl.formatMessage({ id: "Classroom.fullScreen"})}
-                    </MenuItem>
-                  </Menu>
                 </Toolbar>
               </AppBar>
               <Box
@@ -513,7 +378,7 @@ export default function Classroom() {
                       onClick={() => {
                         setTab(0);
                         closeDrawerRightToggle();
-                        handleClose();
+                        // handleClose();
                       }}
                     >
                       <Avatar
@@ -581,6 +446,11 @@ export default function Classroom() {
                       setTab(0);
                     }
                   }}
+                  handleDrawerLeftToggle={handleDrawerLeftToggle}
+                  handleDeviceSettings={handleDeviceSettings}
+                  handleGridView={handleGridView}
+                  isGridView={isGridView}
+                  leftDrawerOpen={leftDrawerOpen}
                 />
               </AppBar>
             </Box>
