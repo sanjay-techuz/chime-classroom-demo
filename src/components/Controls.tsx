@@ -27,7 +27,6 @@ import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
 import ScreenShareOutlinedIcon from "@mui/icons-material/ScreenShareOutlined";
 import StopScreenShareOutlinedIcon from "@mui/icons-material/StopScreenShareOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 // import RadioButtonCheckedOutlinedIcon from "@mui/icons-material/RadioButtonCheckedOutlined";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
@@ -45,6 +44,7 @@ import MessageTopic from "../enums/MessageTopic";
 // import { startRecording, stopRecording } from "../services";
 import SmallAvatar from "../custom/roster/SmallAvatar";
 import { attendanceWenhook } from "../services";
+import MoreSettings from "./MoreSettings";
 
 enum VideoStatus {
   Disabled,
@@ -57,7 +57,6 @@ type Props = {
   onClickShareButton: (flag: boolean) => void;
   onClickChatButton: (flag: boolean) => void;
   handleDrawerLeftToggle: () => void;
-  handleDeviceSettings: () => void;
   handleGridView: () => void;
   isGridView: boolean;
   leftDrawerOpen: boolean;
@@ -65,7 +64,16 @@ type Props = {
 };
 
 export default function Controls(props: Props) {
-  const { viewMode, onClickShareButton, onClickChatButton, tab, handleDrawerLeftToggle, handleDeviceSettings, handleGridView, isGridView, leftDrawerOpen } = props;
+  const {
+    viewMode,
+    onClickShareButton,
+    onClickChatButton,
+    tab,
+    handleDrawerLeftToggle,
+    handleGridView,
+    isGridView,
+    leftDrawerOpen,
+  } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
   const {
@@ -82,15 +90,12 @@ export default function Controls(props: Props) {
   const [isScreenShared, setIsScreenShared] = useState(false);
   const [openScreenSharePermit, setOpenScreenSharePermit] = useState(false);
   const [openChat, setOpenChat] = useState(false);
-  const [enterFullScreen, setEnterFullScreen] = React.useState(false);
   // const [recording, setRecording] = useState(false);
   // const [mediaPipelineId, setMediaPipelineId] = useState("");
   const [videoStatus, setVideoStatus] = useState(VideoStatus.Disabled);
   const intl = useIntl();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const openMenu = Boolean(menuAnchorEl);
 
   useEffect(() => {
     const callback = (localMuted: boolean) => {
@@ -157,77 +162,9 @@ export default function Controls(props: Props) {
     setAnchorEl(null);
   };
 
-  const handleMenuClick = (event: any) => {
-    setMenuAnchorEl(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setMenuAnchorEl(null);
-  };
-
   const handleCloseScreenShareDialog = () => {
     setOpenScreenSharePermit(false);
   };
-
-  document.addEventListener('fullscreenchange', exitHandler, false);
-  document.addEventListener('mozfullscreenchange', exitHandler, false);
-  document.addEventListener('MSFullscreenChange', exitHandler, false);
-  document.addEventListener('webkitfullscreenchange', exitHandler, false);
-  document.addEventListener('keydown',(event)=>{
-    if (event.which == 122) {
-      event.preventDefault();
-      exitHandler
-  }
-  });
-
-  function exitHandler(){
-    const element:any = document;
-    if (element.webkitIsFullScreen === false){
-      setEnterFullScreen(false);
-    }else if (element.mozFullScreen === false){
-      setEnterFullScreen(false);
-    }else if (element.msFullscreenElement === false){
-      setEnterFullScreen(false);
-    }
-    } 
-
-  const handleFullScreen = () => {
-    if(enterFullScreen){
-      setEnterFullScreen(false);
-      const docWithBrowsersExitFunctions = document as Document & {
-        mozCancelFullScreen(): Promise<void>;
-        webkitExitFullscreen(): Promise<void>;
-        msExitFullscreen(): Promise<void>;
-      };
-      if (docWithBrowsersExitFunctions.exitFullscreen) {
-        docWithBrowsersExitFunctions.exitFullscreen();
-      } else if (docWithBrowsersExitFunctions.mozCancelFullScreen) { /* Firefox */
-        docWithBrowsersExitFunctions.mozCancelFullScreen();
-      } else if (docWithBrowsersExitFunctions.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-        docWithBrowsersExitFunctions.webkitExitFullscreen();
-      } else if (docWithBrowsersExitFunctions.msExitFullscreen) { /* IE/Edge */
-        docWithBrowsersExitFunctions.msExitFullscreen();
-      }
-    }else{
-      setEnterFullScreen(true);
-      const docElmWithBrowsersFullScreenFunctions = document.documentElement as HTMLElement & {
-        mozRequestFullScreen(): Promise<void>;
-        webkitRequestFullscreen(): Promise<void>;
-        msRequestFullscreen(): Promise<void>;
-      };
-    
-      if (docElmWithBrowsersFullScreenFunctions.requestFullscreen) {
-        docElmWithBrowsersFullScreenFunctions.requestFullscreen();
-      } else if (docElmWithBrowsersFullScreenFunctions.mozRequestFullScreen) { /* Firefox */
-        docElmWithBrowsersFullScreenFunctions.mozRequestFullScreen();
-      } else if (docElmWithBrowsersFullScreenFunctions.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-        docElmWithBrowsersFullScreenFunctions.webkitRequestFullscreen();
-      } else if (docElmWithBrowsersFullScreenFunctions.msRequestFullscreen) { /* IE/Edge */
-        docElmWithBrowsersFullScreenFunctions.msRequestFullscreen();
-      }
-    
-    }
-    handleMenuClose();
-  }
 
   return (
     <Box
@@ -458,72 +395,11 @@ export default function Controls(props: Props) {
                   }
             }
           >
-           <PeopleAltOutlinedIcon />
+            <PeopleAltOutlinedIcon />
           </Avatar>
         </Tooltip>
 
-        <Tooltip
-          title={intl.formatMessage({ id: "Controls.menu" })}
-          placement="bottom"
-        >
-          <Avatar
-            onClick={handleMenuClick}
-            sx={{
-              bgcolor: "var(--secondary_blue_color)",
-              border: "1px solid var(--pure_white_color)",
-              color: "var(--pure_white_color)",
-              cursor: "pointer",
-            }}
-          >
-           <MoreVertOutlinedIcon />
-          </Avatar>
-        </Tooltip>
-
-        <Popover
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          transformOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          anchorEl={menuAnchorEl}
-          open={openMenu}
-          onClose={handleMenuClose}
-        >
-          {/* <MenuItem
-            onClick={() => {
-              setTab(3);
-              openDrawerRightToggle();
-              handleMenuClose();
-            }}
-          >
-            {intl.formatMessage({ id: "Classroom.meetingInfo"})}
-          </MenuItem> */}
-          <MenuItem
-            onClick={() => {
-              handleDeviceSettings();
-              handleMenuClose();
-            }}
-          >
-            {intl.formatMessage({ id: "Classroom.deviceSettings"})}
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              handleGridView();
-              handleMenuClose();
-            }}
-          >
-            {isGridView ? intl.formatMessage({ id: "Classroom.activeSpeakerView"}) : intl.formatMessage({ id: "Classroom.gridView"})}
-          </MenuItem>
-          <MenuItem
-            onClick={handleFullScreen}
-          >
-            {enterFullScreen ? intl.formatMessage({ id: "Classroom.exitFullScreen"}) : intl.formatMessage({ id: "Classroom.fullScreen"})}
-          </MenuItem>
-          </Popover>
-
+        <MoreSettings handleGridView={handleGridView} isGridView={isGridView} />
 
         <Dialog
           open={openScreenSharePermit}

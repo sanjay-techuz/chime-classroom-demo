@@ -53,14 +53,16 @@ export default {
 
   'RemoteVideoGroup.noVideo': `No one is sharing video`,
 
-  'DeviceSwitcher.microphone': `Microphone:`,
-  'DeviceSwitcher.speaker': `Speaker:`,
-  'DeviceSwitcher.camera': `Camera`,
-  'DeviceSwitcher.videoQuality': `Video quality`,
+  'DeviceSwitcher.microphone': `Change microphone`,
+  'DeviceSwitcher.speaker': `Change speakers`,
+  'DeviceSwitcher.camera': `Change video camera`,
+  'DeviceSwitcher.videoQuality': `Change video quality`,
   'DeviceSwitcher.screenSharePermit': `Who can share screen?`,
-  'DeviceSwitcher.noAudioInputPlaceholder': `No microphone`,
-  'DeviceSwitcher.noAudioOutputPlaceholder': `No speaker`,
-  'DeviceSwitcher.noVideoInputPlaceholder': `No video device`,
+  'DeviceSwitcher.noAudioInputPlaceholder': `No microphone device fouund`,
+  'DeviceSwitcher.noAudioOutputPlaceholder': `No speaker device fouund`,
+  'DeviceSwitcher.noVideoInputPlaceholder': `No video device found`,
+  'DeviceSwitcher.hostOnly': `Host Only`,
+  'DeviceSwitcher.allParticipants': `All participants`,
 
   'Controls.turnOffFocusTooltip': `Turn off focus`,
   'Controls.turnOnFocusTooltip': `Turn on focus`,

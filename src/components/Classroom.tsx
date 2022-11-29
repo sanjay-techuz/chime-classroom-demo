@@ -249,11 +249,6 @@ export default function Classroom() {
   
     chime?.audioVideo?.addObserver(observer);
 
-  const handleDeviceSettings = () => {
-    setTab(2);
-    openDrawerRightToggle();
-  }
-
   const handleGridView = () => {
     setIsGridView(!isGridView);
     setIsScreenShareView(false);
@@ -447,7 +442,6 @@ export default function Classroom() {
                     }
                   }}
                   handleDrawerLeftToggle={handleDrawerLeftToggle}
-                  handleDeviceSettings={handleDeviceSettings}
                   handleGridView={handleGridView}
                   isGridView={isGridView}
                   leftDrawerOpen={leftDrawerOpen}
