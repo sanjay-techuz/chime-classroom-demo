@@ -91,6 +91,8 @@ export default {
   'Controls.participants': `Participants`,
 
   'Chat.all': `All`,
+  'Roster.muteAll': `Mute all`,
+  'Roster.unMuteAll': `Unmute all`,
 
   'ChatInput.inputPlaceholder': `Type a chat message`,
   'ChatInput.raiseHandAriaLabel': `Raise hand`,

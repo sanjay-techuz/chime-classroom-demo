@@ -19,7 +19,7 @@ import {
   Popover,
   Tooltip,
 } from "@mui/material";
-import AutoModeIcon from "@mui/icons-material/AutoMode";
+// import AutoModeIcon from "@mui/icons-material/AutoMode";
 import KeyboardVoiceOutlinedIcon from "@mui/icons-material/KeyboardVoiceOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
 import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
@@ -39,8 +39,8 @@ import getChimeContext from "../context/getChimeContext";
 // import getUIStateContext from "../context/getUIStateContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
 import ClassMode from "../enums/ClassMode";
-import ViewMode from "../enums/ViewMode";
-import MessageTopic from "../enums/MessageTopic";
+// import ViewMode from "../enums/ViewMode";
+// import MessageTopic from "../enums/MessageTopic";
 // import { startRecording, stopRecording } from "../services";
 import SmallAvatar from "../custom/roster/SmallAvatar";
 import { attendanceWenhook } from "../services";
@@ -53,7 +53,6 @@ enum VideoStatus {
 }
 
 type Props = {
-  viewMode: ViewMode;
   onClickShareButton: (flag: boolean) => void;
   onClickChatButton: (flag: boolean) => void;
   handleDrawerLeftToggle: () => void;
@@ -65,7 +64,6 @@ type Props = {
 
 export default function Controls(props: Props) {
   const {
-    viewMode,
     onClickShareButton,
     onClickChatButton,
     tab,
@@ -86,7 +84,7 @@ export default function Controls(props: Props) {
   // const [state] = useContext(getUIStateContext());
   const history = useHistory();
   const [muted, setMuted] = useState(false);
-  const [focus, setFocus] = useState(false);
+  // const [focus, setFocus] = useState(false);
   const [isScreenShared, setIsScreenShared] = useState(false);
   const [openScreenSharePermit, setOpenScreenSharePermit] = useState(false);
   const [openChat, setOpenChat] = useState(false);
@@ -190,7 +188,7 @@ export default function Controls(props: Props) {
           maxWidth: 500,
         }}
       >
-        {classMode === ClassMode.Teacher && viewMode === ViewMode.Room && (
+        {/* {classMode === ClassMode.Teacher && viewMode === ViewMode.Room && (
           <Tooltip
             title={
               focus
@@ -226,7 +224,7 @@ export default function Controls(props: Props) {
               <AutoModeIcon />
             </Avatar>
           </Tooltip>
-        )}
+        )} */}
         <Tooltip
           title={
             muted

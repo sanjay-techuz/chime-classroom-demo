@@ -419,7 +419,6 @@ export default function Classroom() {
                 drawerWidth={drawerWidth}
               >
                 <Controls
-                  viewMode={viewMode}
                   tab={tab}
                   onClickShareButton={async (flag: boolean) => {
                     try {

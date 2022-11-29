@@ -15,6 +15,7 @@ import MessageTopic from "../enums/MessageTopic";
 import ClassMode from "../enums/ClassMode";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import CheckIcon from "@mui/icons-material/Check";
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 type Props = {
   handleGridView: () => void;
@@ -231,6 +232,7 @@ export default function MoreSettings(props: Props) {
           sx: {
             bottom: "75px !important",
             top: "initial !important",
+            width: "250px",
             overflow: "visible",
             "&:before": {
               content: '""',
@@ -254,8 +256,13 @@ export default function MoreSettings(props: Props) {
           onMouseLeave={() => {
             if (!microphoneDeviceAnchorEl) handleMicrophonePopoverClose();
           }}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between"
+          }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.microphone" })}
+          <KeyboardArrowRightIcon />
         </MenuItem>
         <Popover
           id="mouse-over-popover"
@@ -308,7 +315,7 @@ export default function MoreSettings(props: Props) {
                         deviceSwitcherState?.currentAudioInputDevice?.value ===
                         device.value
                           ? "black"
-                          : "white",
+                          : "transparent",
                     }}
                   />{" "}
                   {`${device.name}`}
@@ -331,8 +338,13 @@ export default function MoreSettings(props: Props) {
           onMouseLeave={() => {
             if (!speakerDeviceAnchorEl) handleSpeakerPopoverClose();
           }}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between"
+          }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.speaker" })}
+          <KeyboardArrowRightIcon />
         </MenuItem>
         <Popover
           id="mouse-over-popover"
@@ -385,7 +397,7 @@ export default function MoreSettings(props: Props) {
                         deviceSwitcherState?.currentAudioOutputDevice?.value ===
                         device.value
                           ? "black"
-                          : "white",
+                          : "transparent",
                     }}
                   />{" "}
                   {`${device.name}`}
@@ -408,8 +420,13 @@ export default function MoreSettings(props: Props) {
           onMouseLeave={() => {
             if (!cameraDeviceAnchorEl) handleCameraPopoverClose();
           }}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between"
+          }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.camera" })}
+          <KeyboardArrowRightIcon />
         </MenuItem>
         <Popover
           id="mouse-over-popover"
@@ -462,7 +479,7 @@ export default function MoreSettings(props: Props) {
                         deviceSwitcherState?.currentVideoInputDevice?.value ===
                         device.value
                           ? "black"
-                          : "white",
+                          : "transparent",
                     }}
                   />{" "}
                   {`${device.name}`}
@@ -485,8 +502,13 @@ export default function MoreSettings(props: Props) {
           onMouseLeave={() => {
             if (!videoQualityAnchorEl) handleVideoQualityPopoverClose();
           }}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between"
+          }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.videoQuality" })}
+          <KeyboardArrowRightIcon />
         </MenuItem>
         <Popover
           id="mouse-over-popover"
@@ -565,7 +587,7 @@ export default function MoreSettings(props: Props) {
                     color:
                       selectedQuality?.name === quality.name
                         ? "black"
-                        : "white",
+                        : "transparent",
                   }}
                 />{" "}
                 {`${quality.name}`}
@@ -590,8 +612,13 @@ export default function MoreSettings(props: Props) {
               if (!screenSharePermitAnchorEl)
                 handleScreenSharePermitPopoverClose();
             }}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between"
+            }}
           >
             {intl.formatMessage({ id: "DeviceSwitcher.screenSharePermit" })}
+            <KeyboardArrowRightIcon />
           </MenuItem>
         )}
         <Popover
@@ -637,7 +664,7 @@ export default function MoreSettings(props: Props) {
             <CheckIcon
               sx={{
                 mr: 1,
-                color: screenSharePermitValue === "host" ? "black" : "white",
+                color: screenSharePermitValue === "host" ? "black" : "transparent",
               }}
             />{" "}
             {intl.formatMessage({ id: "DeviceSwitcher.hostOnly" })}
@@ -651,7 +678,7 @@ export default function MoreSettings(props: Props) {
             <CheckIcon
               sx={{
                 mr: 1,
-                color: screenSharePermitValue === "all" ? "black" : "white",
+                color: screenSharePermitValue === "all" ? "black" : "transparent",
               }}
             />{" "}
             {intl.formatMessage({ id: "DeviceSwitcher.allParticipants" })}
