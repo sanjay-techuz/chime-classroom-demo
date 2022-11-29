@@ -9,17 +9,12 @@ import { useIntl } from "react-intl";
 import { useLocation } from "react-router-dom";
 
 import {
-  Avatar,
   Box,
   Divider,
   Drawer,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Toolbar,
   Typography,
 } from "@mui/material";
-import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -36,7 +31,6 @@ import styles from "./Classroom.css";
 import ContentVideo from "./ContentVideo";
 import Controls from "./Controls";
 // import CopyInfo from "./CopyInfo";
-import DeviceSwitcher from "./DeviceSwitcher";
 import Error from "./Error";
 import LoadingSpinner from "./LoadingSpinner";
 import CheckMediaPermissions from "./CheckMediaPermissions";
@@ -53,7 +47,7 @@ import {
 // import common from "../constants/common.json";
 
 const cx = classNames.bind(styles);
-const drawerWidth = 290;
+const drawerWidth = 360;
 
 var resizeTo = 0;
 export default function Classroom() {
@@ -72,8 +66,9 @@ export default function Classroom() {
   const [tryToReload, setTryToReload] = useState(true);
   const [viewMode, setViewMode] = useState(ViewMode.Room);
   const [isMobileView, setIsMobileView] = useState(false);
-  const [tab, setTab] = useState(0);
-  const [leftDrawerOpen, setLeftDrawerOpen] = React.useState(false);
+  const [openChat, setOpenChat] = useState(false);
+  const [openParticipants, setOpenParticipants] = useState(false);
+
   const [rightDrawerOpen, setRightDrawerOpen] = React.useState(false);
   const [isGridView, setIsGridView] = useState(false);
   const location = useLocation();
@@ -183,7 +178,12 @@ export default function Classroom() {
   }
 
   const handleDrawerLeftToggle = () => {
-    setLeftDrawerOpen(!leftDrawerOpen);
+    if(openParticipants && !openChat){
+      closeDrawerRightToggle();
+    }else{
+      openDrawerRightToggle();
+    }
+    setOpenParticipants(!openParticipants);
   };
 
   const openDrawerRightToggle = () => {
@@ -213,12 +213,12 @@ export default function Classroom() {
 
 
   useEffect(() => {
-    if(tab === 1){
+    if(openChat){
       updateGlobalVar("isChatOpen", true);
     }else{
       updateGlobalVar("isChatOpen", false);
     }
-  },[tab])
+  },[openChat])
 
 
 
@@ -280,7 +280,6 @@ export default function Classroom() {
             <Box sx={{ display: "flex", width: "100%", height: "100%" }}>
               <AppBar
                 position="fixed"
-                leftopen={leftDrawerOpen}
                 rightopen={rightDrawerOpen}
                 anchor="top"
                 mobileview={isMobileView}
@@ -303,24 +302,9 @@ export default function Classroom() {
                 component="nav"
                 sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
                 aria-label="mailbox folders"
-              >
-                <Drawer
-                  variant={isMobileView ? "temporary" : "persistent"}
-                  anchor="left"
-                  sx={{
-                    "& .MuiDrawer-paper": {
-                      boxSizing: "border-box",
-                      width: drawerWidth,
-                    },
-                  }}
-                  open={leftDrawerOpen}
-                  onClose={handleDrawerLeftToggle}
-                >
-                  <Roster />
-                </Drawer>
+              >                
                 <Main
                   rightopen={rightDrawerOpen}
-                  leftopen={leftDrawerOpen}
                   mobileview={isMobileView}
                   drawerWidth={drawerWidth}
                 >
@@ -330,8 +314,6 @@ export default function Classroom() {
                       className={cx("ClassRoom_contentVideoWrapper", {
                         isContentShareEnabled,
                         screenShareView: !isScreenShareView,
-                        screenShareViewDrawerOpen:
-                          !isScreenShareView && leftDrawerOpen,
                       })}
                       onClick={() => {
                         setIsScreenShareView(true);
@@ -364,14 +346,16 @@ export default function Classroom() {
                   }}
                   open={rightDrawerOpen}
                   onClose={() => {
-                    setTab(0);
+                    setOpenChat(false);
+                    setOpenChat(false);
                     closeDrawerRightToggle();
                   }}
                 >
-                  <ListItem>
+                  {/* <ListItem>
                     <ListItemIcon
                       onClick={() => {
-                        setTab(0);
+                        setOpenChat(false);
+                        setOpenChat(false);
                         closeDrawerRightToggle();
                         // handleClose();
                       }}
@@ -389,28 +373,34 @@ export default function Classroom() {
                     </ListItemIcon>
                     <ListItemText>
                       <Typography variant="h5">
-                        {tab === 1 && intl.formatMessage({ id: "Classroom.chat"})}
-                        {tab === 2 && intl.formatMessage({ id: "Classroom.deviceSettings"})}
-                        {/* {tab === 3 && intl.formatMessage({ id: "Classroom.meetingInfo"})} */}
+                        {openChat && intl.formatMessage({ id: "Classroom.chat"})}
                       </Typography>
                     </ListItemText>
-                  </ListItem>
-                  <Divider />
-                  <div
-                    className={cx("ClassRoom_chat_parent_div", {
-                      ClassRoom_chat_parent_div_open: tab === 1,
-                      ClassRoom_chat_parent_div_close: tab !== 1,
-                    })}
-                  >
-                    <Chat />
+                  </ListItem> */}
+                  {/* <Divider />  */}
+                  <div style={{ width: "100%", height: "100%" }}>
+                  {openParticipants && <div className={cx({
+                        ClassRoom_chat_open_one: !openChat && openParticipants,
+                        ClassRoom_chat_open_both: openChat && openParticipants
+                    })}>
+                      <Roster />
+                    </div>}
+                    <Divider />
+                    <div
+                      className={cx("ClassRoom_chat_parent_div", {
+                        ClassRoom_chat_parent_div_open: openChat,
+                        ClassRoom_chat_parent_div_close: !openChat,
+                        ClassRoom_chat_open_one: openChat && !openParticipants,
+                        ClassRoom_chat_open_both: openChat && openParticipants
+                      })}
+                    >
+                      <Chat />
+                    </div>
                   </div>
-                  {tab === 2 && <DeviceSwitcher />}
-                  {/* {tab === 3 && <CopyInfo />} */}
                 </Drawer>
               </Box>
               <AppBar
                 position="fixed"
-                leftopen={leftDrawerOpen}
                 rightopen={rightDrawerOpen}
                 anchor="bottom"
                 sx={{ height: "82px" }}
@@ -419,7 +409,8 @@ export default function Classroom() {
                 drawerWidth={drawerWidth}
               >
                 <Controls
-                  tab={tab}
+                  openChat={openChat}
+                  openParticipants={openParticipants}
                   onClickShareButton={async (flag: boolean) => {
                     try {
                       if (flag) {
@@ -434,16 +425,17 @@ export default function Classroom() {
                   onClickChatButton={(flag: boolean) => {
                     if (flag) {
                       openDrawerRightToggle();
-                      setTab(1);
+                      setOpenChat(true);
                     } else {
-                      closeDrawerRightToggle();
-                      setTab(0);
+                      if(!openParticipants){
+                        closeDrawerRightToggle();
+                      }
+                      setOpenChat(false);
                     }
                   }}
                   handleDrawerLeftToggle={handleDrawerLeftToggle}
                   handleGridView={handleGridView}
                   isGridView={isGridView}
-                  leftDrawerOpen={leftDrawerOpen}
                 />
               </AppBar>
             </Box>

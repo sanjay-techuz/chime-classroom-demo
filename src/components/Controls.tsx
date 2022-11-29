@@ -58,19 +58,19 @@ type Props = {
   handleDrawerLeftToggle: () => void;
   handleGridView: () => void;
   isGridView: boolean;
-  leftDrawerOpen: boolean;
-  tab: number;
+  openParticipants: boolean;
+  openChat: boolean;
 };
 
 export default function Controls(props: Props) {
   const {
     onClickShareButton,
     onClickChatButton,
-    tab,
+    openChat,
     handleDrawerLeftToggle,
     handleGridView,
     isGridView,
-    leftDrawerOpen,
+    openParticipants
   } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
@@ -87,7 +87,7 @@ export default function Controls(props: Props) {
   // const [focus, setFocus] = useState(false);
   const [isScreenShared, setIsScreenShared] = useState(false);
   const [openScreenSharePermit, setOpenScreenSharePermit] = useState(false);
-  const [openChat, setOpenChat] = useState(false);
+  const [onChat, setOnChat] = useState(false);
   // const [recording, setRecording] = useState(false);
   // const [mediaPipelineId, setMediaPipelineId] = useState("");
   const [videoStatus, setVideoStatus] = useState(VideoStatus.Disabled);
@@ -122,12 +122,12 @@ export default function Controls(props: Props) {
   }, []);
 
   useEffect(() => {
-    if (tab === 1) {
-      setOpenChat(true);
+    if (openChat) {
+      setOnChat(true);
     } else {
-      setOpenChat(false);
+      setOnChat(false);
     }
-  }, [tab]);
+  }, [openChat]);
 
   useEffect(() => {
     setVideoStatus(localVideo ? VideoStatus.Enabled : VideoStatus.Disabled);
@@ -342,16 +342,16 @@ export default function Controls(props: Props) {
           >
             <Avatar
               onClick={() => {
-                if (!openChat) {
+                if (!onChat) {
                   onClickChatButton(true);
-                  setOpenChat(true);
+                  setOnChat(true);
                 } else {
                   onClickChatButton(false);
-                  setOpenChat(false);
+                  setOnChat(false);
                 }
               }}
               sx={
-                openChat
+                onChat
                   ? {
                       bgcolor: "var(--pure_white_color)",
                       border: "1px solid var(--secondary_blue_color)",
@@ -366,7 +366,7 @@ export default function Controls(props: Props) {
                     }
               }
             >
-              {openChat ? <CommentOutlinedIcon /> : <CommentIcon />}
+              {onChat ? <CommentOutlinedIcon /> : <CommentIcon />}
             </Avatar>
           </Badge>
         </Tooltip>
@@ -378,7 +378,7 @@ export default function Controls(props: Props) {
           <Avatar
             onClick={handleDrawerLeftToggle}
             sx={
-              leftDrawerOpen
+              openParticipants
                 ? {
                     bgcolor: "var(--pure_white_color)",
                     border: "1px solid var(--secondary_blue_color)",

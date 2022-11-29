@@ -107,7 +107,7 @@ export default function Roster() {
           bgcolor: "background.paper",
         }}
       >
-        <Box sx={{ paddingTop: "25px", color: "var(--color_grey)" }}>
+        <Box sx={{ color: "var(--color_grey)" }}>
           <ListItem>
             <ListItemText>
               {intl.formatMessage({ id: "Roster.users" })}
@@ -162,7 +162,7 @@ export default function Roster() {
                       style={{
                         display: "flex",
                         flexDirection: "column",
-                        alignItems: "center",
+                        alignItems: "flex-start",
                       }}
                     >
                       <Tooltip title={rosterAttendee.name} placement="bottom">
@@ -349,6 +349,7 @@ export default function Roster() {
             display: "flex",
             justifyContent: "center",
             borderTop: '1px solid rgba(0, 0, 0, 0.12)',
+            borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
             zIndex: 10
           }}
         >

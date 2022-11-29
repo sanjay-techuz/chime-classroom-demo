@@ -197,3 +197,13 @@ nav{
 .ClassRoom_chat_parent_div_close{
   display: none;
 }
+
+.ClassRoom_chat_open_one{
+  position: relative;
+  height: 100%;
+}
+
+.ClassRoom_chat_open_both{
+  position: relative;
+  height: 50%;
+}
