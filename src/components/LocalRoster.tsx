@@ -23,7 +23,6 @@ type Props = {
   viewMode: ViewMode;
   size: Size;
   attendeeId: string;
-  isContentShareEnabled: boolean;
   name: string;
 };
 
@@ -32,7 +31,6 @@ export default function LocalRoster(props: Props) {
     viewMode,
     size = Size.Large,
     attendeeId,
-    isContentShareEnabled,
     name,
   } = props;
   const initials = nameInitials(name);
@@ -79,7 +77,6 @@ export default function LocalRoster(props: Props) {
       <VideoNameplate
         viewMode={viewMode}
         size={size}
-        isContentShareEnabled={isContentShareEnabled}
         attendeeId={attendeeId}
       />
     </div>

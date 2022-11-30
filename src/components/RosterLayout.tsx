@@ -28,7 +28,6 @@ type Props = {
   attendeeId: string;
   raisedHand?: boolean;
   activeSpeaker?: boolean;
-  isContentShareEnabled: boolean;
   name: string;
 };
 
@@ -40,7 +39,6 @@ export default function RosterLayout(props: Props) {
     attendeeId,
     raisedHand,
     activeSpeaker,
-    isContentShareEnabled,
     name,
   } = props;
   const initials = nameInitials(name);
@@ -102,7 +100,6 @@ export default function RosterLayout(props: Props) {
       <VideoNameplate
         viewMode={viewMode}
         size={size}
-        isContentShareEnabled={isContentShareEnabled}
         attendeeId={attendeeId}
       />
       {raisedHand && (

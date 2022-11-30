@@ -21,7 +21,6 @@ type Props = {
   attendeeId: string | null;
   raisedHand?: boolean;
   activeSpeaker?: boolean;
-  isContentShareEnabled: boolean;
 };
 
 export default function RemoteVideo(props: Props) {
@@ -34,7 +33,6 @@ export default function RemoteVideo(props: Props) {
     attendeeId,
     raisedHand,
     activeSpeaker,
-    isContentShareEnabled,
   } = props;
   return (
     <div
@@ -49,7 +47,6 @@ export default function RemoteVideo(props: Props) {
       <VideoNameplate
         viewMode={viewMode}
         size={size}
-        isContentShareEnabled={isContentShareEnabled}
         attendeeId={attendeeId}
       />
       {raisedHand && (

@@ -278,7 +278,7 @@ export default function Classroom() {
           )}
           {meetingStatus === MeetingStatus.Succeeded && (
             <Box sx={{ display: "flex", width: "100%", height: "100%" }}>
-              <AppBar
+              {/* <AppBar
                 position="fixed"
                 rightopen={rightDrawerOpen}
                 anchor="top"
@@ -297,7 +297,7 @@ export default function Classroom() {
                     {chime?.roster[activeSpeakerAttendeeId]?.name}
                   </Typography>
                 </Toolbar>
-              </AppBar>
+              </AppBar> */}
               <Box
                 component="nav"
                 sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -308,7 +308,7 @@ export default function Classroom() {
                   mobileview={isMobileView}
                   drawerWidth={drawerWidth}
                 >
-                  <DrawerHeader />
+                    {/* <DrawerHeader /> */}
                   <div className={cx("ClassRoom_left")}>
                     <div
                       className={cx("ClassRoom_contentVideoWrapper", {

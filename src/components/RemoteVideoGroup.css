@@ -31,7 +31,7 @@
 }
 
 .RemoteVideoGroup_remoteVideoGroup.roomMode {
-  padding: 0.25rem 0.25rem 0;
+  /* padding: 0.25rem 0.25rem 0; */
 }
 
 .RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled {

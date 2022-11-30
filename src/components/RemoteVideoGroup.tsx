@@ -35,7 +35,7 @@ type Props = {
 };
 
 export default function RemoteVideoGroup(props: Props) {
-  const { viewMode, isContentShareEnabled, isGridView, isScreenShareView } =
+  const { viewMode, isGridView, isScreenShareView } =
     props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
@@ -192,7 +192,7 @@ export default function RemoteVideoGroup(props: Props) {
     const attdLength = Object.keys(roster);
     const window_height = document.getElementById("tileView");
     if (window_height) {
-      const elHeight = window_height?.clientHeight - 50;
+      const elHeight = window_height?.clientHeight - 10;
       const size = rosterSize(elHeight, attdLength.length, isMobileView);
       setGridViewRosterView({ ...size });
     }
@@ -266,7 +266,7 @@ export default function RemoteVideoGroup(props: Props) {
                 ? {
                     width: gridViewRosterSize.width,
                     height: gridViewRosterSize.height,
-                    margin: "0.50%"
+                    margin: "3px"
                   }
                 : {}
             }
@@ -282,7 +282,6 @@ export default function RemoteVideoGroup(props: Props) {
           <LocalVideo
             viewMode={viewMode}
             size={getSize()}
-            isContentShareEnabled={isContentShareEnabled}
           />
         </div>
         {Array.from(Array(MAX_REMOTE_VIDEOS).keys()).map((key, index) => {
@@ -307,7 +306,7 @@ export default function RemoteVideoGroup(props: Props) {
                   ? {
                       width: gridViewRosterSize.width,
                       height: gridViewRosterSize.height,
-                      margin: "0.50%",
+                      margin: "3px",
                       display: visibleIndex ? "block" : "none",
                     }
                   : {}
@@ -329,7 +328,6 @@ export default function RemoteVideoGroup(props: Props) {
                 attendeeId={attendeeId}
                 raisedHand={raisedHand}
                 activeSpeaker={activeSpeaker}
-                isContentShareEnabled={isContentShareEnabled}
               />
             </div>
           );
@@ -360,7 +358,7 @@ export default function RemoteVideoGroup(props: Props) {
                         display: !videoAttendees.has(key) ? "flex" : "none",
                         width: gridViewRosterSize.width,
                         height: gridViewRosterSize.height,
-                        margin: "0.50%",
+                        margin: "3px",
                       }
                     : { width: "100%", height: "100%" }
                 }
@@ -373,7 +371,6 @@ export default function RemoteVideoGroup(props: Props) {
                   attendeeId={key}
                   raisedHand={raisedHand}
                   activeSpeaker={activeSpeaker}
-                  isContentShareEnabled={isContentShareEnabled}
                   name={rosterAttendee?.name || ""}
                 />
               </div>

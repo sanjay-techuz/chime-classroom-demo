@@ -14,9 +14,6 @@
   display: flex;
 }
 
-.VideoNameplate_videoNameplate.screenShareMode {
-  display: none;
-}
 
 .VideoNameplate_videoNameplate.small {
   padding: 0.2rem 0.2rem 0.2rem 0.3rem;
@@ -39,25 +36,6 @@
   border-radius: 0.5rem;
 }
 
-.VideoNameplate_videoNameplate.roomMode.isContentShareEnabled {
-  display: none;
-}
-
-.VideoNameplate_videoNameplate.roomMode.isContentShareEnabled.large {
-  display: flex !important;
-  padding: 0.2rem 0.2rem 0.2rem 0.3rem;
-  bottom: 0.25rem;
-  font-size: 0.75rem;
-  border-radius: 0.25rem;
-}
-
-.VideoNameplate_videoNameplate.screenShareMode.large {
-  display: flex !important;
-  padding: 0.2rem 0.2rem 0.2rem 0.3rem;
-  bottom: 0.25rem;
-  font-size: 0.75rem;
-  border-radius: 0.25rem;
-}
 
 .VideoNameplate_name {
   flex: 1 1 auto;

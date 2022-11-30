@@ -15,12 +15,11 @@ const cx = classNames.bind(styles);
 type Props = {
   viewMode: ViewMode;
   size: Size;
-  isContentShareEnabled: boolean;
   attendeeId: string | null;
 };
 
 export default function VideoNameplate(props: Props) {
-  const { viewMode, size, attendeeId, isContentShareEnabled } = props;
+  const { viewMode, size, attendeeId } = props;
   if (!attendeeId) {
     return <></>;
   }
@@ -35,11 +34,9 @@ export default function VideoNameplate(props: Props) {
     <div
       className={cx("VideoNameplate_videoNameplate", {
         roomMode: viewMode === ViewMode.Room,
-        screenShareMode: viewMode === ViewMode.ScreenShare,
         small: size === Size.Small,
         medium: size === Size.Medium,
         large: size === Size.Large,
-        isContentShareEnabled,
       })}
     >
       <div className={cx("VideoNameplate_name")}>{name}</div>

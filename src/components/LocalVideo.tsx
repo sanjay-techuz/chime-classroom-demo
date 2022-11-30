@@ -20,11 +20,10 @@ const cx = classNames.bind(styles);
 type Props = {
   viewMode: ViewMode;
   size: Size;
-  isContentShareEnabled: boolean;
 };
 
 export default function LocalVideo(props: Props) {
-  const { viewMode, size, isContentShareEnabled } = props;
+  const { viewMode, size } = props;
   const [enabled, setEnabled] = useState(false);
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { updateGlobalVar } = useContext(getGlobalVarContext());
@@ -65,7 +64,6 @@ export default function LocalVideo(props: Props) {
         <VideoNameplate
           viewMode={viewMode}
           size={size}
-          isContentShareEnabled={isContentShareEnabled}
           attendeeId={attendeeId as string}
         />
       </div>
@@ -73,7 +71,6 @@ export default function LocalVideo(props: Props) {
         <LocalRoster
           viewMode={viewMode}
           size={size}
-          isContentShareEnabled={isContentShareEnabled}
           attendeeId={attendeeId as string}
           name={name as string}
         />
