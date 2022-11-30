@@ -1,12 +1,13 @@
 .VideoNameplate_videoNameplate {
   z-index: 1;
   align-items: center;
-  position: absolute;
+  /* position: absolute; */
   max-width: 95%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  background-color: var(--color_black_medium_opacity);
-  backdrop-filter: blur(0.5rem);
+  /* left: 50%;
+  top: 25%;
+  transform: translate(-50%, 0); */
+  /* background-color: var(--color_black_medium_opacity); */
+  /* backdrop-filter: blur(0.5rem); */
 }
 
 .VideoNameplate_videoNameplate.roomMode {
@@ -20,21 +21,21 @@
 .VideoNameplate_videoNameplate.small {
   padding: 0.2rem 0.2rem 0.2rem 0.3rem;
   bottom: 0.25rem;
-  font-size: 0.75rem;
+  font-size: 1rem;
   border-radius: 0.25rem;
 }
 
 .VideoNameplate_videoNameplate.medium {
   padding: 0.25rem 0.3rem 0.25rem 0.5rem;
   bottom: 0.25rem;
-  font-size: 0.8rem;
+  font-size: 1.3rem;
   border-radius: 0.5rem;
 }
 
 .VideoNameplate_videoNameplate.large {
   padding: 0.5rem 0.75em 0.5em 1rem;
   bottom: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   border-radius: 0.5rem;
 }
 
