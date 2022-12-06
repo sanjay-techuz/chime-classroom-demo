@@ -98,7 +98,7 @@ export default {
   'ChatInput.raiseHandAriaLabel': `Raise hand`,
 
   'Roster.raiseHandAriaLabel': `Raised hand by {name}`,
-  'Roster.users': `Users`,
+  'Roster.users': `Participants`,
   'Roster.sureRemove': `Are you sure to remove {name} from meeting ?`,
 
   'RemoteVideo.raiseHandAriaLabel': `Raised hand`,

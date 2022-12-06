@@ -15,7 +15,7 @@ import MessageTopic from "../enums/MessageTopic";
 import ClassMode from "../enums/ClassMode";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import CheckIcon from "@mui/icons-material/Check";
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 type Props = {
   handleGridView: () => void;
@@ -232,6 +232,9 @@ export default function MoreSettings(props: Props) {
           sx: {
             bottom: "75px !important",
             top: "initial !important",
+            bgcolor: "var(--secondary_blue_color)",
+            color: "var(--pure_white_color)",
+            border: "1px solid var(--pure_white_color)",
             width: "250px",
             overflow: "visible",
             "&:before": {
@@ -242,9 +245,11 @@ export default function MoreSettings(props: Props) {
               left: "50%",
               width: 10,
               height: 10,
-              bgcolor: "background.paper",
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
+              borderBottom: "1px solid",
+              borderRight: "1px solid",
+              backgroundColor: "var(--secondary_blue_color)",
             },
           },
         }}
@@ -258,7 +263,7 @@ export default function MoreSettings(props: Props) {
           }}
           sx={{
             display: "flex",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.microphone" })}
@@ -283,6 +288,9 @@ export default function MoreSettings(props: Props) {
             sx: {
               overflow: "visible",
               marginLeft: "10px",
+              bgcolor: "var(--secondary_blue_color)",
+              color: "var(--pure_white_color)",
+              border: "1px solid var(--pure_white_color)",
               "&:before": {
                 content: '""',
                 display: "block",
@@ -291,7 +299,9 @@ export default function MoreSettings(props: Props) {
                 left: -5,
                 width: 10,
                 height: 10,
-                bgcolor: "background.paper",
+                borderBottom: "1px solid",
+                borderLeft: "1px solid",
+                backgroundColor: "var(--secondary_blue_color)",
                 transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
               },
@@ -308,16 +318,29 @@ export default function MoreSettings(props: Props) {
                     await chime?.chooseAudioInputDevice(device);
                   }}
                 >
-                  <CheckIcon
+                  <Avatar
                     sx={{
-                      mr: 1,
-                      color:
+                      height: 22,
+                      width: 22,
+                      backgroundColor:
                         deviceSwitcherState?.currentAudioInputDevice?.value ===
                         device.value
-                          ? "black"
+                          ? "var(--color_green)"
                           : "transparent",
+                      marginRight: 1,
                     }}
-                  />{" "}
+                  >
+                    <CheckIcon
+                      sx={{
+                        fontSize: "1rem",
+                        color:
+                          deviceSwitcherState?.currentAudioInputDevice
+                            ?.value === device.value
+                            ? "var(--pure_white_color)"
+                            : "transparent",
+                      }}
+                    />
+                  </Avatar>{" "}
                   {`${device.name}`}
                 </MenuItem>
               );
@@ -340,7 +363,7 @@ export default function MoreSettings(props: Props) {
           }}
           sx={{
             display: "flex",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.speaker" })}
@@ -365,6 +388,9 @@ export default function MoreSettings(props: Props) {
             sx: {
               overflow: "visible",
               marginLeft: "10px",
+              bgcolor: "var(--secondary_blue_color)",
+              color: "var(--pure_white_color)",
+              border: "1px solid var(--pure_white_color)",
               "&:before": {
                 content: '""',
                 display: "block",
@@ -373,7 +399,9 @@ export default function MoreSettings(props: Props) {
                 left: -5,
                 width: 10,
                 height: 10,
-                bgcolor: "background.paper",
+                borderBottom: "1px solid",
+                borderLeft: "1px solid",
+                backgroundColor: "var(--secondary_blue_color)",
                 transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
               },
@@ -390,16 +418,29 @@ export default function MoreSettings(props: Props) {
                     await chime?.chooseAudioOutputDevice(device);
                   }}
                 >
-                  <CheckIcon
+                  <Avatar
                     sx={{
-                      mr: 1,
-                      color:
+                      height: 22,
+                      width: 22,
+                      backgroundColor:
                         deviceSwitcherState?.currentAudioOutputDevice?.value ===
                         device.value
-                          ? "black"
+                          ? "var(--color_green)"
                           : "transparent",
+                      marginRight: 1,
                     }}
-                  />{" "}
+                  >
+                    <CheckIcon
+                      sx={{
+                        fontSize: "1rem",
+                        color:
+                          deviceSwitcherState?.currentAudioOutputDevice
+                            ?.value === device.value
+                            ? "var(--pure_white_color)"
+                            : "transparent",
+                      }}
+                    />
+                  </Avatar>{" "}
                   {`${device.name}`}
                 </MenuItem>
               );
@@ -422,7 +463,7 @@ export default function MoreSettings(props: Props) {
           }}
           sx={{
             display: "flex",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.camera" })}
@@ -447,6 +488,9 @@ export default function MoreSettings(props: Props) {
             sx: {
               overflow: "visible",
               marginLeft: "10px",
+              bgcolor: "var(--secondary_blue_color)",
+              color: "var(--pure_white_color)",
+              border: "1px solid var(--pure_white_color)",
               "&:before": {
                 content: '""',
                 display: "block",
@@ -455,7 +499,9 @@ export default function MoreSettings(props: Props) {
                 left: -5,
                 width: 10,
                 height: 10,
-                bgcolor: "background.paper",
+                borderBottom: "1px solid",
+                borderLeft: "1px solid",
+                backgroundColor: "var(--secondary_blue_color)",
                 transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
               },
@@ -472,16 +518,29 @@ export default function MoreSettings(props: Props) {
                     await chime?.chooseVideoInputDevice(device);
                   }}
                 >
-                  <CheckIcon
+                  <Avatar
                     sx={{
-                      mr: 1,
-                      color:
+                      height: 22,
+                      width: 22,
+                      backgroundColor:
                         deviceSwitcherState?.currentVideoInputDevice?.value ===
                         device.value
-                          ? "black"
+                          ? "var(--color_green)"
                           : "transparent",
+                      marginRight: 1,
                     }}
-                  />{" "}
+                  >
+                    <CheckIcon
+                      sx={{
+                        fontSize: "1rem",
+                        color:
+                          deviceSwitcherState?.currentVideoInputDevice
+                            ?.value === device.value
+                            ? "var(--pure_white_color)"
+                            : "transparent",
+                      }}
+                    />
+                  </Avatar>{" "}
                   {`${device.name}`}
                 </MenuItem>
               );
@@ -504,7 +563,7 @@ export default function MoreSettings(props: Props) {
           }}
           sx={{
             display: "flex",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.videoQuality" })}
@@ -529,6 +588,9 @@ export default function MoreSettings(props: Props) {
             sx: {
               overflow: "visible",
               marginLeft: "10px",
+              bgcolor: "var(--secondary_blue_color)",
+              color: "var(--pure_white_color)",
+              border: "1px solid var(--pure_white_color)",
               "&:before": {
                 content: '""',
                 display: "block",
@@ -537,7 +599,9 @@ export default function MoreSettings(props: Props) {
                 left: -5,
                 width: 10,
                 height: 10,
-                bgcolor: "background.paper",
+                borderBottom: "1px solid",
+                borderLeft: "1px solid",
+                backgroundColor: "var(--secondary_blue_color)",
                 transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
               },
@@ -581,15 +645,27 @@ export default function MoreSettings(props: Props) {
                   }
                 }}
               >
-                <CheckIcon
+                <Avatar
                   sx={{
-                    mr: 1,
-                    color:
+                    height: 22,
+                    width: 22,
+                    backgroundColor:
                       selectedQuality?.name === quality.name
-                        ? "black"
+                        ? "var(--color_green)"
                         : "transparent",
+                    marginRight: 1,
                   }}
-                />{" "}
+                >
+                  <CheckIcon
+                    sx={{
+                      fontSize: "1rem",
+                      color:
+                        selectedQuality?.name === quality.name
+                          ? "var(--pure_white_color)"
+                          : "transparent",
+                    }}
+                  />
+                </Avatar>{" "}
                 {`${quality.name}`}
               </MenuItem>
             );
@@ -614,7 +690,7 @@ export default function MoreSettings(props: Props) {
             }}
             sx={{
               display: "flex",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
             {intl.formatMessage({ id: "DeviceSwitcher.screenSharePermit" })}
@@ -640,6 +716,9 @@ export default function MoreSettings(props: Props) {
             sx: {
               overflow: "visible",
               marginLeft: "10px",
+              bgcolor: "var(--secondary_blue_color)",
+              color: "var(--pure_white_color)",
+              border: "1px solid var(--pure_white_color)",
               "&:before": {
                 content: '""',
                 display: "block",
@@ -648,7 +727,9 @@ export default function MoreSettings(props: Props) {
                 left: -5,
                 width: 10,
                 height: 10,
-                bgcolor: "background.paper",
+                borderBottom: "1px solid",
+                borderLeft: "1px solid",
+                backgroundColor: "var(--secondary_blue_color)",
                 transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
               },
@@ -661,12 +742,27 @@ export default function MoreSettings(props: Props) {
               handleRadioChange("host");
             }}
           >
-            <CheckIcon
+            <Avatar
               sx={{
-                mr: 1,
-                color: screenSharePermitValue === "host" ? "black" : "transparent",
+                height: 22,
+                width: 22,
+                backgroundColor:
+                  screenSharePermitValue === "host"
+                    ? "var(--color_green)"
+                    : "transparent",
+                marginRight: 1,
               }}
-            />{" "}
+            >
+              <CheckIcon
+                sx={{
+                  fontSize: "1rem",
+                  color:
+                    screenSharePermitValue === "host"
+                      ? "var(--pure_white_color)"
+                      : "transparent",
+                }}
+              />
+            </Avatar>{" "}
             {intl.formatMessage({ id: "DeviceSwitcher.hostOnly" })}
           </MenuItem>
           <MenuItem
@@ -675,12 +771,27 @@ export default function MoreSettings(props: Props) {
               handleRadioChange("all");
             }}
           >
-            <CheckIcon
+             <Avatar
               sx={{
-                mr: 1,
-                color: screenSharePermitValue === "all" ? "black" : "transparent",
+                height: 22,
+                width: 22,
+                backgroundColor:
+                  screenSharePermitValue === "all"
+                    ? "var(--color_green)"
+                    : "transparent",
+                marginRight: 1,
               }}
-            />{" "}
+            >
+              <CheckIcon
+                sx={{
+                  fontSize: "1rem",
+                  color:
+                    screenSharePermitValue === "all"
+                      ? "var(--pure_white_color)"
+                      : "transparent",
+                }}
+              />
+            </Avatar>{" "}
             {intl.formatMessage({ id: "DeviceSwitcher.allParticipants" })}
           </MenuItem>
         </Popover>

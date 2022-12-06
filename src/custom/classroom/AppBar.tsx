@@ -29,7 +29,7 @@ const AppBar = styled(MuiAppBar, {
     ...(leftopen &&
       !rightopen &&
       !mobileview && {
-        width: `calc(100% - ${drawerWidth}px)`,
+        width: `calc(100% - ${drawerWidth + 16}px) !important`,
         marginLeft: `${drawerWidth}px`,
         transition: theme.transitions.create(["margin", "width"], {
           easing: theme.transitions.easing.easeOut,
@@ -39,7 +39,7 @@ const AppBar = styled(MuiAppBar, {
     ...(rightopen &&
       !leftopen &&
       !mobileview && {
-        width: `calc(100% - ${drawerWidth}px)`,
+        width: `calc(100% - ${drawerWidth + 16}px) !important`,
         marginRight: `${drawerWidth}px`,
         transition: theme.transitions.create(["margin", "width"], {
           easing: theme.transitions.easing.easeOut,
@@ -63,10 +63,13 @@ const AppBar = styled(MuiAppBar, {
     }),
     ...(anchor === "bottom" && {
       top: "auto",
-      bottom: 0,
+      bottom: "8px",
     }),
     backgroundColor: `${background} !important`,
     boxShadow: "none",
+    left: "8px",
+    right: "8px",
+    borderRadius: "8px"
   })
 );
 
