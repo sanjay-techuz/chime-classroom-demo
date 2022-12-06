@@ -5,6 +5,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useHistory } from "react-router-dom";
+import classNames from "classnames/bind";
 
 import {
   Avatar,
@@ -45,6 +46,9 @@ import ClassMode from "../enums/ClassMode";
 import SmallAvatar from "../custom/roster/SmallAvatar";
 import { attendanceWenhook } from "../services";
 import MoreSettings from "./MoreSettings";
+import styles from "./Controls.css";
+
+const cx = classNames.bind(styles);
 
 enum VideoStatus {
   Disabled,
@@ -70,7 +74,7 @@ export default function Controls(props: Props) {
     handleDrawerLeftToggle,
     handleGridView,
     isGridView,
-    openParticipants
+    openParticipants,
   } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
@@ -133,26 +137,6 @@ export default function Controls(props: Props) {
     setVideoStatus(localVideo ? VideoStatus.Enabled : VideoStatus.Disabled);
   }, [localVideo]);
 
-  // const handleRecording = async () => {
-  //   setRecording(!recording);
-  //   if (recording) {
-  //     try {
-  //       const result = await stopRecording(mediaPipelineId);
-  //       console.log(result);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   } else {
-  //     try {
-  //       const result = await startRecording(chime?.meetingId as string);
-  //       console.log(result);
-  //       setMediaPipelineId(result.MediaPipelineId);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   }
-  // };
-
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
@@ -185,46 +169,9 @@ export default function Controls(props: Props) {
           justifyContent: "space-around",
           m: 1,
           p: 1,
-          maxWidth: 500,
+          maxWidth: 700,
         }}
       >
-        {/* {classMode === ClassMode.Teacher && viewMode === ViewMode.Room && (
-          <Tooltip
-            title={
-              focus
-                ? intl.formatMessage({ id: "Controls.turnOffFocusTooltip" })
-                : intl.formatMessage({ id: "Controls.turnOnFocusTooltip" })
-            }
-            placement="bottom"
-          >
-            <Avatar
-              onClick={() => {
-                const newFocusState = !focus;
-                chime?.sendMessage(MessageTopic.Focus, {
-                  focus: newFocusState,
-                });
-                setFocus(newFocusState);
-              }}
-              sx={
-                focus
-                  ? {
-                      bgcolor: "var(--pure_white_color)",
-                      border: "1px solid var(--secondary_blue_color)",
-                      color: "var(--secondary_blue_color)",
-                      cursor: "pointer",
-                    }
-                  : {
-                      bgcolor: "var(--secondary_blue_color)",
-                      border: "1px solid var(--pure_white_color)",
-                      color: "var(--pure_white_color)",
-                      cursor: "pointer",
-                    }
-              }
-            >
-              <AutoModeIcon />
-            </Avatar>
-          </Tooltip>
-        )} */}
         <Tooltip
           title={
             muted
@@ -233,7 +180,7 @@ export default function Controls(props: Props) {
           }
           placement="bottom"
         >
-          <Avatar
+          <Button
             onClick={async () => {
               if (muted) {
                 chime?.audioVideo?.realtimeUnmuteLocalAudio();
@@ -243,24 +190,24 @@ export default function Controls(props: Props) {
               // Adds a slight delay to close the tooltip before rendering the updated text in it
               await new Promise((resolve) => setTimeout(resolve, 10));
             }}
-            sx={
-              muted
-                ? {
-                    bgcolor: "var(--pure_white_color)",
-                    border: "1px solid var(--secondary_blue_color)",
-                    color: "var(--secondary_blue_color)",
-                    cursor: "pointer",
-                  }
-                : {
-                    bgcolor: "var(--secondary_blue_color)",
-                    border: "1px solid var(--pure_white_color)",
-                    color: "var(--pure_white_color)",
-                    cursor: "pointer",
-                  }
-            }
+            className={cx(
+              muted ? "Controls_btn_active" : "Controls_btn_not_active"
+            )}
           >
-            {muted ? <MicOffOutlinedIcon /> : <KeyboardVoiceOutlinedIcon />}
-          </Avatar>
+            {muted ? (
+              <>
+                <MicOffOutlinedIcon className={cx("Controls_avtr_size")} />
+                {intl.formatMessage({ id: "Controls.unmuteTooltip" })}
+              </>
+            ) : (
+              <>
+                <KeyboardVoiceOutlinedIcon
+                  className={cx("Controls_avtr_size")}
+                />
+                {intl.formatMessage({ id: "Controls.muteTooltip" })}
+              </>
+            )}
+          </Button>
         </Tooltip>
 
         <Tooltip
@@ -271,7 +218,7 @@ export default function Controls(props: Props) {
           }
           placement="bottom"
         >
-          <Avatar
+          <Button
             onClick={async () => {
               // Adds a slight delay to close the tooltip before rendering the updated text in it
               await new Promise((resolve) => setTimeout(resolve, 10));
@@ -297,28 +244,68 @@ export default function Controls(props: Props) {
                 setVideoStatus(VideoStatus.Disabled);
               }
             }}
-            sx={
+            sx={{ width: "100px" }}
+            className={cx(
               videoStatus === VideoStatus.Enabled
-                ? {
-                    bgcolor: "var(--pure_white_color)",
-                    border: "1px solid var(--secondary_blue_color)",
-                    color: "var(--secondary_blue_color)",
-                    cursor: "pointer",
-                  }
-                : {
-                    bgcolor: "var(--secondary_blue_color)",
-                    border: "1px solid var(--pure_white_color)",
-                    color: "var(--pure_white_color)",
-                    cursor: "pointer",
-                  }
-            }
+                ? "Controls_btn_active"
+                : "Controls_btn_not_active"
+            )}
           >
             {videoStatus === VideoStatus.Enabled ? (
-              <VideocamOutlinedIcon />
+              <>
+                <VideocamOutlinedIcon className={cx("Controls_avtr_size")} />
+                {intl.formatMessage({ id: "Controls.startVideo" })}
+              </>
             ) : (
-              <VideocamOffOutlinedIcon />
+              <>
+                <VideocamOffOutlinedIcon className={cx("Controls_avtr_size")} />
+                {intl.formatMessage({ id: "Controls.stopVideo" })}
+              </>
             )}
-          </Avatar>
+          </Button>
+        </Tooltip>
+
+        <Tooltip
+          title={
+            isScreenShared
+              ? intl.formatMessage({ id: "Controls.shareScreenStopTooltip" })
+              : intl.formatMessage({ id: "Controls.shareScreenTooltip" })
+          }
+          placement="bottom"
+        >
+          <Button
+            sx={{ width: "120px" }}
+            onClick={() => {
+              if (classMode === ClassMode.Teacher || screenSharePermit) {
+                if (!isScreenShared) {
+                  onClickShareButton(true);
+                } else {
+                  onClickShareButton(false);
+                }
+              } else {
+                setOpenScreenSharePermit(true);
+              }
+            }}
+            className={cx(
+              isScreenShared ? "Controls_btn_active" : "Controls_btn_not_active"
+            )}
+          >
+            {isScreenShared ? (
+              <>
+                <StopScreenShareOutlinedIcon
+                  className={cx("Controls_avtr_size")}
+                />
+                {intl.formatMessage({
+                  id: "Controls.shareScreenStopTooltip",
+                })}
+              </>
+            ) : (
+              <>
+                <ScreenShareOutlinedIcon className={cx("Controls_avtr_size")} />
+                {intl.formatMessage({ id: "Controls.shareScreenTooltip" })}
+              </>
+            )}
+          </Button>
         </Tooltip>
 
         <Tooltip
@@ -340,7 +327,7 @@ export default function Controls(props: Props) {
               </SmallAvatar>
             }
           >
-            <Avatar
+            <Button
               onClick={() => {
                 if (!onChat) {
                   onClickChatButton(true);
@@ -350,24 +337,22 @@ export default function Controls(props: Props) {
                   setOnChat(false);
                 }
               }}
-              sx={
-                onChat
-                  ? {
-                      bgcolor: "var(--pure_white_color)",
-                      border: "1px solid var(--secondary_blue_color)",
-                      color: "var(--secondary_blue_color)",
-                      cursor: "pointer",
-                    }
-                  : {
-                      bgcolor: "var(--secondary_blue_color)",
-                      border: "1px solid var(--pure_white_color)",
-                      color: "var(--pure_white_color)",
-                      cursor: "pointer",
-                    }
-              }
+              className={cx(
+                onChat ? "Controls_btn_active" : "Controls_btn_not_active"
+              )}
             >
-              {onChat ? <CommentOutlinedIcon /> : <CommentIcon />}
-            </Avatar>
+              {onChat ? (
+                <>
+                  <CommentOutlinedIcon className={cx("Controls_avtr_size")} />
+                  {intl.formatMessage({ id: "Controls.Chat" })}
+                </>
+              ) : (
+                <>
+                  <CommentIcon className={cx("Controls_avtr_size")} />{" "}
+                  {intl.formatMessage({ id: "Controls.Chat" })}
+                </>
+              )}
+            </Button>
           </Badge>
         </Tooltip>
 
@@ -375,26 +360,18 @@ export default function Controls(props: Props) {
           title={intl.formatMessage({ id: "Controls.participants" })}
           placement="bottom"
         >
-          <Avatar
+          <Button
+            sx={{ width: "100px" }}
             onClick={handleDrawerLeftToggle}
-            sx={
+            className={cx(
               openParticipants
-                ? {
-                    bgcolor: "var(--pure_white_color)",
-                    border: "1px solid var(--secondary_blue_color)",
-                    color: "var(--secondary_blue_color)",
-                    cursor: "pointer",
-                  }
-                : {
-                    bgcolor: "var(--secondary_blue_color)",
-                    border: "1px solid var(--pure_white_color)",
-                    color: "var(--pure_white_color)",
-                    cursor: "pointer",
-                  }
-            }
+                ? "Controls_btn_active"
+                : "Controls_btn_not_active"
+            )}
           >
-            <PeopleAltOutlinedIcon />
-          </Avatar>
+            <PeopleAltOutlinedIcon className={cx("Controls_avtr_size")} />
+            {intl.formatMessage({ id: "Controls.participants" })}
+          </Button>
         </Tooltip>
 
         <MoreSettings handleGridView={handleGridView} isGridView={isGridView} />
@@ -419,87 +396,6 @@ export default function Controls(props: Props) {
           </DialogActions>
         </Dialog>
 
-        {
-          <Tooltip
-            title={
-              isScreenShared
-                ? intl.formatMessage({ id: "Controls.shareScreenStopTooltip" })
-                : intl.formatMessage({ id: "Controls.shareScreenTooltip" })
-            }
-            placement="bottom"
-          >
-            <Avatar
-              onClick={() => {
-                if (classMode === ClassMode.Teacher || screenSharePermit) {
-                  if (!isScreenShared) {
-                    onClickShareButton(true);
-                  } else {
-                    onClickShareButton(false);
-                  }
-                } else {
-                  setOpenScreenSharePermit(true);
-                }
-              }}
-              sx={
-                isScreenShared
-                  ? {
-                      bgcolor: "var(--pure_white_color)",
-                      border: "1px solid var(--secondary_blue_color)",
-                      color: "var(--secondary_blue_color)",
-                      cursor: "pointer",
-                    }
-                  : {
-                      bgcolor: "var(--secondary_blue_color)",
-                      border: "1px solid var(--pure_white_color)",
-                      color: "var(--pure_white_color)",
-                      cursor: "pointer",
-                    }
-              }
-            >
-              {isScreenShared ? (
-                <StopScreenShareOutlinedIcon />
-              ) : (
-                <ScreenShareOutlinedIcon />
-              )}
-            </Avatar>
-          </Tooltip>
-        }
-        {/* {classMode === ClassMode.Teacher && (
-          <Tooltip
-            title={
-              recording
-                ? intl.formatMessage({
-                    id: "Controls.stopRecordingScreenTooltip",
-                  })
-                : intl.formatMessage({
-                    id: "Controls.startRecordingScreenTooltip",
-                  })
-            }
-          >
-            <Avatar
-              onClick={() => {
-                handleRecording();
-              }}
-              sx={
-                recording
-                  ? {
-                      bgcolor: "var(--pure_white_color)",
-                      border: "1px solid var(--secondary_blue_color)",
-                      color: "var(--color_pink)",
-                      cursor: "pointer",
-                    }
-                  : {
-                      bgcolor: "var(--secondary_blue_color)",
-                      border: "1px solid var(--pure_white_color)",
-                      color: "var(--pure_white_color)",
-                      cursor: "pointer",
-                    }
-              }
-            >
-              <RadioButtonCheckedOutlinedIcon />
-            </Avatar>
-          </Tooltip>
-        )} */}
         <Popover
           anchorOrigin={{
             vertical: "top",

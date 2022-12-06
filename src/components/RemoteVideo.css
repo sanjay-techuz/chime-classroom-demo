@@ -13,11 +13,11 @@
 }
 
 .RemoteVideo_remoteVideo.roomMode {
-  border-radius: 0.25rem;
+  border-radius: 8px;
 }
 
 .RemoteVideo_remoteVideo.screenShareMode {
-  border-radius: 0.25rem;
+  border-radius: 8px;
 }
 
 .RemoteVideo_remoteVideo.enabled {

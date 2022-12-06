@@ -16,7 +16,15 @@ import MessageTopic from "../enums/MessageTopic";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
 import CheckIcon from "@mui/icons-material/Check";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
-import { Avatar, Box, Button, IconButton, ListItem, MenuItem, Popover } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  ListItem,
+  MenuItem,
+  Popover,
+} from "@mui/material";
 import useRoster from "../hooks/useRoster";
 import localStorageKeys from "../constants/localStorageKeys.json";
 import RosterAttendeeType from "../types/RosterAttendeeType";
@@ -44,7 +52,8 @@ export default React.memo(function ChatInput(props: Props) {
   );
   const [activeChannel, setActiveChannel] = useState<string>(
     MessageTopic.PublicChannel
-  );  const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
+  );
+  const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
   const [raised, setRaised] = useState(false);
   const intl = useIntl();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -108,84 +117,96 @@ export default React.memo(function ChatInput(props: Props) {
           autoFocusSearch={true}
         />
       )}
-    <Box sx={{ height: 70 }}>
-      <Box sx={{ height: "40%" }}>
-      <Popover
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          transformOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-        >
-            <MenuItem  sx={{ padding: "0px 16px" }} onClick={() => {
-              setActiveChatAttendee(MessageTopic.PublicChannel);
-              setActiveChannel(MessageTopic.PublicChannel);
-              setCurrentChatter("Everyone");
-              changeChannel(MessageTopic.PublicChannel,"", 0);
-            }}>
-            <CheckIcon
-              sx={{
-                mr: 1,
-                color:
-                  currentChatter === "Everyone"
-                    ? "black"
-                    : "transparent",
+      <Box sx={{ height: 70 }}>
+        <Box sx={{ height: "40%" }}>
+          <Popover
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+          >
+            <MenuItem
+              sx={{ padding: "0px 10px" }}
+              onClick={() => {
+                setActiveChatAttendee(MessageTopic.PublicChannel);
+                setActiveChannel(MessageTopic.PublicChannel);
+                setCurrentChatter("Everyone");
+                changeChannel(MessageTopic.PublicChannel, "", 0);
               }}
-                />
-              <ListItem  sx={{ padding: "0px 16px" }}>
-              Everyone
-              </ListItem>
-                <Avatar sx={{
-                  backgroundColor:"var(--color_pink)",
-                  display: publicChannelCnt === 0 ? "none" : "flex",
-                  height: 20,
-                  width: 20,
-                  fontSize: "1rem"
-                }}>{publicChannelCnt}</Avatar>                
-            </MenuItem>
-            {chatAttendeeIds.map((chatAttdId: string) => {
-            const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
-            const msgCount = rosterAttendee?.msgCount
-              ? rosterAttendee?.msgCount
-              : 0;
-            return (
-              <MenuItem sx={{ padding: "0px 16px" }}  onClick={() => {
-                setActiveChatAttendee(chatAttdId);
-                setActiveChannel(createPrivateChannel(localUserId as string, chatAttdId));
-                setCurrentChatter(rosterAttendee?.name as string);
-                changeChannel("private",chatAttdId, msgCount);
-              }}>
+            >
               <CheckIcon
                 sx={{
                   mr: 1,
                   color:
-                    currentChatter === rosterAttendee?.name
-                      ? "black"
-                      : "transparent",
+                    currentChatter === "Everyone" ? "black" : "transparent",
                 }}
-                />
-                <ListItem  sx={{ padding: "0px 16px" }}>
-                  {rosterAttendee?.name}
-                </ListItem>
-                <Avatar sx={{
-                  backgroundColor:"var(--color_pink)",
-                  display: msgCount === 0 ? "none" : "flex",
+              />
+              <ListItem sx={{ padding: "0px 10px" }}>Everyone</ListItem>
+              <Avatar
+                sx={{
+                  backgroundColor: "var(--color_pink)",
+                  display: publicChannelCnt === 0 ? "none" : "flex",
                   height: 20,
                   width: 20,
-                  fontSize: "1rem"
-                }}>{msgCount}</Avatar>              
-              </MenuItem>
-            )})}
-
-        </Popover>
-        To: <Button onClick={handleClick}>{currentChatter}</Button>
-      <IconButton
+                  fontSize: "1rem",
+                }}
+              >
+                {publicChannelCnt}
+              </Avatar>
+            </MenuItem>
+            {chatAttendeeIds.map((chatAttdId: string) => {
+              const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
+              const msgCount = rosterAttendee?.msgCount
+                ? rosterAttendee?.msgCount
+                : 0;
+              return (
+                <MenuItem
+                  sx={{ padding: "0px 10px" }}
+                  onClick={() => {
+                    setActiveChatAttendee(chatAttdId);
+                    setActiveChannel(
+                      createPrivateChannel(localUserId as string, chatAttdId)
+                    );
+                    setCurrentChatter(rosterAttendee?.name as string);
+                    changeChannel("private", chatAttdId, msgCount);
+                  }}
+                >
+                  <CheckIcon
+                    sx={{
+                      mr: 1,
+                      color:
+                        currentChatter === rosterAttendee?.name
+                          ? "black"
+                          : "transparent",
+                    }}
+                  />
+                  <ListItem sx={{ padding: "0px 10px" }}>
+                    {rosterAttendee?.name}
+                  </ListItem>
+                  <Avatar
+                    sx={{
+                      backgroundColor: "var(--color_pink)",
+                      display: msgCount === 0 ? "none" : "flex",
+                      height: 20,
+                      width: 20,
+                      fontSize: "1rem",
+                    }}
+                  >
+                    {msgCount}
+                  </Avatar>
+                </MenuItem>
+              );
+            })}
+          </Popover>
+          To: <Button onClick={handleClick}>{currentChatter}</Button>
+          <IconButton
             onClick={() => setOpenEmojiPicker(!openEmojiPicker)}
             color="inherit"
             sx={{
@@ -195,7 +216,7 @@ export default React.memo(function ChatInput(props: Props) {
               height: "25px",
               color: " #FFF",
               cursor: "pointer",
-              padding: 0
+              padding: 0,
             }}
           >
             <EmojiEmotionsOutlinedIcon />
@@ -220,48 +241,48 @@ export default React.memo(function ChatInput(props: Props) {
               </span>
             </button>
           )}
-      </Box>
-      <div className={cx("chatInput")}>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-          className={cx("form")}
-        >
-          <input
-            className={cx("input")}
-            value={inputText}
-            onChange={(event) => {
-              setInputText(event.target.value);
-            }}
-            onKeyUp={(event) => {
+        </Box>
+        <div className={cx("chatInput")}>
+          <form
+            onSubmit={(event) => {
               event.preventDefault();
-              if (event.keyCode === 13) {
-                setOpenEmojiPicker(false);
-                const sendingMessage = inputText.trim();
-                const msgObject = {
-                  sendingMessage,
-                  channel: activeChannel,
-                  targetId: activeChatAttendee,
-                };
-                const attendeeId =
-                  chime?.configuration?.credentials?.attendeeId;
-                if (sendingMessage !== "" && attendeeId) {
-                  chime?.sendMessage(
-                    MessageTopic.GroupChat,
-                    JSON.stringify(msgObject)
-                  );
-                  setInputText("");
-                }
-              }
             }}
-            placeholder={intl.formatMessage({
-              id: "ChatInput.inputPlaceholder",
-            })}
-          />
-        </form>
-      </div>
-      </Box>  
+            className={cx("form")}
+          >
+            <input
+              className={cx("input")}
+              value={inputText}
+              onChange={(event) => {
+                setInputText(event.target.value);
+              }}
+              onKeyUp={(event) => {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                  setOpenEmojiPicker(false);
+                  const sendingMessage = inputText.trim();
+                  const msgObject = {
+                    sendingMessage,
+                    channel: activeChannel,
+                    targetId: activeChatAttendee,
+                  };
+                  const attendeeId =
+                    chime?.configuration?.credentials?.attendeeId;
+                  if (sendingMessage !== "" && attendeeId) {
+                    chime?.sendMessage(
+                      MessageTopic.GroupChat,
+                      JSON.stringify(msgObject)
+                    );
+                    setInputText("");
+                  }
+                }
+              }}
+              placeholder={intl.formatMessage({
+                id: "ChatInput.inputPlaceholder",
+              })}
+            />
+          </form>
+        </div>
+      </Box>
     </>
   );
 });

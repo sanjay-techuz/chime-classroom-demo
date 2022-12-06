@@ -147,7 +147,7 @@
   color: var(--pure_white_color);
   align-items: center;
   justify-content: center;
-  border-radius: 0.25rem;
+  border-radius: 8px;
 }
 
 .RemoteVideoGroup_attendeeRosterView.activeSpeaker{

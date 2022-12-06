@@ -13,7 +13,7 @@
     overflow: hidden;
     height: 100%;
     width: 100%;
-    border-radius: 0.25rem;
+    border-radius: 8px;
     color: var(--pure_white_color);
   }
   
