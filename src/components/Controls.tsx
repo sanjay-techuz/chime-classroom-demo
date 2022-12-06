@@ -403,11 +403,36 @@ export default function Controls(props: Props) {
           }}
           transformOrigin={{
             vertical: "bottom",
-            horizontal: "left",
+            horizontal: "center",
           }}
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
+          PaperProps={{
+            elevation: 0,
+            sx: {
+              bottom: "75px !important",
+              top: "initial !important",
+              bgcolor: "var(--secondary_blue_color)",
+              color: "var(--pure_white_color)",
+              border: "1px solid var(--pure_white_color)",
+              overflow: "visible",
+              "&:before": {
+                content: '""',
+                display: "block",
+                position: "absolute",
+                bottom: -10,
+                left: "50%",
+                width: 10,
+                height: 10,
+                transform: "translateY(-50%) rotate(45deg)",
+                zIndex: 0,
+                borderBottom: "1px solid",
+                borderRight: "1px solid",
+                backgroundColor: "var(--secondary_blue_color)",
+              },
+            },
+          }}
         >
           {classMode === ClassMode.Teacher && (
             <MenuItem
