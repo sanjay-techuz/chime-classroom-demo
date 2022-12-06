@@ -14,28 +14,57 @@ import ClassMode from "../enums/ClassMode";
 import styles from "./ChatInput.css";
 import MessageTopic from "../enums/MessageTopic";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
+import CheckIcon from "@mui/icons-material/Check";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
-import { IconButton } from "@mui/material";
+import { Avatar, Box, Button, IconButton, ListItem, MenuItem, Popover } from "@mui/material";
+import useRoster from "../hooks/useRoster";
+import localStorageKeys from "../constants/localStorageKeys.json";
+import RosterAttendeeType from "../types/RosterAttendeeType";
+import { createPrivateChannel } from "../utils";
 
 const cx = classNames.bind(styles);
 
 let timeoutId: number;
 
 type Props = {
-  activeChannel: string;
-  activeChatAttendee?: string;
+  publicChannelCnt: number;
+  changeChannel: (type: string, chatAttdId: string, msgCount: number) => void;
 };
 
 export default React.memo(function ChatInput(props: Props) {
-  const { activeChannel, activeChatAttendee } = props;
+  const { changeChannel, publicChannelCnt } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
   const { classMode } = globalVar;
   // const [state] = useContext(getUIStateContext());
   const [inputText, setInputText] = useState("");
-  const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
+  const [currentChatter, setCurrentChatter] = useState("Everyone");
+  const [activeChatAttendee, setActiveChatAttendee] = useState<string>(
+    MessageTopic.PublicChannel
+  );
+  const [activeChannel, setActiveChannel] = useState<string>(
+    MessageTopic.PublicChannel
+  );  const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
   const [raised, setRaised] = useState(false);
   const intl = useIntl();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const roster = useRoster();
+  const localUserId =
+    chime?.meetingSession?.configuration?.credentials?.attendeeId;
+
+  let chatAttendeeIds: Array<string> = [];
+  if (chime?.meetingSession && roster) {
+    chatAttendeeIds = Object.keys(roster).filter(
+      (attendeeId: string) => attendeeId !== localUserId
+    );
+    chatAttendeeIds = chatAttendeeIds.filter(
+      (attendeeId: string) =>
+        attendeeId !==
+        localStorage.getItem(localStorageKeys.CURRENT_RECORDER_ID)
+    );
+  }
 
   useEffect(() => {
     const attendeeId = chime?.configuration?.credentials?.attendeeId;
@@ -62,6 +91,13 @@ export default React.memo(function ChatInput(props: Props) {
     setInputText(inputText + emojiData.emoji);
   }
 
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       {openEmojiPicker && (
@@ -72,6 +108,119 @@ export default React.memo(function ChatInput(props: Props) {
           autoFocusSearch={true}
         />
       )}
+    <Box sx={{ height: 70 }}>
+      <Box sx={{ height: "40%" }}>
+      <Popover
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+        >
+            <MenuItem  sx={{ padding: "0px 16px" }} onClick={() => {
+              setActiveChatAttendee(MessageTopic.PublicChannel);
+              setActiveChannel(MessageTopic.PublicChannel);
+              setCurrentChatter("Everyone");
+              changeChannel(MessageTopic.PublicChannel,"", 0);
+            }}>
+            <CheckIcon
+              sx={{
+                mr: 1,
+                color:
+                  currentChatter === "Everyone"
+                    ? "black"
+                    : "transparent",
+              }}
+                />
+              <ListItem  sx={{ padding: "0px 16px" }}>
+              Everyone
+              </ListItem>
+                <Avatar sx={{
+                  backgroundColor:"var(--color_pink)",
+                  display: publicChannelCnt === 0 ? "none" : "flex",
+                  height: 20,
+                  width: 20,
+                  fontSize: "1rem"
+                }}>{publicChannelCnt}</Avatar>                
+            </MenuItem>
+            {chatAttendeeIds.map((chatAttdId: string) => {
+            const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
+            const msgCount = rosterAttendee?.msgCount
+              ? rosterAttendee?.msgCount
+              : 0;
+            return (
+              <MenuItem sx={{ padding: "0px 16px" }}  onClick={() => {
+                setActiveChatAttendee(chatAttdId);
+                setActiveChannel(createPrivateChannel(localUserId as string, chatAttdId));
+                setCurrentChatter(rosterAttendee?.name as string);
+                changeChannel("private",chatAttdId, msgCount);
+              }}>
+              <CheckIcon
+                sx={{
+                  mr: 1,
+                  color:
+                    currentChatter === rosterAttendee?.name
+                      ? "black"
+                      : "transparent",
+                }}
+                />
+                <ListItem  sx={{ padding: "0px 16px" }}>
+                  {rosterAttendee?.name}
+                </ListItem>
+                <Avatar sx={{
+                  backgroundColor:"var(--color_pink)",
+                  display: msgCount === 0 ? "none" : "flex",
+                  height: 20,
+                  width: 20,
+                  fontSize: "1rem"
+                }}>{msgCount}</Avatar>              
+              </MenuItem>
+            )})}
+
+        </Popover>
+        To: <Button onClick={handleClick}>{currentChatter}</Button>
+      <IconButton
+            onClick={() => setOpenEmojiPicker(!openEmojiPicker)}
+            color="inherit"
+            sx={{
+              position: "absolute",
+              right: "40px",
+              width: "25px",
+              height: "25px",
+              color: " #FFF",
+              cursor: "pointer",
+              padding: 0
+            }}
+          >
+            <EmojiEmotionsOutlinedIcon />
+          </IconButton>
+          {classMode === ClassMode.Student && (
+            <button
+              type="button"
+              className={cx("raiseHandButton", {
+                raised,
+              })}
+              onClick={() => {
+                setRaised(!raised);
+              }}
+            >
+              <span
+                role="img"
+                aria-label={intl.formatMessage({
+                  id: "ChatInput.raiseHandAriaLabel",
+                })}
+              >
+                ✋
+              </span>
+            </button>
+          )}
+      </Box>
       <div className={cx("chatInput")}>
         <form
           onSubmit={(event) => {
@@ -110,43 +259,9 @@ export default React.memo(function ChatInput(props: Props) {
               id: "ChatInput.inputPlaceholder",
             })}
           />
-
-          <IconButton
-            onClick={() => setOpenEmojiPicker(!openEmojiPicker)}
-            color="inherit"
-            sx={{
-              position: "absolute",
-              right: "40px",
-              width: "40px",
-              height: "40px",
-              color: " #FFF",
-              cursor: "pointer",
-            }}
-          >
-            <EmojiEmotionsOutlinedIcon />
-          </IconButton>
-          {classMode === ClassMode.Student && (
-            <button
-              type="button"
-              className={cx("raiseHandButton", {
-                raised,
-              })}
-              onClick={() => {
-                setRaised(!raised);
-              }}
-            >
-              <span
-                role="img"
-                aria-label={intl.formatMessage({
-                  id: "ChatInput.raiseHandAriaLabel",
-                })}
-              >
-                ✋
-              </span>
-            </button>
-          )}
         </form>
       </div>
+      </Box>  
     </>
   );
 });

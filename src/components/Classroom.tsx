@@ -340,8 +340,16 @@ export default function Classroom() {
                   sx={{
                     "& .MuiDrawer-paper": {
                       boxSizing: "border-box",
-                      width: drawerWidth,
+                        width: `calc(${drawerWidth}px - 16px)`,
+                      right: "8px",
+                      top: "8px",
+                      bottom: "8px",
+                      marginLeft: "8px",
+                      borderRadius: "8px",
+                      height: "calc(100% - 16px)",
                       overflow: "hidden",
+                      backgroundColor: "var(--secondary_blue_color) !important",
+                      color: "var(--pure_white_color) !important"
                     },
                   }}
                   open={rightDrawerOpen}
@@ -383,9 +391,13 @@ export default function Classroom() {
                         ClassRoom_chat_open_one: !openChat && openParticipants,
                         ClassRoom_chat_open_both: openChat && openParticipants
                     })}>
-                      <Roster />
+                      <Roster closeParticipantsPanel={handleDrawerLeftToggle}/>
                     </div>}
-                    <Divider />
+                    <Divider sx={{
+                      margin: "auto",
+                      borderColor: "rgb(77 76 76 / 80%)",
+                      borderBottomWidth: "unset",
+                    }}/>
                     <div
                       className={cx("ClassRoom_chat_parent_div", {
                         ClassRoom_chat_parent_div_open: openChat,
@@ -394,7 +406,12 @@ export default function Classroom() {
                         ClassRoom_chat_open_both: openChat && openParticipants
                       })}
                     >
-                      <Chat />
+                      <Chat openParticipants={openParticipants} closeChatPanel={() => {
+                        if(!openParticipants){
+                        closeDrawerRightToggle();
+                      }
+                      setOpenChat(false);
+                      }} />
                     </div>
                   </div>
                 </Drawer>
@@ -403,7 +420,7 @@ export default function Classroom() {
                 position="fixed"
                 rightopen={rightDrawerOpen}
                 anchor="bottom"
-                sx={{ height: "82px" }}
+                sx={{ height: "70px", width: `calc(100% - 16px)` }}
                 mobileview={isMobileView}
                 background={"var(--secondary_blue_color)"}
                 drawerWidth={drawerWidth}

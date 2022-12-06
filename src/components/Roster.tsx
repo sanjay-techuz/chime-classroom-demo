@@ -18,9 +18,13 @@ import {
   ListItemText,
   Typography,
   Button,
+  Divider,
 } from "@mui/material";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
+import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
+import VideocamOffOutlinedIcon from '@mui/icons-material/VideocamOffOutlined';
+import MicNoneIcon from '@mui/icons-material/MicNone';
 import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import MicIcon from "@mui/icons-material/Mic";
@@ -39,10 +43,16 @@ import MessageTopic from "../enums/MessageTopic";
 import ClassMode from "../enums/ClassMode";
 import SmallAvatar from "../custom/roster/SmallAvatar";
 import { nameInitials } from "../utils";
+import CloseIcon from '@mui/icons-material/Close';
 
 const cx = classNames.bind(styles);
 
-export default function Roster() {
+type Props = {
+  closeParticipantsPanel: () => void;
+};
+
+export default function Roster(props: Props) {
+  const { closeParticipantsPanel } = props
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
   const { classMode } = globalVar;
@@ -104,204 +114,299 @@ export default function Roster() {
           width: "100%",
           height: "95%",
           maxWidth: 360,
-          bgcolor: "background.paper",
         }}
       >
-        <Box sx={{ color: "var(--color_grey)" }}>
+        <Box>
           <ListItem>
             <ListItemText>
               {intl.formatMessage({ id: "Roster.users" })}
               {` (${attendeeIds.length})`}
             </ListItemText>
+            <ListItemIcon sx={{ justifyContent: "flex-end", color: "var(--pure_white_color)", cursor: "pointer" }} onClick={closeParticipantsPanel}><CloseIcon /></ListItemIcon>
           </ListItem>
         </Box>
-        <Box sx={{
-          width: "100%",
-          height: "95%",
-          maxWidth: 360,
-          bgcolor: "background.paper",
-          overflowY: 'scroll'
-        }}>
-        {attendeeIds &&
-          attendeeIds.map((attendeeId: string) => {
-            const rosterAttendee: RosterAttendeeType = roster[attendeeId];
-            const initials = nameInitials(rosterAttendee?.name);
-            return (
-              <ListItem key={attendeeId} component="div">
-                <ListItemAvatar>
-                  <Badge
-                    overlap="circular"
-                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                    badgeContent={
-                      <SmallAvatar
-                        bgcolor={
-                          rosterAttendee?.muted
-                            ? "var(--color_pink)"
-                            : "var(--secondary_blue_color)"
-                        }
+        <Divider
+          sx={{
+            margin: "auto",
+            borderColor: "rgb(77 76 76 / 80%)",
+            borderBottomWidth: "unset",
+            width: "90%",
+          }}
+        />
+        <Box
+        className={cx("Roster_scrollbar")}
+          sx={{
+            width: "100%",
+            height: "95%",
+            maxWidth: 360,
+            overflowY: "scroll",
+          }}
+        >
+          {attendeeIds &&
+            attendeeIds.map((attendeeId: string) => {
+              const rosterAttendee: RosterAttendeeType = roster[attendeeId];
+              const initials = nameInitials(rosterAttendee?.name);
+              return (
+                <ListItem key={attendeeId} component="div">
+                  <ListItemAvatar>
+                    {/* <Badge
+                      overlap="circular"
+                      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                      badgeContent={
+                        <SmallAvatar
+                          bgcolor={
+                            rosterAttendee?.muted
+                              ? "var(--color_pink)"
+                              : "var(--secondary_blue_color)"
+                          }
+                        >
+                          {rosterAttendee?.muted ? (
+                            <MicOffOutlinedIcon sx={{ fontSize: "14px" }} />
+                          ) : (
+                            <MicNoneOutlinedIcon sx={{ fontSize: "14px" }} />
+                          )}
+                        </SmallAvatar>
+                      }
+                    > */}
+                      <Avatar
+                        sx={{
+                          bgcolor: "var(--color_grey)",
+                          color: "var(--pure_white_color)",
+                        }}
+                        variant="circular"
                       >
-                        {rosterAttendee?.muted ? (
-                          <MicOffOutlinedIcon sx={{ fontSize: "14px" }} />
-                        ) : (
-                          <MicNoneOutlinedIcon sx={{ fontSize: "14px" }} />
-                        )}
-                      </SmallAvatar>
-                    }
-                  >
-                    <Avatar
-                      sx={{ bgcolor: "var(--color_green)" }}
-                      variant="rounded"
-                    >
-                      {initials}
-                    </Avatar>
-                  </Badge>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={
-                    <span
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <Tooltip title={rosterAttendee.name} placement="bottom">
+                        {initials}
+                      </Avatar>
+                    {/* </Badge> */}
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={
+                      <span
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        <Tooltip title={rosterAttendee.name} placement="bottom">
+                          <Typography
+                            sx={{
+                              width: "100px",
+                              display: "inline-block",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden !important",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {rosterAttendee.name}
+                          </Typography>
+                        </Tooltip>
                         <Typography
                           sx={{
+                            fontSize: "0.8rem",
                             width: "100px",
                             display: "inline-block",
                             whiteSpace: "nowrap",
                             overflow: "hidden !important",
                             textOverflow: "ellipsis",
+                            color: "var(--color_grey)",
                           }}
                         >
-                          {rosterAttendee.name}
+                          {attendeeId === localUserId
+                            ? ` Me${
+                                attendeeId === localStorage.getItem("hostId")
+                                  ? ", Presenter"
+                                  : ""
+                              }`
+                            : `${
+                                attendeeId === localStorage.getItem("hostId")
+                                  ? ", Presenter"
+                                  : ""
+                              }`}
                         </Typography>
-                      </Tooltip>
-                      <Typography
-                        sx={{
-                          fontSize: "0.8rem",
-                          width: "100px",
-                          display: "inline-block",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden !important",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {attendeeId === localUserId
-                          ? ` (You${
-                              attendeeId === localStorage.getItem("hostId")
-                                ? ", Presenter)"
-                                : ")"
-                            }`
-                          : `${
-                              attendeeId === localStorage.getItem("hostId")
-                                ? ", Presenter)"
-                                : ""
-                            }`}
-                      </Typography>
-                    </span>
-                  }
-                  sx={{ textTransform: "capitalize" }}
-                />
-                <ListItemIcon sx={{ minWidth: "30px" }}>
-                  {raisedHandAttendees.has(attendeeId) && (
-                    <div className={cx("Roster_raisedHand")}>
-                      <span
-                        role="img"
-                        aria-label={intl.formatMessage(
-                          {
-                            id: "Roster.raiseHandAriaLabel",
-                          },
-                          {
-                            name: rosterAttendee.name,
-                          }
-                        )}
-                      >
-                        ✋
                       </span>
-                    </div>
-                  )}
-                </ListItemIcon>
-                <ListItemIcon sx={{ minWidth: "30px" }}>
-                  {typeof rosterAttendee.muted === "boolean" &&
-                    (classMode === ClassMode.Teacher &&
+                    }
+                    sx={{ textTransform: "capitalize" }}
+                  />
+                  <ListItemIcon sx={{ minWidth: "45px" }}>
+                    {raisedHandAttendees.has(attendeeId) && (
+                      <div className={cx("Roster_raisedHand")}>
+                        <span
+                          role="img"
+                          aria-label={intl.formatMessage(
+                            {
+                              id: "Roster.raiseHandAriaLabel",
+                            },
+                            {
+                              name: rosterAttendee.name,
+                            }
+                          )}
+                        >
+                          ✋
+                        </span>
+                      </div>
+                    )}
+                  </ListItemIcon>
+                  <ListItemIcon sx={{ minWidth: "45px" }}>
+                    {typeof rosterAttendee.muted === "boolean" &&
+                      (classMode === ClassMode.Teacher &&
+                      attendeeId !== localUserId ? (
+                        <Tooltip
+                          title={
+                            rosterAttendee.muted
+                              ? intl.formatMessage({
+                                  id: "Controls.unmuteTooltip",
+                                })
+                              : intl.formatMessage({
+                                  id: "Controls.muteTooltip",
+                                })
+                          }
+                          placement="bottom"
+                        >
+                          <div
+                            className={cx("Roster_muted")}
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              const mute = rosterAttendee.muted;
+                              chime?.sendMessage(
+                                MessageTopic.RemoteMuteUnmute,
+                                {
+                                  focus: !mute,
+                                  targetId: attendeeId,
+                                }
+                              );
+                            }}
+                          >
+                            {rosterAttendee.muted ? (
+                              <Avatar
+                                sx={{
+                                  width: 30,
+                                  height: 30,
+                                  bgcolor: "var(--pure_white_color)",
+                                  color: "var(--color_black)",
+                                }}
+                              >
+                                <MicOffOutlinedIcon />
+                              </Avatar>
+                            ) : (
+                              <Avatar
+                                sx={{
+                                  width: 30,
+                                  height: 30,
+                                  bgcolor: "var(--color_grey)",
+                                }}
+                              >
+                                <MicNoneIcon />
+                              </Avatar>
+                            )}
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        <div className={cx("Roster_muted")}>
+                          {rosterAttendee.muted ? (
+                            <Avatar
+                              sx={{
+                                width: 30,
+                                height: 30,
+                                bgcolor: "var(--pure_white_color)",
+                                color: "var(--color_black)",
+                              }}
+                            >
+                              <MicOffOutlinedIcon />
+                            </Avatar>
+                          ) : (
+                            <Avatar
+                              sx={{
+                                width: 30,
+                                height: 30,
+                                bgcolor: "var(--color_grey)",
+                              }}
+                            >
+                              <MicNoneIcon />
+                            </Avatar>
+                          )}
+                        </div>
+                      ))}
+                  </ListItemIcon>
+
+                  <ListItemIcon sx={{ minWidth: "45px" }}>
+                    {classMode === ClassMode.Teacher &&
                     attendeeId !== localUserId ? (
                       <Tooltip
                         title={
-                          rosterAttendee.muted
+                          videoAttendees.has(attendeeId)
                             ? intl.formatMessage({
-                                id: "Controls.unmuteTooltip",
+                                id: "Controls.turnOffVideoTooltip",
                               })
-                            : intl.formatMessage({ id: "Controls.muteTooltip" })
+                            : intl.formatMessage({
+                                id: "Controls.turnOnVideoTooltip",
+                              })
                         }
                         placement="bottom"
                       >
                         <div
-                          className={cx("Roster_muted")}
+                          className={cx("Roster_video")}
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            const mute = rosterAttendee.muted;
-                            chime?.sendMessage(MessageTopic.RemoteMuteUnmute, {
-                              focus: !mute,
+                            const focus = videoAttendees.has(attendeeId);
+                            chime?.sendMessage(MessageTopic.RemoteVideoOnOff, {
+                              focus: !focus,
                               targetId: attendeeId,
                             });
                           }}
                         >
-                          {rosterAttendee.muted ? <MicOffIcon /> : <MicIcon />}
+                          {videoAttendees.has(attendeeId) ? (
+                            <Avatar
+                              sx={{
+                                width: 30,
+                                height: 30,
+                                bgcolor: "var(--color_grey)",
+                              }}
+                            >
+                              <VideocamOutlinedIcon />
+                            </Avatar>
+                          ) : (
+                            <Avatar
+                              sx={{
+                                width: 30,
+                                height: 30,
+                                bgcolor: "var(--pure_white_color)",
+                                color: "var(--color_black)",
+                              }}
+                            >
+                              <VideocamOffOutlinedIcon />
+                            </Avatar>
+                          )}
                         </div>
                       </Tooltip>
                     ) : (
                       <div className={cx("Roster_muted")}>
-                        {rosterAttendee.muted ? <MicOffIcon /> : <MicIcon />}
-                      </div>
-                    ))}
-                </ListItemIcon>
-
-                <ListItemIcon sx={{ minWidth: "30px" }}>
-                  {classMode === ClassMode.Teacher &&
-                  attendeeId !== localUserId ? (
-                    <Tooltip
-                      title={
-                        videoAttendees.has(attendeeId)
-                          ? intl.formatMessage({
-                              id: "Controls.turnOffVideoTooltip",
-                            })
-                          : intl.formatMessage({
-                              id: "Controls.turnOnVideoTooltip",
-                            })
-                      }
-                      placement="bottom"
-                    >
-                      <div
-                        className={cx("Roster_video")}
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          const focus = videoAttendees.has(attendeeId);
-                          chime?.sendMessage(MessageTopic.RemoteVideoOnOff, {
-                            focus: !focus,
-                            targetId: attendeeId,
-                          });
-                        }}
-                      >
                         {videoAttendees.has(attendeeId) ? (
-                          <VideocamIcon />
+                          <Avatar
+                            sx={{
+                              width: 30,
+                              height: 30,
+                              bgcolor: "var(--color_grey)",
+                              }}
+                          >
+                            <VideocamOutlinedIcon />
+                          </Avatar>
                         ) : (
-                          <VideocamOffIcon />
+                          <Avatar
+                            sx={{
+                              width: 30,
+                              height: 30,
+                              bgcolor: "var(--pure_white_color)",
+                              color: "var(--color_black)",
+                            }}
+                          >
+                            <VideocamOffOutlinedIcon />
+                          </Avatar>
                         )}
                       </div>
-                    </Tooltip>
-                  ) : (
-                    <div className={cx("Roster_muted")}>
-                      {videoAttendees.has(attendeeId) ? (
-                        <VideocamIcon />
-                      ) : (
-                        <VideocamOffIcon />
-                      )}
-                    </div>
-                  )}
-                </ListItemIcon>
-                {/* <ListItemIcon sx={{ minWidth: "30px" }}>
+                    )}
+                  </ListItemIcon>
+                  {/* <ListItemIcon sx={{ minWidth: "30px" }}>
                 {classMode === ClassMode.Teacher &&
                   attendeeId !== localUserId && (
                     <Tooltip
@@ -334,42 +439,54 @@ export default function Roster() {
                     </Tooltip>
                   )}
               </ListItemIcon> */}
-              </ListItem>
-            );
-          })}
+                </ListItem>
+              );
+            })}
         </Box>
       </Box>
       {classMode === ClassMode.Teacher && (
         <Box
           sx={{
             width: "100%",
-            bgcolor: "background.paper",
+            bgcolor: "var(--secondary_blue_color)",
             position: "absolute",
-            bottom: 0,
+            bottom: 8,
             display: "flex",
-            justifyContent: "center",
-            borderTop: '1px solid rgba(0, 0, 0, 0.12)',
-            borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-            zIndex: 10
+            justifyContent: "space-evenly",
+            zIndex: 10,
           }}
         >
           <Button
+            sx={{
+              width: "120px",
+              backgroundColor: "var(--secondary_blue_color)",
+              color: "var(--pure_white_color)",
+              border: "1px solid var(--pure_white_color)",
+              borderRadius: 16,
+            }}
             onClick={() => {
               chime?.sendMessage(MessageTopic.Focus, {
                 focus: true,
               });
             }}
           >
-            {intl.formatMessage({ id: "Roster.muteAll"})}
+            {intl.formatMessage({ id: "Roster.muteAll" })}
           </Button>
           <Button
+            sx={{
+              width: "120px",
+              backgroundColor: "var(--secondary_blue_color)",
+              color: "var(--pure_white_color)",
+              border: "1px solid var(--pure_white_color)",
+              borderRadius: 16,
+            }}
             onClick={() => {
               chime?.sendMessage(MessageTopic.Focus, {
                 focus: false,
               });
             }}
           >
-          {intl.formatMessage({ id: "Roster.unMuteAll"})}
+            {intl.formatMessage({ id: "Roster.unMuteAll" })}
           </Button>
         </Box>
       )}

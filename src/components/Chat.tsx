@@ -20,6 +20,8 @@ import {
   Badge,
   Tooltip,
   IconButton,
+  Divider,
+  ListItemIcon,
 } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -35,6 +37,7 @@ import { clipBoard, createPrivateChannel, nameInitials } from "../utils";
 import useRemoteControl from "../hooks/useRemoteControl";
 import SmallAvatar from "../custom/roster/SmallAvatar";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CloseIcon from '@mui/icons-material/Close';
 
 const cx = classNames.bind(styles);
 var chatPannelOpen = false;
@@ -42,7 +45,13 @@ var grpCnt = 0;
 var gbRoster: any;
 var currentChannel: string = MessageTopic.PublicChannel;
 var publicChannelCnt = 0;
-export default function Chat() {
+
+type Props = {
+  openParticipants: boolean;
+  closeChatPanel: () => void;
+};
+export default function Chat(props: Props) {
+  const { openParticipants, closeChatPanel } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const intl = useIntl();
 
@@ -51,9 +60,6 @@ export default function Chat() {
   const [messages, setMessages] = useState<DataMessage[]>([]);
   const [filterMessage, setFilterMessage] = useState<DataMessage[]>([]);
   const [activeChannel, setActiveChannel] = useState<string>(
-    MessageTopic.PublicChannel
-  );
-  const [activeChatAttendee, setActiveChatAttendee] = useState<string>(
     MessageTopic.PublicChannel
   );
 
@@ -197,7 +203,23 @@ export default function Chat() {
         margin: "auto",
       }}
     >
-      <Box
+        <Box>
+          <ListItem>
+            <ListItemText>
+              {intl.formatMessage({ id: "Classroom.chat" })}
+            </ListItemText>
+            <ListItemIcon sx={{ justifyContent: "flex-end", color: "var(--pure_white_color)", cursor: "pointer" }} onClick={closeChatPanel}><CloseIcon /></ListItemIcon>
+          </ListItem>
+        </Box>
+        <Divider
+          sx={{
+            margin: "auto",
+            borderColor: "rgb(77 76 76 / 80%)",
+            borderBottomWidth: "unset",
+            width: "90%",
+          }}
+        />
+      {/* <Box
         sx={{
           width: "100%",
           height: "10%",
@@ -306,7 +328,7 @@ export default function Chat() {
             );
           })}
         </ImageList>
-      </Box>
+      </Box> */}
       <Box
         sx={{
           width: "100%",
@@ -315,7 +337,7 @@ export default function Chat() {
           flexDirection: "column",
         }}
       >
-        <div className={cx("Chat_messages")}>
+        <div style={openParticipants ? { maxHeight:"240px"} : {maxHeight: "590px"}} className={cx("Chat_messages")}>
           {filterMessage.map((message, index) => {
             let messageString: string = "";
             if (message.topic === MessageTopic.GroupChat) {
@@ -353,8 +375,11 @@ export default function Chat() {
                     }}
                   >
                     <Avatar
-                      sx={{ bgcolor: "var(--color_green)" }}
-                      variant="rounded"
+                      sx={{
+                        bgcolor: "var(--color_grey)",
+                        color: "var(--pure_white_color)",
+                      }}
+                      variant="circular"
                     >
                       {avtr}
                     </Avatar>
@@ -392,6 +417,7 @@ export default function Chat() {
                       elevation={0}
                       sx={{
                         color: "var(--color_grey)",
+                        backgroundColor: "transparent"
                       }}
                     >
                       <Typography
@@ -411,7 +437,8 @@ export default function Chat() {
                         clipBoard(messageString);                         
                     }} sx={{ padding: "0px !important"}}>
                       <ContentCopyIcon sx={{
-                        height:"20px !important"
+                        height: "20px !important",
+                        color: "var(--pure_white_color)"
                       }}/>
                     </IconButton>
                   </Tooltip>
@@ -445,8 +472,11 @@ export default function Chat() {
                     }}
                   >
                     <Avatar
-                      sx={{ bgcolor: "var(--primary_blue_color)" }}
-                      variant="rounded"
+                      sx={{
+                      bgcolor: "var(--color_grey)",
+                      color: "var(--pure_white_color)",
+                    }}
+                    variant="circular"
                     >
                       {avtr}
                     </Avatar>
@@ -484,6 +514,7 @@ export default function Chat() {
                       elevation={0}
                       sx={{
                         color: "var(--color_grey)",
+                        backgroundColor: "transparent"
                       }}
                     >
                       <Typography
@@ -503,7 +534,8 @@ export default function Chat() {
                         clipBoard(messageString);                         
                     }} sx={{ padding: "0px !important"}}>
                       <ContentCopyIcon sx={{
-                        height:"20px !important"
+                        height:"20px !important",
+                        color: "var(--pure_white_color)"
                       }}/>
                     </IconButton>
                   </Tooltip>
@@ -516,8 +548,29 @@ export default function Chat() {
         </div>
         <div className={cx("Chat_chatInput")}>
           <ChatInput
-            activeChannel={activeChannel}
-            activeChatAttendee={activeChatAttendee}
+          publicChannelCnt={publicChannelCnt}
+            changeChannel={(type: string,chatAttdId: string,msgCount: number) => {
+              if(type === MessageTopic.PublicChannel){
+                setActiveChannel(MessageTopic.PublicChannel);
+                currentChannel = MessageTopic.PublicChannel;
+                publicChannelCnt = 0;
+                updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
+              }else{
+                grpCnt = grpCnt - msgCount;
+                chime?.updateChatMessageCounter(chatAttdId, 0);
+                setActiveChannel(
+                  createPrivateChannel(localUserId as string, chatAttdId)
+                );
+                currentChannel = createPrivateChannel(
+                  localUserId as string,
+                  chatAttdId
+                );
+                updateGlobalVar(
+                  "groupChatCounter",
+                  grpCnt + publicChannelCnt
+                );
+              }
+            }}
           />
         </div>
       </Box>

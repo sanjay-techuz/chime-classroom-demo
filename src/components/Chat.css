@@ -19,7 +19,7 @@
 }
 @media (min-height:800px) {
   .Chat_messages {
-    max-height: 660px;
+    max-height: 600px;
   }
 }
 
@@ -82,9 +82,11 @@
 
 .Chat_chatInput {
   position: absolute;
-  bottom: 0;
   width: 100%;
   flex: 0 0 auto;
+  border: 1px solid var(--color_grey);
+  bottom: 3px;
+  border-radius: 8px;
 }
 
 .Chat_attendee_list{
