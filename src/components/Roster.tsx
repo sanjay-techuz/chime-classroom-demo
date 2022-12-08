@@ -9,7 +9,6 @@ import { useIntl } from "react-intl";
 
 import {
   Avatar,
-  Badge,
   Box,
   ListItem,
   ListItemIcon,
@@ -20,28 +19,20 @@ import {
   Button,
   Divider,
 } from "@mui/material";
-import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
 import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 import VideocamOffOutlinedIcon from '@mui/icons-material/VideocamOffOutlined';
 import MicNoneIcon from '@mui/icons-material/MicNone';
-import VideocamIcon from "@mui/icons-material/Videocam";
-import VideocamOffIcon from "@mui/icons-material/VideocamOff";
-import MicIcon from "@mui/icons-material/Mic";
-import MicOffIcon from "@mui/icons-material/MicOff";
-// import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
-// import getUIStateContext from "../context/getUIStateContext";
 import useRoster from "../hooks/useRoster";
 import useRaisedHandAttendees from "../hooks/useRaisedHandAttendees";
 import RosterAttendeeType from "../types/RosterAttendeeType";
 import styles from "./Roster.css";
 import MessageTopic from "../enums/MessageTopic";
 import ClassMode from "../enums/ClassMode";
-import SmallAvatar from "../custom/roster/SmallAvatar";
 import { nameInitials } from "../utils";
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -59,7 +50,6 @@ export default function Roster(props: Props) {
   const roster = useRoster();
   const [videoAttendees, setVideoAttendees] = useState(new Set());
   const raisedHandAttendees = useRaisedHandAttendees();
-  // const [state] = useContext(getUIStateContext());
   const intl = useIntl();
   const localUserId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
@@ -149,25 +139,6 @@ export default function Roster(props: Props) {
               return (
                 <ListItem key={attendeeId} component="div">
                   <ListItemAvatar>
-                    {/* <Badge
-                      overlap="circular"
-                      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                      badgeContent={
-                        <SmallAvatar
-                          bgcolor={
-                            rosterAttendee?.muted
-                              ? "var(--color_pink)"
-                              : "var(--secondary_blue_color)"
-                          }
-                        >
-                          {rosterAttendee?.muted ? (
-                            <MicOffOutlinedIcon sx={{ fontSize: "14px" }} />
-                          ) : (
-                            <MicNoneOutlinedIcon sx={{ fontSize: "14px" }} />
-                          )}
-                        </SmallAvatar>
-                      }
-                    > */}
                       <Avatar
                         sx={{
                           bgcolor: "var(--color_grey)",
@@ -177,7 +148,6 @@ export default function Roster(props: Props) {
                       >
                         {initials}
                       </Avatar>
-                    {/* </Badge> */}
                   </ListItemAvatar>
                   <ListItemText
                     primary={
@@ -406,39 +376,6 @@ export default function Roster(props: Props) {
                       </div>
                     )}
                   </ListItemIcon>
-                  {/* <ListItemIcon sx={{ minWidth: "30px" }}>
-                {classMode === ClassMode.Teacher &&
-                  attendeeId !== localUserId && (
-                    <Tooltip
-                      title={intl.formatMessage({
-                        id: "Controls.removeAttendee",
-                      })}
-                      placement="bottom"
-                    >
-                      <div
-                        className={cx("Roster_muted")}
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          if (
-                            confirm(
-                              intl.formatMessage(
-                                { id: "Roster.sureRemove" },
-                                { name: rosterAttendee.name }
-                              )
-                            )
-                          ) {
-                            chime?.sendMessage(MessageTopic.RemoveAttendee, {
-                              focus: true,
-                              targetId: attendeeId,
-                            });
-                          }
-                        }}
-                      >
-                        <PersonRemoveAlt1Icon />
-                      </div>
-                    </Tooltip>
-                  )}
-              </ListItemIcon> */}
                 </ListItem>
               );
             })}

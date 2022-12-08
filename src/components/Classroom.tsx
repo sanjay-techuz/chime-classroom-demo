@@ -12,8 +12,6 @@ import {
   Box,
   Divider,
   Drawer,
-  Toolbar,
-  Typography,
 } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -21,16 +19,13 @@ import getChimeContext from "../context/getChimeContext";
 import getMeetingStatusContext from "../context/getMeetingStatusContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
 
-// import getUIStateContext from "../context/getUIStateContext";
 import ClassMode from "../enums/ClassMode";
 import MeetingStatus from "../enums/MeetingStatus";
 import ViewMode from "../enums/ViewMode";
-// import useRemoteControl from "../hooks/useRemoteControl";
 import Chat from "./Chat";
 import styles from "./Classroom.css";
 import ContentVideo from "./ContentVideo";
 import Controls from "./Controls";
-// import CopyInfo from "./CopyInfo";
 import Error from "./Error";
 import LoadingSpinner from "./LoadingSpinner";
 import CheckMediaPermissions from "./CheckMediaPermissions";
@@ -38,14 +33,12 @@ import RemoteVideoGroup from "./RemoteVideoGroup";
 import Roster from "./Roster";
 import Main from "../custom/classroom/Main";
 import AppBar from "../custom/classroom/AppBar";
-import DrawerHeader from "../custom/classroom/DrawerHeader";
 import { attendanceWenhook } from "../services";
 import {
   useNotificationDispatch,
   Type as NotifType,
 } from "../providers/NotificationProvider";
 import RosterSliderView from "./RosterSliderView";
-// import common from "../constants/common.json";
 
 const cx = classNames.bind(styles);
 const drawerWidth = 360;
@@ -54,12 +47,10 @@ var resizeTo = 0;
 export default function Classroom() {
   Modal.setAppElement("body");
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  // const [state] = useContext(getUIStateContext());
   const intl = useIntl();
   const notifDispatch = useNotificationDispatch();
 
-  const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
-  const { activeSpeakerAttendeeId } = globalVar;
+  const { updateGlobalVar } = useContext(getGlobalVarContext());
   const { meetingStatus, errorMessage } = useContext(getMeetingStatusContext());
   const [isContentShareEnabled, setIsContentShareEnabled] = useState(false);
   const [isScreenShareView, setIsScreenShareView] = useState(false);
@@ -74,8 +65,6 @@ export default function Classroom() {
   const [isGridView, setIsGridView] = useState(false);
   const location = useLocation();
   const locationState = location?.state || null;
-
-  // useRemoteControl();
 
   useEffect(() => {
     if(locationState){
@@ -279,26 +268,6 @@ export default function Classroom() {
           )}
           {meetingStatus === MeetingStatus.Succeeded && (
             <Box sx={{ display: "flex", width: "100%", height: "100%" }}>
-              {/* <AppBar
-                position="fixed"
-                rightopen={rightDrawerOpen}
-                anchor="top"
-                mobileview={isMobileView}
-                background={"var(--primary_blue_color)"}
-                drawerWidth={drawerWidth}
-              >
-                <Toolbar>
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    sx={{ flexGrow: 1, textTransform: "capitalize" }}
-                    component="div"
-                    align="center"
-                  >
-                    {chime?.roster[activeSpeakerAttendeeId]?.name}
-                  </Typography>
-                </Toolbar>
-              </AppBar> */}
               <Box
                 component="nav"
                 sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -309,7 +278,6 @@ export default function Classroom() {
                   mobileview={isMobileView}
                   drawerWidth={drawerWidth}
                 >
-                    {/* <DrawerHeader /> */}
                   <div className={cx("ClassRoom_left")}>
                     <div
                       className={cx("ClassRoom_contentVideoWrapper", {
@@ -366,33 +334,6 @@ export default function Classroom() {
                     closeDrawerRightToggle();
                   }}
                 >
-                  {/* <ListItem>
-                    <ListItemIcon
-                      onClick={() => {
-                        setOpenChat(false);
-                        setOpenChat(false);
-                        closeDrawerRightToggle();
-                        // handleClose();
-                      }}
-                    >
-                      <Avatar
-                        sx={{
-                          bgcolor: "var(--pure_white_color)",
-                          border: "1px solid var(--color_black)",
-                          color: "var(--color_black)",
-                          cursor: "pointer",
-                        }}
-                      >
-                        <ArrowBackIosNewSharpIcon />
-                      </Avatar>
-                    </ListItemIcon>
-                    <ListItemText>
-                      <Typography variant="h5">
-                        {openChat && intl.formatMessage({ id: "Classroom.chat"})}
-                      </Typography>
-                    </ListItemText>
-                  </ListItem> */}
-                  {/* <Divider />  */}
                   <div style={{ width: "100%", height: "100%" }}>
                   {openParticipants && <div className={cx({
                         ClassRoom_chat_open_one: !openChat && openParticipants,

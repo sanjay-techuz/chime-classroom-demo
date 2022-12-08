@@ -34,7 +34,7 @@ type Props = {
   rightDrawerOpen: boolean;
 };
 export default function RosterSliderView(props: Props) {
-  const { viewMode, isScreenShareView, isContentShareEnabled, rightDrawerOpen } = props;
+  const { viewMode, isContentShareEnabled, rightDrawerOpen } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { updateGlobalVar } = useContext(getGlobalVarContext());
   const [visibleIndices, setVisibleIndices] = useState<{

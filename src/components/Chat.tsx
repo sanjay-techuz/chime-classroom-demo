@@ -11,13 +11,11 @@ import { useIntl } from "react-intl";
 import {
   Avatar,
   Box,
-  ImageList,
   ListItem,
   ListItemText,
   ListItemAvatar,
   Paper,
   Typography,
-  Badge,
   Tooltip,
   IconButton,
   Divider,
@@ -31,11 +29,9 @@ import useRoster from "../hooks/useRoster";
 import styles from "./Chat.css";
 import ChatInput from "./ChatInput";
 import MessageTopic from "../enums/MessageTopic";
-import RosterAttendeeType from "../types/RosterAttendeeType";
 import localStorageKeys from "../constants/localStorageKeys.json";
 import { clipBoard, createPrivateChannel, nameInitials } from "../utils";
 import useRemoteControl from "../hooks/useRemoteControl";
-import SmallAvatar from "../custom/roster/SmallAvatar";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CloseIcon from '@mui/icons-material/Close';
 
