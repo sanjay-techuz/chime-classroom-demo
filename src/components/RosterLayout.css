@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    background: transparent;
+    background: var(--secondary_blue_color);
     overflow: hidden;
     height: 100%;
     width: 100%;
@@ -17,6 +17,11 @@
     color: var(--pure_white_color);
   }
   
+.RosterLayout_remoteVideo.activeSpeakerViewMode{
+  width: 150px;
+  height: 150px;
+}
+
   .RosterLayout_remoteVideo.activeSpeaker {
     border: 3px solid var(--color_green);
   }

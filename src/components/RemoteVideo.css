@@ -12,6 +12,11 @@
   width: 100%;
 }
 
+.RemoteVideo_remoteVideo.activeSpeakerViewMode{
+  width: 150px;
+  height: 150px;
+}
+
 .RemoteVideo_remoteVideo.roomMode {
   border-radius: 8px;
 }

@@ -282,6 +282,7 @@ export default function RemoteVideoGroup(props: Props) {
           <LocalVideo
             viewMode={viewMode}
             size={getSize()}
+            view={"grid"}
           />
         </div>
         {Array.from(Array(MAX_REMOTE_VIDEOS).keys()).map((key, index) => {

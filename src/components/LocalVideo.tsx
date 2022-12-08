@@ -20,10 +20,11 @@ const cx = classNames.bind(styles);
 type Props = {
   viewMode: ViewMode;
   size: Size;
+  view?: string;
 };
 
 export default function LocalVideo(props: Props) {
-  const { viewMode, size } = props;
+  const { viewMode, size, view } = props;
   const [enabled, setEnabled] = useState(false);
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { updateGlobalVar } = useContext(getGlobalVarContext());
@@ -58,6 +59,7 @@ export default function LocalVideo(props: Props) {
       <div
         className={cx("LocalVideo_localVideo", {
           disabled: !enabled,
+          activeSpeakerViewMode: view === "activeSpeaker"
         })}
       >
         <video muted ref={videoElement} className={cx("LocalVideo_video")} />
@@ -73,6 +75,7 @@ export default function LocalVideo(props: Props) {
           size={size}
           attendeeId={attendeeId as string}
           name={name as string}
+          view={view}
         />
       )}
     </>

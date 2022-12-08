@@ -109,14 +109,16 @@ export default React.memo(function ChatInput(props: Props) {
 
   return (
     <>
-      {openEmojiPicker && (
+      <Box sx={{
+        display: openEmojiPicker ? "block" : "none"
+      }}>
         <EmojiPicker
           height={300}
           width={300}
           onEmojiClick={onClick}
           autoFocusSearch={true}
-        />
-      )}
+      />
+      </Box>
       <Box sx={{ height: 70 }}>
         <Box sx={{ height: "40%" }}>
           <Popover
@@ -145,7 +147,7 @@ export default React.memo(function ChatInput(props: Props) {
                 sx={{
                   mr: 1,
                   color:
-                    currentChatter === "Everyone" ? "black" : "transparent",
+                  activeChatAttendee === MessageTopic.PublicChannel ? "black" : "transparent",
                 }}
               />
               <ListItem sx={{ padding: "0px 10px" }}>Everyone</ListItem>
@@ -182,7 +184,7 @@ export default React.memo(function ChatInput(props: Props) {
                     sx={{
                       mr: 1,
                       color:
-                        currentChatter === rosterAttendee?.name
+                      activeChatAttendee === chatAttdId
                           ? "black"
                           : "transparent",
                     }}

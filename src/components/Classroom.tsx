@@ -44,6 +44,7 @@ import {
   useNotificationDispatch,
   Type as NotifType,
 } from "../providers/NotificationProvider";
+import RosterSliderView from "./RosterSliderView";
 // import common from "../constants/common.json";
 
 const cx = classNames.bind(styles);
@@ -325,12 +326,18 @@ export default function Classroom() {
                       />
                     </div>
                     <div className={cx("ClassRoom_remoteVideoGroupWrapper")}>
-                      <RemoteVideoGroup
+                      {!isGridView ? <RosterSliderView 
+                        viewMode={viewMode}
+                        isContentShareEnabled={isContentShareEnabled}
+                        isScreenShareView={isScreenShareView}
+                        rightDrawerOpen={rightDrawerOpen}
+                      /> :
+                       <RemoteVideoGroup
                         viewMode={viewMode}
                         isContentShareEnabled={isContentShareEnabled}
                         isGridView={isGridView}
                         isScreenShareView={isScreenShareView}
-                      />
+                      /> }
                     </div>
                   </div>
                 </Main>

@@ -29,6 +29,7 @@ type Props = {
   raisedHand?: boolean;
   activeSpeaker?: boolean;
   name: string;
+  view?: string;
 };
 
 export default function RosterLayout(props: Props) {
@@ -40,6 +41,7 @@ export default function RosterLayout(props: Props) {
     raisedHand,
     activeSpeaker,
     name,
+    view
   } = props;
   const initials = nameInitials(name);
   const roster = useRoster();
@@ -51,6 +53,7 @@ export default function RosterLayout(props: Props) {
     <div
       className={cx("RosterLayout_remoteVideo", {
         activeSpeaker,
+        activeSpeakerViewMode: view === "activeSpeaker"
       })}
     >
       <Badge

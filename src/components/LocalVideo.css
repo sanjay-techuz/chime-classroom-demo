@@ -27,3 +27,8 @@
   border-radius: 8px;
   object-fit: cover;
 }
+
+.activeSpeakerViewMode{
+  width: 150px;
+  height: 150px;
+}

@@ -24,6 +24,7 @@ type Props = {
   size: Size;
   attendeeId: string;
   name: string;
+  view?: string
 };
 
 export default function LocalRoster(props: Props) {
@@ -32,15 +33,18 @@ export default function LocalRoster(props: Props) {
     size = Size.Large,
     attendeeId,
     name,
+    view,
   } = props;
   const initials = nameInitials(name);
   const roster = useRoster();
   const rosterAttendee: RosterAttendeeType = roster[attendeeId];
   // const volume = rosterAttendee?.volume ? rosterAttendee?.volume : 0;
   const muted = rosterAttendee?.muted ? rosterAttendee?.muted : false;
-
+  
   return (
-    <div className={cx("RosterLayout_remoteVideo")}>
+    <div className={cx("RosterLayout_remoteVideo",{
+      activeSpeakerViewMode: view === "activeSpeaker"
+    })}>
    <Badge
         overlap="circular"
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
