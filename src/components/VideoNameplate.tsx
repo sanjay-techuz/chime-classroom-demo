@@ -5,21 +5,17 @@
 import classNames from "classnames/bind";
 import React from "react";
 
-import ViewMode from "../enums/ViewMode";
 import useAttendee from "../hooks/useAttendee";
-import Size from "../enums/Size";
 import styles from "./VideoNameplate.css";
 
 const cx = classNames.bind(styles);
 
 type Props = {
-  viewMode: ViewMode;
-  size: Size;
   attendeeId: string | null;
 };
 
-export default function VideoNameplate(props: Props) {
-  const { viewMode, size, attendeeId } = props;
+export default React.memo(function VideoNameplate(props: Props) {
+  const { attendeeId } = props;
   if (!attendeeId) {
     return <></>;
   }
@@ -29,24 +25,19 @@ export default function VideoNameplate(props: Props) {
     return <></>;
   }
 
-  const { name } = attendee;
+  const { name, muted } = attendee;
   return (
     <div
-      className={cx("VideoNameplate_videoNameplate", {
-        roomMode: viewMode === ViewMode.Room,
-        small: size === Size.Small,
-        medium: size === Size.Medium,
-        large: size === Size.Large,
-      })}
+      className={cx("VideoNameplate_videoNameplate")}
     >
-      <div className={cx("VideoNameplate_name")}>{name}</div>
-      {/* <div className={cx("VideoNameplate_muted")}>
+      <div className={cx("VideoNameplate_muted")}>
         {muted ? (
           <i className="fas fa-microphone-slash" />
         ) : (
           <i className="fas fa-microphone" />
         )}
-      </div> */}
+      </div>
+      <div className={cx("VideoNameplate_name")}>{name}</div>
     </div>
   );
-}
+})

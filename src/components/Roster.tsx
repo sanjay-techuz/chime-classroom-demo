@@ -102,7 +102,7 @@ export default function Roster(props: Props) {
       <Box
         sx={{
           width: "100%",
-          height: "95%",
+          height: "calc(100% - 60px)",
           maxWidth: 360,
         }}
       >
@@ -127,7 +127,7 @@ export default function Roster(props: Props) {
         className={cx("Roster_scrollbar")}
           sx={{
             width: "100%",
-            height: "95%",
+            height: "calc(100% - 50px)",
             maxWidth: 360,
             overflowY: "scroll",
           }}

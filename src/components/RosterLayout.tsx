@@ -11,7 +11,7 @@ import Size from "../enums/Size";
 import VideoNameplate from "./VideoNameplate";
 import styles from "./RosterLayout.css";
 import { nameInitials } from "../utils";
-import { Avatar, Badge } from "@mui/material";
+import { Avatar, Badge, Typography } from "@mui/material";
 import SmallAvatar from "../custom/roster/SmallAvatar";
 import useRoster from "../hooks/useRoster";
 import RosterAttendeeType from "../types/RosterAttendeeType";
@@ -41,7 +41,7 @@ export default function RosterLayout(props: Props) {
     raisedHand,
     activeSpeaker,
     name,
-    view
+    view,
   } = props;
   const initials = nameInitials(name);
   const roster = useRoster();
@@ -53,42 +53,64 @@ export default function RosterLayout(props: Props) {
     <div
       className={cx("RosterLayout_remoteVideo", {
         activeSpeaker,
-        activeSpeakerViewMode: view === "activeSpeaker"
+        activeSpeakerViewMode: view === "activeSpeaker",
       })}
     >
-      <Badge
-        overlap="circular"
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        badgeContent={
-          <SmallAvatar
-            sx={{ width: "2rem", height: "2rem"}}
-            bgcolor={
-              muted
-                ? "var(--color_pink)"
-                : "var(--secondary_blue_color)"
+      {view === "activeSpeaker" ? (
+        <>
+          <Typography
+            sx={{
+              fontSize: "1.5rem !important",
+              textTransform: "capitalize",
+            }}
+          >
+            {rosterAttendee?.name}
+          </Typography>
+          <VideoNameplate attendeeId={attendeeId} />
+        </>
+      ) : (
+        <>
+          <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            badgeContent={
+              <SmallAvatar
+                sx={{ width: "2rem", height: "2rem" }}
+                bgcolor={
+                  muted ? "var(--color_pink)" : "var(--secondary_blue_color)"
+                }
+              >
+                {muted ? (
+                  <MicOffOutlinedIcon sx={{ fontSize: "14px" }} />
+                ) : (
+                  <MicNoneOutlinedIcon sx={{ fontSize: "14px" }} />
+                )}
+              </SmallAvatar>
             }
           >
-            {muted ? (
-              <MicOffOutlinedIcon sx={{ fontSize: "14px" }} />
-            ) : (
-              <MicNoneOutlinedIcon sx={{ fontSize: "14px" }} />
-            )}
-          </SmallAvatar>
-        }
-      >
-        <Avatar
-          sx={{
-            width: "100px",
-            height: "100px",
-            backgroundColor: "var(--pure_white_color)",
-            color: "var(--secondary_blue_color)",
-            textTransform: "capitalize",
-            fontSize: "3rem",
-          }}
-        >
-          {initials}
-        </Avatar>
-      </Badge>
+            <Avatar
+              sx={{
+                width: "100px",
+                height: "100px",
+                backgroundColor: "var(--pure_white_color)",
+                color: "var(--secondary_blue_color)",
+                textTransform: "capitalize",
+                fontSize: "3rem",
+              }}
+            >
+              {initials}
+            </Avatar>
+          </Badge>
+          <Typography
+            sx={{
+              fontSize: "1.5rem !important",
+              textTransform: "capitalize",
+            }}
+          >
+            {rosterAttendee?.name}
+          </Typography>
+        </>
+      )}
 
       {/* <span className={cx("RosterLayout_initials",
       // {
@@ -100,11 +122,7 @@ export default function RosterLayout(props: Props) {
       //   RosterLayout_initials6: volume >= 75 && !muted,
       // }
       )}>{initials}</span> */}
-      <VideoNameplate
-        viewMode={viewMode}
-        size={size}
-        attendeeId={attendeeId}
-      />
+
       {raisedHand && (
         <div className={cx("RemoteVideo_raisedHand")}>
           <span

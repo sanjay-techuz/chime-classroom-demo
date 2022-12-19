@@ -32,7 +32,8 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import CommentIcon from "@mui/icons-material/Comment";
-
+import PanToolIcon from "@mui/icons-material/PanTool";
+import PanToolOutlinedIcon from "@mui/icons-material/PanToolOutlined";
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import routes from "../constants/routes.json";
 // import common from "../constants/common.json";
@@ -47,8 +48,10 @@ import SmallAvatar from "../custom/roster/SmallAvatar";
 import { attendanceWenhook } from "../services";
 import MoreSettings from "./MoreSettings";
 import styles from "./Controls.css";
+import MessageTopic from "../enums/MessageTopic";
 
 const cx = classNames.bind(styles);
+let timeoutId: number;
 
 enum VideoStatus {
   Disabled,
@@ -92,6 +95,7 @@ export default function Controls(props: Props) {
   const [isScreenShared, setIsScreenShared] = useState(false);
   const [openScreenSharePermit, setOpenScreenSharePermit] = useState(false);
   const [onChat, setOnChat] = useState(false);
+  const [raised, setRaised] = useState(false);
   // const [recording, setRecording] = useState(false);
   // const [mediaPipelineId, setMediaPipelineId] = useState("");
   const [videoStatus, setVideoStatus] = useState(VideoStatus.Disabled);
@@ -136,6 +140,27 @@ export default function Controls(props: Props) {
   useEffect(() => {
     setVideoStatus(localVideo ? VideoStatus.Enabled : VideoStatus.Disabled);
   }, [localVideo]);
+
+  useEffect(() => {
+    const attendeeId = chime?.configuration?.credentials?.attendeeId;
+    if (!attendeeId) {
+      return;
+    }
+
+    chime?.sendMessage(
+      raised ? MessageTopic.RaiseHand : MessageTopic.DismissHand,
+      attendeeId
+    );
+
+    if (raised) {
+      timeoutId = window.setTimeout(() => {
+        chime?.sendMessage(MessageTopic.DismissHand, attendeeId);
+        setRaised(false);
+      }, 10000);
+    } else {
+      clearTimeout(timeoutId);
+    }
+  }, [raised, chime?.configuration]);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -395,7 +420,69 @@ export default function Controls(props: Props) {
             </Button>
           </DialogActions>
         </Dialog>
-
+      </Box>
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-around",
+          m: 1,
+          p: 1,
+          maxWidth: "120px",
+          position: "absolute",
+          right: 0,
+        }}
+      >
+        {classMode === ClassMode.Student && (
+          <Tooltip
+            title={
+              raised
+                ? intl.formatMessage({ id: "ChatInput.dismissHandAriaLabel" })
+                : intl.formatMessage({ id: "ChatInput.raiseHandAriaLabel" })
+            }
+            placement="bottom"
+          >
+          <Avatar
+            sx={raised ? {
+              bgcolor: "var(--pure_white_color)",
+              border: "1px solid var(--secondary_blue_color)",
+              color: "var(--secondary_blue_color)",
+              cursor: "pointer",
+            } : {
+              bgcolor: "var(--secondary_blue_color)",
+              border: "1px solid var(--pure_white_color)",
+              color: "var(--pure_white_color)",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              setRaised(!raised);
+            }}
+          >
+            {raised ? <PanToolIcon /> : <PanToolOutlinedIcon />}
+          </Avatar>
+          </Tooltip>
+          // <button
+          //   type="button"
+          //   className={cx("raiseHandButton", {
+          //     raised,
+          //   })}
+          //   onClick={() => {
+          //     setRaised(!raised);
+          //   }}
+          // >
+          //   <span
+          //     role="img"
+          //     aria-label={intl.formatMessage({
+          //       id: "ChatInput.raiseHandAriaLabel",
+          //     })}
+          //   >
+          //     ✋
+          //   </span>
+          // </button>
+        )}
         <Popover
           anchorOrigin={{
             vertical: "top",

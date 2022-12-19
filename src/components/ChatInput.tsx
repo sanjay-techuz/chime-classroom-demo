@@ -3,14 +3,12 @@
 /* eslint-disable  */
 
 import classNames from "classnames/bind";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
-import getGlobalVarContext from "../context/getGlobalVarContext";
 // import getUIStateContext from "../context/getUIStateContext";
-import ClassMode from "../enums/ClassMode";
 import styles from "./ChatInput.css";
 import MessageTopic from "../enums/MessageTopic";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
@@ -32,18 +30,16 @@ import { createPrivateChannel } from "../utils";
 
 const cx = classNames.bind(styles);
 
-let timeoutId: number;
-
 type Props = {
   publicChannelCnt: number;
   changeChannel: (type: string, chatAttdId: string, msgCount: number) => void;
 };
+let chatMessageText: string = ""
 
 export default React.memo(function ChatInput(props: Props) {
   const { changeChannel, publicChannelCnt } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  const { globalVar } = useContext(getGlobalVarContext());
-  const { classMode } = globalVar;
+
   // const [state] = useContext(getUIStateContext());
   const [inputText, setInputText] = useState("");
   const [currentChatter, setCurrentChatter] = useState("Everyone");
@@ -54,7 +50,6 @@ export default React.memo(function ChatInput(props: Props) {
     MessageTopic.PublicChannel
   );
   const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
-  const [raised, setRaised] = useState(false);
   const intl = useIntl();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -75,29 +70,9 @@ export default React.memo(function ChatInput(props: Props) {
     );
   }
 
-  useEffect(() => {
-    const attendeeId = chime?.configuration?.credentials?.attendeeId;
-    if (!attendeeId) {
-      return;
-    }
-
-    chime?.sendMessage(
-      raised ? MessageTopic.RaiseHand : MessageTopic.DismissHand,
-      attendeeId
-    );
-
-    if (raised) {
-      timeoutId = window.setTimeout(() => {
-        chime?.sendMessage(MessageTopic.DismissHand, attendeeId);
-        setRaised(false);
-      }, 10000);
-    } else {
-      clearTimeout(timeoutId);
-    }
-  }, [raised, chime?.configuration]);
 
   function onClick(emojiData: EmojiClickData, _event: MouseEvent) {
-    setInputText(inputText + emojiData.emoji);
+    setInputText(chatMessageText + emojiData.emoji);
   }
 
   const handleClick = (event: any) => {
@@ -107,24 +82,31 @@ export default React.memo(function ChatInput(props: Props) {
     setAnchorEl(null);
   };
 
+  useEffect(() => {
+    chatMessageText = inputText
+  },[inputText])
+
+  const emojiPickerVal = useMemo(() => {
+    return <EmojiPicker
+    height={300}
+    width={300}
+    onEmojiClick={onClick}
+    autoFocusSearch={true}
+/>
+  },[openEmojiPicker])       
   return (
     <>
       <Box sx={{
         display: openEmojiPicker ? "block" : "none"
       }}>
-        <EmojiPicker
-          height={300}
-          width={300}
-          onEmojiClick={onClick}
-          autoFocusSearch={true}
-      />
+        {emojiPickerVal}
       </Box>
       <Box sx={{ height: 70 }}>
         <Box sx={{ height: "40%" }}>
           <Popover
             anchorOrigin={{
               vertical: "top",
-              horizontal: "center",
+              horizontal: "left",
             }}
             transformOrigin={{
               vertical: "bottom",
@@ -133,9 +115,34 @@ export default React.memo(function ChatInput(props: Props) {
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                bottom: "90px !important",
+                top: "initial !important",
+                bgcolor: "var(--secondary_blue_color)",
+                color: "var(--pure_white_color)",
+                border: "1px solid var(--pure_white_color)",
+                overflow: "visible",
+                "&:before": {
+                  content: '""',
+                  display: "block",
+                  position: "absolute",
+                  bottom: -10,
+                  left: "10%",
+                  width: 10,
+                  height: 10,
+                  transform: "translateY(-50%) rotate(45deg)",
+                  zIndex: 0,
+                  borderBottom: "1px solid",
+                  borderRight: "1px solid",
+                  backgroundColor: "var(--secondary_blue_color)",
+                },
+              },
+            }}
           >
             <MenuItem
-              sx={{ padding: "0px 10px" }}
+              sx={{ padding: "3px 10px" }}
               onClick={() => {
                 setActiveChatAttendee(MessageTopic.PublicChannel);
                 setActiveChannel(MessageTopic.PublicChannel);
@@ -143,13 +150,27 @@ export default React.memo(function ChatInput(props: Props) {
                 changeChannel(MessageTopic.PublicChannel, "", 0);
               }}
             >
-              <CheckIcon
-                sx={{
-                  mr: 1,
-                  color:
-                  activeChatAttendee === MessageTopic.PublicChannel ? "black" : "transparent",
-                }}
-              />
+               <Avatar
+                    sx={{
+                      height: 20,
+                      width: 20,
+                      backgroundColor:
+                      activeChatAttendee === MessageTopic.PublicChannel
+                          ? "var(--color_green)"
+                          : "transparent",
+                      marginRight: 1,
+                    }}
+                  >
+                    <CheckIcon
+                      sx={{
+                        fontSize: "1rem",
+                        color:
+                        activeChatAttendee === MessageTopic.PublicChannel
+                            ? "var(--pure_white_color)"
+                            : "transparent",
+                      }}
+                    />
+                  </Avatar>{" "}
               <ListItem sx={{ padding: "0px 10px" }}>Everyone</ListItem>
               <Avatar
                 sx={{
@@ -180,15 +201,27 @@ export default React.memo(function ChatInput(props: Props) {
                     changeChannel("private", chatAttdId, msgCount);
                   }}
                 >
-                  <CheckIcon
+                <Avatar
                     sx={{
-                      mr: 1,
-                      color:
+                      height: 20,
+                      width: 20,
+                      backgroundColor:
                       activeChatAttendee === chatAttdId
-                          ? "black"
+                          ? "var(--color_green)"
                           : "transparent",
+                      marginRight: 1,
                     }}
-                  />
+                  >
+                    <CheckIcon
+                      sx={{
+                        fontSize: "1rem",
+                        color:
+                        activeChatAttendee === chatAttdId
+                            ? "var(--pure_white_color)"
+                            : "transparent",
+                      }}
+                    />
+                  </Avatar>{" "}
                   <ListItem sx={{ padding: "0px 10px" }}>
                     {rosterAttendee?.name}
                   </ListItem>
@@ -223,26 +256,7 @@ export default React.memo(function ChatInput(props: Props) {
           >
             <EmojiEmotionsOutlinedIcon />
           </IconButton>
-          {classMode === ClassMode.Student && (
-            <button
-              type="button"
-              className={cx("raiseHandButton", {
-                raised,
-              })}
-              onClick={() => {
-                setRaised(!raised);
-              }}
-            >
-              <span
-                role="img"
-                aria-label={intl.formatMessage({
-                  id: "ChatInput.raiseHandAriaLabel",
-                })}
-              >
-                ✋
-              </span>
-            </button>
-          )}
+ 
         </Box>
         <div className={cx("chatInput")}>
           <form

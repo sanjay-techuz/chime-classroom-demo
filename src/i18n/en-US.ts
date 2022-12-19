@@ -98,6 +98,7 @@ export default {
 
   'ChatInput.inputPlaceholder': `Type a chat message`,
   'ChatInput.raiseHandAriaLabel': `Raise hand`,
+  'ChatInput.dismissHandAriaLabel': `Dismiss hand`,
 
   'Roster.raiseHandAriaLabel': `Raised hand by {name}`,
   'Roster.users': `Participants`,

@@ -283,6 +283,7 @@ export default function Classroom() {
                       className={cx("ClassRoom_contentVideoWrapper", {
                         isContentShareEnabled,
                         screenShareView: !isScreenShareView,
+                        rightDrawerOpen
                       })}
                       onClick={() => {
                         setIsScreenShareView(true);

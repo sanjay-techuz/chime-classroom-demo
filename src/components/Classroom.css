@@ -30,11 +30,16 @@
 }
 
 .ClassRoom_contentVideoWrapper {
+  position: absolute;
+  top: 140px;
   display: none;
   flex: 1 1 auto;
   overflow-y: hidden;
-  height: 100%;
+  height: calc(100% - 225px);
   width: 100%;
+}
+.ClassRoom_contentVideoWrapper.rightDrawerOpen{
+  width: calc(100% - 360px) !important; 
 }
 
 .ClassRoom_contentVideoWrapper.isContentShareEnabled {

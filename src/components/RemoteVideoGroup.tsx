@@ -280,8 +280,6 @@ export default function RemoteVideoGroup(props: Props) {
           })}
         >
           <LocalVideo
-            viewMode={viewMode}
-            size={getSize()}
             view={"grid"}
           />
         </div>

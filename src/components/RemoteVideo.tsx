@@ -48,8 +48,6 @@ export default function RemoteVideo(props: Props) {
     >
       <video muted ref={videoElementRef} className={cx("RemoteVideo_video")} />
       <VideoNameplate
-        viewMode={viewMode}
-        size={size}
         attendeeId={attendeeId}
       />
       {raisedHand && (

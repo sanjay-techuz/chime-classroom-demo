@@ -18,13 +18,11 @@ import VideoNameplate from "./VideoNameplate";
 const cx = classNames.bind(styles);
 
 type Props = {
-  viewMode: ViewMode;
-  size: Size;
   view?: string;
 };
 
 export default function LocalVideo(props: Props) {
-  const { viewMode, size, view } = props;
+  const { view } = props;
   const [enabled, setEnabled] = useState(false);
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { updateGlobalVar } = useContext(getGlobalVarContext());
@@ -64,15 +62,11 @@ export default function LocalVideo(props: Props) {
       >
         <video muted ref={videoElement} className={cx("LocalVideo_video")} />
         <VideoNameplate
-          viewMode={viewMode}
-          size={size}
           attendeeId={attendeeId as string}
         />
       </div>
       {!enabled && (
         <LocalRoster
-          viewMode={viewMode}
-          size={size}
           attendeeId={attendeeId as string}
           name={name as string}
           view={view}

@@ -5,7 +5,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { Avatar, Divider, MenuItem, Popover, Tooltip } from "@mui/material";
+import { Avatar, Button, Divider, MenuItem, Popover, Tooltip } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -202,8 +202,15 @@ export default function MoreSettings(props: Props) {
         title={intl.formatMessage({ id: "Controls.menu" })}
         placement="bottom"
       >
-        <Avatar
-          onClick={handleMenuClick}
+        <Button
+            sx={{ width: "70px" }}
+            onClick={handleMenuClick}
+            className={"Controls_btn_not_active"}
+          >
+            <MoreVertOutlinedIcon className={"Controls_avtr_size"} />
+            {intl.formatMessage({ id: "Controls.menu" })}
+          </Button>
+        {/* <Avatar
           sx={{
             bgcolor: "var(--secondary_blue_color)",
             border: "1px solid var(--pure_white_color)",
@@ -212,7 +219,7 @@ export default function MoreSettings(props: Props) {
           }}
         >
           <MoreVertOutlinedIcon />
-        </Avatar>
+        </Avatar> */}
       </Tooltip>
 
       <Popover

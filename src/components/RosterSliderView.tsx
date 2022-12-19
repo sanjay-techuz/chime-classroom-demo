@@ -19,7 +19,7 @@ import useRoster from "../hooks/useRoster";
 import RosterAttendeeType from "../types/RosterAttendeeType";
 import RosterLayout from "./RosterLayout";
 import LocalVideo from "./LocalVideo";
-import { Box, Button } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
@@ -36,7 +36,8 @@ type Props = {
 export default function RosterSliderView(props: Props) {
   const { viewMode, isContentShareEnabled, rightDrawerOpen } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  const { updateGlobalVar } = useContext(getGlobalVarContext());
+  const { globalVar,updateGlobalVar } = useContext(getGlobalVarContext());
+  const { activeSpeakerAttendeeId } = globalVar;
   const [visibleIndices, setVisibleIndices] = useState<{
     [index: string]: { boundAttendeeId: string };
   }>({});
@@ -62,10 +63,10 @@ export default function RosterSliderView(props: Props) {
 
   useEffect(() => {
     let attdLength = Object.keys(roster).length - 1;
-    if (attendeeIdFullScreen) {
+    if (attendeeIdFullScreen || contentShareEnabled) {
       attdLength = attdLength - 1;
     }
-    const maxCols = 3;
+    const maxCols = 4;
     let cols = 1;
     for (cols; cols <= maxCols; cols++) {
       if (attdLength <= cols * cols) {
@@ -76,7 +77,7 @@ export default function RosterSliderView(props: Props) {
     if (attendeeIdFullScreen) {
       row = Math.ceil((attdLength - 1) / cols);
     }
-    setMaxScrollLength(row * 462);
+    setMaxScrollLength(row * 876);
   }, [roster, attendeeIdFullScreen]);
 
   const acquireVideoIndex = (tileId: number): number => {
@@ -121,9 +122,9 @@ export default function RosterSliderView(props: Props) {
               if (attendeeIdFullScreen === activeAttendee[0]) {
                 clearTimeout(tm);
               } else {
+                updateGlobalVar("activeSpeakerAttendeeId", activeAttendee[0]);
                 if (!contentShareEnabled) {
                   setAttendeeIdFullScreen(activeAttendee[0]);
-                  updateGlobalVar("activeSpeakerAttendeeId", activeAttendee[0]);
                   tm = 0;
                 }
               }
@@ -228,7 +229,6 @@ export default function RosterSliderView(props: Props) {
     });
   }
   const attendeeIds = removeSelfAttendeeId(activeAttendee, selfAttendeeId);
-
   return (
     <Box
       sx={{
@@ -238,21 +238,18 @@ export default function RosterSliderView(props: Props) {
         flexDirection: "column",
       }}
     >
-      <Box sx={{ 
-        display: attendeeIds.length === 0 ? "block" : "none",
+      {attendeeIds.length === 0 && <Box sx={{ 
         height: "100%",
         width: "100%"
         }}>
       <LocalVideo
-          viewMode={viewMode}
-          size={getSize()}
           view={"grid"}
         />
-      </Box>
+      </Box>}
 
         <Box
           sx={{
-            height: "150px",
+            height: "125px",
             width: "100%",
             display: attendeeIds.length === 0 ? "none" : "flex",
             justifyContent: "center",
@@ -262,11 +259,11 @@ export default function RosterSliderView(props: Props) {
             sx={{
               color: "var(--pure_white_color)",
             }}
-            disabled={scrollLength >= 462 ? false : true}
+            disabled={scrollLength >= 876 ? false : true}
             onClick={() => {
               let sl = scrollLength;
               if (scrollLength > 0) {
-                sl = sl - 462;
+                sl = sl - 876;
                 if (sl <= 0) {
                   sl = 0;
                 }
@@ -280,13 +277,20 @@ export default function RosterSliderView(props: Props) {
               }
             }}
           >
-            <ArrowBackIosNewIcon />
+            <IconButton sx={{
+              color: "var(--pure_white_color)",
+              backgroundColor: "var(--secondary_blue_color)"
+            }}
+            disabled={scrollLength >= 876 ? false : true}
+            >
+              <ArrowBackIosNewIcon />
+            </IconButton>
           </Button>
           <div
             id="tileView"
             style={{
-              width: "462px",
-              height: "150px",
+              width: "876px",
+              height: "125px",
               overflow: "hidden",
             }}
           >
@@ -294,9 +298,12 @@ export default function RosterSliderView(props: Props) {
               id="scrollview"
               style={{
                 width: `${maxScrollLength}px`,
+                minWidth: "876px",
                 height: "100%",
                 display: "flex",
                 flexDirection: "row",
+                //if not scroll proper remove minWidth and justifyContent
+                justifyContent: maxScrollLength >= 876 ? "flex-start" : "center"
               }}
             >
               <div
@@ -304,28 +311,27 @@ export default function RosterSliderView(props: Props) {
                   attendeeIdFullScreen === currentUser
                     ? {
                         width: rightDrawerOpen ? "calc(100% - 360px)" : "100%",
-                        height: "500px",
+                        height: "calc(100% - 225px)",
                         display: "block",
                         position: "absolute",
-                        top: "165px",
+                        top: "140px",
                         left: "0px",
+                        padding: "0 8px"
                       }
                     : {
-                        width: "150px",
-                        height: "150px",
+                        width: "215px",
+                        height: "125px",
                         margin: "0px 2px",
                       }
                 }
               >
-                <LocalVideo
-                  viewMode={viewMode}
-                  size={getSize()}
+                {attendeeIds.length !== 0 && <LocalVideo
                   view={
                     attendeeIdFullScreen === currentUser
                       ? "grid"
                       : "activeSpeaker"
                   }
-                />
+                />}
               </div>
               {Array.from(Array(MAX_REMOTE_VIDEOS).keys()).map((key, index) => {
                 const visibleIndex = visibleIndices[index];
@@ -343,15 +349,16 @@ export default function RosterSliderView(props: Props) {
                       activeSpeaker
                         ? {
                           width: rightDrawerOpen ? "calc(100% - 360px)" : "100%",
-                          height: "500px",
+                          height: "calc(100% - 225px)",
                             display: "block",
                             position: "absolute",
-                            top: "165px",
+                            top: "140px",
                             left: "0px",
+                            padding: "0 8px"
                           }
                         : {
-                            width: "150px",
-                            height: "150px",
+                            width: "215px",
+                            height: "125px",
                             margin: "0px 2px",
                             display: visibleIndex ? "block" : "none",
                           }
@@ -372,7 +379,7 @@ export default function RosterSliderView(props: Props) {
                       size={getSize()}
                       attendeeId={attendeeId}
                       raisedHand={raisedHand}
-                      activeSpeaker={activeSpeaker}
+                      activeSpeaker={activeSpeakerAttendeeId === attendeeId}
                       view={ activeSpeaker ? "grid" : "activeSpeaker" }
                     />
                   </div>
@@ -397,15 +404,16 @@ export default function RosterSliderView(props: Props) {
                         activeSpeaker
                           ? {
                             width: rightDrawerOpen ? "calc(100% - 360px)" : "100%",
-                            height: "500px",
+                            height: "calc(100% - 225px)",
                             display: "block",
                             position: "absolute",
-                            top: "165px",
+                            top: "140px",
                             left: "0px",
+                            padding: "0 8px"
                             }
                           : {
-                              width: "150px",
-                              height: "150px",
+                              width: "215px",
+                              height: "125px",
                               margin: "0px 2px",
                             }
                       }
@@ -417,7 +425,7 @@ export default function RosterSliderView(props: Props) {
                         size={getSize()}
                         attendeeId={key}
                         raisedHand={raisedHand}
-                        activeSpeaker={activeSpeaker}
+                        activeSpeaker={activeSpeakerAttendeeId === key}
                         name={rosterAttendee?.name || ""}
                         view={ activeSpeaker ? "grid" : "activeSpeaker" }
                       />
@@ -434,15 +442,15 @@ export default function RosterSliderView(props: Props) {
               color: "var(--pure_white_color)",
             }}
             disabled={
-              scrollLength >= maxScrollLength - 462 ||
-              (scrollLength >= 0 && maxScrollLength <= 462)
+              scrollLength >= maxScrollLength - 876 ||
+              (scrollLength >= 0 && maxScrollLength <= 876)
                 ? true
                 : false
             }
             onClick={() => {
               let sl = scrollLength;
               if (scrollLength >= 0) {
-                sl += 462;
+                sl += 876;
                 if (sl >= maxScrollLength) {
                   sl = maxScrollLength;
                 }
@@ -456,7 +464,19 @@ export default function RosterSliderView(props: Props) {
               }
             }}
           >
-            <ArrowForwardIosIcon />
+            <IconButton sx={{
+              color: "var(--pure_white_color)",
+              backgroundColor: "var(--secondary_blue_color)"
+            }}
+            disabled={
+              scrollLength >= maxScrollLength - 876 ||
+              (scrollLength >= 0 && maxScrollLength <= 876)
+                ? true
+                : false
+            }
+            >
+              <ArrowForwardIosIcon />
+            </IconButton>
           </Button>
         </Box>
     </Box>
