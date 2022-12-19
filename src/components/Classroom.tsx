@@ -29,7 +29,7 @@ import Controls from "./Controls";
 import Error from "./Error";
 import LoadingSpinner from "./LoadingSpinner";
 import CheckMediaPermissions from "./CheckMediaPermissions";
-import RemoteVideoGroup from "./RemoteVideoGroup";
+// import RemoteVideoGroup from "./RemoteVideoGroup";
 import Roster from "./Roster";
 import Main from "../custom/classroom/Main";
 import AppBar from "../custom/classroom/AppBar";
@@ -60,9 +60,7 @@ export default function Classroom() {
   const [isMobileView, setIsMobileView] = useState(false);
   const [openChat, setOpenChat] = useState(false);
   const [openParticipants, setOpenParticipants] = useState(false);
-
   const [rightDrawerOpen, setRightDrawerOpen] = React.useState(false);
-  const [isGridView, setIsGridView] = useState(false);
   const location = useLocation();
   const locationState = location?.state || null;
 
@@ -239,10 +237,6 @@ export default function Classroom() {
   
     chime?.audioVideo?.addObserver(observer);
 
-  const handleGridView = () => {
-    setIsGridView(!isGridView);
-    setIsScreenShareView(false);
-  }
 
   return (
     <>
@@ -284,29 +278,18 @@ export default function Classroom() {
                         isContentShareEnabled,
                         screenShareView: !isScreenShareView,
                         rightDrawerOpen
-                      })}
-                      onClick={() => {
-                        setIsScreenShareView(true);
-                        setIsGridView(false);
-                      }}
+                      })}                    
                     >
                       <ContentVideo
                         onContentShareEnabled={onContentShareEnabled}
                       />
                     </div>
                     <div className={cx("ClassRoom_remoteVideoGroupWrapper")}>
-                      {!isGridView ? <RosterSliderView 
-                        viewMode={viewMode}
+                      <RosterSliderView 
                         isContentShareEnabled={isContentShareEnabled}
                         isScreenShareView={isScreenShareView}
                         rightDrawerOpen={rightDrawerOpen}
-                      /> :
-                       <RemoteVideoGroup
-                        viewMode={viewMode}
-                        isContentShareEnabled={isContentShareEnabled}
-                        isGridView={isGridView}
-                        isScreenShareView={isScreenShareView}
-                      /> }
+                      /> 
                     </div>
                   </div>
                 </Main>
@@ -400,8 +383,6 @@ export default function Classroom() {
                     }
                   }}
                   handleDrawerLeftToggle={handleDrawerLeftToggle}
-                  handleGridView={handleGridView}
-                  isGridView={isGridView}
                 />
               </AppBar>
             </Box>

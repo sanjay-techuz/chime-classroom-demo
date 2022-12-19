@@ -12,8 +12,6 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
-import ViewMode from "../enums/ViewMode";
-import Size from "../enums/Size";
 import useRaisedHandAttendees from "../hooks/useRaisedHandAttendees";
 import RemoteVideo from "./RemoteVideo";
 import styles from "./RemoteVideoGroup.css";
@@ -28,14 +26,13 @@ const MAX_REMOTE_VIDEOS = 16;
 let tm: any = 0;
 
 type Props = {
-  viewMode: ViewMode;
   isContentShareEnabled: boolean;
   isGridView: boolean;
   isScreenShareView: boolean;
 };
 
 export default function RemoteVideoGroup(props: Props) {
-  const { viewMode, isGridView, isScreenShareView } =
+  const { isGridView, isScreenShareView } =
     props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
@@ -79,11 +76,6 @@ export default function RemoteVideoGroup(props: Props) {
     }
     return -1;
   };
-
-  const numberOfVisibleIndices = Object.keys(visibleIndices).reduce<number>(
-    (result: number, key: string) => result + (visibleIndices[key] ? 1 : 0),
-    0
-  );
 
   const activeSpeakerCallback = (attendeeIds: Array<string>) => {
     //remove selfAttendeeId when Speaker active   --sanjay balai
@@ -177,15 +169,6 @@ export default function RemoteVideoGroup(props: Props) {
     });
   }, []);
 
-  const getSize = (): Size => {
-    if (numberOfVisibleIndices >= 10) {
-      return Size.Small;
-    }
-    if (numberOfVisibleIndices >= 5) {
-      return Size.Medium;
-    }
-    return Size.Large;
-  };
 
   // get height and width of tileview from class for responsive view --sanjay balai
   function reorganize() {
@@ -242,10 +225,7 @@ export default function RemoteVideoGroup(props: Props) {
       id="tileView"
       className={cx(
         "RemoteVideoGroup_remoteVideoGroup",
-        // `RemoteVideoGroup_remoteVideoGroup-${numberOfVisibleIndices}`,
         {
-          roomMode: viewMode === ViewMode.Room,
-          screenShareMode: viewMode === ViewMode.ScreenShare,
           disabled: isScreenShareView,
         }
       )}
@@ -255,11 +235,6 @@ export default function RemoteVideoGroup(props: Props) {
           // disabled: !isGridView
         })}
       >
-        {/* {numberOfVisibleIndices === 0 && (
-        <div className={cx('RemoteVideoGroup_instruction')}>
-          <FormattedMessage id="RemoteVideoGroup.noVideo" />
-        </div>
-      )} */}
         <div
             style={
               isGridView
@@ -313,7 +288,6 @@ export default function RemoteVideoGroup(props: Props) {
             >
               <RemoteVideo
                 key={key}
-                viewMode={viewMode}
                 enabled={!!visibleIndex}
                 videoElementRef={useCallback(
                   (element: HTMLVideoElement | null) => {
@@ -323,7 +297,6 @@ export default function RemoteVideoGroup(props: Props) {
                   },
                   []
                 )}
-                size={getSize()}
                 attendeeId={attendeeId}
                 raisedHand={raisedHand}
                 activeSpeaker={activeSpeaker}
@@ -365,8 +338,6 @@ export default function RemoteVideoGroup(props: Props) {
               >
                 <RosterLayout
                   key={key}
-                  viewMode={viewMode}
-                  size={getSize()}
                   attendeeId={key}
                   raisedHand={raisedHand}
                   activeSpeaker={activeSpeaker}

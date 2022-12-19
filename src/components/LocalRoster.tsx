@@ -5,8 +5,6 @@
 import classNames from "classnames/bind";
 import React from "react";
 
-import ViewMode from "../enums/ViewMode";
-import Size from "../enums/Size";
 import VideoNameplate from "./VideoNameplate";
 import styles from "./RosterLayout.css";
 import { nameInitials } from "../utils";

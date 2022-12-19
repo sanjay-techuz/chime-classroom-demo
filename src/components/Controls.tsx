@@ -63,8 +63,6 @@ type Props = {
   onClickShareButton: (flag: boolean) => void;
   onClickChatButton: (flag: boolean) => void;
   handleDrawerLeftToggle: () => void;
-  handleGridView: () => void;
-  isGridView: boolean;
   openParticipants: boolean;
   openChat: boolean;
 };
@@ -75,8 +73,6 @@ export default function Controls(props: Props) {
     onClickChatButton,
     openChat,
     handleDrawerLeftToggle,
-    handleGridView,
-    isGridView,
     openParticipants,
   } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -399,7 +395,7 @@ export default function Controls(props: Props) {
           </Button>
         </Tooltip>
 
-        <MoreSettings handleGridView={handleGridView} isGridView={isGridView} />
+        <MoreSettings />
 
         <Dialog
           open={openScreenSharePermit}

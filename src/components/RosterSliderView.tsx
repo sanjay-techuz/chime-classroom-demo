@@ -11,8 +11,6 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
-import ViewMode from "../enums/ViewMode";
-import Size from "../enums/Size";
 import useRaisedHandAttendees from "../hooks/useRaisedHandAttendees";
 import RemoteVideo from "./RemoteVideo";
 import useRoster from "../hooks/useRoster";
@@ -28,13 +26,12 @@ let tm: any = 0;
 let contentShareEnabled = false;
 
 type Props = {
-  viewMode: ViewMode;
   isContentShareEnabled: boolean;
   isScreenShareView: boolean;
   rightDrawerOpen: boolean;
 };
 export default function RosterSliderView(props: Props) {
-  const { viewMode, isContentShareEnabled, rightDrawerOpen } = props;
+  const { isContentShareEnabled, rightDrawerOpen } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar,updateGlobalVar } = useContext(getGlobalVarContext());
   const { activeSpeakerAttendeeId } = globalVar;
@@ -104,11 +101,6 @@ export default function RosterSliderView(props: Props) {
     }
     return -1;
   };
-
-  const numberOfVisibleIndices = Object.keys(visibleIndices).reduce<number>(
-    (result: number, key: string) => result + (visibleIndices[key] ? 1 : 0),
-    0
-  );
 
   const activeSpeakerCallback = (attendeeIds: Array<string>) => {
     //remove selfAttendeeId when Speaker active   --sanjay balai
@@ -195,15 +187,6 @@ export default function RosterSliderView(props: Props) {
     });
   }, []);
 
-  const getSize = (): Size => {
-    if (numberOfVisibleIndices >= 10) {
-      return Size.Small;
-    }
-    if (numberOfVisibleIndices >= 5) {
-      return Size.Medium;
-    }
-    return Size.Large;
-  };
 
   // find the number of attendee join --sanjay balai
   let activeAttendee: any;
@@ -366,7 +349,6 @@ export default function RosterSliderView(props: Props) {
                   >
                     <RemoteVideo
                       key={key}
-                      viewMode={viewMode}
                       enabled={!!visibleIndex}
                       videoElementRef={useCallback(
                         (element: HTMLVideoElement | null) => {
@@ -376,7 +358,6 @@ export default function RosterSliderView(props: Props) {
                         },
                         []
                       )}
-                      size={getSize()}
                       attendeeId={attendeeId}
                       raisedHand={raisedHand}
                       activeSpeaker={activeSpeakerAttendeeId === attendeeId}
@@ -421,8 +402,6 @@ export default function RosterSliderView(props: Props) {
                     >
                       <RosterLayout
                         key={key}
-                        viewMode={viewMode}
-                        size={getSize()}
                         attendeeId={key}
                         raisedHand={raisedHand}
                         activeSpeaker={activeSpeakerAttendeeId === key}

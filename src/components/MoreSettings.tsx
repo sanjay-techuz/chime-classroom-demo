@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 /* eslint-disable  */
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { Avatar, Button, Divider, MenuItem, Popover, Tooltip } from "@mui/material";
@@ -11,22 +11,15 @@ import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
 import useDevices from "../hooks/useDevices";
-import MessageTopic from "../enums/MessageTopic";
-import ClassMode from "../enums/ClassMode";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import CheckIcon from "@mui/icons-material/Check";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-type Props = {
-  handleGridView: () => void;
-  isGridView: boolean;
-};
 
-export default function MoreSettings(props: Props) {
-  const { handleGridView, isGridView } = props;
+export default function MoreSettings() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
-  const { localVideo, classMode, screenSharePermit } = globalVar;
+  const { globalVar } = useContext(getGlobalVarContext());
+  const { localVideo } = globalVar;
   // const [screenSharePermitValue, setScreenSharePermitValue] = useState(
   //   screenSharePermit ? "all" : "host"
   // );
@@ -803,16 +796,6 @@ export default function MoreSettings(props: Props) {
           </MenuItem>
         </Popover> */}
         <Divider />
-        <MenuItem
-          onClick={() => {
-            handleGridView();
-            handleMenuClose();
-          }}
-        >
-          {isGridView
-            ? intl.formatMessage({ id: "Classroom.activeSpeakerView" })
-            : intl.formatMessage({ id: "Classroom.gridView" })}
-        </MenuItem>
         <MenuItem onClick={handleFullScreen}>
           {enterFullScreen
             ? intl.formatMessage({ id: "Classroom.exitFullScreen" })

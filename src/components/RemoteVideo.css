@@ -10,19 +10,12 @@
   overflow: hidden;
   height: 100%;
   width: 100%;
+  border-radius: 8px;
 }
 
 .RemoteVideo_remoteVideo.activeSpeakerViewMode{
   width: 215px;
   height: 125px;
-}
-
-.RemoteVideo_remoteVideo.roomMode {
-  border-radius: 8px;
-}
-
-.RemoteVideo_remoteVideo.screenShareMode {
-  border-radius: 8px;
 }
 
 .RemoteVideo_remoteVideo.enabled {

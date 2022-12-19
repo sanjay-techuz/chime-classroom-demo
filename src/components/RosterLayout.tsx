@@ -6,8 +6,6 @@ import classNames from "classnames/bind";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ViewMode from "../enums/ViewMode";
-import Size from "../enums/Size";
 import VideoNameplate from "./VideoNameplate";
 import styles from "./RosterLayout.css";
 import { nameInitials } from "../utils";
@@ -23,8 +21,6 @@ import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
 const cx = classNames.bind(styles);
 
 type Props = {
-  viewMode: ViewMode;
-  size: Size;
   attendeeId: string;
   raisedHand?: boolean;
   activeSpeaker?: boolean;
@@ -35,8 +31,6 @@ type Props = {
 export default function RosterLayout(props: Props) {
   const intl = useIntl();
   const {
-    viewMode,
-    size = Size.Large,
     attendeeId,
     raisedHand,
     activeSpeaker,

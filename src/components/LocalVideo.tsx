@@ -9,8 +9,6 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
-import Size from "../enums/Size";
-import ViewMode from "../enums/ViewMode";
 import LocalRoster from "./LocalRoster";
 import styles from "./LocalVideo.css";
 import VideoNameplate from "./VideoNameplate";

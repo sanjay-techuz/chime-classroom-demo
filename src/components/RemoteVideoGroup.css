@@ -30,101 +30,6 @@
   display: none !important;
 }
 
-.RemoteVideoGroup_remoteVideoGroup.roomMode {
-  /* padding: 0.25rem 0.25rem 0; */
-}
-
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled {
-  height: var(--local_video_container_height);
-}
-
-.RemoteVideoGroup_remoteVideoGroup.screenShareMode {
-  padding: 0 0.25rem;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(8, 1fr);
-}
-
-/* Room mode */
-
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-1 {
-  grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(1, 1fr);
-}
-
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-2,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-3,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-4 {
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-}
-
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-5,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-6 {
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-}
-
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-7,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-8,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-9 {
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-}
-
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-10,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-11,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-12 {
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-}
-
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-13,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-14,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-15,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.RemoteVideoGroup_remoteVideoGroup-16 {
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-}
-
-/* Content share in room mode */
-
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-0 {
-  display: none;
-}
-
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-1,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-2,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-3,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-4 {
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(1, 1fr);
-}
-
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-5,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-6,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-7,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-8,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-9,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-10,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-11,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-12,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-13,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-14,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-15,
-.RemoteVideoGroup_remoteVideoGroup.roomMode.isContentShareEnabled.RemoteVideoGroup_remoteVideoGroup-16 {
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-}
-
-/* Screen share mode */
-
-.RemoteVideoGroup_remoteVideoGroup.screenShareMode.RemoteVideoGroup_remoteVideoGroup-1,
-.RemoteVideoGroup_remoteVideoGroup.screenShareMode.RemoteVideoGroup_remoteVideoGroup-2,
-.RemoteVideoGroup_remoteVideoGroup.screenShareMode.RemoteVideoGroup_remoteVideoGroup-3,
-.RemoteVideoGroup_remoteVideoGroup.screenShareMode.RemoteVideoGroup_remoteVideoGroup-4 {
-  grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-}
 
 /* Child elements */
 
@@ -137,9 +42,6 @@
   color: var(--color_silver_chalice);
 }
 
-.remoteVideoGroup.screenShareMode .instruction {
-  font-size: 1rem;
-}
 
 .RemoteVideoGroup_attendeeRosterView{
   display: flex;
