@@ -27,9 +27,9 @@ export default function MoreSettings(props: Props) {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
   const { localVideo, classMode, screenSharePermit } = globalVar;
-  const [screenSharePermitValue, setScreenSharePermitValue] = useState(
-    screenSharePermit ? "all" : "host"
-  );
+  // const [screenSharePermitValue, setScreenSharePermitValue] = useState(
+  //   screenSharePermit ? "all" : "host"
+  // );
   const deviceSwitcherState = useDevices();
   const intl = useIntl();
   const videoQualityList = [
@@ -59,31 +59,31 @@ export default function MoreSettings(props: Props) {
     React.useState<null | HTMLElement>(null);
   const [videoQualityAnchorEl, setVideoQualityAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const [screenSharePermitAnchorEl, setScreenSharePermitAnchorEl] =
-    React.useState<null | HTMLElement>(null);
+  // const [screenSharePermitAnchorEl, setScreenSharePermitAnchorEl] =
+  //   React.useState<null | HTMLElement>(null);
   const openMenu = Boolean(menuAnchorEl);
   const openMicrophoneDeviceSettings = Boolean(microphoneDeviceAnchorEl);
   const openSpeakerDeviceSettings = Boolean(speakerDeviceAnchorEl);
   const openCameraDeviceSettings = Boolean(cameraDeviceAnchorEl);
   const openVideoQualitySettings = Boolean(videoQualityAnchorEl);
-  const screenSharePermitSettings = Boolean(screenSharePermitAnchorEl);
+  // const screenSharePermitSettings = Boolean(screenSharePermitAnchorEl);
 
-  useEffect(() => {
-    setScreenSharePermitValue(screenSharePermit ? "all" : "host");
-  }, []);
+  // useEffect(() => {
+  //   setScreenSharePermitValue(screenSharePermit ? "all" : "host");
+  // }, []);
 
-  const handleRadioChange = (value: string) => {
-    let newFocusState = screenSharePermitValue === "all" ? true : false;
-    setScreenSharePermitValue(value);
-    newFocusState = value === "all" ? true : false;
+  // const handleRadioChange = (value: string) => {
+  //   let newFocusState = screenSharePermitValue === "all" ? true : false;
+  //   setScreenSharePermitValue(value);
+  //   newFocusState = value === "all" ? true : false;
 
-    updateGlobalVar("screenSharePermit", newFocusState);
-    localStorage.setItem("screenSharePermit", JSON.stringify(newFocusState));
+  //   updateGlobalVar("screenSharePermit", newFocusState);
+  //   localStorage.setItem("screenSharePermit", JSON.stringify(newFocusState));
 
-    chime?.sendMessage(MessageTopic.ScreenSharePermit, {
-      focus: newFocusState,
-    });
-  };
+  //   chime?.sendMessage(MessageTopic.ScreenSharePermit, {
+  //     focus: newFocusState,
+  //   });
+  // };
 
   const handleMenuClick = (event: any) => {
     setMenuAnchorEl(event.currentTarget);
@@ -120,12 +120,12 @@ export default function MoreSettings(props: Props) {
     setVideoQualityAnchorEl(null);
   };
 
-  const handleScreenSharePermitPopoverOpen = (event: any) => {
-    setScreenSharePermitAnchorEl(event?.currentTarget);
-  };
-  const handleScreenSharePermitPopoverClose = () => {
-    setScreenSharePermitAnchorEl(null);
-  };
+  // const handleScreenSharePermitPopoverOpen = (event: any) => {
+  //   setScreenSharePermitAnchorEl(event?.currentTarget);
+  // };
+  // const handleScreenSharePermitPopoverClose = () => {
+  //   setScreenSharePermitAnchorEl(null);
+  // };
 
   document.addEventListener("fullscreenchange", exitHandler, false);
   document.addEventListener("mozfullscreenchange", exitHandler, false);
@@ -686,7 +686,7 @@ export default function MoreSettings(props: Props) {
           )}
         </Popover>
 
-        {classMode === ClassMode.Teacher && (
+        {/* {classMode === ClassMode.Teacher && (
           <MenuItem
             onClick={(event) => {
               handleScreenSharePermitPopoverOpen(event);
@@ -703,8 +703,8 @@ export default function MoreSettings(props: Props) {
             {intl.formatMessage({ id: "DeviceSwitcher.screenSharePermit" })}
             <KeyboardArrowRightIcon />
           </MenuItem>
-        )}
-        <Popover
+        )} */}
+        {/* <Popover
           id="mouse-over-popover"
           open={screenSharePermitSettings}
           anchorEl={screenSharePermitAnchorEl}
@@ -801,7 +801,7 @@ export default function MoreSettings(props: Props) {
             </Avatar>{" "}
             {intl.formatMessage({ id: "DeviceSwitcher.allParticipants" })}
           </MenuItem>
-        </Popover>
+        </Popover> */}
         <Divider />
         <MenuItem
           onClick={() => {

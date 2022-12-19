@@ -103,6 +103,8 @@ export default {
   'Roster.raiseHandAriaLabel': `Raised hand by {name}`,
   'Roster.users': `Participants`,
   'Roster.sureRemove': `Are you sure to remove {name} from meeting ?`,
+  'Roster.makePresenter': `Make presenter`,
+  'Roster.removePresenter': `Remove presenter`,
 
   'RemoteVideo.raiseHandAriaLabel': `Raised hand`,
 

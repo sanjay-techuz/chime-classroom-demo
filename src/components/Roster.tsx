@@ -20,9 +20,10 @@ import {
   Divider,
 } from "@mui/material";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
-import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
-import VideocamOffOutlinedIcon from '@mui/icons-material/VideocamOffOutlined';
-import MicNoneIcon from '@mui/icons-material/MicNone';
+import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
+import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
+import MicNoneIcon from "@mui/icons-material/MicNone";
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -34,7 +35,7 @@ import styles from "./Roster.css";
 import MessageTopic from "../enums/MessageTopic";
 import ClassMode from "../enums/ClassMode";
 import { nameInitials } from "../utils";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 const cx = classNames.bind(styles);
 
@@ -43,7 +44,7 @@ type Props = {
 };
 
 export default function Roster(props: Props) {
-  const { closeParticipantsPanel } = props
+  const { closeParticipantsPanel } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
   const { classMode } = globalVar;
@@ -112,7 +113,16 @@ export default function Roster(props: Props) {
               {intl.formatMessage({ id: "Roster.users" })}
               {` (${attendeeIds.length})`}
             </ListItemText>
-            <ListItemIcon sx={{ justifyContent: "flex-end", color: "var(--pure_white_color)", cursor: "pointer" }} onClick={closeParticipantsPanel}><CloseIcon /></ListItemIcon>
+            <ListItemIcon
+              sx={{
+                justifyContent: "flex-end",
+                color: "var(--pure_white_color)",
+                cursor: "pointer",
+              }}
+              onClick={closeParticipantsPanel}
+            >
+              <CloseIcon />
+            </ListItemIcon>
           </ListItem>
         </Box>
         <Divider
@@ -124,7 +134,7 @@ export default function Roster(props: Props) {
           }}
         />
         <Box
-        className={cx("Roster_scrollbar")}
+          className={cx("Roster_scrollbar")}
           sx={{
             width: "100%",
             height: "calc(100% - 50px)",
@@ -139,15 +149,15 @@ export default function Roster(props: Props) {
               return (
                 <ListItem key={attendeeId} component="div">
                   <ListItemAvatar>
-                      <Avatar
-                        sx={{
-                          bgcolor: "var(--color_grey)",
-                          color: "var(--pure_white_color)",
-                        }}
-                        variant="circular"
-                      >
-                        {initials}
-                      </Avatar>
+                    <Avatar
+                      sx={{
+                        bgcolor: "var(--color_grey)",
+                        color: "var(--pure_white_color)",
+                      }}
+                      variant="circular"
+                    >
+                      {initials}
+                    </Avatar>
                   </ListItemAvatar>
                   <ListItemText
                     primary={
@@ -357,7 +367,7 @@ export default function Roster(props: Props) {
                               width: 30,
                               height: 30,
                               bgcolor: "var(--color_grey)",
-                              }}
+                            }}
                           >
                             <VideocamOutlinedIcon />
                           </Avatar>
@@ -375,6 +385,37 @@ export default function Roster(props: Props) {
                         )}
                       </div>
                     )}
+                  </ListItemIcon>
+                  <ListItemIcon sx={{ minWidth: "30px" }}>
+                    {classMode === ClassMode.Teacher &&
+                      attendeeId !== localUserId && (
+                        <Tooltip
+                          title={rosterAttendee.presenter ? intl.formatMessage({ id: "Roster.removePresenter" }) : intl.formatMessage({ id: "Roster.makePresenter" })}
+                          placement="bottom"
+                        >
+                          <Avatar
+                            sx={{
+                              width: 30,
+                              height: 30,
+                              bgcolor: rosterAttendee.presenter ? "var(--pure_white_color)" : "var(--color_grey)",
+                              color: rosterAttendee.presenter ? "var(--color_black)" : "var(--pure_white_color)",
+                            }}
+                            onClick={() => {
+                              const focus = !rosterAttendee.presenter;
+                              chime?.sendMessage(
+                                MessageTopic.ScreenSharePermit,
+                                {
+                                  focus: focus,
+                                  targetId: attendeeId,
+                                }
+                              );
+                              chime?.updateScreenPresenter(attendeeId, focus);
+                            }}
+                          >
+                            <ArrowUpwardIcon />
+                          </Avatar>
+                        </Tooltip>
+                      )}
                   </ListItemIcon>
                 </ListItem>
               );

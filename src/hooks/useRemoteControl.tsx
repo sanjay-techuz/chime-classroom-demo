@@ -116,6 +116,7 @@ export default function useRemoteControl() {
             }
           break;
         case MessageTopic.ScreenSharePermit:
+          if (targetId === localUserId) {
             updateGlobalVar('screenSharePermit',focus);
             localStorage.setItem('screenSharePermit', JSON.stringify(focus));
             if (focus) {
@@ -123,6 +124,7 @@ export default function useRemoteControl() {
             }else{
               notifDispatch({ type: NotifType.SCREEN_SHARE_PERMIT, payload: { message: intl.formatMessage({ id: "Notification.screenShareNotPermit" })} });
             }
+          }
           break;
         default:
           break;
