@@ -14,8 +14,8 @@
 }
 
 .RemoteVideo_remoteVideo.activeSpeakerViewMode{
-  width: 215px;
-  height: 125px;
+  width: 195px;
+  height: 105px;
 }
 
 .RemoteVideo_remoteVideo.enabled {
@@ -23,7 +23,7 @@
 }
 
 .RemoteVideo_remoteVideo.activeSpeaker {
-  border: 3px solid var(--color_green);
+  border: 1px solid var(--color_green);
 }
 
 .RemoteVideo_video {
@@ -39,7 +39,7 @@
 .RemoteVideo_raisedHand {
   z-index: 1;
   position: absolute;
-  top: 0.25rem;
+  top: 0;
   left: 0.25rem;
   font-size: 2rem;
   animation: shake 1.22s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite both;

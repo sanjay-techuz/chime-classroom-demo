@@ -13,10 +13,9 @@ import { Avatar, Badge, Typography } from "@mui/material";
 import SmallAvatar from "../custom/roster/SmallAvatar";
 import useRoster from "../hooks/useRoster";
 import RosterAttendeeType from "../types/RosterAttendeeType";
-// import useRoster from "../hooks/useRoster";
-// import RosterAttendeeType from "../types/RosterAttendeeType";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
+import Icons from "../custom/Icons";
 
 const cx = classNames.bind(styles);
 
@@ -40,7 +39,6 @@ export default function RosterLayout(props: Props) {
   const initials = nameInitials(name);
   const roster = useRoster();
   const rosterAttendee: RosterAttendeeType = roster[attendeeId];
-  // const volume = rosterAttendee?.volume ? rosterAttendee?.volume : 0;
   const muted = rosterAttendee?.muted ? rosterAttendee?.muted : false;
 
   return (
@@ -54,7 +52,8 @@ export default function RosterLayout(props: Props) {
         <>
           <Typography
             sx={{
-              fontSize: "1.5rem !important",
+              fontSize: "16px !important",
+              lineHeight: "24px !important",
               textTransform: "capitalize",
             }}
           >
@@ -86,7 +85,7 @@ export default function RosterLayout(props: Props) {
               sx={{
                 width: "100px",
                 height: "100px",
-                backgroundColor: "var(--pure_white_color)",
+                backgroundColor: "var(--color_initials_bg)",
                 color: "var(--secondary_blue_color)",
                 textTransform: "capitalize",
                 fontSize: "3rem",
@@ -97,25 +96,20 @@ export default function RosterLayout(props: Props) {
           </Badge>
           <Typography
             sx={{
-              fontSize: "1.5rem !important",
+              fontStyle: "normal",
+              fontWeight: "500",
+              fontSize: "16px",
+              lineHeight: "24px",
+              letterSpacing: "0.125714px",
               textTransform: "capitalize",
+              marginTop: "13px"
             }}
           >
             {rosterAttendee?.name}
           </Typography>
+          {attendeeId === localStorage.getItem("hostId") && <span className={cx("RosterLayout_host")}>Host</span>}
         </>
       )}
-
-      {/* <span className={cx("RosterLayout_initials",
-      // {
-      //   RosterLayout_initials1: volume >= 0 && volume < 15 && !muted,
-      //   RosterLayout_initials2: volume >= 15 && volume < 30 && !muted,
-      //   RosterLayout_initials3: volume >= 30 && volume < 45 && !muted,
-      //   RosterLayout_initials4: volume >= 45 && volume < 60 && !muted,
-      //   RosterLayout_initials5: volume >= 60 && volume < 75 && !muted,
-      //   RosterLayout_initials6: volume >= 75 && !muted,
-      // }
-      )}>{initials}</span> */}
 
       {raisedHand && (
         <div className={cx("RemoteVideo_raisedHand")}>
@@ -125,10 +119,10 @@ export default function RosterLayout(props: Props) {
               id: "RemoteVideo.raiseHandAriaLabel",
             })}
           >
-            ✋
+          <Icons src={"/icons/hand_yellow.svg"} height={20} width={20} />
           </span>
         </div>
-      )}
+      )} 
     </div>
   );
 }

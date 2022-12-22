@@ -26,20 +26,20 @@
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 85px);
+  height: calc(100% - 60px);
 }
 
 .ClassRoom_contentVideoWrapper {
   position: absolute;
-  top: 140px;
+  top: 120px;
   display: none;
   flex: 1 1 auto;
   overflow-y: hidden;
-  height: calc(100% - 225px);
+  height: calc(100% - 185px);
   width: 100%;
 }
 .ClassRoom_contentVideoWrapper.rightDrawerOpen{
-  width: calc(100% - 360px) !important; 
+  width: calc(100% - 301px) !important; 
 }
 
 .ClassRoom_contentVideoWrapper.isContentShareEnabled {
@@ -211,5 +211,21 @@ nav{
 
 .ClassRoom_chat_open_both{
   position: relative;
-  height: 49.5%;
+  height: 50%;
+}
+
+.ClassRoom_meeting_timer{
+  position: absolute;
+  height: 29px;
+  left: 8px;
+  top: 120px;
+  background: rgba(0, 0, 0, 0.653482);
+  border-radius: 4px;
+  z-index: 10;
+  padding: 5px 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.0942858px;
 }

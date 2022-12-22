@@ -23,19 +23,21 @@
    --color_cod_gray_medium: #111;
    --color_cod_gray_light: #1b1b1b;
    --color_black: #000;
-   --color_thunderbird: #d62f12;
-   --color_black_medium_opacity: rgba(0, 0, 0, 0.6);
+   --color_thunderbird: #D62F12;
+   --color_black_medium_opacity: rgba(0, 0, 0, 0.653482);
    --color_black_low_opacity: rgba(0, 0, 0, 0.25);
    --color_green: #4caf50;
 
-   --primary_blue_color: #142230;
-   --secondary_blue_color: #1a3551;
    --primary_blue_color: #000000;
-   --secondary_blue_color: #2a2a2a;
+   --secondary_blue_color: #242424;
+   --third_blue_color: #1D1D1D;
+   --controls_border_color:#484848;
    --pure_white_color: #FFF;
    --color_pink: #e91e63;
    --color_yellow: #ffeb3b;
    --color_grey: #757575;
+   --color_sc_green: #01B22E;
+   --color_initials_bg: #D8D8D8
  }
  
  *,

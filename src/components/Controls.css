@@ -94,30 +94,66 @@
 }
 
 .Controls_btn_active{
-  width: 80px;
+  height: 32px;
   background-color: var(--pure_white_color) !important;
-  border: 1px solid var(--secondary_blue_color) !important;
-  color: var(--secondary_blue_color) !important;
+  border: 1px solid var(--controls_border_color) !important;
+  color: var(--third_blue_color) !important;
   cursor: pointer;
   border-radius: 64px !important;
   text-transform: none !important;
-  font-size: 0.7rem !important;
-  justify-content: space-around !important;
+  font-size: 12px !important;
+  padding: 6px 16px !important;
+  /* justify-content: space-around !important; */
 }
 
-.Controls_btn_not_active{
-  width: 80px;
-  background-color: var(--secondary_blue_color) !important;
-  border: 1px solid var(--pure_white_color) !important;
+.Controls_sc_btn_active{
+  width: 130px;
+  height: 32px;
+  background-color: var(--color_thunderbird) !important;
+  border: 1px solid var(--color_thunderbird) !important;
   color: var(--pure_white_color) !important;
   cursor: pointer;
   border-radius: 64px !important;
   text-transform: none !important;
-  font-size: 0.7rem !important;
-  justify-content: space-around !important;
+  font-size: 12px !important;
+  /* justify-content: space-around !important; */
+}
+
+.Controls_btn_not_active{
+  height: 32px;
+  background-color: var(--third_blue_color) !important;
+  border: 1px solid var(--controls_border_color) !important;
+  color: var(--pure_white_color) !important;
+  cursor: pointer;
+  border-radius: 64px !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  padding: 6px 16px !important;
+  /* justify-content: space-around !important; */
+}
+
+.Controls_sc_btn_not_active{
+  width: 130px;
+  height: 32px;
+  background-color: var(--color_sc_green) !important;
+  border: 1px solid var(--color_sc_green) !important;
+  color: var(--color_black) !important;
+  cursor: pointer;
+  border-radius: 64px !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  /* justify-content: space-around !important; */
 }
 
 .Controls_avtr_size{
-  width: 20px !important;
-  height: 20px !important;
+  width: 15px !important;
+  height: 15px !important;
+}
+
+.Controls_diveder{
+  border-color: var(--controls_border_color) !important
+}
+
+.Controls_margin_right{
+  margin-left: 5px;
 }

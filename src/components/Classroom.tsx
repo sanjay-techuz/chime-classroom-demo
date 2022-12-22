@@ -41,7 +41,7 @@ import {
 import RosterSliderView from "./RosterSliderView";
 
 const cx = classNames.bind(styles);
-const drawerWidth = 360;
+const drawerWidth = 301;
 
 var resizeTo = 0;
 export default function Classroom() {
@@ -307,7 +307,7 @@ export default function Classroom() {
                       borderRadius: "8px",
                       height: "calc(100% - 16px)",
                       overflow: "hidden",
-                      backgroundColor: "var(--secondary_blue_color) !important",
+                      backgroundColor: "var(--third_blue_color) !important",
                       color: "var(--pure_white_color) !important"
                     },
                   }}
@@ -328,7 +328,7 @@ export default function Classroom() {
                     <Divider sx={{
                       margin: "auto",
                       borderColor: "rgb(77 76 76 / 80%)",
-                      borderBottomWidth: "unset",
+                      borderBottomWidth: "thin",
                     }}/>
                     <div
                       className={cx("ClassRoom_chat_parent_div", {
@@ -352,9 +352,9 @@ export default function Classroom() {
                 position="fixed"
                 rightopen={rightDrawerOpen}
                 anchor="bottom"
-                sx={{ height: "70px", width: `calc(100% - 16px)` }}
+                sx={{ height: "50px", width: `calc(100% - 16px)` }}
                 mobileview={isMobileView}
-                background={"var(--secondary_blue_color)"}
+                background={"var(--third_blue_color)"}
                 drawerWidth={drawerWidth}
               >
                 <Controls

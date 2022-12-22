@@ -40,9 +40,10 @@ export default function LocalRoster(props: Props) {
       {view === "activeSpeaker" ? (
         <>
           <Typography sx={{
-          fontSize: "1.5rem !important",
+          fontSize: "16px !important",
+          lineHeight: "24px !important",
           textTransform: "capitalize"
-        }}>{rosterAttendee?.name}</Typography>
+        }}>{name}</Typography>
         <VideoNameplate
             attendeeId={attendeeId}
           />
@@ -72,7 +73,7 @@ export default function LocalRoster(props: Props) {
               sx={{
                 width: "100px",
                 height: "100px",
-                backgroundColor: "var(--pure_white_color)",
+                backgroundColor: "var(--color_initials_bg)",
                 color: "var(--secondary_blue_color)",
                 textTransform: "capitalize",
                 fontSize: "3rem",
@@ -82,9 +83,15 @@ export default function LocalRoster(props: Props) {
             </Avatar>
           </Badge>
           <Typography sx={{
-          fontSize: "1.5rem !important",
-          textTransform: "capitalize"
-        }}>{rosterAttendee?.name}</Typography>
+            fontStyle: "normal",
+            fontWeight: "500",
+            fontSize: "16px",
+            lineHeight: "24px",
+            letterSpacing: "0.125714px",
+            textTransform: "capitalize",
+            marginTop: "13px"
+        }}>{name}</Typography>
+        {attendeeId === localStorage.getItem("hostId") && <span className={"RosterLayout_host"}>Host</span>}
         </>
       )}
     </div>

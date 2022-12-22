@@ -18,8 +18,7 @@ import RosterAttendeeType from "../types/RosterAttendeeType";
 import RosterLayout from "./RosterLayout";
 import LocalVideo from "./LocalVideo";
 import { Box, Button, IconButton } from "@mui/material";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import Icons from "../custom/Icons";
 
 const MAX_REMOTE_VIDEOS = 16;
 let tm: any = 0;
@@ -74,7 +73,7 @@ export default function RosterSliderView(props: Props) {
     if (attendeeIdFullScreen) {
       row = Math.ceil((attdLength - 1) / cols);
     }
-    setMaxScrollLength(row * 876);
+    setMaxScrollLength(row * 796);
   }, [roster, attendeeIdFullScreen]);
 
   const acquireVideoIndex = (tileId: number): number => {
@@ -232,7 +231,7 @@ export default function RosterSliderView(props: Props) {
 
         <Box
           sx={{
-            height: "125px",
+            height: "105px",
             width: "100%",
             display: attendeeIds.length === 0 ? "none" : "flex",
             justifyContent: "center",
@@ -242,11 +241,11 @@ export default function RosterSliderView(props: Props) {
             sx={{
               color: "var(--pure_white_color)",
             }}
-            disabled={scrollLength >= 876 ? false : true}
+            disabled={scrollLength >= 796 ? false : true}
             onClick={() => {
               let sl = scrollLength;
               if (scrollLength > 0) {
-                sl = sl - 876;
+                sl = sl - 796;
                 if (sl <= 0) {
                   sl = 0;
                 }
@@ -262,18 +261,20 @@ export default function RosterSliderView(props: Props) {
           >
             <IconButton sx={{
               color: "var(--pure_white_color)",
-              backgroundColor: "var(--secondary_blue_color)"
+              backgroundColor: "var(--secondary_blue_color)",
+              width: 40,
+              height: 40,
+              display: scrollLength >= 796 ? "flex" : "none"
             }}
-            disabled={scrollLength >= 876 ? false : true}
             >
-              <ArrowBackIosNewIcon />
+            <Icons src={"/icons/left_arrow.svg"} height={12} width={14} />
             </IconButton>
           </Button>
           <div
             id="tileView"
             style={{
-              width: "876px",
-              height: "125px",
+              width: "796px",
+              height: "105px",
               overflow: "hidden",
             }}
           >
@@ -281,29 +282,30 @@ export default function RosterSliderView(props: Props) {
               id="scrollview"
               style={{
                 width: `${maxScrollLength}px`,
-                minWidth: "876px",
+                minWidth: "796px",
                 height: "100%",
                 display: "flex",
                 flexDirection: "row",
                 //if not scroll proper remove minWidth and justifyContent
-                justifyContent: maxScrollLength >= 876 ? "flex-start" : "center"
+                justifyContent: maxScrollLength >= 796 ? "flex-start" : "center"
               }}
             >
+              <span className={"ClassRoom_meeting_timer"}>Your meeting will end in <span style={{ color: "red" }}>30 min</span></span>
               <div
                 style={
                   attendeeIdFullScreen === currentUser
                     ? {
-                        width: rightDrawerOpen ? "calc(100% - 360px)" : "100%",
-                        height: "calc(100% - 225px)",
+                        width: rightDrawerOpen ? "calc(100% - 301px)" : "100%",
+                        height: "calc(100% - 185px)",
                         display: "block",
                         position: "absolute",
-                        top: "140px",
+                        top: "120px",
                         left: "0px",
                         padding: "0 8px"
                       }
                     : {
-                        width: "215px",
-                        height: "125px",
+                        width: "195px",
+                        height: "105px",
                         margin: "0px 2px",
                       }
                 }
@@ -331,17 +333,17 @@ export default function RosterSliderView(props: Props) {
                     style={
                       activeSpeaker
                         ? {
-                          width: rightDrawerOpen ? "calc(100% - 360px)" : "100%",
-                          height: "calc(100% - 225px)",
+                          width: rightDrawerOpen ? "calc(100% - 301px)" : "100%",
+                          height: "calc(100% - 185px)",
                             display: "block",
                             position: "absolute",
-                            top: "140px",
+                            top: "120px",
                             left: "0px",
                             padding: "0 8px"
                           }
                         : {
-                            width: "215px",
-                            height: "125px",
+                            width: "195px",
+                            height: "105px",
                             margin: "0px 2px",
                             display: visibleIndex ? "block" : "none",
                           }
@@ -384,17 +386,17 @@ export default function RosterSliderView(props: Props) {
                       style={
                         activeSpeaker
                           ? {
-                            width: rightDrawerOpen ? "calc(100% - 360px)" : "100%",
-                            height: "calc(100% - 225px)",
+                            width: rightDrawerOpen ? "calc(100% - 301px)" : "100%",
+                            height: "calc(100% - 185px)",
                             display: "block",
                             position: "absolute",
-                            top: "140px",
+                            top: "120px",
                             left: "0px",
                             padding: "0 8px"
                             }
                           : {
-                              width: "215px",
-                              height: "125px",
+                              width: "195px",
+                              height: "105px",
                               margin: "0px 2px",
                             }
                       }
@@ -421,15 +423,15 @@ export default function RosterSliderView(props: Props) {
               color: "var(--pure_white_color)",
             }}
             disabled={
-              scrollLength >= maxScrollLength - 876 ||
-              (scrollLength >= 0 && maxScrollLength <= 876)
+              scrollLength >= maxScrollLength - 796 ||
+              (scrollLength >= 0 && maxScrollLength <= 796)
                 ? true
                 : false
             }
             onClick={() => {
               let sl = scrollLength;
               if (scrollLength >= 0) {
-                sl += 876;
+                sl += 796;
                 if (sl >= maxScrollLength) {
                   sl = maxScrollLength;
                 }
@@ -445,16 +447,14 @@ export default function RosterSliderView(props: Props) {
           >
             <IconButton sx={{
               color: "var(--pure_white_color)",
-              backgroundColor: "var(--secondary_blue_color)"
+              backgroundColor: "var(--secondary_blue_color)",
+              width: 40,
+              height: 40,
+              display: (scrollLength >= maxScrollLength - 796 ||
+              (scrollLength >= 0 && maxScrollLength <= 796)) ? "none" : "flex"
             }}
-            disabled={
-              scrollLength >= maxScrollLength - 876 ||
-              (scrollLength >= 0 && maxScrollLength <= 876)
-                ? true
-                : false
-            }
             >
-              <ArrowForwardIosIcon />
+            <Icons src={"/icons/right_arrow.svg"} height={12} width={14} />
             </IconButton>
           </Button>
         </Box>

@@ -18,12 +18,21 @@
   }
   
 .RosterLayout_remoteVideo.activeSpeakerViewMode{
-  width: 215px;
-  height: 125px;
+  width: 195px;
+  height: 105px;
 }
 
   .RosterLayout_remoteVideo.activeSpeaker {
-    border: 3px solid var(--color_green);
+    border: 1px solid var(--color_green);
+  }
+
+  .RosterLayout_host{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0.11px;
+    color: #ABABAB;
   }
 
   .RosterLayout_initials{

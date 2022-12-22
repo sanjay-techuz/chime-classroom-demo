@@ -18,11 +18,11 @@
 .input {
   flex: 1 1 auto;
   color: var(--pure_white_color);
-  background-color: transparent;
+  background-color: var(--third_blue_color);
   outline: none;
   border: none;
   font-size: 1rem;
-  padding: 0.75rem 0.5rem;
+  padding: 5px 10px;
 }
 
 /* .input::placeholder {

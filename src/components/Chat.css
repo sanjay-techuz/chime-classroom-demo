@@ -17,6 +17,15 @@
   padding-top: 0.5rem;
   max-height: 560px;
 }
+
+.Chat_chat_header{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 1
+}
+
 @media (min-height:800px) {
   .Chat_messages {
     max-height: 600px;
@@ -86,7 +95,7 @@
   flex: 0 0 auto;
   border: 1px solid var(--color_grey);
   bottom: 3px;
-  border-radius: 8px;
+  border-radius: 0px 0px 8px 8px;
 }
 
 .Chat_attendee_list{
@@ -134,4 +143,23 @@
   color: var(--pure_white_color);
   margin: 2px;
   cursor: pointer;
+}
+
+.Chat_message_string_parent{
+  background: rgba(0, 0, 0, 0.653482);
+  padding: 4px 9px;
+  max-width: 260px;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.Chat_message_string{
+  border-radius: 8px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0.0942858px;
+  color: #FFFFFF;
+
 }

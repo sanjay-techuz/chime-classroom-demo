@@ -105,3 +105,11 @@
     transform: translate3d(1.5px, 0, 0);
   }
 }
+
+.Roster_participants{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 1
+}

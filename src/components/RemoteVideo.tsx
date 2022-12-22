@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 
 import VideoNameplate from "./VideoNameplate";
 import styles from "./RemoteVideo.css";
+import Icons from "../custom/Icons";
 
 const cx = classNames.bind(styles);
 
@@ -50,7 +51,7 @@ export default function RemoteVideo(props: Props) {
               id: "RemoteVideo.raiseHandAriaLabel",
             })}
           >
-            ✋
+          <Icons src={"/icons/hand_yellow.svg"} height={20} width={20} />
           </span>
         </div>
       )}

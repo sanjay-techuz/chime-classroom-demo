@@ -5,15 +5,14 @@
 import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { Avatar, Button, Divider, MenuItem, Popover, Tooltip } from "@mui/material";
+import { Button, Divider, ListItem, MenuItem, Popover, Tooltip } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
 import useDevices from "../hooks/useDevices";
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import CheckIcon from "@mui/icons-material/Check";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import Icons from "../custom/Icons";
 
 
 export default function MoreSettings() {
@@ -196,23 +195,13 @@ export default function MoreSettings() {
         placement="bottom"
       >
         <Button
-            sx={{ width: "70px" }}
+            sx={{ width: "80px" }}
             onClick={handleMenuClick}
             className={"Controls_btn_not_active"}
           >
-            <MoreVertOutlinedIcon className={"Controls_avtr_size"} />
-            {intl.formatMessage({ id: "Controls.menu" })}
+            <Icons src={"/icons/more.svg"} height={12} width={12} />
+            <span className={"Controls_margin_right"}>{intl.formatMessage({ id: "Controls.menu" })}</span>
           </Button>
-        {/* <Avatar
-          sx={{
-            bgcolor: "var(--secondary_blue_color)",
-            border: "1px solid var(--pure_white_color)",
-            color: "var(--pure_white_color)",
-            cursor: "pointer",
-          }}
-        >
-          <MoreVertOutlinedIcon />
-        </Avatar> */}
       </Tooltip>
 
       <Popover
@@ -232,9 +221,9 @@ export default function MoreSettings() {
           sx: {
             bottom: "75px !important",
             top: "initial !important",
-            bgcolor: "var(--secondary_blue_color)",
+            bgcolor: "var(--third_blue_color)",
             color: "var(--pure_white_color)",
-            border: "1px solid var(--pure_white_color)",
+            border: "1px solid var(--controls_border_color)",
             width: "250px",
             overflow: "visible",
             "&:before": {
@@ -247,9 +236,9 @@ export default function MoreSettings() {
               height: 10,
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
-              borderBottom: "1px solid",
-              borderRight: "1px solid",
-              backgroundColor: "var(--secondary_blue_color)",
+              borderBottom: "1px solid var(--controls_border_color)",
+              borderRight: "1px solid var(--controls_border_color)",
+              backgroundColor: "var(--third_blue_color)",
             },
           },
         }}
@@ -264,6 +253,7 @@ export default function MoreSettings() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
+            fontSize: "12px"
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.microphone" })}
@@ -282,15 +272,14 @@ export default function MoreSettings() {
             horizontal: "left",
           }}
           onClose={handleMicrophonePopoverClose}
-          // onMouseLeave={handleMicrophonePopoverClose}
           PaperProps={{
             elevation: 0,
             sx: {
               overflow: "visible",
               marginLeft: "10px",
-              bgcolor: "var(--secondary_blue_color)",
+              bgcolor: "var(--third_blue_color)",
               color: "var(--pure_white_color)",
-              border: "1px solid var(--pure_white_color)",
+              border: "1px solid var(--controls_border_color)",
               "&:before": {
                 content: '""',
                 display: "block",
@@ -299,9 +288,9 @@ export default function MoreSettings() {
                 left: -5,
                 width: 10,
                 height: 10,
-                borderBottom: "1px solid",
-                borderLeft: "1px solid",
-                backgroundColor: "var(--secondary_blue_color)",
+                borderBottom: "1px solid var(--controls_border_color)",
+                borderLeft: "1px solid var(--controls_border_color)",
+                backgroundColor: "var(--third_blue_color)",
                 transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
               },
@@ -318,35 +307,14 @@ export default function MoreSettings() {
                     await chime?.chooseAudioInputDevice(device);
                   }}
                 >
-                  <Avatar
-                    sx={{
-                      height: 22,
-                      width: 22,
-                      backgroundColor:
-                        deviceSwitcherState?.currentAudioInputDevice?.value ===
-                        device.value
-                          ? "var(--color_green)"
-                          : "transparent",
-                      marginRight: 1,
-                    }}
-                  >
-                    <CheckIcon
-                      sx={{
-                        fontSize: "1rem",
-                        color:
-                          deviceSwitcherState?.currentAudioInputDevice
-                            ?.value === device.value
-                            ? "var(--pure_white_color)"
-                            : "transparent",
-                      }}
-                    />
-                  </Avatar>{" "}
-                  {`${device.name}`}
+                  {deviceSwitcherState?.currentAudioInputDevice?.value ===
+                        device.value ? <Icons src={"/icons/check_icon.svg"} height={16} width={16} /> : <Icons src={"/icons/check_icon_black.svg"} height={16} width={16} />}
+                  <ListItem sx={{ padding: "0px 10px", fontSize: "12px" }}>{`${device.name}`}</ListItem>
                 </MenuItem>
               );
             })}
           {!deviceSwitcherState.audioInputDevices?.length && (
-            <MenuItem>
+            <MenuItem sx={{ fontSize: "12px" }} >
               {intl.formatMessage({
                 id: "DeviceSwitcher.noAudioInputPlaceholder",
               })}
@@ -364,6 +332,7 @@ export default function MoreSettings() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
+            fontSize: "12px"
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.speaker" })}
@@ -388,9 +357,9 @@ export default function MoreSettings() {
             sx: {
               overflow: "visible",
               marginLeft: "10px",
-              bgcolor: "var(--secondary_blue_color)",
+              bgcolor: "var(--third_blue_color)",
               color: "var(--pure_white_color)",
-              border: "1px solid var(--pure_white_color)",
+              border: "1px solid var(--controls_border_color)",
               "&:before": {
                 content: '""',
                 display: "block",
@@ -399,9 +368,9 @@ export default function MoreSettings() {
                 left: -5,
                 width: 10,
                 height: 10,
-                borderBottom: "1px solid",
-                borderLeft: "1px solid",
-                backgroundColor: "var(--secondary_blue_color)",
+                borderBottom: "1px solid var(--controls_border_color)",
+                borderLeft: "1px solid var(--controls_border_color)",
+                backgroundColor: "var(--third_blue_color)",
                 transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
               },
@@ -418,35 +387,14 @@ export default function MoreSettings() {
                     await chime?.chooseAudioOutputDevice(device);
                   }}
                 >
-                  <Avatar
-                    sx={{
-                      height: 22,
-                      width: 22,
-                      backgroundColor:
-                        deviceSwitcherState?.currentAudioOutputDevice?.value ===
-                        device.value
-                          ? "var(--color_green)"
-                          : "transparent",
-                      marginRight: 1,
-                    }}
-                  >
-                    <CheckIcon
-                      sx={{
-                        fontSize: "1rem",
-                        color:
-                          deviceSwitcherState?.currentAudioOutputDevice
-                            ?.value === device.value
-                            ? "var(--pure_white_color)"
-                            : "transparent",
-                      }}
-                    />
-                  </Avatar>{" "}
-                  {`${device.name}`}
+                  {deviceSwitcherState?.currentAudioOutputDevice?.value ===
+                        device.value ? <Icons src={"/icons/check_icon.svg"} height={16} width={16} /> : <Icons src={"/icons/check_icon_black.svg"} height={16} width={16} />}
+                  <ListItem sx={{ padding: "0px 10px", fontSize: "12px" }}>{`${device.name}`}</ListItem>
                 </MenuItem>
               );
             })}
           {!deviceSwitcherState.audioOutputDevices?.length && (
-            <MenuItem>
+            <MenuItem sx={{ fontSize: "12px" }}>
               {intl.formatMessage({
                 id: "DeviceSwitcher.noAudioOutputPlaceholder",
               })}
@@ -464,6 +412,7 @@ export default function MoreSettings() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
+            fontSize: "12px"
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.camera" })}
@@ -488,9 +437,9 @@ export default function MoreSettings() {
             sx: {
               overflow: "visible",
               marginLeft: "10px",
-              bgcolor: "var(--secondary_blue_color)",
+              bgcolor: "var(--third_blue_color)",
               color: "var(--pure_white_color)",
-              border: "1px solid var(--pure_white_color)",
+              border: "1px solid var(--controls_border_color)",
               "&:before": {
                 content: '""',
                 display: "block",
@@ -499,9 +448,9 @@ export default function MoreSettings() {
                 left: -5,
                 width: 10,
                 height: 10,
-                borderBottom: "1px solid",
-                borderLeft: "1px solid",
-                backgroundColor: "var(--secondary_blue_color)",
+                borderBottom: "1px solid var(--controls_border_color)",
+                borderLeft: "1px solid var(--controls_border_color)",
+                backgroundColor: "var(--third_blue_color)",
                 transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
               },
@@ -518,42 +467,21 @@ export default function MoreSettings() {
                     await chime?.chooseVideoInputDevice(device);
                   }}
                 >
-                  <Avatar
-                    sx={{
-                      height: 22,
-                      width: 22,
-                      backgroundColor:
-                        deviceSwitcherState?.currentVideoInputDevice?.value ===
-                        device.value
-                          ? "var(--color_green)"
-                          : "transparent",
-                      marginRight: 1,
-                    }}
-                  >
-                    <CheckIcon
-                      sx={{
-                        fontSize: "1rem",
-                        color:
-                          deviceSwitcherState?.currentVideoInputDevice
-                            ?.value === device.value
-                            ? "var(--pure_white_color)"
-                            : "transparent",
-                      }}
-                    />
-                  </Avatar>{" "}
-                  {`${device.name}`}
+                  {deviceSwitcherState?.currentVideoInputDevice?.value ===
+                        device.value ? <Icons src={"/icons/check_icon.svg"} height={16} width={16} /> : <Icons src={"/icons/check_icon_black.svg"} height={16} width={16} />}
+                  <ListItem sx={{ padding: "0px 10px", fontSize: "12px" }}>{`${device.name}`}</ListItem>
                 </MenuItem>
               );
             })}
           {!deviceSwitcherState.videoInputDevices?.length && (
-            <MenuItem>
+            <MenuItem sx={{ fontSize: "12px" }}>
               {intl.formatMessage({
                 id: "DeviceSwitcher.noVideoInputPlaceholder",
               })}
             </MenuItem>
           )}
         </Popover>
-        <Divider />
+        <Divider className={"Controls_diveder"} />
         <MenuItem
           onClick={(event) => {
             handleVideoQualityPopoverOpen(event);
@@ -564,6 +492,7 @@ export default function MoreSettings() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
+            fontSize: "12px"
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.videoQuality" })}
@@ -588,9 +517,9 @@ export default function MoreSettings() {
             sx: {
               overflow: "visible",
               marginLeft: "10px",
-              bgcolor: "var(--secondary_blue_color)",
+              bgcolor: "var(--third_blue_color)",
               color: "var(--pure_white_color)",
-              border: "1px solid var(--pure_white_color)",
+              border: "1px solid var(--controls_border_color)",
               "&:before": {
                 content: '""',
                 display: "block",
@@ -599,9 +528,9 @@ export default function MoreSettings() {
                 left: -5,
                 width: 10,
                 height: 10,
-                borderBottom: "1px solid",
-                borderLeft: "1px solid",
-                backgroundColor: "var(--secondary_blue_color)",
+                borderBottom: "1px solid var(--controls_border_color)",
+                borderLeft: "1px solid var(--controls_border_color)",
+                backgroundColor: "var(--third_blue_color)",
                 transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
               },
@@ -645,33 +574,13 @@ export default function MoreSettings() {
                   }
                 }}
               >
-                <Avatar
-                  sx={{
-                    height: 22,
-                    width: 22,
-                    backgroundColor:
-                      selectedQuality?.name === quality.name
-                        ? "var(--color_green)"
-                        : "transparent",
-                    marginRight: 1,
-                  }}
-                >
-                  <CheckIcon
-                    sx={{
-                      fontSize: "1rem",
-                      color:
-                        selectedQuality?.name === quality.name
-                          ? "var(--pure_white_color)"
-                          : "transparent",
-                    }}
-                  />
-                </Avatar>{" "}
-                {`${quality.name}`}
+                {selectedQuality?.name === quality.name ? <Icons src={"/icons/check_icon.svg"} height={16} width={16} /> : <Icons src={"/icons/check_icon_black.svg"} height={16} width={16} />}
+                <ListItem sx={{ padding: "0px 10px", fontSize: "12px" }}>{`${quality.name}`}</ListItem>
               </MenuItem>
             );
           })}
           {!deviceSwitcherState.videoInputDevices?.length && (
-            <MenuItem>
+            <MenuItem sx={{ fontSize: "12px" }}>
               {intl.formatMessage({
                 id: "DeviceSwitcher.noVideoInputPlaceholder",
               })}
@@ -795,8 +704,8 @@ export default function MoreSettings() {
             {intl.formatMessage({ id: "DeviceSwitcher.allParticipants" })}
           </MenuItem>
         </Popover> */}
-        <Divider />
-        <MenuItem onClick={handleFullScreen}>
+        <Divider className={"Controls_diveder"} />
+        <MenuItem onClick={handleFullScreen} sx={{ fontSize: "12px" }}>
           {enterFullScreen
             ? intl.formatMessage({ id: "Classroom.exitFullScreen" })
             : intl.formatMessage({ id: "Classroom.fullScreen" })}

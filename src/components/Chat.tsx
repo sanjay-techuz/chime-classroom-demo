@@ -3,17 +3,14 @@
 /* eslint-disable  */
 
 import classNames from "classnames/bind";
-import moment from "moment";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { DataMessage } from "amazon-chime-sdk-js";
 import { useIntl } from "react-intl";
 
 import {
-  Avatar,
   Box,
   ListItem,
   ListItemText,
-  ListItemAvatar,
   Paper,
   Typography,
   Tooltip,
@@ -30,10 +27,10 @@ import styles from "./Chat.css";
 import ChatInput from "./ChatInput";
 import MessageTopic from "../enums/MessageTopic";
 import localStorageKeys from "../constants/localStorageKeys.json";
-import { clipBoard, createPrivateChannel, nameInitials } from "../utils";
+import { clipBoard, createPrivateChannel } from "../utils";
 import useRemoteControl from "../hooks/useRemoteControl";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CloseIcon from '@mui/icons-material/Close';
+import Icons from "../custom/Icons";
 
 const cx = classNames.bind(styles);
 var chatPannelOpen = false;
@@ -202,133 +199,23 @@ export default function Chat(props: Props) {
         <Box>
           <ListItem>
             <ListItemText>
-              {intl.formatMessage({ id: "Classroom.chat" })}
+              <span className={cx("Chat_chat_header")}>{intl.formatMessage({ id: "Classroom.chat" })}</span>
             </ListItemText>
-            <ListItemIcon sx={{ justifyContent: "flex-end", color: "var(--pure_white_color)", cursor: "pointer" }} onClick={closeChatPanel}><CloseIcon /></ListItemIcon>
+            <ListItemIcon sx={{ justifyContent: "flex-end", color: "var(--pure_white_color)", cursor: "pointer" }} onClick={closeChatPanel}><Icons src={"/icons/close.svg"} height={15} width={15} /></ListItemIcon>
           </ListItem>
         </Box>
         <Divider
           sx={{
             margin: "auto",
             borderColor: "rgb(77 76 76 / 80%)",
-            borderBottomWidth: "unset",
+            borderBottomWidth: "thin",
             width: "90%",
           }}
         />
-      {/* <Box
-        sx={{
-          width: "100%",
-          height: "10%",
-          display: "flex",
-          alignItems: "center",
-          borderBottom: "1px solid var(--primary_blue_color)",
-        }}
-      >
-        <ImageList
-          sx={{
-            gridAutoFlow: "column",
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(50px,1fr)) !important",
-            gridAutoColumns: "minmax(50px, 1fr)",
-            p: 1,
-            margin: 0,
-          }}
-        >
-          <Badge
-            overlap="circular"
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            badgeContent={
-              <SmallAvatar
-                sx={{
-                  display: publicChannelCnt === 0 ? "none" : "flex",
-                  fontSize: publicChannelCnt <= 99 ? "1rem" : "0.6rem",
-                }}
-                bgcolor={"var(--color_pink)"}
-              >
-                {publicChannelCnt <= 99 ? publicChannelCnt : "99+"}
-              </SmallAvatar>
-            }
-          >
-            <Avatar
-              sx={{
-                bgcolor:
-                  activeChatAttendee === MessageTopic.PublicChannel
-                    ? "var(--color_green)"
-                    : "var(--primary_blue_color)",
-                cursor:"pointer"
-              }}
-              variant="rounded"
-              onClick={() => {
-                setActiveChatAttendee(MessageTopic.PublicChannel);
-                setActiveChannel(MessageTopic.PublicChannel);
-                currentChannel = MessageTopic.PublicChannel;
-                publicChannelCnt = 0;
-                updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
-              }}
-            >
-              {intl.formatMessage({ id: "Chat.all"})}
-            </Avatar>
-          </Badge>
-          {chatAttendeeIds.map((chatAttdId: string) => {
-            const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
-            const initials = nameInitials(rosterAttendee?.name);
-            const msgCount = rosterAttendee?.msgCount
-              ? rosterAttendee?.msgCount
-              : 0;
-            return (
-              <Badge
-                overlap="circular"
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                badgeContent={
-                  <SmallAvatar
-                    sx={{
-                      display: msgCount === 0 ? "none" : "flex",
-                      fontSize: msgCount <= 99 ? "1rem" : "0.6rem",
-                    }}
-                    bgcolor={"var(--color_pink)"}
-                  >
-                    {msgCount <= 99 ? msgCount : "99+"}
-                  </SmallAvatar>
-                }
-              >
-                <Avatar
-                  key={chatAttdId}
-                  sx={{
-                    bgcolor:
-                      activeChatAttendee === chatAttdId
-                        ? "var(--color_green)"
-                        : "var(--primary_blue_color)",
-                        cursor:"pointer"
-                  }}
-                  variant="rounded"
-                  onClick={() => {
-                    setActiveChatAttendee(chatAttdId);
-                    grpCnt = grpCnt - msgCount;
-                    chime?.updateChatMessageCounter(chatAttdId, 0);
-                    setActiveChannel(
-                      createPrivateChannel(localUserId as string, chatAttdId)
-                    );
-                    currentChannel = createPrivateChannel(
-                      localUserId as string,
-                      chatAttdId
-                    );
-                    updateGlobalVar(
-                      "groupChatCounter",
-                      grpCnt + publicChannelCnt
-                    );
-                  }}
-                >
-                  {initials}
-                </Avatar>
-              </Badge>
-            );
-          })}
-        </ImageList>
-      </Box> */}
       <Box
         sx={{
           width: "100%",
-          height: "90%",
+          height: "100%",
           display: "flex",
           flexDirection: "column",
         }}
@@ -345,9 +232,6 @@ export default function Chat(props: Props) {
             }
 
             if (message.senderAttendeeId === localUserId) {
-              const avtr = nameInitials(
-                chime?.roster[message.senderAttendeeId]?.name
-              );
               return (
                 <ListItem
                   key={message.timestampMs}
@@ -355,6 +239,7 @@ export default function Chat(props: Props) {
                   sx={{
                     flexDirection: "row-reverse",
                     alignItems: "flex-start",
+                    padding: 0
                   }}
                   onMouseEnter={() => {
                     const elem = document.getElementsByClassName(`moreButton_${index}`)[0] as HTMLElement;
@@ -365,21 +250,6 @@ export default function Chat(props: Props) {
                     elem.style.opacity = "0";
                   }}
                 >
-                  <ListItemAvatar
-                    sx={{
-                      marginTop: "4px",
-                    }}
-                  >
-                    <Avatar
-                      sx={{
-                        bgcolor: "var(--color_grey)",
-                        color: "var(--pure_white_color)",
-                      }}
-                      variant="circular"
-                    >
-                      {avtr}
-                    </Avatar>
-                  </ListItemAvatar>
                   <ListItemText
                     sx={{ mr: 2, mt: 0, textAlign: "right", fontSize: "14px" }}
                   >
@@ -399,15 +269,17 @@ export default function Chat(props: Props) {
                           whiteSpace: "nowrap",
                           overflow: "hidden",
                           textOverflow: "ellipsis",
+                          fontStyle: "normal",
+                          fontWeight: 500,
+                          fontSize: "10px",
+                          lineHeight: "14px",
+                          letterSpacing: "0.08px",
+                          color: "#FFFFFF"
                         }}
                       >
                         {chime?.roster[message.senderAttendeeId]?.name}
                       </span>
                       </Tooltip>
-                      ,{` `}
-                      <Typography variant="caption">
-                        {moment(message.timestampMs).format("h:mm A")}
-                      </Typography>
                     </div>
                     <Paper
                       elevation={0}
@@ -420,20 +292,22 @@ export default function Chat(props: Props) {
                         sx={{
                           overflowWrap: "anywhere",
                           minWidth: "75px",
+                          display:"flex",
+                          justifyContent: "flex-end"
                         }}
                         variant="body1"
                       >
-                        {messageString}
+                        <div className={cx("Chat_message_string_parent")}><span className={cx("Chat_message_string")}>{messageString}</span></div>
                       </Typography>
                     </Paper>
                   </ListItemText>
-                  <div className={cx(`moreButton_${index}`)} style={{ opacity:0 }} defaultValue={messageString} >
+                  <div className={cx(`moreButton_${index}`)} style={{ opacity:0, padding: "15px" }} defaultValue={messageString} >
                   <Tooltip title={"Copy"} placement="bottom">
                     <IconButton onClick={() => {
                         clipBoard(messageString);                         
                     }} sx={{ padding: "0px !important"}}>
                       <ContentCopyIcon sx={{
-                        height: "20px !important",
+                        height: "12px !important",
                         color: "var(--pure_white_color)"
                       }}/>
                     </IconButton>
@@ -442,9 +316,6 @@ export default function Chat(props: Props) {
                 </ListItem>
               );
             } else {
-              const avtr = nameInitials(
-                chime?.roster[message.senderAttendeeId]?.name
-              );
               return (
                 <ListItem
                   key={message.timestampMs}
@@ -452,6 +323,7 @@ export default function Chat(props: Props) {
                   sx={{
                     flexDirection: "row",
                     alignItems: "flex-start",
+                    padding: 0
                   }}
                   onMouseEnter={() => {
                     const elem = document.getElementsByClassName(`moreButton_${index}`)[0] as HTMLElement;
@@ -462,23 +334,8 @@ export default function Chat(props: Props) {
                     elem.style.opacity = "0";
                   }}
                 >
-                  <ListItemAvatar
-                    sx={{
-                      marginTop: "4px",
-                    }}
-                  >
-                    <Avatar
-                      sx={{
-                      bgcolor: "var(--color_grey)",
-                      color: "var(--pure_white_color)",
-                    }}
-                    variant="circular"
-                    >
-                      {avtr}
-                    </Avatar>
-                  </ListItemAvatar>
                   <ListItemText
-                    sx={{ mr: 2, mt: 0, textAlign: "left", fontSize: "14px" }}
+                    sx={{ ml: 2, mt: 0, textAlign: "left", fontSize: "14px" }}
                   >
                     <div
                       style={{
@@ -488,10 +345,6 @@ export default function Chat(props: Props) {
                         justifyContent: "flex-start",
                       }}
                     >
-                      <Typography variant="caption">
-                        {moment(message.timestampMs).format("h:mm A")}
-                      </Typography>
-                      ,{` `}  
                       <Tooltip title={chime?.roster[message.senderAttendeeId]?.name} placement="bottom">
                       <span
                         style={{
@@ -500,6 +353,12 @@ export default function Chat(props: Props) {
                           whiteSpace: "nowrap",
                           overflow: "hidden",
                           textOverflow: "ellipsis",
+                          fontStyle: "normal",
+                          fontWeight: 500,
+                          fontSize: "10px",
+                          lineHeight: "14px",
+                          letterSpacing: "0.08px",
+                          color: "#FFFFFF"
                         }}
                       >
                         {chime?.roster[message.senderAttendeeId]?.name}
@@ -517,20 +376,22 @@ export default function Chat(props: Props) {
                         sx={{
                           overflowWrap: "anywhere",
                           minWidth: "75px",
+                          display:"flex",
+                          justifyContent: "flex-start"
                         }}
                         variant="body1"
                       >
-                        {messageString}
+                        <div className={cx("Chat_message_string_parent")}><span className={cx("Chat_message_string")}>{messageString}</span></div>
                       </Typography>
                     </Paper>
                   </ListItemText>
-                  <div className={cx(`moreButton_${index}`)} style={{ opacity:0 }} defaultValue={messageString} >
+                  <div className={cx(`moreButton_${index}`)} style={{ opacity:0, padding: "15px"  }} defaultValue={messageString} >
                   <Tooltip title={"Copy"} placement="bottom">
                     <IconButton onClick={() => {
                         clipBoard(messageString);                         
                     }} sx={{ padding: "0px !important"}}>
                       <ContentCopyIcon sx={{
-                        height:"20px !important",
+                        height:"12px !important",
                         color: "var(--pure_white_color)"
                       }}/>
                     </IconButton>

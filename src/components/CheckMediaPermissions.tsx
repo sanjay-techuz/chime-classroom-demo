@@ -403,7 +403,13 @@ export default function CheckMediaPermissions(props: Props) {
     }
   };
   return (
-    <Dialog open={!!showDialog}>
+    <Dialog open={!!showDialog} PaperProps={{
+      style: {
+        backgroundColor: "var(--third_blue_color)",
+        border: "1px solid var(--controls_border_color)",
+        color: "#FFFFFF"
+      }
+    }}>
       <>
       {showDialog && _renderDialogContent()}
       <IconButton 

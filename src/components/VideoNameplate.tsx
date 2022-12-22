@@ -4,6 +4,7 @@
 
 import classNames from "classnames/bind";
 import React from "react";
+import Icons from "../custom/Icons";
 
 import useAttendee from "../hooks/useAttendee";
 import styles from "./VideoNameplate.css";
@@ -32,9 +33,9 @@ export default React.memo(function VideoNameplate(props: Props) {
     >
       <div className={cx("VideoNameplate_muted")}>
         {muted ? (
-          <i className="fas fa-microphone-slash" />
+          <Icons src={"/icons/microphone_red_small.svg"} height={11} width={10} />
         ) : (
-          <i className="fas fa-microphone" />
+          <Icons src={"/icons/microphone_on_grey.svg"} height={11} width={7} />
         )}
       </div>
       <div className={cx("VideoNameplate_name")}>{name}</div>

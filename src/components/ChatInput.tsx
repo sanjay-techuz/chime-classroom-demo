@@ -8,12 +8,10 @@ import { useIntl } from "react-intl";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
-// import getUIStateContext from "../context/getUIStateContext";
 import styles from "./ChatInput.css";
 import MessageTopic from "../enums/MessageTopic";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
-import CheckIcon from "@mui/icons-material/Check";
-import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
 import {
   Avatar,
   Box,
@@ -27,6 +25,7 @@ import useRoster from "../hooks/useRoster";
 import localStorageKeys from "../constants/localStorageKeys.json";
 import RosterAttendeeType from "../types/RosterAttendeeType";
 import { createPrivateChannel } from "../utils";
+import Icons from "../custom/Icons";
 
 const cx = classNames.bind(styles);
 
@@ -40,7 +39,6 @@ export default React.memo(function ChatInput(props: Props) {
   const { changeChannel, publicChannelCnt } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
 
-  // const [state] = useContext(getUIStateContext());
   const [inputText, setInputText] = useState("");
   const [currentChatter, setCurrentChatter] = useState("Everyone");
   const [activeChatAttendee, setActiveChatAttendee] = useState<string>(
@@ -88,8 +86,9 @@ export default React.memo(function ChatInput(props: Props) {
 
   const emojiPickerVal = useMemo(() => {
     return <EmojiPicker
-    height={300}
-    width={300}
+    height={260}
+    width={260}
+    theme={Theme.DARK}
     onEmojiClick={onClick}
     autoFocusSearch={true}
 />
@@ -101,8 +100,8 @@ export default React.memo(function ChatInput(props: Props) {
       }}>
         {emojiPickerVal}
       </Box>
-      <Box sx={{ height: 70 }}>
-        <Box sx={{ height: "40%" }}>
+      <Box sx={{ height: 50 }}>
+        <Box sx={{ height: "40%", padding: "0px 10px", color: '#5F5F5F', fontSize: "14px" }}>
           <Popover
             anchorOrigin={{
               vertical: "top",
@@ -118,11 +117,11 @@ export default React.memo(function ChatInput(props: Props) {
             PaperProps={{
               elevation: 0,
               sx: {
-                bottom: "90px !important",
+                bottom: "70px !important",
                 top: "initial !important",
-                bgcolor: "var(--secondary_blue_color)",
+                bgcolor: "var(--third_blue_color)",
                 color: "var(--pure_white_color)",
-                border: "1px solid var(--pure_white_color)",
+                border: "1px solid var(--controls_border_color)",
                 overflow: "visible",
                 "&:before": {
                   content: '""',
@@ -134,9 +133,9 @@ export default React.memo(function ChatInput(props: Props) {
                   height: 10,
                   transform: "translateY(-50%) rotate(45deg)",
                   zIndex: 0,
-                  borderBottom: "1px solid",
-                  borderRight: "1px solid",
-                  backgroundColor: "var(--secondary_blue_color)",
+                  borderBottom: "1px solid var(--controls_border_color)",
+                  borderRight: "1px solid var(--controls_border_color)",
+                  backgroundColor: "var(--third_blue_color)",
                 },
               },
             }}
@@ -150,28 +149,8 @@ export default React.memo(function ChatInput(props: Props) {
                 changeChannel(MessageTopic.PublicChannel, "", 0);
               }}
             >
-               <Avatar
-                    sx={{
-                      height: 20,
-                      width: 20,
-                      backgroundColor:
-                      activeChatAttendee === MessageTopic.PublicChannel
-                          ? "var(--color_green)"
-                          : "transparent",
-                      marginRight: 1,
-                    }}
-                  >
-                    <CheckIcon
-                      sx={{
-                        fontSize: "1rem",
-                        color:
-                        activeChatAttendee === MessageTopic.PublicChannel
-                            ? "var(--pure_white_color)"
-                            : "transparent",
-                      }}
-                    />
-                  </Avatar>{" "}
-              <ListItem sx={{ padding: "0px 10px" }}>Everyone</ListItem>
+              {activeChatAttendee === MessageTopic.PublicChannel ? <Icons src={"/icons/check_icon.svg"} height={16} width={16} /> : <Icons src={"/icons/check_icon_black.svg"} height={16} width={16} />}
+              <ListItem sx={{ padding: "0px 10px", fontSize: "12px" }}>Everyone</ListItem>
               <Avatar
                 sx={{
                   backgroundColor: "var(--color_pink)",
@@ -201,28 +180,8 @@ export default React.memo(function ChatInput(props: Props) {
                     changeChannel("private", chatAttdId, msgCount);
                   }}
                 >
-                <Avatar
-                    sx={{
-                      height: 20,
-                      width: 20,
-                      backgroundColor:
-                      activeChatAttendee === chatAttdId
-                          ? "var(--color_green)"
-                          : "transparent",
-                      marginRight: 1,
-                    }}
-                  >
-                    <CheckIcon
-                      sx={{
-                        fontSize: "1rem",
-                        color:
-                        activeChatAttendee === chatAttdId
-                            ? "var(--pure_white_color)"
-                            : "transparent",
-                      }}
-                    />
-                  </Avatar>{" "}
-                  <ListItem sx={{ padding: "0px 10px" }}>
+                  {activeChatAttendee === chatAttdId ? <Icons src={"/icons/check_icon.svg"} height={16} width={16} /> : <Icons src={"/icons/check_icon_black.svg"} height={16} width={16} />}
+                  <ListItem sx={{ padding: "0px 10px", fontSize: "12px" }}>
                     {rosterAttendee?.name}
                   </ListItem>
                   <Avatar
@@ -240,21 +199,21 @@ export default React.memo(function ChatInput(props: Props) {
               );
             })}
           </Popover>
-          To: <Button onClick={handleClick}>{currentChatter}</Button>
+          To: <Button sx={{ padding: 0, color: "#FFF", textTransform: "none", fontSize: "14px" }} onClick={handleClick}>{currentChatter} ^</Button>
           <IconButton
             onClick={() => setOpenEmojiPicker(!openEmojiPicker)}
             color="inherit"
             sx={{
               position: "absolute",
-              right: "40px",
-              width: "25px",
-              height: "25px",
+              right: "20px",
+              width: "20px",
+              height: "20px",
               color: " #FFF",
               cursor: "pointer",
               padding: 0,
             }}
           >
-            <EmojiEmotionsOutlinedIcon />
+            <EmojiEmotionsOutlinedIcon sx={{fontSize: "14px"}} />
           </IconButton>
  
         </Box>

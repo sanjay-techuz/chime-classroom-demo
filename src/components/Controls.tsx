@@ -20,35 +20,17 @@ import {
   Popover,
   Tooltip,
 } from "@mui/material";
-// import AutoModeIcon from "@mui/icons-material/AutoMode";
-import KeyboardVoiceOutlinedIcon from "@mui/icons-material/KeyboardVoiceOutlined";
-import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
-import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
-import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
-import ScreenShareOutlinedIcon from "@mui/icons-material/ScreenShareOutlined";
-import StopScreenShareOutlinedIcon from "@mui/icons-material/StopScreenShareOutlined";
-import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-// import RadioButtonCheckedOutlinedIcon from "@mui/icons-material/RadioButtonCheckedOutlined";
-import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
-import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
-import CommentIcon from "@mui/icons-material/Comment";
-import PanToolIcon from "@mui/icons-material/PanTool";
-import PanToolOutlinedIcon from "@mui/icons-material/PanToolOutlined";
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import routes from "../constants/routes.json";
-// import common from "../constants/common.json";
 import getChimeContext from "../context/getChimeContext";
-// import getUIStateContext from "../context/getUIStateContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
 import ClassMode from "../enums/ClassMode";
-// import ViewMode from "../enums/ViewMode";
-// import MessageTopic from "../enums/MessageTopic";
-// import { startRecording, stopRecording } from "../services";
 import SmallAvatar from "../custom/roster/SmallAvatar";
 import { attendanceWenhook } from "../services";
 import MoreSettings from "./MoreSettings";
 import styles from "./Controls.css";
 import MessageTopic from "../enums/MessageTopic";
+import Icons from "../custom/Icons";
 
 const cx = classNames.bind(styles);
 let timeoutId: number;
@@ -84,16 +66,12 @@ export default function Controls(props: Props) {
     classMode,
     screenSharePermit,
   } = globalVar;
-  // const [state] = useContext(getUIStateContext());
   const history = useHistory();
   const [muted, setMuted] = useState(false);
-  // const [focus, setFocus] = useState(false);
   const [isScreenShared, setIsScreenShared] = useState(false);
   const [openScreenSharePermit, setOpenScreenSharePermit] = useState(false);
   const [onChat, setOnChat] = useState(false);
   const [raised, setRaised] = useState(false);
-  // const [recording, setRecording] = useState(false);
-  // const [mediaPipelineId, setMediaPipelineId] = useState("");
   const [videoStatus, setVideoStatus] = useState(VideoStatus.Disabled);
   const intl = useIntl();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -188,9 +166,7 @@ export default function Controls(props: Props) {
           flexWrap: "wrap",
           alignItems: "center",
           justifyContent: "space-around",
-          m: 1,
-          p: 1,
-          maxWidth: 700,
+          maxWidth: 670,
         }}
       >
         <Tooltip
@@ -217,15 +193,13 @@ export default function Controls(props: Props) {
           >
             {muted ? (
               <>
-                <MicOffOutlinedIcon className={cx("Controls_avtr_size")} />
-                {intl.formatMessage({ id: "Controls.unmuteTooltip" })}
+                <Icons src={"/icons/microphone_off_black.svg"} height={14} width={12} />
+                <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.unmuteTooltip" })}</span>
               </>
             ) : (
               <>
-                <KeyboardVoiceOutlinedIcon
-                  className={cx("Controls_avtr_size")}
-                />
-                {intl.formatMessage({ id: "Controls.muteTooltip" })}
+                <Icons src={"/icons/microphone_on_white.svg"} height={14} width={9} />
+                <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.muteTooltip" })}</span>
               </>
             )}
           </Button>
@@ -265,7 +239,7 @@ export default function Controls(props: Props) {
                 setVideoStatus(VideoStatus.Disabled);
               }
             }}
-            sx={{ width: "100px" }}
+            sx={{ width: "120px" }}
             className={cx(
               videoStatus === VideoStatus.Enabled
                 ? "Controls_btn_active"
@@ -274,13 +248,13 @@ export default function Controls(props: Props) {
           >
             {videoStatus === VideoStatus.Enabled ? (
               <>
-                <VideocamOutlinedIcon className={cx("Controls_avtr_size")} />
-                {intl.formatMessage({ id: "Controls.startVideo" })}
+                <Icons src={"/icons/camera_off_black.svg"} height={12} width={14} />
+                <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.startVideo" })}</span>
               </>
             ) : (
               <>
-                <VideocamOffOutlinedIcon className={cx("Controls_avtr_size")} />
-                {intl.formatMessage({ id: "Controls.stopVideo" })}
+                <Icons src={"/icons/camera_on_white.svg"} height={9} width={14} />
+                <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.stopVideo" })}</span>
               </>
             )}
           </Button>
@@ -295,7 +269,6 @@ export default function Controls(props: Props) {
           placement="bottom"
         >
           <Button
-            sx={{ width: "120px" }}
             onClick={() => {
               if (classMode === ClassMode.Teacher || screenSharePermit) {
                 if (!isScreenShared) {
@@ -308,22 +281,20 @@ export default function Controls(props: Props) {
               }
             }}
             className={cx(
-              isScreenShared ? "Controls_btn_active" : "Controls_btn_not_active"
+              isScreenShared ? "Controls_sc_btn_active" : "Controls_sc_btn_not_active"
             )}
           >
             {isScreenShared ? (
               <>
-                <StopScreenShareOutlinedIcon
-                  className={cx("Controls_avtr_size")}
-                />
-                {intl.formatMessage({
+                <Icons src={"/icons/screen_share_white.svg"} height={12} width={14} />
+                <span className={cx("Controls_margin_right")}>{intl.formatMessage({
                   id: "Controls.shareScreenStopTooltip",
-                })}
+                })}</span>
               </>
             ) : (
               <>
-                <ScreenShareOutlinedIcon className={cx("Controls_avtr_size")} />
-                {intl.formatMessage({ id: "Controls.shareScreenTooltip" })}
+                <Icons src={"/icons/screen_share_black.svg"} height={12} width={14} />
+                <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.shareScreenTooltip" })}</span>
               </>
             )}
           </Button>
@@ -364,13 +335,13 @@ export default function Controls(props: Props) {
             >
               {onChat ? (
                 <>
-                  <CommentOutlinedIcon className={cx("Controls_avtr_size")} />
-                  {intl.formatMessage({ id: "Controls.Chat" })}
+                  <Icons src={"/icons/chat_black.svg"} height={13} width={14} />
+                  <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.Chat" })}</span>
                 </>
               ) : (
                 <>
-                  <CommentIcon className={cx("Controls_avtr_size")} />{" "}
-                  {intl.formatMessage({ id: "Controls.Chat" })}
+                  <Icons src={"/icons/chat.svg"} height={13} width={14} />
+                  <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.Chat" })}</span>
                 </>
               )}
             </Button>
@@ -382,7 +353,7 @@ export default function Controls(props: Props) {
           placement="bottom"
         >
           <Button
-            sx={{ width: "100px" }}
+            sx={{ width: "127px" }}
             onClick={handleDrawerLeftToggle}
             className={cx(
               openParticipants
@@ -390,28 +361,34 @@ export default function Controls(props: Props) {
                 : "Controls_btn_not_active"
             )}
           >
-            <PeopleAltOutlinedIcon className={cx("Controls_avtr_size")} />
-            {intl.formatMessage({ id: "Controls.participants" })}
+            {openParticipants ? <Icons src={"/icons/participants_black.svg"} height={10} width={15} /> : <Icons src={"/icons/participants.svg"} height={10} width={15} /> }
+            <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.participants" })}</span>
           </Button>
         </Tooltip>
 
         <MoreSettings />
 
         <Dialog
+        PaperProps={{
+          style: {
+            backgroundColor: "var(--third_blue_color)",
+            border: "1px solid var(--controls_border_color)"
+          }
+        }}
           open={openScreenSharePermit}
           onClose={handleCloseScreenShareDialog}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" sx={{ color: "#FFFFFF"}}>
               {intl.formatMessage({
                 id: "Controls.screenSharePermitDialogMessage",
               })}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseScreenShareDialog} autoFocus>
+            <Button sx={{ color: "#FFFFFF"}} onClick={handleCloseScreenShareDialog} autoFocus>
               {intl.formatMessage({ id: "Controls.dialogOk" })}
             </Button>
           </DialogActions>
@@ -425,8 +402,6 @@ export default function Controls(props: Props) {
           flexWrap: "wrap",
           alignItems: "center",
           justifyContent: "space-around",
-          m: 1,
-          p: 1,
           maxWidth: "120px",
           position: "absolute",
           right: 0,
@@ -444,40 +419,26 @@ export default function Controls(props: Props) {
           <Avatar
             sx={raised ? {
               bgcolor: "var(--pure_white_color)",
-              border: "1px solid var(--secondary_blue_color)",
-              color: "var(--secondary_blue_color)",
+              border: "1px solid var(--controls_border_color)",
+              color: "var(--third_blue_color)",
               cursor: "pointer",
+              width: 32,
+              height: 32
             } : {
-              bgcolor: "var(--secondary_blue_color)",
-              border: "1px solid var(--pure_white_color)",
+              bgcolor: "var(--third_blue_color)",
+              border: "1px solid var(--controls_border_color)",
               color: "var(--pure_white_color)",
               cursor: "pointer",
+              width: 32,
+              height: 32
             }}
             onClick={() => {
               setRaised(!raised);
             }}
           >
-            {raised ? <PanToolIcon /> : <PanToolOutlinedIcon />}
+            {raised ? <Icons src={"/icons/hand.svg"} height={20} width={20} /> : <Icons src={"/icons/hand_white.svg"} height={20} width={20} />}
           </Avatar>
           </Tooltip>
-          // <button
-          //   type="button"
-          //   className={cx("raiseHandButton", {
-          //     raised,
-          //   })}
-          //   onClick={() => {
-          //     setRaised(!raised);
-          //   }}
-          // >
-          //   <span
-          //     role="img"
-          //     aria-label={intl.formatMessage({
-          //       id: "ChatInput.raiseHandAriaLabel",
-          //     })}
-          //   >
-          //     ✋
-          //   </span>
-          // </button>
         )}
         <Popover
           anchorOrigin={{
@@ -496,9 +457,9 @@ export default function Controls(props: Props) {
             sx: {
               bottom: "75px !important",
               top: "initial !important",
-              bgcolor: "var(--secondary_blue_color)",
+              bgcolor: "var(--third_blue_color)",
               color: "var(--pure_white_color)",
-              border: "1px solid var(--pure_white_color)",
+              border: "1px solid var(--controls_border_color)",
               overflow: "visible",
               "&:before": {
                 content: '""',
@@ -510,25 +471,26 @@ export default function Controls(props: Props) {
                 height: 10,
                 transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
-                borderBottom: "1px solid",
-                borderRight: "1px solid",
-                backgroundColor: "var(--secondary_blue_color)",
+                borderBottom: "1px solid var(--controls_border_color)",
+                borderRight: "1px solid var(--controls_border_color)",
+                backgroundColor: "var(--third_blue_color)",
               },
             },
           }}
         >
           {classMode === ClassMode.Teacher && (
             <MenuItem
+              sx={{ fontSize: "12px" }}
               onClick={() => {
                 chime?.leaveRoom(true);
                 history.push(`${routes.MAIN}?id=${userInfo.teacherId}`);
-                // window.location.href = `${common.domain}complete?id=${userInfo.teacherId}`;
               }}
             >
               {intl.formatMessage({ id: "Controls.EndMeeting" })}
             </MenuItem>
           )}
           <MenuItem
+            sx={{ fontSize: "12px" }}
             onClick={async () => {
               if (classMode !== ClassMode.Teacher) {
                 const webhookRes = {
@@ -544,7 +506,6 @@ export default function Controls(props: Props) {
               }
               chime?.leaveRoom(false);
               history.push(routes.MAIN);
-              // window.location.href = `${common.domain}complete`;
             }}
           >
             {intl.formatMessage({ id: "Controls.LeaveMeeting" })}
@@ -562,12 +523,13 @@ export default function Controls(props: Props) {
             onClick={handleClick}
             sx={{
               bgcolor: "var(--color_thunderbird)",
-              // border: "1px solid var(--pure_white_color)",
               color: "var(--pure_white_color)",
               cursor: "pointer",
+              width: 32,
+              height: 32
             }}
           >
-            <CallOutlinedIcon />
+            <Icons src={"/icons/endmeeting.svg"} height={15} width={15} />
           </Avatar>
         </Tooltip>
       </Box>
