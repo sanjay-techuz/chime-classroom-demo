@@ -29,20 +29,18 @@ export default function RemoteVideo(props: Props) {
     attendeeId,
     raisedHand,
     activeSpeaker,
-    view
+    view,
   } = props;
   return (
     <div
       className={cx("RemoteVideo_remoteVideo", {
         enabled,
         activeSpeaker,
-        activeSpeakerViewMode: view === "activeSpeaker"
+        activeSpeakerViewMode: view === "activeSpeaker",
       })}
     >
       <video muted ref={videoElementRef} className={cx("RemoteVideo_video")} />
-      <VideoNameplate
-        attendeeId={attendeeId}
-      />
+      <VideoNameplate attendeeId={attendeeId} />
       {raisedHand && (
         <div className={cx("RemoteVideo_raisedHand")}>
           <span
@@ -51,7 +49,7 @@ export default function RemoteVideo(props: Props) {
               id: "RemoteVideo.raiseHandAriaLabel",
             })}
           >
-          <Icons src={"/icons/hand_yellow.svg"} height={20} width={20} />
+            <Icons src={"/icons/hand_yellow.svg"} />
           </span>
         </div>
       )}

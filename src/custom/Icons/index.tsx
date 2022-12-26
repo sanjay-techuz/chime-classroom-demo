@@ -6,20 +6,13 @@
 
 import React from "react";
 
-const Icons = ({
-  src,
-  height,
-  width
-}: {
-  src: string;
-  height: number;
-  width: number;
-}) => (
-    <img style={{
-        objectFit: "contain",
-        // height: height,
-        // width: width
-    }} src={src} />
+const Icons = ({ src }: { src: string }) => (
+  <img
+    style={{
+      objectFit: "contain",
+    }}
+    src={src}
+  />
 );
 
 export default Icons;

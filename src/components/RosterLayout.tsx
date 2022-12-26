@@ -29,13 +29,7 @@ type Props = {
 
 export default function RosterLayout(props: Props) {
   const intl = useIntl();
-  const {
-    attendeeId,
-    raisedHand,
-    activeSpeaker,
-    name,
-    view,
-  } = props;
+  const { attendeeId, raisedHand, activeSpeaker, name, view } = props;
   const initials = nameInitials(name);
   const roster = useRoster();
   const rosterAttendee: RosterAttendeeType = roster[attendeeId];
@@ -51,11 +45,7 @@ export default function RosterLayout(props: Props) {
       {view === "activeSpeaker" ? (
         <>
           <Typography
-            sx={{
-              fontSize: "16px !important",
-              lineHeight: "24px !important",
-              textTransform: "capitalize",
-            }}
+            className={cx("Mui_roster_layout_active_speaker_typography")}
           >
             {rosterAttendee?.name}
           </Typography>
@@ -68,46 +58,33 @@ export default function RosterLayout(props: Props) {
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             badgeContent={
               <SmallAvatar
-                sx={{ width: "2rem", height: "2rem" }}
+                className={cx("Mui_roster_layout_badge_small_avatar")}
                 bgcolor={
                   muted ? "var(--color_pink)" : "var(--secondary_blue_color)"
                 }
               >
                 {muted ? (
-                  <MicOffOutlinedIcon sx={{ fontSize: "14px" }} />
+                  <MicOffOutlinedIcon
+                    className={cx("Mui_roster_layout_fontsize")}
+                  />
                 ) : (
-                  <MicNoneOutlinedIcon sx={{ fontSize: "14px" }} />
+                  <MicNoneOutlinedIcon
+                    className={cx("Mui_roster_layout_fontsize")}
+                  />
                 )}
               </SmallAvatar>
             }
           >
-            <Avatar
-              sx={{
-                width: "100px",
-                height: "100px",
-                backgroundColor: "var(--color_initials_bg)",
-                color: "var(--secondary_blue_color)",
-                textTransform: "capitalize",
-                fontSize: "3rem",
-              }}
-            >
+            <Avatar className={cx("Mui_roster_layout_badge_avatar")}>
               {initials}
             </Avatar>
           </Badge>
-          <Typography
-            sx={{
-              fontStyle: "normal",
-              fontWeight: "500",
-              fontSize: "16px",
-              lineHeight: "24px",
-              letterSpacing: "0.125714px",
-              textTransform: "capitalize",
-              marginTop: "13px"
-            }}
-          >
+          <Typography className={cx("Mui_roster_layout_badge_typography")}>
             {rosterAttendee?.name}
           </Typography>
-          {attendeeId === localStorage.getItem("hostId") && <span className={cx("RosterLayout_host")}>Host</span>}
+          {attendeeId === localStorage.getItem("hostId") && (
+            <span className={cx("RosterLayout_host")}>Host</span>
+          )}
         </>
       )}
 
@@ -119,10 +96,10 @@ export default function RosterLayout(props: Props) {
               id: "RemoteVideo.raiseHandAriaLabel",
             })}
           >
-          <Icons src={"/icons/hand_yellow.svg"} height={20} width={20} />
+            <Icons src={"/icons/hand_yellow.svg"} />
           </span>
         </div>
-      )} 
+      )}
     </div>
   );
 }

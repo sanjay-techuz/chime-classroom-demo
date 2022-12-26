@@ -8,11 +8,7 @@ import Modal from "react-modal";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router-dom";
 
-import {
-  Box,
-  Divider,
-  Drawer,
-} from "@mui/material";
+import { Box, Divider, Drawer } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -65,9 +61,19 @@ export default function Classroom() {
   const locationState = location?.state || null;
 
   useEffect(() => {
-    if(locationState){
-      const { meetingName, meetingID, id, batchId, userName, mode, userID, duration, isRecording }: any = locationState;
-      const teacherId =id;
+    if (locationState) {
+      const {
+        meetingName,
+        meetingID,
+        id,
+        batchId,
+        userName,
+        mode,
+        userID,
+        duration,
+        isRecording,
+      }: any = locationState;
+      const teacherId = id;
       const info = {
         teacherId,
         meetingID,
@@ -77,29 +83,35 @@ export default function Classroom() {
         mode,
         userID,
         duration,
-        isRecording
-      }
-      updateGlobalVar("userInfo",info);
-      if(mode){
-        updateGlobalVar("classMode", mode === "mp" ? ClassMode.Teacher : ClassMode.Student);
+        isRecording,
+      };
+      updateGlobalVar("userInfo", info);
+      if (mode) {
+        updateGlobalVar(
+          "classMode",
+          mode === "mp" ? ClassMode.Teacher : ClassMode.Student
+        );
       }
     }
-  },[locationState]);
+  }, [locationState]);
 
   useEffect(() => {
-    if(localStorage.getItem("screenSharePermit")){
-      updateGlobalVar("screenSharePermit",JSON.parse(localStorage.getItem("screenSharePermit") as string));
+    if (localStorage.getItem("screenSharePermit")) {
+      updateGlobalVar(
+        "screenSharePermit",
+        JSON.parse(localStorage.getItem("screenSharePermit") as string)
+      );
     }
     if (window.innerWidth < 1100) {
       setIsMobileView(true);
-      updateGlobalVar("isMobileView",true);
+      updateGlobalVar("isMobileView", true);
     } else {
       setIsMobileView(false);
-      updateGlobalVar("isMobileView",false);
+      updateGlobalVar("isMobileView", false);
     }
     return () => {
       resizeTo = 0;
-    };  
+    };
   }, []);
 
   const stopContentShare = async () => {
@@ -128,8 +140,7 @@ export default function Classroom() {
     [viewMode]
   );
 
-
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     useEffect(() => {
       // Recommend using "onbeforeunload" over "addEventListener"
       window.onbeforeunload = async (event: BeforeUnloadEvent) => {
@@ -138,17 +149,17 @@ export default function Classroom() {
         event.preventDefault();
         event.returnValue = true;
         try {
-          const {meetingID, batchId, mode, userID }: any = location.state;
-          if(mode !== "mp"){
+          const { meetingID, batchId, mode, userID }: any = location.state;
+          if (mode !== "mp") {
             const webhookRes = {
               meetingId: meetingID,
               internal_meeting_id: chime?.meetingId || "",
               user_id: userID,
               batch_id: batchId,
-              isJoin: false
-            }
-            
-            console.log("🏣🏣🏣🏣",webhookRes)
+              isJoin: false,
+            };
+
+            console.log("🏣🏣🏣🏣", webhookRes);
             await attendanceWenhook(webhookRes);
           }
           await chime?.leaveRoom(false);
@@ -166,9 +177,9 @@ export default function Classroom() {
   }
 
   const handleDrawerLeftToggle = () => {
-    if(openParticipants && !openChat){
+    if (openParticipants && !openChat) {
       closeDrawerRightToggle();
-    }else{
+    } else {
       openDrawerRightToggle();
     }
     setOpenParticipants(!openParticipants);
@@ -185,58 +196,79 @@ export default function Classroom() {
   const updateMobileView = () => {
     if (window.innerWidth < 1100) {
       setIsMobileView(true);
-      updateGlobalVar("isMobileView",true);
+      updateGlobalVar("isMobileView", true);
     } else {
       setIsMobileView(false);
-      updateGlobalVar("isMobileView",false);
+      updateGlobalVar("isMobileView", false);
     }
-  }
+  };
 
   window.addEventListener("resize", () => {
     // We execute the same script as before
-    if(resizeTo) clearTimeout(resizeTo);
+    if (resizeTo) clearTimeout(resizeTo);
     resizeTo = window.setTimeout(() => updateMobileView(), 500);
-
   });
 
-
   useEffect(() => {
-    if(openChat){
+    if (openChat) {
       updateGlobalVar("isChatOpen", true);
-    }else{
+    } else {
       updateGlobalVar("isChatOpen", false);
     }
-  },[openChat])
+  }, [openChat]);
 
+  // OBSERVE INTERNET CONNECTION
+  const observer = {
+    connectionDidBecomePoor: () => {
+      notifDispatch({
+        type: NotifType.POOR_INTERNET_CONNECTION,
+        payload: {
+          message: intl.formatMessage({ id: "Classroom.poorConnection" }),
+        },
+      });
+      setTimeout(() => {
+        notifDispatch({
+          type: NotifType.REMOVE_POOR_INTERNET_CONNECTION,
+          payload: "POOR_INTERNET_CONNECTION",
+        });
+      }, 15000);
+    },
+    connectionDidSuggestStopVideo: () => {
+      notifDispatch({
+        type: NotifType.POOR_INTERNET_CONNECTION,
+        payload: {
+          message: intl.formatMessage({ id: "Classroom.poorConnection" }),
+        },
+      });
+      setTimeout(() => {
+        notifDispatch({
+          type: NotifType.REMOVE_POOR_INTERNET_CONNECTION,
+          payload: "POOR_INTERNET_CONNECTION",
+        });
+      }, 15000);
+    },
+    videoSendDidBecomeUnavailable: () => {
+      // Chime SDK allows a total of 25 simultaneous videos per meeting.
+      // If you try to share more video, this method will be called.
+      // See videoAvailabilityDidChange below to find out when it becomes available.
+      notifDispatch({
+        type: NotifType.POOR_INTERNET_CONNECTION,
+        payload: {
+          message: intl.formatMessage({
+            id: "Classroom.videoTileLimitExceeded",
+          }),
+        },
+      });
+      setTimeout(() => {
+        notifDispatch({
+          type: NotifType.REMOVE_POOR_INTERNET_CONNECTION,
+          payload: "POOR_INTERNET_CONNECTION",
+        });
+      }, 10000);
+    },
+  };
 
-
-    // OBSERVE INTERNET CONNECTION
-    const observer = {
-      connectionDidBecomePoor: () => {
-        notifDispatch({ type: NotifType.POOR_INTERNET_CONNECTION, payload: { message: intl.formatMessage({ id: "Classroom.poorConnection" })} });
-        setTimeout(() => {
-          notifDispatch({ type: NotifType.REMOVE_POOR_INTERNET_CONNECTION, payload: 'POOR_INTERNET_CONNECTION' });
-        }, 15000);
-      },
-      connectionDidSuggestStopVideo: () => {
-        notifDispatch({ type: NotifType.POOR_INTERNET_CONNECTION, payload: { message: intl.formatMessage({ id: "Classroom.poorConnection" })} });
-        setTimeout(() => {
-          notifDispatch({ type: NotifType.REMOVE_POOR_INTERNET_CONNECTION, payload: 'POOR_INTERNET_CONNECTION' });
-        }, 15000);
-      },
-      videoSendDidBecomeUnavailable: () => {
-        // Chime SDK allows a total of 25 simultaneous videos per meeting.
-        // If you try to share more video, this method will be called.
-        // See videoAvailabilityDidChange below to find out when it becomes available.
-        notifDispatch({ type: NotifType.POOR_INTERNET_CONNECTION, payload: { message: intl.formatMessage({ id: "Classroom.videoTileLimitExceeded" })} });
-        setTimeout(() => {
-          notifDispatch({ type: NotifType.REMOVE_POOR_INTERNET_CONNECTION, payload: 'POOR_INTERNET_CONNECTION' });
-        }, 10000);
-      },
-    };
-  
-    chime?.audioVideo?.addObserver(observer);
-
+  chime?.audioVideo?.addObserver(observer);
 
   return (
     <>
@@ -247,26 +279,18 @@ export default function Classroom() {
         }}
       />
       {tryToReload && (
-        <Box
-          sx={{
-            display: "flex",
-            width: "100%",
-            height: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <Box className={cx("Mui_classroom_parent_container")}>
           {meetingStatus === MeetingStatus.Loading && <LoadingSpinner />}
           {meetingStatus === MeetingStatus.Failed && (
             <Error errorMessage={errorMessage} />
           )}
           {meetingStatus === MeetingStatus.Succeeded && (
-            <Box sx={{ display: "flex", width: "100%", height: "100%" }}>
+            <Box className={cx("Mui_classroom_child_container")}>
               <Box
                 component="nav"
                 sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
                 aria-label="mailbox folders"
-              >                
+              >
                 <Main
                   rightopen={rightDrawerOpen}
                   mobileview={isMobileView}
@@ -277,19 +301,19 @@ export default function Classroom() {
                       className={cx("ClassRoom_contentVideoWrapper", {
                         isContentShareEnabled,
                         screenShareView: !isScreenShareView,
-                        rightDrawerOpen
-                      })}                    
+                        rightDrawerOpen,
+                      })}
                     >
                       <ContentVideo
                         onContentShareEnabled={onContentShareEnabled}
                       />
                     </div>
                     <div className={cx("ClassRoom_remoteVideoGroupWrapper")}>
-                      <RosterSliderView 
+                      <RosterSliderView
                         isContentShareEnabled={isContentShareEnabled}
                         isScreenShareView={isScreenShareView}
                         rightDrawerOpen={rightDrawerOpen}
-                      /> 
+                      />
                     </div>
                   </div>
                 </Main>
@@ -299,7 +323,7 @@ export default function Classroom() {
                   sx={{
                     "& .MuiDrawer-paper": {
                       boxSizing: "border-box",
-                        width: `calc(${drawerWidth}px - 16px)`,
+                      width: `calc(${drawerWidth}px - 16px)`,
                       right: "8px",
                       top: "8px",
                       bottom: "8px",
@@ -308,7 +332,7 @@ export default function Classroom() {
                       height: "calc(100% - 16px)",
                       overflow: "hidden",
                       backgroundColor: "var(--third_blue_color) !important",
-                      color: "var(--pure_white_color) !important"
+                      color: "var(--pure_white_color) !important",
                     },
                   }}
                   open={rightDrawerOpen}
@@ -318,32 +342,39 @@ export default function Classroom() {
                     closeDrawerRightToggle();
                   }}
                 >
-                  <div style={{ width: "100%", height: "100%" }}>
-                  {openParticipants && <div className={cx({
-                        ClassRoom_chat_open_one: !openChat && openParticipants,
-                        ClassRoom_chat_open_both: openChat && openParticipants
-                    })}>
-                      <Roster closeParticipantsPanel={handleDrawerLeftToggle}/>
-                    </div>}
-                    <Divider sx={{
-                      margin: "auto",
-                      borderColor: "rgb(77 76 76 / 80%)",
-                      borderBottomWidth: "thin",
-                    }}/>
+                  <div className={cx("Mui_classroom_drawer_container_div")}>
+                    {openParticipants && (
+                      <div
+                        className={cx({
+                          ClassRoom_chat_open_one:
+                            !openChat && openParticipants,
+                          ClassRoom_chat_open_both:
+                            openChat && openParticipants,
+                        })}
+                      >
+                        <Roster
+                          closeParticipantsPanel={handleDrawerLeftToggle}
+                        />
+                      </div>
+                    )}
+                    <Divider className={cx("Mui_classroom_header_divider")} />
                     <div
                       className={cx("ClassRoom_chat_parent_div", {
                         ClassRoom_chat_parent_div_open: openChat,
                         ClassRoom_chat_parent_div_close: !openChat,
                         ClassRoom_chat_open_one: openChat && !openParticipants,
-                        ClassRoom_chat_open_both: openChat && openParticipants
+                        ClassRoom_chat_open_both: openChat && openParticipants,
                       })}
                     >
-                      <Chat openParticipants={openParticipants} closeChatPanel={() => {
-                        if(!openParticipants){
-                        closeDrawerRightToggle();
-                      }
-                      setOpenChat(false);
-                      }} />
+                      <Chat
+                        openParticipants={openParticipants}
+                        closeChatPanel={() => {
+                          if (!openParticipants) {
+                            closeDrawerRightToggle();
+                          }
+                          setOpenChat(false);
+                        }}
+                      />
                     </div>
                   </div>
                 </Drawer>
@@ -352,7 +383,7 @@ export default function Classroom() {
                 position="fixed"
                 rightopen={rightDrawerOpen}
                 anchor="bottom"
-                sx={{ height: "50px", width: `calc(100% - 16px)` }}
+                className={cx("Mui_classroom_control_appbar")}
                 mobileview={isMobileView}
                 background={"var(--third_blue_color)"}
                 drawerWidth={drawerWidth}
@@ -376,7 +407,7 @@ export default function Classroom() {
                       openDrawerRightToggle();
                       setOpenChat(true);
                     } else {
-                      if(!openParticipants){
+                      if (!openParticipants) {
                         closeDrawerRightToggle();
                       }
                       setOpenChat(false);

@@ -28,17 +28,15 @@ export default React.memo(function VideoNameplate(props: Props) {
 
   const { name, muted } = attendee;
   return (
-    <div
-      className={cx("VideoNameplate_videoNameplate")}
-    >
+    <div className={cx("VideoNameplate_videoNameplate")}>
       <div className={cx("VideoNameplate_muted")}>
         {muted ? (
-          <Icons src={"/icons/microphone_red_small.svg"} height={11} width={10} />
+          <Icons src={"/icons/microphone_red_small.svg"} />
         ) : (
-          <Icons src={"/icons/microphone_on_grey.svg"} height={11} width={7} />
+          <Icons src={"/icons/microphone_on_grey.svg"} />
         )}
       </div>
       <div className={cx("VideoNameplate_name")}>{name}</div>
     </div>
   );
-})
+});

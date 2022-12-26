@@ -95,69 +95,36 @@ export default function Roster(props: Props) {
 
   return (
     <>
-      <Box
-        sx={{
-          width: "100%",
-          height: "calc(100% - 60px)",
-          maxWidth: 301,
-        }}
-      >
+      <Box className={cx("Mui_roster_parent_container")}>
         <Box>
           <ListItem>
             <ListItemText>
               <span className={cx("Roster_participants")}>
                 {intl.formatMessage({ id: "Roster.users" })}
                 {` (${attendeeIds.length})`}
-                </span>              
+              </span>
             </ListItemText>
             <ListItemIcon
-              sx={{
-                justifyContent: "flex-end",
-                color: "var(--pure_white_color)",
-                cursor: "pointer",
-              }}
+              className={cx("Mui_roster_user_list_item_icon")}
               onClick={closeParticipantsPanel}
             >
-              <Icons src={"/icons/close.svg"} height={15} width={15} />
+              <Icons src={"/icons/close.svg"} />
             </ListItemIcon>
           </ListItem>
         </Box>
-        <Divider
-          sx={{
-            margin: "auto",
-            borderColor: "rgb(77 76 76 / 80%)",
-            borderBottomWidth: "thin",
-            width: "90%",
-          }}
-        />
-        <Box
-          className={cx("Roster_scrollbar")}
-          sx={{
-            width: "100%",
-            height: "calc(100% - 50px)",
-            maxWidth: 301,
-            overflowY: "scroll",
-          }}
-        >
+        <Divider className={cx("Mui_roster_header_divider")} />
+        <Box className={cx("Roster_scrollbar")}>
           {attendeeIds &&
             attendeeIds.map((attendeeId: string) => {
               const rosterAttendee: RosterAttendeeType = roster[attendeeId];
               const initials = nameInitials(rosterAttendee?.name);
               return (
                 <ListItem key={attendeeId} component="div">
-                  <ListItemAvatar sx={{ minWidth: 40 }}>
+                  <ListItemAvatar
+                    className={cx("Mui_roster_attendee_list_item_avatar")}
+                  >
                     <Avatar
-                      sx={{
-                        bgcolor: "var(--color_grey)",
-                        color: "var(--pure_white_color)",
-                        width: 32,
-                        height: 32,
-                        fontStyle: "normal",
-                        fontWeight: "500",
-                        fontSize: "14px",
-                        lineHeight: "24px",
-                        letterSpacing: "0.11px"
-                      }}
+                      className={cx("Mui_roster_attendee__avatar")}
                       variant="circular"
                     >
                       {initials}
@@ -165,45 +132,18 @@ export default function Roster(props: Props) {
                   </ListItemAvatar>
                   <ListItemText
                     primary={
-                      <span
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-start",
-                        }}
-                      >
+                      <span className={cx("Mui_roster_attendee_avatar_span")}>
                         <Tooltip title={rosterAttendee.name} placement="bottom">
                           <Typography
-                            sx={{
-                              width: "100px",
-                              display: "inline-block",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden !important",
-                              textOverflow: "ellipsis",
-                              fontStyle: "normal",
-                              fontWeight: "500",
-                              fontSize: "12px",
-                              lineHeight: "14px",
-                              letterSpacing: 1
-                            }}
+                            className={cx(
+                              "Mui_roster_attendee_avatar_typography"
+                            )}
                           >
                             {rosterAttendee.name}
                           </Typography>
                         </Tooltip>
                         <Typography
-                          sx={{
-                            width: "100px",
-                            display: "inline-block",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden !important",
-                            textOverflow: "ellipsis",
-                            fontStyle: "normal",
-                            fontWeight: 400,
-                            fontSize: "10px",
-                            lineHeight: "14px",
-                            letterSpacing: "0.08px",
-                            color: "#ABABAB"
-                          }}
+                          className={cx("Mui_roster_attendee_host_typography")}
                         >
                           {attendeeId === localUserId
                             ? ` Me${
@@ -219,9 +159,11 @@ export default function Roster(props: Props) {
                         </Typography>
                       </span>
                     }
-                    sx={{ textTransform: "capitalize" }}
+                    className={cx("Mui_roster_attendee_list_item")}
                   />
-                  <ListItemIcon sx={{ minWidth: "30px" }}>
+                  <ListItemIcon
+                    className={cx("Mui_roster_attendee_list_item_icons")}
+                  >
                     {raisedHandAttendees.has(attendeeId) && (
                       <div className={cx("Roster_raisedHand")}>
                         <span
@@ -235,12 +177,14 @@ export default function Roster(props: Props) {
                             }
                           )}
                         >
-                        <Icons src={"/icons/hand_yellow.svg"} height={16} width={16} />
+                          <Icons src={"/icons/hand_yellow.svg"} />
                         </span>
                       </div>
                     )}
                   </ListItemIcon>
-                  <ListItemIcon sx={{ minWidth: "30px" }}>
+                  <ListItemIcon
+                    className={cx("Mui_roster_attendee_list_item_icons")}
+                  >
                     {typeof rosterAttendee.muted === "boolean" &&
                       (classMode === ClassMode.Teacher &&
                       attendeeId !== localUserId ? (
@@ -271,24 +215,26 @@ export default function Roster(props: Props) {
                             }}
                           >
                             {rosterAttendee.muted ? (
-                              <Icons src={"/icons/microphone_off_red.svg"} height={14} width={12} />
+                              <Icons src={"/icons/microphone_off_red.svg"} />
                             ) : (
-                              <Icons src={"/icons/microphone_on_white.svg"} height={14} width={9} />
+                              <Icons src={"/icons/microphone_on_white.svg"} />
                             )}
                           </div>
                         </Tooltip>
                       ) : (
                         <div className={cx("Roster_muted")}>
                           {rosterAttendee.muted ? (
-                            <Icons src={"/icons/microphone_off_red.svg"} height={14} width={12} />
+                            <Icons src={"/icons/microphone_off_red.svg"} />
                           ) : (
-                            <Icons src={"/icons/microphone_on_white.svg"} height={14} width={9} />
+                            <Icons src={"/icons/microphone_on_white.svg"} />
                           )}
                         </div>
                       ))}
                   </ListItemIcon>
 
-                  <ListItemIcon sx={{ minWidth: "30px" }}>
+                  <ListItemIcon
+                    className={cx("Mui_roster_attendee_list_item_icons")}
+                  >
                     {classMode === ClassMode.Teacher &&
                     attendeeId !== localUserId ? (
                       <Tooltip
@@ -315,18 +261,18 @@ export default function Roster(props: Props) {
                           }}
                         >
                           {videoAttendees.has(attendeeId) ? (
-                            <Icons src={"/icons/camera_on_white.svg"} height={14} width={14} />
+                            <Icons src={"/icons/camera_on_white.svg"} />
                           ) : (
-                            <Icons src={"/icons/camera_off_red.svg"} height={14} width={16} />
+                            <Icons src={"/icons/camera_off_red.svg"} />
                           )}
                         </div>
                       </Tooltip>
                     ) : (
                       <div className={cx("Roster_muted")}>
                         {videoAttendees.has(attendeeId) ? (
-                          <Icons src={"/icons/camera_on_white.svg"} height={14} width={14} />
+                          <Icons src={"/icons/camera_on_white.svg"} />
                         ) : (
-                          <Icons src={"/icons/camera_off_red.svg"} height={14} width={16} />
+                          <Icons src={"/icons/camera_off_red.svg"} />
                         )}
                       </div>
                     )}
@@ -368,32 +314,9 @@ export default function Roster(props: Props) {
         </Box>
       </Box>
       {classMode === ClassMode.Teacher && (
-        <Box
-          sx={{
-            width: "100%",
-            bgcolor: "var(--third_blue_color)",
-            position: "absolute",
-            bottom: 8,
-            display: "flex",
-            justifyContent: "space-evenly",
-            zIndex: 10,
-          }}
-        >
+        <Box className={cx("Mui_roster_second_container")}>
           <Button
-            sx={{
-              width: "79px",
-              height: "32px",
-              backgroundColor: "var(--third_blue_color)",
-              color: "var(--pure_white_color)",
-              border: "1px solid var(--controls_border_color)",
-              borderRadius: "19px",
-              textTransform: "none",
-              fontStyle: "normal",
-              fontWeight: 500,
-              fontSize: "12px",
-              lineHeight: "24px",
-              letterSpacing: "0.09px"
-            }}
+            className={cx("Mui_roster_mute_all_btn")}
             onClick={() => {
               chime?.sendMessage(MessageTopic.Focus, {
                 focus: true,
@@ -403,20 +326,7 @@ export default function Roster(props: Props) {
             {intl.formatMessage({ id: "Roster.muteAll" })}
           </Button>
           <Button
-            sx={{
-              width: "112px",
-              height: "32px",
-              backgroundColor: "var(--third_blue_color)",
-              color: "var(--pure_white_color)",
-              border: "1px solid var(--controls_border_color)",
-              borderRadius: "19px",
-              textTransform: "none",
-              fontStyle: "normal",
-              fontWeight: 500,
-              fontSize: "12px",
-              lineHeight: "24px",
-              letterSpacing: "0.09px"
-            }}
+            className={cx("Mui_roster_unmute_all_btn")}
             onClick={() => {
               chime?.sendMessage(MessageTopic.Focus, {
                 focus: false,

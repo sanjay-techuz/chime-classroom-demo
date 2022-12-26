@@ -29,7 +29,7 @@ import MessageTopic from "../enums/MessageTopic";
 import localStorageKeys from "../constants/localStorageKeys.json";
 import { clipBoard, createPrivateChannel } from "../utils";
 import useRemoteControl from "../hooks/useRemoteControl";
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Icons from "../custom/Icons";
 
 const cx = classNames.bind(styles);
@@ -187,40 +187,29 @@ export default function Chat(props: Props) {
   }, [messages, activeChannel]);
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        margin: "auto",
-      }}
-    >
-        <Box>
-          <ListItem>
-            <ListItemText>
-              <span className={cx("Chat_chat_header")}>{intl.formatMessage({ id: "Classroom.chat" })}</span>
-            </ListItemText>
-            <ListItemIcon sx={{ justifyContent: "flex-end", color: "var(--pure_white_color)", cursor: "pointer" }} onClick={closeChatPanel}><Icons src={"/icons/close.svg"} height={15} width={15} /></ListItemIcon>
-          </ListItem>
-        </Box>
-        <Divider
-          sx={{
-            margin: "auto",
-            borderColor: "rgb(77 76 76 / 80%)",
-            borderBottomWidth: "thin",
-            width: "90%",
-          }}
-        />
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <div style={openParticipants ? { maxHeight:"240px"} : {maxHeight: "590px"}} className={cx("Chat_messages")}>
+    <Box className={cx("Mui_chat_parent_container")}>
+      <Box>
+        <ListItem>
+          <ListItemText>
+            <span className={cx("Chat_chat_header")}>
+              {intl.formatMessage({ id: "Classroom.chat" })}
+            </span>
+          </ListItemText>
+          <ListItemIcon
+            className={cx("Mui_chat_header_list_icon")}
+            onClick={closeChatPanel}
+          >
+            <Icons src={"/icons/close.svg"} />
+          </ListItemIcon>
+        </ListItem>
+      </Box>
+      <Divider className={cx("Mui_chat_header_divider")} />
+      <Box className={cx("Mui_chat_child_container")}>
+        <div
+          className={cx("Chat_messages", {
+            Chat_messages_max_height: openParticipants,
+          })}
+        >
           {filterMessage.map((message, index) => {
             let messageString: string = "";
             if (message.topic === MessageTopic.GroupChat) {
@@ -236,82 +225,80 @@ export default function Chat(props: Props) {
                 <ListItem
                   key={message.timestampMs}
                   component="div"
-                  sx={{
-                    flexDirection: "row-reverse",
-                    alignItems: "flex-start",
-                    padding: 0
-                  }}
+                  className={cx("Mui_chat_message_list_item")}
                   onMouseEnter={() => {
-                    const elem = document.getElementsByClassName(`moreButton_${index}`)[0] as HTMLElement;
+                    const elem = document.getElementsByClassName(
+                      `moreButton_${index}`
+                    )[0] as HTMLElement;
                     elem.style.opacity = "1";
                   }}
                   onMouseLeave={() => {
-                    const elem = document.getElementsByClassName(`moreButton_${index}`)[0] as HTMLElement;
+                    const elem = document.getElementsByClassName(
+                      `moreButton_${index}`
+                    )[0] as HTMLElement;
                     elem.style.opacity = "0";
                   }}
                 >
                   <ListItemText
-                    sx={{ mr: 2, mt: 0, textAlign: "right", fontSize: "14px" }}
+                    className={cx("Mui_chat_message_list_item_text")}
                   >
                     <div
-                      style={{
-                        height: "24px",
-                        display: "flex",
-                        alignItems: "flex-end",
-                        justifyContent: "flex-end",
-                      }}
+                      className={cx("Mui_chat_message_list_item_message_div")}
                     >
-                    <Tooltip title={chime?.roster[message.senderAttendeeId]?.name} placement="bottom">
-                      <span
-                        style={{
-                          width: "100px",
-                          display: "inline-block",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          fontStyle: "normal",
-                          fontWeight: 500,
-                          fontSize: "10px",
-                          lineHeight: "14px",
-                          letterSpacing: "0.08px",
-                          color: "#FFFFFF"
-                        }}
+                      <Tooltip
+                        title={chime?.roster[message.senderAttendeeId]?.name}
+                        placement="bottom"
                       >
-                        {chime?.roster[message.senderAttendeeId]?.name}
-                      </span>
+                        <span
+                          className={cx(
+                            "Mui_chat_message_list_item_message_span"
+                          )}
+                        >
+                          {chime?.roster[message.senderAttendeeId]?.name}
+                        </span>
                       </Tooltip>
                     </div>
                     <Paper
                       elevation={0}
-                      sx={{
-                        color: "var(--color_grey)",
-                        backgroundColor: "transparent"
-                      }}
+                      className={cx("Mui_chat_message_list_item_message_paper")}
                     >
                       <Typography
-                        sx={{
-                          overflowWrap: "anywhere",
-                          minWidth: "75px",
-                          display:"flex",
-                          justifyContent: "flex-end"
-                        }}
+                        className={cx(
+                          "Mui_chat_message_list_item_message_typography"
+                        )}
                         variant="body1"
                       >
-                        <div className={cx("Chat_message_string_parent")}><span className={cx("Chat_message_string")}>{messageString}</span></div>
+                        <div className={cx("Chat_message_string_parent")}>
+                          <span className={cx("Chat_message_string")}>
+                            {messageString}
+                          </span>
+                        </div>
                       </Typography>
                     </Paper>
                   </ListItemText>
-                  <div className={cx(`moreButton_${index}`)} style={{ opacity:0, padding: "15px" }} defaultValue={messageString} >
-                  <Tooltip title={"Copy"} placement="bottom">
-                    <IconButton onClick={() => {
-                        clipBoard(messageString);                         
-                    }} sx={{ padding: "0px !important"}}>
-                      <ContentCopyIcon sx={{
-                        height: "12px !important",
-                        color: "var(--pure_white_color)"
-                      }}/>
-                    </IconButton>
-                  </Tooltip>
+                  <div
+                    className={cx(
+                      `moreButton_${index}`,
+                      "Mui_chat_message_list_item_message_more_btn"
+                    )}
+                    defaultValue={messageString}
+                  >
+                    <Tooltip title={"Copy"} placement="bottom">
+                      <IconButton
+                        className={cx(
+                          "Mui_chat_message_list_item_message_more_icon_btn"
+                        )}
+                        onClick={() => {
+                          clipBoard(messageString);
+                        }}
+                      >
+                        <ContentCopyIcon
+                          className={cx(
+                            "Mui_chat_message_list_item_message_copy_icon_btn"
+                          )}
+                        />
+                      </IconButton>
+                    </Tooltip>
                   </div>
                 </ListItem>
               );
@@ -320,82 +307,82 @@ export default function Chat(props: Props) {
                 <ListItem
                   key={message.timestampMs}
                   component="div"
-                  sx={{
-                    flexDirection: "row",
-                    alignItems: "flex-start",
-                    padding: 0
-                  }}
+                  className={cx("Mui_chat_message_left_list_item")}
                   onMouseEnter={() => {
-                    const elem = document.getElementsByClassName(`moreButton_${index}`)[0] as HTMLElement;
+                    const elem = document.getElementsByClassName(
+                      `moreButton_${index}`
+                    )[0] as HTMLElement;
                     elem.style.opacity = "1";
                   }}
                   onMouseLeave={() => {
-                    const elem = document.getElementsByClassName(`moreButton_${index}`)[0] as HTMLElement;
+                    const elem = document.getElementsByClassName(
+                      `moreButton_${index}`
+                    )[0] as HTMLElement;
                     elem.style.opacity = "0";
                   }}
                 >
                   <ListItemText
-                    sx={{ ml: 2, mt: 0, textAlign: "left", fontSize: "14px" }}
+                    className={cx("Mui_chat_message_left_list_item_text")}
                   >
                     <div
-                      style={{
-                        height: "24px",
-                        display: "flex",
-                        alignItems: "flex-end",
-                        justifyContent: "flex-start",
-                      }}
+                      className={cx(
+                        "Mui_chat_message_left_list_item_message_div"
+                      )}
                     >
-                      <Tooltip title={chime?.roster[message.senderAttendeeId]?.name} placement="bottom">
-                      <span
-                        style={{
-                          width: "100px",
-                          display: "inline-block",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          fontStyle: "normal",
-                          fontWeight: 500,
-                          fontSize: "10px",
-                          lineHeight: "14px",
-                          letterSpacing: "0.08px",
-                          color: "#FFFFFF"
-                        }}
+                      <Tooltip
+                        title={chime?.roster[message.senderAttendeeId]?.name}
+                        placement="bottom"
                       >
-                        {chime?.roster[message.senderAttendeeId]?.name}
-                      </span>
-                      </Tooltip>                      
+                        <span
+                          className={cx(
+                            "Mui_chat_message_list_item_message_span"
+                          )}
+                        >
+                          {chime?.roster[message.senderAttendeeId]?.name}
+                        </span>
+                      </Tooltip>
                     </div>
                     <Paper
                       elevation={0}
-                      sx={{
-                        color: "var(--color_grey)",
-                        backgroundColor: "transparent"
-                      }}
+                      className={cx("Mui_chat_message_list_item_message_paper")}
                     >
                       <Typography
-                        sx={{
-                          overflowWrap: "anywhere",
-                          minWidth: "75px",
-                          display:"flex",
-                          justifyContent: "flex-start"
-                        }}
+                        className={cx(
+                          "Mui_chat_message_left_list_item_message_typography"
+                        )}
                         variant="body1"
                       >
-                        <div className={cx("Chat_message_string_parent")}><span className={cx("Chat_message_string")}>{messageString}</span></div>
+                        <div className={cx("Chat_message_string_parent")}>
+                          <span className={cx("Chat_message_string")}>
+                            {messageString}
+                          </span>
+                        </div>
                       </Typography>
                     </Paper>
                   </ListItemText>
-                  <div className={cx(`moreButton_${index}`)} style={{ opacity:0, padding: "15px"  }} defaultValue={messageString} >
-                  <Tooltip title={"Copy"} placement="bottom">
-                    <IconButton onClick={() => {
-                        clipBoard(messageString);                         
-                    }} sx={{ padding: "0px !important"}}>
-                      <ContentCopyIcon sx={{
-                        height:"12px !important",
-                        color: "var(--pure_white_color)"
-                      }}/>
-                    </IconButton>
-                  </Tooltip>
+                  <div
+                    className={cx(
+                      `moreButton_${index}`,
+                      "Mui_chat_message_list_item_message_more_btn"
+                    )}
+                    defaultValue={messageString}
+                  >
+                    <Tooltip title={"Copy"} placement="bottom">
+                      <IconButton
+                        className={cx(
+                          "Mui_chat_message_list_item_message_more_icon_btn"
+                        )}
+                        onClick={() => {
+                          clipBoard(messageString);
+                        }}
+                      >
+                        <ContentCopyIcon
+                          className={cx(
+                            "Mui_chat_message_list_item_message_copy_icon_btn"
+                          )}
+                        />
+                      </IconButton>
+                    </Tooltip>
                   </div>
                 </ListItem>
               );
@@ -405,14 +392,18 @@ export default function Chat(props: Props) {
         </div>
         <div className={cx("Chat_chatInput")}>
           <ChatInput
-          publicChannelCnt={publicChannelCnt}
-            changeChannel={(type: string,chatAttdId: string,msgCount: number) => {
-              if(type === MessageTopic.PublicChannel){
+            publicChannelCnt={publicChannelCnt}
+            changeChannel={(
+              type: string,
+              chatAttdId: string,
+              msgCount: number
+            ) => {
+              if (type === MessageTopic.PublicChannel) {
                 setActiveChannel(MessageTopic.PublicChannel);
                 currentChannel = MessageTopic.PublicChannel;
                 publicChannelCnt = 0;
                 updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
-              }else{
+              } else {
                 grpCnt = grpCnt - msgCount;
                 chime?.updateChatMessageCounter(chatAttdId, 0);
                 setActiveChannel(
@@ -422,10 +413,7 @@ export default function Chat(props: Props) {
                   localUserId as string,
                   chatAttdId
                 );
-                updateGlobalVar(
-                  "groupChatCounter",
-                  grpCnt + publicChannelCnt
-                );
+                updateGlobalVar("groupChatCounter", grpCnt + publicChannelCnt);
               }
             }}
           />

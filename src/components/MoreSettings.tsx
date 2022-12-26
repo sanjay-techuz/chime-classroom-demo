@@ -5,7 +5,14 @@
 import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { Button, Divider, ListItem, MenuItem, Popover, Tooltip } from "@mui/material";
+import {
+  Button,
+  Divider,
+  ListItem,
+  MenuItem,
+  Popover,
+  Tooltip,
+} from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -13,7 +20,6 @@ import getGlobalVarContext from "../context/getGlobalVarContext";
 import useDevices from "../hooks/useDevices";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Icons from "../custom/Icons";
-
 
 export default function MoreSettings() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -195,13 +201,15 @@ export default function MoreSettings() {
         placement="bottom"
       >
         <Button
-            sx={{ width: "80px" }}
-            onClick={handleMenuClick}
-            className={"Controls_btn_not_active"}
-          >
-            <Icons src={"/icons/more.svg"} height={12} width={12} />
-            <span className={"Controls_margin_right"}>{intl.formatMessage({ id: "Controls.menu" })}</span>
-          </Button>
+          sx={{ width: "80px" }}
+          onClick={handleMenuClick}
+          className={"Controls_btn_not_active"}
+        >
+          <Icons src={"/icons/more.svg"} />
+          <span className={"Controls_margin_right"}>
+            {intl.formatMessage({ id: "Controls.menu" })}
+          </span>
+        </Button>
       </Tooltip>
 
       <Popover
@@ -253,7 +261,7 @@ export default function MoreSettings() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            fontSize: "12px"
+            fontSize: "12px",
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.microphone" })}
@@ -308,13 +316,19 @@ export default function MoreSettings() {
                   }}
                 >
                   {deviceSwitcherState?.currentAudioInputDevice?.value ===
-                        device.value ? <Icons src={"/icons/check_icon.svg"} height={16} width={16} /> : <Icons src={"/icons/check_icon_black.svg"} height={16} width={16} />}
-                  <ListItem sx={{ padding: "0px 10px", fontSize: "12px" }}>{`${device.name}`}</ListItem>
+                  device.value ? (
+                    <Icons src={"/icons/check_icon.svg"} />
+                  ) : (
+                    <Icons src={"/icons/check_icon_black.svg"} />
+                  )}
+                  <ListItem
+                    sx={{ padding: "0px 10px", fontSize: "12px" }}
+                  >{`${device.name}`}</ListItem>
                 </MenuItem>
               );
             })}
           {!deviceSwitcherState.audioInputDevices?.length && (
-            <MenuItem sx={{ fontSize: "12px" }} >
+            <MenuItem sx={{ fontSize: "12px" }}>
               {intl.formatMessage({
                 id: "DeviceSwitcher.noAudioInputPlaceholder",
               })}
@@ -332,7 +346,7 @@ export default function MoreSettings() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            fontSize: "12px"
+            fontSize: "12px",
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.speaker" })}
@@ -388,8 +402,14 @@ export default function MoreSettings() {
                   }}
                 >
                   {deviceSwitcherState?.currentAudioOutputDevice?.value ===
-                        device.value ? <Icons src={"/icons/check_icon.svg"} height={16} width={16} /> : <Icons src={"/icons/check_icon_black.svg"} height={16} width={16} />}
-                  <ListItem sx={{ padding: "0px 10px", fontSize: "12px" }}>{`${device.name}`}</ListItem>
+                  device.value ? (
+                    <Icons src={"/icons/check_icon.svg"} />
+                  ) : (
+                    <Icons src={"/icons/check_icon_black.svg"} />
+                  )}
+                  <ListItem
+                    sx={{ padding: "0px 10px", fontSize: "12px" }}
+                  >{`${device.name}`}</ListItem>
                 </MenuItem>
               );
             })}
@@ -412,7 +432,7 @@ export default function MoreSettings() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            fontSize: "12px"
+            fontSize: "12px",
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.camera" })}
@@ -468,8 +488,14 @@ export default function MoreSettings() {
                   }}
                 >
                   {deviceSwitcherState?.currentVideoInputDevice?.value ===
-                        device.value ? <Icons src={"/icons/check_icon.svg"} height={16} width={16} /> : <Icons src={"/icons/check_icon_black.svg"} height={16} width={16} />}
-                  <ListItem sx={{ padding: "0px 10px", fontSize: "12px" }}>{`${device.name}`}</ListItem>
+                  device.value ? (
+                    <Icons src={"/icons/check_icon.svg"} />
+                  ) : (
+                    <Icons src={"/icons/check_icon_black.svg"} />
+                  )}
+                  <ListItem
+                    sx={{ padding: "0px 10px", fontSize: "12px" }}
+                  >{`${device.name}`}</ListItem>
                 </MenuItem>
               );
             })}
@@ -492,7 +518,7 @@ export default function MoreSettings() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            fontSize: "12px"
+            fontSize: "12px",
           }}
         >
           {intl.formatMessage({ id: "DeviceSwitcher.videoQuality" })}
@@ -574,8 +600,14 @@ export default function MoreSettings() {
                   }
                 }}
               >
-                {selectedQuality?.name === quality.name ? <Icons src={"/icons/check_icon.svg"} height={16} width={16} /> : <Icons src={"/icons/check_icon_black.svg"} height={16} width={16} />}
-                <ListItem sx={{ padding: "0px 10px", fontSize: "12px" }}>{`${quality.name}`}</ListItem>
+                {selectedQuality?.name === quality.name ? (
+                  <Icons src={"/icons/check_icon.svg"} />
+                ) : (
+                  <Icons src={"/icons/check_icon_black.svg"} />
+                )}
+                <ListItem
+                  sx={{ padding: "0px 10px", fontSize: "12px" }}
+                >{`${quality.name}`}</ListItem>
               </MenuItem>
             );
           })}

@@ -3,48 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-.Roster_roster {
-  color: var(--color_alabaster);
-  height: 100%;
-  display: flex;
-  overflow-y: scroll;
-  flex-direction: column;
-  position: relative;
-  border-top: 1px solid var(--primary_blue_color);
-}
-
-.Roster_noAttendee {
-  color: var(--color_silver_chalice);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.Roster_attendee {
-  flex: 0 0 3rem;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  height: 3rem;
-  padding: 0 1rem;
-}
-
-.Roster_name {
-  flex: 1 1 auto;
-  white-space: nowrap;
-  overflow: auto;
-  text-overflow: ellipsis;
-}
-
-.Roster_weak-signal {
-  color: var(--color_thunderbird);
-}
-
-.Roster_active-speaker {
-  color: var(--color_green);
-}
-
 .Roster_raisedHand {
   font-size: 1.3rem;
   margin-left: 0.5rem;
@@ -71,7 +29,6 @@
   width: 1.5rem;
 }
 
-
 /* Hide scrollbar for Chrome, Safari and Opera */
 .Roster_scrollbar::-webkit-scrollbar {
   display: none;
@@ -79,8 +36,12 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .Roster_scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  width: 100%;
+  height: calc(100% - 50px);
+  max-width: 301;
+  overflow-y: scroll;
 }
 
 @keyframes shake {
@@ -106,10 +67,127 @@
   }
 }
 
-.Roster_participants{
+.Roster_participants {
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 24px;
-  letter-spacing: 1
+  letter-spacing: 1;
+}
+
+/*  MUI - CLASSES DESIGN OVERRIDE*/
+
+.Mui_roster_parent_container {
+  width: 100% !important;
+  height: calc(100% - 60px) !important;
+  max-width: 301 !important;
+}
+
+.Mui_roster_user_list_item_icon {
+  justify-content: flex-end !important;
+  color: var(--pure_white_color) !important;
+  cursor: pointer !important;
+}
+
+.Mui_roster_header_divider {
+  margin: auto !important;
+  border-color: rgb(77 76 76 / 80%) !important;
+  border-bottom-width: thin !important;
+  width: 90%;
+}
+
+.Mui_roster_attendee_list_item_avatar {
+  min-width: 40px !important;
+}
+
+.Mui_roster_attendee__avatar {
+  background-color: var(--color_grey) !important;
+  color: var(--pure_white_color) !important;
+  width: 32px !important;
+  height: 32px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 24px !important;
+  letter-spacing: 0.11px !important;
+}
+
+.Mui_roster_attendee_avatar_span {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.Mui_roster_attendee_avatar_typography {
+  width: 100px !important;
+  display: inline-block !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  line-height: 14px !important;
+  letter-spacing: 1 !important;
+}
+
+.Mui_roster_attendee_host_typography {
+  width: 100px !important;
+  display: inline-block !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  line-height: 14px !important;
+  color: #ababab !important;
+}
+
+.Mui_roster_attendee_list_item {
+  text-transform: capitalize !important;
+}
+
+.Mui_roster_attendee_list_item_icons {
+  min-width: 30px !important;
+}
+
+.Mui_roster_second_container {
+  width: 100% !important;
+  background-color: var(--third_blue_color) !important;
+  position: absolute !important;
+  bottom: 8px !important;
+  display: flex !important;
+  justify-content: space-evenly !important;
+  z-index: 10 !important;
+}
+
+.Mui_roster_mute_all_btn {
+  width: 79px !important;
+  height: 32px !important;
+  background-color: var(--third_blue_color) !important;
+  color: var(--pure_white_color) !important;
+  border: 1px solid var(--controls_border_color) !important;
+  border-radius: 19px !important;
+  text-transform: none !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  line-height: 24px !important;
+  letter-spacing: 0.09px !important;
+}
+
+.Mui_roster_unmute_all_btn {
+  width: 112px !important;
+  height: 32px !important;
+  background-color: var(--third_blue_color) !important;
+  color: var(--pure_white_color) !important;
+  border: 1px solid var(--controls_border_color) !important;
+  border-radius: 19px !important;
+  text-transform: none !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  line-height: 24px !important;
+  letter-spacing: 0.09px !important;
 }

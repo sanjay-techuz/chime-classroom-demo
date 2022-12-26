@@ -4,124 +4,105 @@
  */
 
 .RosterLayout_remoteVideo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background: var(--secondary_blue_color);
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
-    border-radius: 8px;
-    color: var(--pure_white_color);
-  }
-  
-.RosterLayout_remoteVideo.activeSpeakerViewMode{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--secondary_blue_color);
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  color: var(--pure_white_color);
+}
+
+.RosterLayout_remoteVideo.activeSpeakerViewMode {
   width: 195px;
   height: 105px;
 }
 
-  .RosterLayout_remoteVideo.activeSpeaker {
-    border: 1px solid var(--color_green);
+.RosterLayout_remoteVideo.activeSpeaker {
+  border: 1px solid var(--color_green);
+}
+
+.RosterLayout_host {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.11px;
+  color: #ababab;
+}
+
+.RemoteVideo_raisedHand {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0.25rem;
+  font-size: 2rem;
+  animation: shake 1.22s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  user-select: none;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-0.5px, 0, 0);
   }
 
-  .RosterLayout_host{
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 14px;
-    letter-spacing: 0.11px;
-    color: #ABABAB;
+  20%,
+  80% {
+    transform: translate3d(1px, 0, 0);
   }
 
-  .RosterLayout_initials{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: var(--pure_white_color);
-    color: var(--secondary_blue_color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-transform: capitalize;
-    font-size: 3rem;
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-1.5px, 0, 0);
   }
 
-  .RosterLayout_initials1{
-    animation: tweeder 1s infinite ease;
+  40%,
+  60% {
+    transform: translate3d(1.5px, 0, 0);
   }
-  
-  .RosterLayout_initials2{
-    animation: tweeder1 1s infinite ease;
-  }
-  
-  .RosterLayout_initials3{
-    animation: tweeder2 1s infinite ease;
-  }
+}
 
-  .RosterLayout_initials4{
-    animation: tweeder3 1s infinite ease;
-  }
+/*  MUI - CLASSES DESIGN OVERRIDE*/
 
-  .RosterLayout_initials5{
-    animation: tweeder4 1s infinite ease;
-  }
+.Mui_roster_layout_active_speaker_typography {
+  font-size: 16px !important;
+  line-height: 24px !important;
+  text-transform: capitalize;
+}
 
-  .RosterLayout_initials6{
-    animation: tweeder5 1s infinite ease;
-  }
+.Mui_roster_layout_badge_small_avatar {
+  width: 2rem !important;
+  height: 2rem !important;
+}
 
-  @keyframes tweeder{
-    0%{ transform: scale(1.1) }
-    15%{ transform: scale(1.115) }
-    35%{ transform: scale(1.125)}
-    70%{ transform: scale(1.130) }
-    90%{ transform: scale(1.140) }
-    100%{ transform: scale(1.150) }
-  }
+.Mui_roster_layout_fontsize {
+  font-size: 14px !important;
+}
 
-  @keyframes tweeder1{
-    0%{ transform: scale(1.150) }
-    15%{ transform: scale(1.160) }
-    35%{ transform: scale(1.170)}
-    70%{ transform: scale(1.180) }
-    90%{ transform: scale(1.190) }
-    100%{ transform: scale(1.2) }
-  }
+.Mui_roster_layout_badge_avatar {
+  width: 100px !important;
+  height: 100px !important;
+  background-color: var(--color_initials_bg) !important;
+  color: var(--secondary_blue_color) !important;
+  text-transform: capitalize !important;
+  font-size: 3rem !important;
+}
 
-  @keyframes tweeder2{
-    0%{ transform: scale(1.2) }
-    15%{ transform: scale(1.215) }
-    35%{ transform: scale(1.225)}
-    70%{ transform: scale(1.230) }
-    90%{ transform: scale(1.240) }
-    100%{ transform: scale(1.250) }
-  }
-
-  @keyframes tweeder3{
-    0%{ transform: scale(1.250) }
-    15%{ transform: scale(1.260) }
-    35%{ transform: scale(1.270)}
-    70%{ transform: scale(1.280) }
-    90%{ transform: scale(1.290) }
-    100%{ transform: scale(1.3) }
-  }
-
-  @keyframes tweeder4{
-    0%{ transform: scale(1.3) }
-    15%{ transform: scale(1.315) }
-    35%{ transform: scale(1.325)}
-    70%{ transform: scale(1.330) }
-    90%{ transform: scale(1.340) }
-    100%{ transform: scale(1.350) }
-  }
-
-  @keyframes tweeder5{
-    0%{ transform: scale(1.350) }
-    15%{ transform: scale(1.360) }
-    35%{ transform: scale(1.370)}
-    70%{ transform: scale(1.380) }
-    90%{ transform: scale(1.390) }
-    100%{ transform: scale(1.4) }
-  }
+.Mui_roster_layout_badge_typography {
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  letter-spacing: 0.125714px !important;
+  text-transform: capitalize !important;
+  margin-top: 13px !important;
+}

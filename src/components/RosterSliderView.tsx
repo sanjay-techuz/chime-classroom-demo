@@ -7,6 +7,7 @@ import {
   DefaultActiveSpeakerPolicy,
 } from "amazon-chime-sdk-js";
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import classNames from "classnames/bind";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -20,11 +21,14 @@ import LocalVideo from "./LocalVideo";
 import { Box, Button, IconButton } from "@mui/material";
 import Icons from "../custom/Icons";
 import { countDownTimer } from "../utils/countDownTimer";
-import localStorageKeys from '../constants/localStorageKeys.json';
+import localStorageKeys from "../constants/localStorageKeys.json";
+import styles from "./RosterSliderView.css";
 
 const MAX_REMOTE_VIDEOS = 16;
 let tm: any = 0;
 let contentShareEnabled = false;
+
+const cx = classNames.bind(styles);
 
 type Props = {
   isContentShareEnabled: boolean;
@@ -34,7 +38,7 @@ type Props = {
 export default function RosterSliderView(props: Props) {
   const { isContentShareEnabled, rightDrawerOpen } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  const { globalVar,updateGlobalVar } = useContext(getGlobalVarContext());
+  const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
   const { activeSpeakerAttendeeId } = globalVar;
   const [visibleIndices, setVisibleIndices] = useState<{
     [index: string]: { boundAttendeeId: string };
@@ -51,9 +55,9 @@ export default function RosterSliderView(props: Props) {
   const [maxScrollLength, setMaxScrollLength] = useState(0);
 
   useEffect(() => {
-    if(isContentShareEnabled){
+    if (isContentShareEnabled) {
       setAttendeeIdFullScreen("");
-    }else{
+    } else {
       setAttendeeIdFullScreen(currentUser as string);
     }
     contentShareEnabled = isContentShareEnabled;
@@ -61,18 +65,22 @@ export default function RosterSliderView(props: Props) {
 
   useEffect(() => {
     const mt = document.getElementById("meeting_timer");
-    const meetingStartMeeting = localStorage.getItem(localStorageKeys.MEETING_START_TIME);
-    
-    if(mt){
-      if(!meetingStartMeeting){
+    const meetingStartMeeting = localStorage.getItem(
+      localStorageKeys.MEETING_START_TIME
+    );
+
+    if (mt) {
+      if (!meetingStartMeeting) {
         mt!.innerHTML = "00 min";
-        return
+        return;
       }
-      setInterval(function() {
-        mt.innerHTML = countDownTimer(JSON.parse(meetingStartMeeting) + (58 * 60 * 1000));
-      },1000)
+      setInterval(function () {
+        mt.innerHTML = countDownTimer(
+          JSON.parse(meetingStartMeeting) + 58 * 60 * 1000
+        );
+      }, 1000);
     }
-  },[]);
+  }, []);
 
   useEffect(() => {
     let attdLength = Object.keys(roster).length - 1;
@@ -203,7 +211,6 @@ export default function RosterSliderView(props: Props) {
     });
   }, []);
 
-
   // find the number of attendee join --sanjay balai
   let activeAttendee: any;
   if (chime?.meetingSession && roster) {
@@ -229,252 +236,229 @@ export default function RosterSliderView(props: Props) {
   }
   const attendeeIds = removeSelfAttendeeId(activeAttendee, selfAttendeeId);
   return (
-    <Box
-      sx={{
-        height: "100%",
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      {attendeeIds.length === 0 && <Box sx={{ 
-        height: "100%",
-        width: "100%"
-        }}>
-      <LocalVideo
-          view={"grid"}
-        />
-      </Box>}
+    <Box className={cx("Mui_roster_slider_parent_container")}>
+      {attendeeIds.length === 0 && (
+        <Box className={cx("Mui_roster_slider_local_video_container")}>
+          <LocalVideo view={"grid"} />
+        </Box>
+      )}
 
-        <Box
-          sx={{
-            height: "105px",
-            width: "100%",
-            display: attendeeIds.length === 0 ? "none" : "flex",
-            justifyContent: "center",
+      <Box
+        className={cx("Mui_roster_slider_main_container", {
+          Mui_roster_slider_display_none: attendeeIds.length === 0,
+          Mui_roster_slider_display_flex: attendeeIds.length !== 0,
+        })}
+      >
+        <Button
+          className={cx("Mui_roster_slider_white_color")}
+          disabled={scrollLength >= 796 ? false : true}
+          onClick={() => {
+            let sl = scrollLength;
+            if (scrollLength > 0) {
+              sl = sl - 796;
+              if (sl <= 0) {
+                sl = 0;
+              }
+              setScrollLength(sl);
+            }
+            let element = document.getElementById("tileView");
+            if (element) {
+              element.style.overflow = "scroll";
+              element.scrollLeft = sl;
+              element.style.overflow = "hidden";
+            }
           }}
         >
-          <Button
-            sx={{
-              color: "var(--pure_white_color)",
-            }}
-            disabled={scrollLength >= 796 ? false : true}
-            onClick={() => {
-              let sl = scrollLength;
-              if (scrollLength > 0) {
-                sl = sl - 796;
-                if (sl <= 0) {
-                  sl = 0;
-                }
-                setScrollLength(sl);
-              }
-              let element = document.getElementById("tileView");
-              if (element) {
-                element.style.overflow = "scroll";
-                element.scrollLeft = sl;
-                element.style.overflow = "hidden";
-              }
-            }}
+          <IconButton
+            className={cx("Mui_roster_slider_left_btn", {
+              Mui_roster_slider_display_none: scrollLength <= 796,
+              Mui_roster_slider_display_flex: scrollLength >= 796,
+            })}
           >
-            <IconButton sx={{
-              color: "var(--pure_white_color)",
-              backgroundColor: "var(--secondary_blue_color)",
-              width: 40,
-              height: 40,
-              display: scrollLength >= 796 ? "flex" : "none"
-            }}
-            >
-            <Icons src={"/icons/left_arrow.svg"} height={12} width={14} />
-            </IconButton>
-          </Button>
+            <Icons src={"/icons/left_arrow.svg"} />
+          </IconButton>
+        </Button>
+        <div id="tileView" className={cx("Mui_roster_slider_tileview")}>
           <div
-            id="tileView"
+            id="scrollview"
+            className={cx("Mui_roster_slider_sliderview")}
             style={{
-              width: "796px",
-              height: "105px",
-              overflow: "hidden",
+              width: `${maxScrollLength}px`,
+              //if not scroll proper remove minWidth and justifyContent
+              justifyContent: maxScrollLength >= 796 ? "flex-start" : "center",
             }}
           >
+            <span className={"ClassRoom_meeting_timer"}>
+              Your meeting will end in{" "}
+              <span
+                className={cx("Mui_roster_slider_red_color")}
+                id="meeting_timer"
+              ></span>
+            </span>
             <div
-              id="scrollview"
-              style={{
-                width: `${maxScrollLength}px`,
-                minWidth: "796px",
-                height: "100%",
-                display: "flex",
-                flexDirection: "row",
-                //if not scroll proper remove minWidth and justifyContent
-                justifyContent: maxScrollLength >= 796 ? "flex-start" : "center"
-              }}
+              className={cx({
+                Mui_roster_slider_active_local_video_view:
+                  attendeeIdFullScreen === currentUser,
+                Mui_roster_slider_not_active_local_video_view:
+                  attendeeIdFullScreen !== currentUser,
+              })}
+              style={
+                attendeeIdFullScreen === currentUser
+                  ? {
+                      width: rightDrawerOpen ? "calc(100% - 301px)" : "100%",
+                    }
+                  : {
+                      width: "195px",
+                    }
+              }
             >
-              <span className={"ClassRoom_meeting_timer"} >Your meeting will end in <span style={{ color: "red" }} id="meeting_timer"></span></span>
-              <div
-                style={
-                  attendeeIdFullScreen === currentUser
-                    ? {
-                        width: rightDrawerOpen ? "calc(100% - 301px)" : "100%",
-                        height: "calc(100% - 185px)",
-                        display: "block",
-                        position: "absolute",
-                        top: "120px",
-                        left: "0px",
-                        padding: "0 8px"
-                      }
-                    : {
-                        width: "195px",
-                        height: "105px",
-                        margin: "0px 2px",
-                      }
-                }
-              >
-                {attendeeIds.length !== 0 && <LocalVideo
+              {attendeeIds.length !== 0 && (
+                <LocalVideo
                   view={
                     attendeeIdFullScreen === currentUser
                       ? "grid"
                       : "activeSpeaker"
                   }
-                />}
-              </div>
-              {Array.from(Array(MAX_REMOTE_VIDEOS).keys()).map((key, index) => {
-                const visibleIndex = visibleIndices[index];
-                const attendeeId = visibleIndex
-                  ? visibleIndex.boundAttendeeId
-                  : null;
-                const raisedHand = raisedHandAttendees
-                  ? raisedHandAttendees.has(attendeeId)
-                  : false;
-                const activeSpeaker =
-                  attendeeIdFullScreen === attendeeId ? true : false;
+                />
+              )}
+            </div>
+            {Array.from(Array(MAX_REMOTE_VIDEOS).keys()).map((key, index) => {
+              const visibleIndex = visibleIndices[index];
+              const attendeeId = visibleIndex
+                ? visibleIndex.boundAttendeeId
+                : null;
+              const raisedHand = raisedHandAttendees
+                ? raisedHandAttendees.has(attendeeId)
+                : false;
+              const activeSpeaker =
+                attendeeIdFullScreen === attendeeId ? true : false;
+              return (
+                <div
+                  className={cx({
+                    Mui_roster_slider_active_local_video_view: activeSpeaker,
+                    Mui_roster_slider_not_active_local_video_view:
+                      !activeSpeaker,
+                  })}
+                  style={
+                    activeSpeaker
+                      ? {
+                          width: rightDrawerOpen
+                            ? "calc(100% - 301px)"
+                            : "100%",
+                        }
+                      : {
+                          width: "195px",
+                          display: visibleIndex ? "block" : "none",
+                        }
+                  }
+                >
+                  <RemoteVideo
+                    key={key}
+                    enabled={!!visibleIndex}
+                    videoElementRef={useCallback(
+                      (element: HTMLVideoElement | null) => {
+                        if (element) {
+                          videoElements[index] = element;
+                        }
+                      },
+                      []
+                    )}
+                    attendeeId={attendeeId}
+                    raisedHand={raisedHand}
+                    activeSpeaker={activeSpeakerAttendeeId === attendeeId}
+                    view={activeSpeaker ? "grid" : "activeSpeaker"}
+                  />
+                </div>
+              );
+            })}
+            {attendeeIds.map((key: string) => {
+              let rosterAttendee: RosterAttendeeType = {};
+
+              if (roster) {
+                rosterAttendee = roster[key];
+              }
+              const raisedHand = raisedHandAttendees
+                ? raisedHandAttendees.has(key)
+                : false;
+              const activeSpeaker = attendeeIdFullScreen === key ? true : false;
+
+              if (!videoAttendees.has(key)) {
                 return (
                   <div
+                    className={cx({
+                      Mui_roster_slider_active_local_video_view: activeSpeaker,
+                      Mui_roster_slider_not_active_local_video_view:
+                        !activeSpeaker,
+                    })}
                     style={
                       activeSpeaker
                         ? {
-                          width: rightDrawerOpen ? "calc(100% - 301px)" : "100%",
-                          height: "calc(100% - 185px)",
-                            display: "block",
-                            position: "absolute",
-                            top: "120px",
-                            left: "0px",
-                            padding: "0 8px"
+                            width: rightDrawerOpen
+                              ? "calc(100% - 301px)"
+                              : "100%",
                           }
                         : {
                             width: "195px",
-                            height: "105px",
-                            margin: "0px 2px",
-                            display: visibleIndex ? "block" : "none",
                           }
                     }
+                    key={key}
                   >
-                    <RemoteVideo
+                    <RosterLayout
                       key={key}
-                      enabled={!!visibleIndex}
-                      videoElementRef={useCallback(
-                        (element: HTMLVideoElement | null) => {
-                          if (element) {
-                            videoElements[index] = element;
-                          }
-                        },
-                        []
-                      )}
-                      attendeeId={attendeeId}
+                      attendeeId={key}
                       raisedHand={raisedHand}
-                      activeSpeaker={activeSpeakerAttendeeId === attendeeId}
-                      view={ activeSpeaker ? "grid" : "activeSpeaker" }
+                      activeSpeaker={activeSpeakerAttendeeId === key}
+                      name={rosterAttendee?.name || ""}
+                      view={activeSpeaker ? "grid" : "activeSpeaker"}
                     />
                   </div>
                 );
-              })}
-              {attendeeIds.map((key: string) => {
-                let rosterAttendee: RosterAttendeeType = {};
-
-                if (roster) {
-                  rosterAttendee = roster[key];
-                }
-                const raisedHand = raisedHandAttendees
-                  ? raisedHandAttendees.has(key)
-                  : false;
-                const activeSpeaker =
-                  attendeeIdFullScreen === key ? true : false;
-
-                if (!videoAttendees.has(key)) {
-                  return (
-                    <div
-                      style={
-                        activeSpeaker
-                          ? {
-                            width: rightDrawerOpen ? "calc(100% - 301px)" : "100%",
-                            height: "calc(100% - 185px)",
-                            display: "block",
-                            position: "absolute",
-                            top: "120px",
-                            left: "0px",
-                            padding: "0 8px"
-                            }
-                          : {
-                              width: "195px",
-                              height: "105px",
-                              margin: "0px 2px",
-                            }
-                      }
-                      key={key}
-                    >
-                      <RosterLayout
-                        key={key}
-                        attendeeId={key}
-                        raisedHand={raisedHand}
-                        activeSpeaker={activeSpeakerAttendeeId === key}
-                        name={rosterAttendee?.name || ""}
-                        view={ activeSpeaker ? "grid" : "activeSpeaker" }
-                      />
-                    </div>
-                  );
-                } else {
-                  return null;
-                }
-              })}
-            </div>
+              } else {
+                return null;
+              }
+            })}
           </div>
-          <Button
-            sx={{
-              color: "var(--pure_white_color)",
-            }}
-            disabled={
-              scrollLength >= maxScrollLength - 796 ||
-              (scrollLength >= 0 && maxScrollLength <= 796)
-                ? true
-                : false
+        </div>
+        <Button
+          className={cx("Mui_roster_slider_white_color")}
+          disabled={
+            scrollLength >= maxScrollLength - 796 ||
+            (scrollLength >= 0 && maxScrollLength <= 796)
+              ? true
+              : false
+          }
+          onClick={() => {
+            let sl = scrollLength;
+            if (scrollLength >= 0) {
+              sl += 796;
+              if (sl >= maxScrollLength) {
+                sl = maxScrollLength;
+              }
+              setScrollLength(sl);
             }
-            onClick={() => {
-              let sl = scrollLength;
-              if (scrollLength >= 0) {
-                sl += 796;
-                if (sl >= maxScrollLength) {
-                  sl = maxScrollLength;
-                }
-                setScrollLength(sl);
-              }
-              let element = document.getElementById("tileView");
-              if (element) {
-                element.style.overflow = "scroll";
-                element.scrollLeft = sl;
-                element.style.overflow = "hidden";
-              }
-            }}
+            let element = document.getElementById("tileView");
+            if (element) {
+              element.style.overflow = "scroll";
+              element.scrollLeft = sl;
+              element.style.overflow = "hidden";
+            }
+          }}
+        >
+          <IconButton
+            className={cx("Mui_roster_slider_left_btn", {
+              Mui_roster_slider_display_none:
+                scrollLength >= maxScrollLength - 796 ||
+                (scrollLength >= 0 && maxScrollLength <= 796),
+              Mui_roster_slider_display_flex: !(
+                scrollLength >= maxScrollLength - 796 ||
+                (scrollLength >= 0 && maxScrollLength <= 796)
+              ),
+            })}
           >
-            <IconButton sx={{
-              color: "var(--pure_white_color)",
-              backgroundColor: "var(--secondary_blue_color)",
-              width: 40,
-              height: 40,
-              display: (scrollLength >= maxScrollLength - 796 ||
-              (scrollLength >= 0 && maxScrollLength <= 796)) ? "none" : "flex"
-            }}
-            >
-            <Icons src={"/icons/right_arrow.svg"} height={12} width={14} />
-            </IconButton>
-          </Button>
-        </Box>
+            <Icons src={"/icons/right_arrow.svg"} />
+          </IconButton>
+        </Button>
+      </Box>
     </Box>
   );
 }

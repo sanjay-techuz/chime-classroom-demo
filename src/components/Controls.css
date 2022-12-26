@@ -3,97 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-.Controls_controls {
-  display: block;
-  position: relative;
-}
-
-.Controls_controls.Controls_screenShareMode {
-  width: calc(var(--local_video_container_height) - 0.5rem);
-  height: calc(var(--local_video_container_height) - 0.5rem);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.15s;
-}
-
-.Controls_controls.Controls_screenShareMode:hover {
-  opacity: 1 !important;
-}
-
-.Controls_controls.Controls_screenShareMode.Controls_videoEnabled {
-  opacity: 0;
-}
-
-.Controls_controls.Controls_screenShareMode.Controls_audioMuted {
-  opacity: 1;
-}
-
-.Controls_micMuted {
-  display: none;
-  z-index: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--color_black_medium_opacity);
-  text-align: center;
-  justify-content: center;
-  border-radius: 0.25rem;
-  font-size: 1rem;
-  padding: 1rem;
-}
-
-.Controls_controls.Controls_screenShareMode.Controls_audioMuted.Controls_videoEnabled .Controls_micMuted {
-  display: flex;
-}
-
-.Controls_controls.Controls_screenShareMode.Controls_Controls_audioMuted.Controls_videoEnabled .Controls_muteButton {
-  background-color: var(--color_thunderbird);
-}
-
-.Controls_controls button {
-  width: 2.75rem;
-  height: 2.75rem;
-  text-align: center;
-  border: none;
-  border-radius: 50%;
-  font-size: 1.25rem;
-  color: var(--color_alabaster);
-  background: var(--color_tundora);
-  cursor: pointer;
-  transition: opacity 0.15s;
-  outline: none;
-  z-index: 1;
-}
-
-.Controls_controls button.Controls_enabled {
-  color: var(--color_tundora);
-  background: var(--color_alabaster);
-}
-
-.Controls_controls button:hover {
-  opacity: 0.8;
-}
-
-.Controls_controls.Controls_roomMode button + button {
-  margin-left: 1rem;
-}
-
-.Controls_controls.Controls_screenShareMode button + button {
-  margin-left: 0.5rem;
-}
-
-.Controls_endButton {
-  background: var(--color_thunderbird) !important;
-}
-
-.Controls_recordRedButton{
-  color: rgb(255 106 106) !important;
-}
-
-.Controls_btn_active{
+.Controls_btn_active {
   height: 32px;
   background-color: var(--pure_white_color) !important;
   border: 1px solid var(--controls_border_color) !important;
@@ -106,7 +16,7 @@
   /* justify-content: space-around !important; */
 }
 
-.Controls_sc_btn_active{
+.Controls_sc_btn_active {
   width: 130px;
   height: 32px;
   background-color: var(--color_thunderbird) !important;
@@ -119,7 +29,7 @@
   /* justify-content: space-around !important; */
 }
 
-.Controls_btn_not_active{
+.Controls_btn_not_active {
   height: 32px;
   background-color: var(--third_blue_color) !important;
   border: 1px solid var(--controls_border_color) !important;
@@ -132,7 +42,7 @@
   /* justify-content: space-around !important; */
 }
 
-.Controls_sc_btn_not_active{
+.Controls_sc_btn_not_active {
   width: 130px;
   height: 32px;
   background-color: var(--color_sc_green) !important;
@@ -145,15 +55,73 @@
   /* justify-content: space-around !important; */
 }
 
-.Controls_avtr_size{
-  width: 15px !important;
-  height: 15px !important;
+.Controls_diveder {
+  border-color: var(--controls_border_color) !important;
 }
 
-.Controls_diveder{
-  border-color: var(--controls_border_color) !important
-}
-
-.Controls_margin_right{
+.Controls_margin_right {
   margin-left: 5px;
+}
+
+/*  MUI - CLASSES DESIGN OVERRIDE*/
+
+.Mui_controls_parent_container_box {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: auto !important;
+}
+
+.Mui_controls_child_container_box {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+  max-width: 670px !important;
+}
+
+.Mui_classroom_control_white_color {
+  color: #ffffff !important;
+}
+
+.Mui_classroom_control_second_container {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+  max-width: 120px !important;
+  position: absolute !important;
+  right: 0 !important;
+}
+
+.Mui_controls_raised_hand {
+  background-color: var(--pure_white_color) !important;
+  border: 1px solid var(--controls_border_color) !important;
+  color: var(--third_blue_color) !important;
+  cursor: pointer !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.Mui_controls_dismiss_hand {
+  background-color: var(--third_blue_color) !important;
+  border: 1px solid var(--controls_border_color) !important;
+  color: var(--pure_white_color) !important;
+  cursor: pointer !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.Mui_controls_end_meeting_btn {
+  background-color: var(--color_thunderbird) !important;
+  color: var(--pure_white_color) !important;
+  cursor: pointer !important;
+  width: 32px !important;
+  height: 32px !important;
 }

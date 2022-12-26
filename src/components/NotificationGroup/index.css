@@ -1,0 +1,5 @@
+/*  MUI - CLASSES DESIGN OVERRIDE*/
+
+.Mui_snackbar_from_top {
+  top: 140px !important;
+}

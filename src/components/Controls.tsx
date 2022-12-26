@@ -148,27 +148,8 @@ export default function Controls(props: Props) {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        margin: "auto",
-      }}
-    >
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "space-around",
-          maxWidth: 670,
-        }}
-      >
+    <Box className={cx("Mui_controls_parent_container_box")}>
+      <Box className={cx("Mui_controls_child_container_box")}>
         <Tooltip
           title={
             muted
@@ -193,13 +174,17 @@ export default function Controls(props: Props) {
           >
             {muted ? (
               <>
-                <Icons src={"/icons/microphone_off_black.svg"} height={14} width={12} />
-                <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.unmuteTooltip" })}</span>
+                <Icons src={"/icons/microphone_off_black.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({ id: "Controls.unmuteTooltip" })}
+                </span>
               </>
             ) : (
               <>
-                <Icons src={"/icons/microphone_on_white.svg"} height={14} width={9} />
-                <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.muteTooltip" })}</span>
+                <Icons src={"/icons/microphone_on_white.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({ id: "Controls.muteTooltip" })}
+                </span>
               </>
             )}
           </Button>
@@ -239,7 +224,7 @@ export default function Controls(props: Props) {
                 setVideoStatus(VideoStatus.Disabled);
               }
             }}
-            sx={{ width: "120px" }}
+            sx={{ width: "130px" }}
             className={cx(
               videoStatus === VideoStatus.Enabled
                 ? "Controls_btn_active"
@@ -248,13 +233,17 @@ export default function Controls(props: Props) {
           >
             {videoStatus === VideoStatus.Enabled ? (
               <>
-                <Icons src={"/icons/camera_off_black.svg"} height={12} width={14} />
-                <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.startVideo" })}</span>
+                <Icons src={"/icons/camera_off_black.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({ id: "Controls.startVideo" })}
+                </span>
               </>
             ) : (
               <>
-                <Icons src={"/icons/camera_on_white.svg"} height={9} width={14} />
-                <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.stopVideo" })}</span>
+                <Icons src={"/icons/camera_on_white.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({ id: "Controls.stopVideo" })}
+                </span>
               </>
             )}
           </Button>
@@ -281,20 +270,26 @@ export default function Controls(props: Props) {
               }
             }}
             className={cx(
-              isScreenShared ? "Controls_sc_btn_active" : "Controls_sc_btn_not_active"
+              isScreenShared
+                ? "Controls_sc_btn_active"
+                : "Controls_sc_btn_not_active"
             )}
           >
             {isScreenShared ? (
               <>
-                <Icons src={"/icons/screen_share_white.svg"} height={12} width={14} />
-                <span className={cx("Controls_margin_right")}>{intl.formatMessage({
-                  id: "Controls.shareScreenStopTooltip",
-                })}</span>
+                <Icons src={"/icons/screen_share_white.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({
+                    id: "Controls.shareScreenStopTooltip",
+                  })}
+                </span>
               </>
             ) : (
               <>
-                <Icons src={"/icons/screen_share_black.svg"} height={12} width={14} />
-                <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.shareScreenTooltip" })}</span>
+                <Icons src={"/icons/screen_share_black.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({ id: "Controls.shareScreenTooltip" })}
+                </span>
               </>
             )}
           </Button>
@@ -335,13 +330,17 @@ export default function Controls(props: Props) {
             >
               {onChat ? (
                 <>
-                  <Icons src={"/icons/chat_black.svg"} height={13} width={14} />
-                  <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.Chat" })}</span>
+                  <Icons src={"/icons/chat_black.svg"} />
+                  <span className={cx("Controls_margin_right")}>
+                    {intl.formatMessage({ id: "Controls.Chat" })}
+                  </span>
                 </>
               ) : (
                 <>
-                  <Icons src={"/icons/chat.svg"} height={13} width={14} />
-                  <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.Chat" })}</span>
+                  <Icons src={"/icons/chat.svg"} />
+                  <span className={cx("Controls_margin_right")}>
+                    {intl.formatMessage({ id: "Controls.Chat" })}
+                  </span>
                 </>
               )}
             </Button>
@@ -361,52 +360,53 @@ export default function Controls(props: Props) {
                 : "Controls_btn_not_active"
             )}
           >
-            {openParticipants ? <Icons src={"/icons/participants_black.svg"} height={10} width={15} /> : <Icons src={"/icons/participants.svg"} height={10} width={15} /> }
-            <span className={cx("Controls_margin_right")}>{intl.formatMessage({ id: "Controls.participants" })}</span>
+            {openParticipants ? (
+              <Icons src={"/icons/participants_black.svg"} />
+            ) : (
+              <Icons src={"/icons/participants.svg"} />
+            )}
+            <span className={cx("Controls_margin_right")}>
+              {intl.formatMessage({ id: "Controls.participants" })}
+            </span>
           </Button>
         </Tooltip>
 
         <MoreSettings />
 
         <Dialog
-        PaperProps={{
-          style: {
-            backgroundColor: "var(--third_blue_color)",
-            border: "1px solid var(--controls_border_color)"
-          }
-        }}
+          PaperProps={{
+            style: {
+              backgroundColor: "var(--third_blue_color)",
+              border: "1px solid var(--controls_border_color)",
+            },
+          }}
           open={openScreenSharePermit}
           onClose={handleCloseScreenShareDialog}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
           <DialogContent>
-            <DialogContentText id="alert-dialog-description" sx={{ color: "#FFFFFF"}}>
+            <DialogContentText
+              id="alert-dialog-description"
+              className={cx("Mui_classroom_control_white_color")}
+            >
               {intl.formatMessage({
                 id: "Controls.screenSharePermitDialogMessage",
               })}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button sx={{ color: "#FFFFFF"}} onClick={handleCloseScreenShareDialog} autoFocus>
+            <Button
+              className={cx("Mui_classroom_control_white_color")}
+              onClick={handleCloseScreenShareDialog}
+              autoFocus
+            >
               {intl.formatMessage({ id: "Controls.dialogOk" })}
             </Button>
           </DialogActions>
         </Dialog>
       </Box>
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "space-around",
-          maxWidth: "120px",
-          position: "absolute",
-          right: 0,
-        }}
-      >
+      <Box className={cx("Mui_classroom_control_second_container")}>
         {classMode === ClassMode.Student && (
           <Tooltip
             title={
@@ -416,28 +416,21 @@ export default function Controls(props: Props) {
             }
             placement="bottom"
           >
-          <Avatar
-            sx={raised ? {
-              bgcolor: "var(--pure_white_color)",
-              border: "1px solid var(--controls_border_color)",
-              color: "var(--third_blue_color)",
-              cursor: "pointer",
-              width: 32,
-              height: 32
-            } : {
-              bgcolor: "var(--third_blue_color)",
-              border: "1px solid var(--controls_border_color)",
-              color: "var(--pure_white_color)",
-              cursor: "pointer",
-              width: 32,
-              height: 32
-            }}
-            onClick={() => {
-              setRaised(!raised);
-            }}
-          >
-            {raised ? <Icons src={"/icons/hand.svg"} height={20} width={20} /> : <Icons src={"/icons/hand_white.svg"} height={20} width={20} />}
-          </Avatar>
+            <Avatar
+              className={cx({
+                Mui_controls_raised_hand: raised,
+                Mui_controls_dismiss_hand: !raised,
+              })}
+              onClick={() => {
+                setRaised(!raised);
+              }}
+            >
+              {raised ? (
+                <Icons src={"/icons/hand.svg"} />
+              ) : (
+                <Icons src={"/icons/hand_white.svg"} />
+              )}
+            </Avatar>
           </Tooltip>
         )}
         <Popover
@@ -521,15 +514,9 @@ export default function Controls(props: Props) {
         >
           <Avatar
             onClick={handleClick}
-            sx={{
-              bgcolor: "var(--color_thunderbird)",
-              color: "var(--pure_white_color)",
-              cursor: "pointer",
-              width: 32,
-              height: 32
-            }}
+            className={cx("Mui_controls_end_meeting_btn")}
           >
-            <Icons src={"/icons/endmeeting.svg"} height={15} width={15} />
+            <Icons src={"/icons/endmeeting.svg"} />
           </Avatar>
         </Tooltip>
       </Box>

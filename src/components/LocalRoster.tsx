@@ -39,16 +39,13 @@ export default function LocalRoster(props: Props) {
     >
       {view === "activeSpeaker" ? (
         <>
-          <Typography sx={{
-          fontSize: "16px !important",
-          lineHeight: "24px !important",
-          textTransform: "capitalize"
-        }}>{name}</Typography>
-        <VideoNameplate
-            attendeeId={attendeeId}
-          />
+          <Typography
+            className={cx("Mui_roster_layout_active_speaker_typography")}
+          >
+            {name}
+          </Typography>
+          <VideoNameplate attendeeId={attendeeId} />
         </>
-
       ) : (
         <>
           <Badge
@@ -56,42 +53,33 @@ export default function LocalRoster(props: Props) {
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             badgeContent={
               <SmallAvatar
-                sx={{ width: "2rem", height: "2rem" }}
+                className={cx("Mui_roster_layout_badge_small_avatar")}
                 bgcolor={
                   muted ? "var(--color_pink)" : "var(--secondary_blue_color)"
                 }
               >
                 {muted ? (
-                  <MicOffOutlinedIcon sx={{ fontSize: "14px" }} />
+                  <MicOffOutlinedIcon
+                    className={cx("Mui_roster_layout_fontsize")}
+                  />
                 ) : (
-                  <MicNoneOutlinedIcon sx={{ fontSize: "14px" }} />
+                  <MicNoneOutlinedIcon
+                    className={cx("Mui_roster_layout_fontsize")}
+                  />
                 )}
               </SmallAvatar>
             }
           >
-            <Avatar
-              sx={{
-                width: "100px",
-                height: "100px",
-                backgroundColor: "var(--color_initials_bg)",
-                color: "var(--secondary_blue_color)",
-                textTransform: "capitalize",
-                fontSize: "3rem",
-              }}
-            >
+            <Avatar className={cx("Mui_roster_layout_badge_avatar")}>
               {initials}
             </Avatar>
           </Badge>
-          <Typography sx={{
-            fontStyle: "normal",
-            fontWeight: "500",
-            fontSize: "16px",
-            lineHeight: "24px",
-            letterSpacing: "0.125714px",
-            textTransform: "capitalize",
-            marginTop: "13px"
-        }}>{name}</Typography>
-        {attendeeId === localStorage.getItem("hostId") && <span className={"RosterLayout_host"}>Host</span>}
+          <Typography className={cx("Mui_roster_layout_badge_typography")}>
+            {name}
+          </Typography>
+          {attendeeId === localStorage.getItem("hostId") && (
+            <span className={"RosterLayout_host"}>Host</span>
+          )}
         </>
       )}
     </div>
