@@ -193,6 +193,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       );
     }
     localStorage.setItem(localStorageKeys.MEETING_CONFIG,JSON.stringify(JoinInfo));
+    localStorage.setItem(localStorageKeys.MEETING_START_TIME,JSON.stringify(new Date().getTime()));
 
     this.configuration = new MeetingSessionConfiguration(
       JoinInfo.Meeting,

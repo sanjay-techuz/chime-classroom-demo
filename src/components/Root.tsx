@@ -12,20 +12,31 @@ import { NotificationProvider } from "../providers/NotificationProvider";
 import UIStateProvider from "../providers/UIStateProvider";
 import Routes from "../Routes";
 import NotificationGroup from "./NotificationGroup";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const Root = () => (
-  <BrowserRouter>
-    <NotificationProvider>
-      <I18nProvider>
-        <ChimeProvider>
-          <UIStateProvider>
-            <Routes />
-            <NotificationGroup />
-          </UIStateProvider>
-        </ChimeProvider>
-      </I18nProvider>
-    </NotificationProvider>
-  </BrowserRouter>
-);
+const Root = () => {
+  const theme = createTheme({
+    typography: {
+      fontFamily: "Poppins",
+    },
+  });
+
+  return (
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <NotificationProvider>
+          <I18nProvider>
+            <ChimeProvider>
+              <UIStateProvider>
+                <Routes />
+                <NotificationGroup />
+              </UIStateProvider>
+            </ChimeProvider>
+          </I18nProvider>
+        </NotificationProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  );
+};
 
 export default hot(Root);

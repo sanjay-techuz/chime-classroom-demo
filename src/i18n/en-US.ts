@@ -96,7 +96,7 @@ export default {
   'Roster.muteAll': `Mute all`,
   'Roster.unMuteAll': `Unmute all`,
 
-  'ChatInput.inputPlaceholder': `Type a chat message`,
+  'ChatInput.inputPlaceholder': `Start typing...`,
   'ChatInput.raiseHandAriaLabel': `Raise hand`,
   'ChatInput.dismissHandAriaLabel': `Dismiss hand`,
 

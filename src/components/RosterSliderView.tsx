@@ -19,6 +19,8 @@ import RosterLayout from "./RosterLayout";
 import LocalVideo from "./LocalVideo";
 import { Box, Button, IconButton } from "@mui/material";
 import Icons from "../custom/Icons";
+import { countDownTimer } from "../utils/countDownTimer";
+import localStorageKeys from '../constants/localStorageKeys.json';
 
 const MAX_REMOTE_VIDEOS = 16;
 let tm: any = 0;
@@ -56,6 +58,21 @@ export default function RosterSliderView(props: Props) {
     }
     contentShareEnabled = isContentShareEnabled;
   }, [isContentShareEnabled]);
+
+  useEffect(() => {
+    const mt = document.getElementById("meeting_timer");
+    const meetingStartMeeting = localStorage.getItem(localStorageKeys.MEETING_START_TIME);
+    
+    if(mt){
+      if(!meetingStartMeeting){
+        mt!.innerHTML = "00 min";
+        return
+      }
+      setInterval(function() {
+        mt.innerHTML = countDownTimer(JSON.parse(meetingStartMeeting) + (58 * 60 * 1000));
+      },1000)
+    }
+  },[]);
 
   useEffect(() => {
     let attdLength = Object.keys(roster).length - 1;
@@ -290,7 +307,7 @@ export default function RosterSliderView(props: Props) {
                 justifyContent: maxScrollLength >= 796 ? "flex-start" : "center"
               }}
             >
-              <span className={"ClassRoom_meeting_timer"}>Your meeting will end in <span style={{ color: "red" }}>30 min</span></span>
+              <span className={"ClassRoom_meeting_timer"} >Your meeting will end in <span style={{ color: "red" }} id="meeting_timer"></span></span>
               <div
                 style={
                   attendeeIdFullScreen === currentUser
