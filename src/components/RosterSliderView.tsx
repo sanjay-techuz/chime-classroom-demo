@@ -12,7 +12,6 @@ import classNames from "classnames/bind";
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
-import useRaisedHandAttendees from "../hooks/useRaisedHandAttendees";
 import RemoteVideo from "./RemoteVideo";
 import useRoster from "../hooks/useRoster";
 import RosterAttendeeType from "../types/RosterAttendeeType";
@@ -43,7 +42,6 @@ export default function RosterSliderView(props: Props) {
   const [visibleIndices, setVisibleIndices] = useState<{
     [index: string]: { boundAttendeeId: string };
   }>({});
-  const raisedHandAttendees = useRaisedHandAttendees();
   const roster = useRoster();
   const videoElements: HTMLVideoElement[] = [];
   const tiles: { [index: number]: number } = {};
@@ -323,9 +321,7 @@ export default function RosterSliderView(props: Props) {
               const attendeeId = visibleIndex
                 ? visibleIndex.boundAttendeeId
                 : null;
-              const raisedHand = raisedHandAttendees
-                ? raisedHandAttendees.has(attendeeId)
-                : false;
+
               const activeSpeaker =
                 attendeeIdFullScreen === attendeeId ? true : false;
               return (
@@ -360,7 +356,6 @@ export default function RosterSliderView(props: Props) {
                       []
                     )}
                     attendeeId={attendeeId}
-                    raisedHand={raisedHand}
                     activeSpeaker={activeSpeakerAttendeeId === attendeeId}
                     view={activeSpeaker ? "grid" : "activeSpeaker"}
                   />
@@ -373,9 +368,6 @@ export default function RosterSliderView(props: Props) {
               if (roster) {
                 rosterAttendee = roster[key];
               }
-              const raisedHand = raisedHandAttendees
-                ? raisedHandAttendees.has(key)
-                : false;
               const activeSpeaker = attendeeIdFullScreen === key ? true : false;
 
               if (!videoAttendees.has(key)) {
@@ -402,7 +394,6 @@ export default function RosterSliderView(props: Props) {
                     <RosterLayout
                       key={key}
                       attendeeId={key}
-                      raisedHand={raisedHand}
                       activeSpeaker={activeSpeakerAttendeeId === key}
                       name={rosterAttendee?.name || ""}
                       view={activeSpeaker ? "grid" : "activeSpeaker"}

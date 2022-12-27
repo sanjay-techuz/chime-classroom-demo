@@ -24,7 +24,6 @@ import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
 import useRoster from "../hooks/useRoster";
-import useRaisedHandAttendees from "../hooks/useRaisedHandAttendees";
 import RosterAttendeeType from "../types/RosterAttendeeType";
 import styles from "./Roster.css";
 import MessageTopic from "../enums/MessageTopic";
@@ -46,7 +45,6 @@ export default function Roster(props: Props) {
   const { classMode } = globalVar;
   const roster = useRoster();
   const [videoAttendees, setVideoAttendees] = useState(new Set());
-  const raisedHandAttendees = useRaisedHandAttendees();
   const intl = useIntl();
   const localUserId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
@@ -165,7 +163,7 @@ export default function Roster(props: Props) {
                   <ListItemIcon
                     className={cx("Mui_roster_attendee_list_item_icons")}
                   >
-                    {raisedHandAttendees.has(attendeeId) && (
+                    {rosterAttendee?.raised && (
                       <div className={cx("Roster_raisedHand")}>
                         <span
                           role="img"

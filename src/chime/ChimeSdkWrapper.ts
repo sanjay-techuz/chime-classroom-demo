@@ -365,6 +365,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
               this.roster[attendeeId].name = json.AttendeeInfo?.Name || '';
               this.roster[attendeeId].msgCount = 0;
               this.roster[attendeeId].presenter = false;
+              this.roster[attendeeId].raised = false;
               this.roster[attendeeId].host = json.AttendeeInfo?.Host || false;
 
               shouldPublishImmediately = true;
@@ -403,9 +404,15 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       this.publishRosterUpdate();
   }
 
-    // UPDATE MESSAGE COUNTER FOR PURTICULAR ATTENDEE
+  // UPDATE SCREEN SHARE PRESENTER  
   updateScreenPresenter = (attendeeId: string, flag: boolean) => { 
       this.roster[attendeeId].presenter = flag;
+      this.publishRosterUpdate();
+  }
+
+  // UPDATE SCREEN SHARE PRESENTER  
+  updateRaisedHand = (attendeeId: string, flag: boolean) => { 
+      this.roster[attendeeId].raised = flag;
       this.publishRosterUpdate();
   }
 

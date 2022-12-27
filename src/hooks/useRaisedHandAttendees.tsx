@@ -19,8 +19,10 @@ export default function useRaisedHandAttendees() {
       if (attendeeId) {
         if (message.topic === MessageTopic.RaiseHand) {
           realTimeRaisedHandAttendees.add(attendeeId);
+          chime?.updateRaisedHand(attendeeId, true);
         } else if (message.topic === MessageTopic.DismissHand) {
           realTimeRaisedHandAttendees.delete(attendeeId);
+          chime?.updateRaisedHand(attendeeId, false);
         }
         setRaisedHandAttendees(new Set(realTimeRaisedHandAttendees));
       }

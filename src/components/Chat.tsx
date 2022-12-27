@@ -29,6 +29,7 @@ import MessageTopic from "../enums/MessageTopic";
 import localStorageKeys from "../constants/localStorageKeys.json";
 import { clipBoard, createPrivateChannel } from "../utils";
 import useRemoteControl from "../hooks/useRemoteControl";
+import useRaisedHandAttendees from "../hooks/useRaisedHandAttendees";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Icons from "../custom/Icons";
 
@@ -74,6 +75,7 @@ export default function Chat(props: Props) {
     );
   }
   useRemoteControl();
+  useRaisedHandAttendees();
 
   useEffect(() => {
     chatPannelOpen = isChatOpen;
@@ -147,16 +149,9 @@ export default function Chat(props: Props) {
       callback,
     };
 
-    const raiseHandMessageUpdateCallback = {
-      topic: MessageTopic.RaiseHand,
-      callback,
-    };
-
     chime?.subscribeToMessageUpdate(chatMessageUpdateCallback);
-    chime?.subscribeToMessageUpdate(raiseHandMessageUpdateCallback);
     return () => {
       chime?.unsubscribeFromMessageUpdate(chatMessageUpdateCallback);
-      chime?.unsubscribeFromMessageUpdate(raiseHandMessageUpdateCallback);
       chatPannelOpen = false;
       grpCnt = 0;
       gbRoster = [];

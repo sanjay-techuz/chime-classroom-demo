@@ -9,6 +9,9 @@ import { useIntl } from "react-intl";
 import VideoNameplate from "./VideoNameplate";
 import styles from "./RemoteVideo.css";
 import Icons from "../custom/Icons";
+import { Box } from "@mui/material";
+import useRoster from "../hooks/useRoster";
+import RosterAttendeeType from "../types/RosterAttendeeType";
 
 const cx = classNames.bind(styles);
 
@@ -27,10 +30,12 @@ export default function RemoteVideo(props: Props) {
     enabled,
     videoElementRef,
     attendeeId,
-    raisedHand,
     activeSpeaker,
     view,
   } = props;
+  const roster = useRoster();
+  const rosterAttendee: RosterAttendeeType = roster[attendeeId!];
+
   return (
     <div
       className={cx("RemoteVideo_remoteVideo", {
@@ -41,7 +46,11 @@ export default function RemoteVideo(props: Props) {
     >
       <video muted ref={videoElementRef} className={cx("RemoteVideo_video")} />
       <VideoNameplate attendeeId={attendeeId} />
-      {raisedHand && (
+
+      {rosterAttendee?.raised && (
+        view !== "activeSpeaker" ? 
+        <Box className={cx("Mui_roster_layout_raised_hand_box")}>{rosterAttendee?.name} raised a hand <Icons src={"/icons/hand_yellow.svg"} /></Box>
+        :
         <div className={cx("RemoteVideo_raisedHand")}>
           <span
             role="img"

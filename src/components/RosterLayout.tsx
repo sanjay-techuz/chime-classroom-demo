@@ -16,6 +16,7 @@ import RosterAttendeeType from "../types/RosterAttendeeType";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
 import Icons from "../custom/Icons";
+import { Box } from "@mui/system";
 
 const cx = classNames.bind(styles);
 
@@ -29,7 +30,7 @@ type Props = {
 
 export default function RosterLayout(props: Props) {
   const intl = useIntl();
-  const { attendeeId, raisedHand, activeSpeaker, name, view } = props;
+  const { attendeeId, activeSpeaker, name, view } = props;
   const initials = nameInitials(name);
   const roster = useRoster();
   const rosterAttendee: RosterAttendeeType = roster[attendeeId];
@@ -50,9 +51,22 @@ export default function RosterLayout(props: Props) {
             {rosterAttendee?.name}
           </Typography>
           <VideoNameplate attendeeId={attendeeId} />
+          {rosterAttendee?.raised && (
+        <div className={cx("RemoteVideo_raisedHand")}>
+          <span
+            role="img"
+            aria-label={intl.formatMessage({
+              id: "RemoteVideo.raiseHandAriaLabel",
+            })}
+          >
+            <Icons src={"/icons/hand_yellow.svg"} />
+          </span>
+        </div>
+      )}
         </>
       ) : (
         <>
+        {rosterAttendee?.raised && <Box className={cx("Mui_roster_layout_raised_hand_box")}>{rosterAttendee?.name} raised a hand <Icons src={"/icons/hand_yellow.svg"} /></Box>}
           <Badge
             overlap="circular"
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -86,19 +100,6 @@ export default function RosterLayout(props: Props) {
             <span className={cx("RosterLayout_host")}>Host</span>
           )}
         </>
-      )}
-
-      {raisedHand && (
-        <div className={cx("RemoteVideo_raisedHand")}>
-          <span
-            role="img"
-            aria-label={intl.formatMessage({
-              id: "RemoteVideo.raiseHandAriaLabel",
-            })}
-          >
-            <Icons src={"/icons/hand_yellow.svg"} />
-          </span>
-        </div>
       )}
     </div>
   );
