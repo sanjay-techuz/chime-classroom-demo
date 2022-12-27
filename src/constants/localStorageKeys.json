@@ -4,6 +4,5 @@
   "CURRENT_MEETING_ID": "currentMeetingID",
   "CURRENT_ATTENDEE_ID": "currentAtendeeId",
   "CURRENT_RECORDER_ID": "recorderId",
-  "MEETING_CONFIG": "meetingConfig",
-  "MEETING_START_TIME": "meetingStartTime"
+  "MEETING_CONFIG": "meetingConfig"
 }

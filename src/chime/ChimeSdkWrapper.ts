@@ -51,6 +51,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
 
   meetingRecorderName: string = "Unknown";
 
+  endTime: number | null = null;
+
   browserBehavior = new DefaultBrowserBehavior();
 
   supportedChimeRegions: RegionType[] = [
@@ -193,7 +195,6 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
       );
     }
     localStorage.setItem(localStorageKeys.MEETING_CONFIG,JSON.stringify(JoinInfo));
-    localStorage.setItem(localStorageKeys.MEETING_START_TIME,JSON.stringify(new Date().getTime()));
 
     this.configuration = new MeetingSessionConfiguration(
       JoinInfo.Meeting,
@@ -208,10 +209,11 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     this.title = meetingID;
     this.name = userName;
     this.region = 'us-east-1';
+    this.endTime = JoinInfo.EndTime;
     this.meetingId = JoinInfo.Meeting.MeetingId;
-    if(role === "teacher"){
-      localStorage.setItem('hostId', JoinInfo.Attendee.AttendeeId);
-    }
+    // if(role === "teacher"){
+    //   localStorage.setItem('hostId', JoinInfo.Attendee.AttendeeId);
+    // }
     // if(JoinInfo.Attendee.host){
     //   localStorage.setItem('hostId', JoinInfo.Attendee.AttendeeId);
     // }
@@ -244,6 +246,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
 
     this.title = meetingID;
     this.name = userName;
+    this.endTime = joinInfo.EndTime;
     this.region = 'us-east-1';
     this.meetingId = joinInfo.Meeting.MeetingId;
   }
@@ -362,6 +365,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
               this.roster[attendeeId].name = json.AttendeeInfo?.Name || '';
               this.roster[attendeeId].msgCount = 0;
               this.roster[attendeeId].presenter = false;
+              this.roster[attendeeId].host = json.AttendeeInfo?.Host || false;
 
               shouldPublishImmediately = true;
             }

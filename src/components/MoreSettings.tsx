@@ -25,9 +25,6 @@ export default function MoreSettings() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
   const { localVideo } = globalVar;
-  // const [screenSharePermitValue, setScreenSharePermitValue] = useState(
-  //   screenSharePermit ? "all" : "host"
-  // );
   const deviceSwitcherState = useDevices();
   const intl = useIntl();
   const videoQualityList = [
@@ -57,31 +54,12 @@ export default function MoreSettings() {
     React.useState<null | HTMLElement>(null);
   const [videoQualityAnchorEl, setVideoQualityAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  // const [screenSharePermitAnchorEl, setScreenSharePermitAnchorEl] =
-  //   React.useState<null | HTMLElement>(null);
+
   const openMenu = Boolean(menuAnchorEl);
   const openMicrophoneDeviceSettings = Boolean(microphoneDeviceAnchorEl);
   const openSpeakerDeviceSettings = Boolean(speakerDeviceAnchorEl);
   const openCameraDeviceSettings = Boolean(cameraDeviceAnchorEl);
   const openVideoQualitySettings = Boolean(videoQualityAnchorEl);
-  // const screenSharePermitSettings = Boolean(screenSharePermitAnchorEl);
-
-  // useEffect(() => {
-  //   setScreenSharePermitValue(screenSharePermit ? "all" : "host");
-  // }, []);
-
-  // const handleRadioChange = (value: string) => {
-  //   let newFocusState = screenSharePermitValue === "all" ? true : false;
-  //   setScreenSharePermitValue(value);
-  //   newFocusState = value === "all" ? true : false;
-
-  //   updateGlobalVar("screenSharePermit", newFocusState);
-  //   localStorage.setItem("screenSharePermit", JSON.stringify(newFocusState));
-
-  //   chime?.sendMessage(MessageTopic.ScreenSharePermit, {
-  //     focus: newFocusState,
-  //   });
-  // };
 
   const handleMenuClick = (event: any) => {
     setMenuAnchorEl(event.currentTarget);
@@ -620,122 +598,6 @@ export default function MoreSettings() {
           )}
         </Popover>
 
-        {/* {classMode === ClassMode.Teacher && (
-          <MenuItem
-            onClick={(event) => {
-              handleScreenSharePermitPopoverOpen(event);
-            }}
-            onMouseLeave={() => {
-              if (!screenSharePermitAnchorEl)
-                handleScreenSharePermitPopoverClose();
-            }}
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            {intl.formatMessage({ id: "DeviceSwitcher.screenSharePermit" })}
-            <KeyboardArrowRightIcon />
-          </MenuItem>
-        )} */}
-        {/* <Popover
-          id="mouse-over-popover"
-          open={screenSharePermitSettings}
-          anchorEl={screenSharePermitAnchorEl}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          onClose={handleScreenSharePermitPopoverClose}
-          onMouseLeave={handleScreenSharePermitPopoverClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: "visible",
-              marginLeft: "10px",
-              bgcolor: "var(--secondary_blue_color)",
-              color: "var(--pure_white_color)",
-              border: "1px solid var(--pure_white_color)",
-              "&:before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: "50%",
-                left: -5,
-                width: 10,
-                height: 10,
-                borderBottom: "1px solid",
-                borderLeft: "1px solid",
-                backgroundColor: "var(--secondary_blue_color)",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0,
-              },
-            },
-          }}
-        >
-          <MenuItem
-            value={"host"}
-            onClick={() => {
-              handleRadioChange("host");
-            }}
-          >
-            <Avatar
-              sx={{
-                height: 22,
-                width: 22,
-                backgroundColor:
-                  screenSharePermitValue === "host"
-                    ? "var(--color_green)"
-                    : "transparent",
-                marginRight: 1,
-              }}
-            >
-              <CheckIcon
-                sx={{
-                  fontSize: "1rem",
-                  color:
-                    screenSharePermitValue === "host"
-                      ? "var(--pure_white_color)"
-                      : "transparent",
-                }}
-              />
-            </Avatar>{" "}
-            {intl.formatMessage({ id: "DeviceSwitcher.hostOnly" })}
-          </MenuItem>
-          <MenuItem
-            value={"all"}
-            onClick={() => {
-              handleRadioChange("all");
-            }}
-          >
-             <Avatar
-              sx={{
-                height: 22,
-                width: 22,
-                backgroundColor:
-                  screenSharePermitValue === "all"
-                    ? "var(--color_green)"
-                    : "transparent",
-                marginRight: 1,
-              }}
-            >
-              <CheckIcon
-                sx={{
-                  fontSize: "1rem",
-                  color:
-                    screenSharePermitValue === "all"
-                      ? "var(--pure_white_color)"
-                      : "transparent",
-                }}
-              />
-            </Avatar>{" "}
-            {intl.formatMessage({ id: "DeviceSwitcher.allParticipants" })}
-          </MenuItem>
-        </Popover> */}
         <Divider className={"Controls_diveder"} />
         <MenuItem onClick={handleFullScreen} sx={{ fontSize: "12px" }}>
           {enterFullScreen

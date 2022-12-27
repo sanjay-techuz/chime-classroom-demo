@@ -82,7 +82,7 @@ export default function RosterLayout(props: Props) {
           <Typography className={cx("Mui_roster_layout_badge_typography")}>
             {rosterAttendee?.name}
           </Typography>
-          {attendeeId === localStorage.getItem("hostId") && (
+          {rosterAttendee?.host && (
             <span className={cx("RosterLayout_host")}>Host</span>
           )}
         </>

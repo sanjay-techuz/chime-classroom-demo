@@ -47,6 +47,7 @@ type Props = {
   handleDrawerLeftToggle: () => void;
   openParticipants: boolean;
   openChat: boolean;
+  isContentShareEnabled: boolean;
 };
 
 export default function Controls(props: Props) {
@@ -56,6 +57,7 @@ export default function Controls(props: Props) {
     openChat,
     handleDrawerLeftToggle,
     openParticipants,
+    isContentShareEnabled
   } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
@@ -261,7 +263,11 @@ export default function Controls(props: Props) {
             onClick={() => {
               if (classMode === ClassMode.Teacher || screenSharePermit) {
                 if (!isScreenShared) {
-                  onClickShareButton(true);
+                  if(isContentShareEnabled){
+                    setOpenScreenSharePermit(true);
+                  }else{
+                    onClickShareButton(true);
+                  }
                 } else {
                   onClickShareButton(false);
                 }
@@ -390,7 +396,9 @@ export default function Controls(props: Props) {
               id="alert-dialog-description"
               className={cx("Mui_classroom_control_white_color")}
             >
-              {intl.formatMessage({
+              {isContentShareEnabled && (screenSharePermit || classMode === ClassMode.Teacher) ? intl.formatMessage({
+                id: "Controls.screenShareAlreadySharedDialogMessage",
+              }) : intl.formatMessage({
                 id: "Controls.screenSharePermitDialogMessage",
               })}
             </DialogContentText>

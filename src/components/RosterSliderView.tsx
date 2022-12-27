@@ -65,19 +65,15 @@ export default function RosterSliderView(props: Props) {
 
   useEffect(() => {
     const mt = document.getElementById("meeting_timer");
-    const meetingStartMeeting = localStorage.getItem(
-      localStorageKeys.MEETING_START_TIME
-    );
-
+    const meetingStartMeeting = chime?.endTime;
+    
     if (mt) {
       if (!meetingStartMeeting) {
         mt!.innerHTML = "00 min";
         return;
       }
       setInterval(function () {
-        mt.innerHTML = countDownTimer(
-          JSON.parse(meetingStartMeeting) + 58 * 60 * 1000
-        );
+        mt.innerHTML = countDownTimer(meetingStartMeeting);
       }, 1000);
     }
   }, []);

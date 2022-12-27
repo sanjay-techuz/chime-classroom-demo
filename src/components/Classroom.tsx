@@ -96,12 +96,6 @@ export default function Classroom() {
   }, [locationState]);
 
   useEffect(() => {
-    if (localStorage.getItem("screenSharePermit")) {
-      updateGlobalVar(
-        "screenSharePermit",
-        JSON.parse(localStorage.getItem("screenSharePermit") as string)
-      );
-    }
     if (window.innerWidth < 1100) {
       setIsMobileView(true);
       updateGlobalVar("isMobileView", true);
@@ -414,6 +408,7 @@ export default function Classroom() {
                     }
                   }}
                   handleDrawerLeftToggle={handleDrawerLeftToggle}
+                  isContentShareEnabled={isContentShareEnabled}
                 />
               </AppBar>
             </Box>

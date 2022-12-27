@@ -82,6 +82,7 @@ export default {
   'Controls.hostEnableScreenShare': `Host enabled screen share for participants`,
   'Controls.hostDisableScreenShare': `Host disabled screen share for participants`,
   'Controls.screenSharePermitDialogMessage': `Host disabled participants screen sharing`,
+  'Controls.screenShareAlreadySharedDialogMessage': `Someone shared screen already`,
   'Controls.dialogOk': 'Ok',
   'Controls.removeAttendee': `Remove Attendee`,
   'Controls.startRecordingScreenTooltip': `Start recording`,

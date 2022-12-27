@@ -2,17 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 /* eslint-disable  */
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
   Box,
   FormControl,
-  FormControlLabel,
   FormLabel,
   MenuItem,
-  Radio,
-  RadioGroup,
   Select,
 } from "@mui/material";
 
@@ -20,16 +17,12 @@ import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
 import useDevices from "../hooks/useDevices";
-import MessageTopic from "../enums/MessageTopic";
-import ClassMode from "../enums/ClassMode";
 
 export default function DeviceSwitcher() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
-  const { localVideo, classMode, screenSharePermit } = globalVar;
-  const [screenSharePermitValue, setScreenSharePermitValue] = useState(
-    screenSharePermit ? "all" : "host"
-  );
+  const { globalVar } = useContext(getGlobalVarContext());
+  const { localVideo } = globalVar;
+
   const deviceSwitcherState = useDevices();
   const intl = useIntl();
   const videoQualityList = [
@@ -47,24 +40,6 @@ export default function DeviceSwitcher() {
     },
   ];
   const [selectedQuality, setSelectedQuality] = useState(videoQualityList[0]);
-
-  useEffect(() => {
-    setScreenSharePermitValue(screenSharePermit ? "all" : "host");
-  }, []);
-
-  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let newFocusState = screenSharePermitValue === "all" ? true : false;
-    setScreenSharePermitValue((event.target as HTMLInputElement).value);
-    newFocusState =
-      (event.target as HTMLInputElement).value === "all" ? true : false;
-
-    updateGlobalVar("screenSharePermit", newFocusState);
-    localStorage.setItem("screenSharePermit", JSON.stringify(newFocusState));
-
-    chime?.sendMessage(MessageTopic.ScreenSharePermit, {
-      focus: newFocusState,
-    });
-  };
 
   return (
     <Box
@@ -218,32 +193,6 @@ export default function DeviceSwitcher() {
           })}
         </Select>
       </FormControl>
-
-      {classMode === ClassMode.Teacher && (
-        <FormControl sx={{ m: 1, minWidth: 260, maxWidth: 260 }}>
-          <FormLabel>
-            {intl.formatMessage({ id: "DeviceSwitcher.screenSharePermit" })}
-          </FormLabel>
-          <RadioGroup
-            row
-            aria-labelledby="demo-form-control-label-placement"
-            name="position"
-            value={screenSharePermitValue}
-            onChange={handleRadioChange}
-          >
-            <FormControlLabel
-              value="host"
-              control={<Radio />}
-              label="Host Only"
-            />
-            <FormControlLabel
-              value="all"
-              control={<Radio />}
-              label="All participants"
-            />
-          </RadioGroup>
-        </FormControl>
-      )}
     </Box>
   );
 }

@@ -31,6 +31,7 @@ import MessageTopic from "../enums/MessageTopic";
 import ClassMode from "../enums/ClassMode";
 import { nameInitials } from "../utils";
 import Icons from "../custom/Icons";
+import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 
 const cx = classNames.bind(styles);
 
@@ -147,13 +148,13 @@ export default function Roster(props: Props) {
                         >
                           {attendeeId === localUserId
                             ? ` Me${
-                                attendeeId === localStorage.getItem("hostId")
+                              rosterAttendee?.host
                                   ? ", Presenter"
                                   : ""
                               }`
                             : `${
-                                attendeeId === localStorage.getItem("hostId")
-                                  ? ", Presenter"
+                              rosterAttendee?.host
+                                  ? "Presenter"
                                   : ""
                               }`}
                         </Typography>
@@ -277,7 +278,7 @@ export default function Roster(props: Props) {
                       </div>
                     )}
                   </ListItemIcon>
-                  {/* <ListItemIcon sx={{ minWidth: "30px" }}>
+                  <ListItemIcon sx={{ minWidth: "30px" }}>
                     {classMode === ClassMode.Teacher &&
                       attendeeId !== localUserId && (
                         <Tooltip
@@ -303,11 +304,11 @@ export default function Roster(props: Props) {
                               chime?.updateScreenPresenter(attendeeId, focus);
                             }}
                           >
-                            <ArrowUpwardIcon />
+                            <ScreenShareIcon />
                           </Avatar>
                         </Tooltip>
                       )}
-                  </ListItemIcon> */}
+                  </ListItemIcon>
                 </ListItem>
               );
             })}
