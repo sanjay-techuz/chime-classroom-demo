@@ -115,6 +115,13 @@ export default function useRemoteControl() {
               notifDispatch({ type: NotifType.REMOTE_AUTO_FOCUS, payload: { message: intl.formatMessage({ id: "Notification.turnOffFocus" })} });
             }
           break;
+        case MessageTopic.MuteAll:
+            chime?.audioVideo?.realtimeSetCanUnmuteLocalAudio(focus);
+            if (focus) {
+              chime?.audioVideo?.realtimeMuteLocalAudio();
+              notifDispatch({ type: NotifType.REMOTE_AUTO_FOCUS, payload: { message: intl.formatMessage({ id: "Notification.remoteMute" })} });
+            }
+          break;
         case MessageTopic.ScreenSharePermit:
           if (targetId === localUserId) {
             updateGlobalVar('screenSharePermit',focus);
@@ -146,6 +153,10 @@ export default function useRemoteControl() {
       topic: MessageTopic.Focus, 
       callback 
     };
+    const MuteAllMessageUpdateCallback = { 
+      topic: MessageTopic.MuteAll, 
+      callback 
+    };
     const screenSharePermitMessageUpdateCallback = { 
       topic: MessageTopic.ScreenSharePermit, 
       callback 
@@ -156,12 +167,14 @@ export default function useRemoteControl() {
     chime?.subscribeToMessageUpdate(remoteVideoOnOffUpdateCallback);
     chime?.subscribeToMessageUpdate(focusMessageUpdateCallback);
     chime?.subscribeToMessageUpdate(screenSharePermitMessageUpdateCallback);
+    chime?.subscribeToMessageUpdate(MuteAllMessageUpdateCallback);
     return () => {
       chime?.unsubscribeFromMessageUpdate(remoteMuteUnmuteUpdateCallback);
       chime?.unsubscribeFromMessageUpdate(remoteAttendeeRemoveUpdateCallback);
       chime?.unsubscribeFromMessageUpdate(remoteVideoOnOffUpdateCallback);
       chime?.unsubscribeFromMessageUpdate(focusMessageUpdateCallback);
       chime?.unsubscribeFromMessageUpdate(screenSharePermitMessageUpdateCallback);
+      chime?.unsubscribeFromMessageUpdate(MuteAllMessageUpdateCallback);
     };
   }, [meetingStatus]);
 }

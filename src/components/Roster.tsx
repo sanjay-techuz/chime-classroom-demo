@@ -44,10 +44,10 @@ export default function Roster(props: Props) {
   const { closeParticipantsPanel, openChatPanel } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
-  const { classMode } = globalVar;
+  const { classMode, turnOnFocus } = globalVar;
   const roster = useRoster();
   const [videoAttendees, setVideoAttendees] = useState(new Set());
-  const [ selectedAttdId, setSelectedAttdId ] = useState("")
+  const [ selectedAttdId, setSelectedAttdId ] = useState("");
   const intl = useIntl();
   const localUserId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
@@ -367,7 +367,7 @@ export default function Roster(props: Props) {
           <Button
             className={cx("Mui_roster_mute_all_btn")}
             onClick={() => {
-              chime?.sendMessage(MessageTopic.Focus, {
+              chime?.sendMessage(MessageTopic.MuteAll, {
                 focus: true,
               });
             }}
@@ -377,12 +377,13 @@ export default function Roster(props: Props) {
           <Button
             className={cx("Mui_roster_unmute_all_btn")}
             onClick={() => {
+              updateGlobalVar("turnOnFocus", !turnOnFocus);
               chime?.sendMessage(MessageTopic.Focus, {
-                focus: false,
+                focus: !turnOnFocus,
               });
             }}
           >
-            {intl.formatMessage({ id: "Roster.unMuteAll" })}
+            {turnOnFocus ? intl.formatMessage({ id: "Controls.turnOffFocusTooltip" }) : intl.formatMessage({ id: "Controls.turnOnFocusTooltip" })}
           </Button>
         </Box>
       )}

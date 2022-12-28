@@ -23,7 +23,8 @@ export default function GlobalVarProvider(props: Props) {
       userInfo: {},
       classMode: ClassMode.Student,
       screenSharePermit: false,
-      activeChatAttendeeId:""
+      activeChatAttendeeId:"",
+      turnOnFocus: false
   });
 
   const updateGlobalVar = (key: string,value: any) => {
@@ -54,7 +55,10 @@ export default function GlobalVarProvider(props: Props) {
           break;
         case("activeChatAttendeeId"):
           setGlobalVar((oldData) => ({ ...oldData, activeChatAttendeeId: value }))
-          break;                                                     
+          break;  
+        case("turnOnFocus"):
+          setGlobalVar((oldData) => ({ ...oldData, turnOnFocus: value }))
+          break;                                                    
         default:
           break;
     }

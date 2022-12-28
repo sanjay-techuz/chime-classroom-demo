@@ -7,6 +7,7 @@ enum MessageTopic {
   RaiseHand = 'raise-hand',
   DismissHand = 'dismiss-hand',
   Focus = 'focus',
+  MuteAll = 'mute-all',
   RemoteMuteUnmute = 'remote-mute-unmute',
   RemoveAttendee = 'remove-attendee',
   RemoteVideoOnOff = 'remote-video-on-off',
