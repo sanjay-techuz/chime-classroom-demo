@@ -348,6 +348,7 @@ export default function Classroom() {
                       >
                         <Roster
                           closeParticipantsPanel={handleDrawerLeftToggle}
+                          openChatPanel={() => setOpenChat(true)}
                         />
                       </div>
                     )}

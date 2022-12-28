@@ -18,6 +18,8 @@ import {
   Typography,
   Button,
   Divider,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -30,24 +32,34 @@ import MessageTopic from "../enums/MessageTopic";
 import ClassMode from "../enums/ClassMode";
 import { nameInitials } from "../utils";
 import Icons from "../custom/Icons";
-import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 
 const cx = classNames.bind(styles);
 
 type Props = {
   closeParticipantsPanel: () => void;
+  openChatPanel: () => void
 };
 
 export default function Roster(props: Props) {
-  const { closeParticipantsPanel } = props;
+  const { closeParticipantsPanel, openChatPanel } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  const { globalVar } = useContext(getGlobalVarContext());
+  const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
   const { classMode } = globalVar;
   const roster = useRoster();
   const [videoAttendees, setVideoAttendees] = useState(new Set());
+  const [ selectedAttdId, setSelectedAttdId ] = useState("")
   const intl = useIntl();
   const localUserId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     const tileIds: { [tileId: number]: string } = {};
@@ -90,6 +102,11 @@ export default function Roster(props: Props) {
     attendeeIds = Object.keys(roster).filter((attendeeId) => {
       return !!roster[attendeeId].name;
     });
+  }
+
+  const handleChat = (attendeeId: string) => {
+    updateGlobalVar("activeChatAttendeeId", attendeeId);
+    openChatPanel()
   }
 
   return (
@@ -277,34 +294,63 @@ export default function Roster(props: Props) {
                     )}
                   </ListItemIcon>
                   <ListItemIcon sx={{ minWidth: "30px" }}>
-                    {classMode === ClassMode.Teacher &&
-                      attendeeId !== localUserId && (
-                        <Tooltip
-                          title={rosterAttendee.presenter ? intl.formatMessage({ id: "Roster.removePresenter" }) : intl.formatMessage({ id: "Roster.makePresenter" })}
-                          placement="bottom"
+                    {attendeeId !== localUserId && (
+                        <>
+                        <div className={cx("Roster_video")}
+                          style={{ cursor: "pointer" }} 
+                          onClick={(e) => {
+                          handleClick(e);
+                          setSelectedAttdId(attendeeId)
+                          }}>
+                          <Icons src={"/icons/roster_more.svg"} />
+                          </div>
+                        {attendeeId === selectedAttdId && 
+                        <Menu
+                          id="fade-menu"
+                          MenuListProps={{
+                            'aria-labelledby': 'fade-button',
+                          }}
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={handleClose}
+                          PaperProps={{
+                            elevation: 0,
+                            sx: {
+                              bgcolor: "var(--third_blue_color)",
+                              color: "var(--pure_white_color)",
+                              border: "1px solid var(--controls_border_color)",
+                              overflow: "visible",
+                              "&:before": {
+                                content: '""',
+                                display: "block",
+                                position: "absolute",
+                                top: 0,
+                                right: "10%",
+                                width: 10,
+                                height: 10,
+                                transform: "translateY(-50%) rotate(45deg)",
+                                zIndex: 0,
+                                borderTop: "1px solid var(--controls_border_color)",
+                                borderLeft: "1px solid var(--controls_border_color)",
+                                backgroundColor: "var(--third_blue_color)",
+                              },
+                            },
+                          }}  
                         >
-                          <Avatar
-                            sx={{
-                              width: 30,
-                              height: 30,
-                              bgcolor: rosterAttendee.presenter ? "var(--pure_white_color)" : "var(--color_grey)",
-                              color: rosterAttendee.presenter ? "var(--color_black)" : "var(--pure_white_color)",
-                            }}
-                            onClick={() => {
-                              const focus = !rosterAttendee.presenter;
-                              chime?.sendMessage(
-                                MessageTopic.ScreenSharePermit,
-                                {
-                                  focus: focus,
-                                  targetId: attendeeId,
-                                }
-                              );
-                              chime?.updateScreenPresenter(attendeeId, focus);
-                            }}
-                          >
-                            <ScreenShareIcon />
-                          </Avatar>
-                        </Tooltip>
+                          <MenuItem sx={{ fontSize: "12px" }} onClick={() => handleChat(attendeeId)}>Chat</MenuItem>
+                          {classMode === ClassMode.Teacher && <MenuItem sx={{ fontSize: "12px" }} onClick={() => {
+                            const focus = !rosterAttendee.presenter;
+                            chime?.sendMessage(
+                              MessageTopic.ScreenSharePermit,
+                              {
+                                focus: focus,
+                                targetId: attendeeId,
+                              }
+                            );
+                            chime?.updateScreenPresenter(attendeeId, focus);
+                          }}>{rosterAttendee.presenter ? intl.formatMessage({ id: "Roster.removePresenter" }) : intl.formatMessage({ id: "Roster.makePresenter" })}</MenuItem>}
+                          </Menu>}
+                        </>
                       )}
                   </ListItemIcon>
                 </ListItem>

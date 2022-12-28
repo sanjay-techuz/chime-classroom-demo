@@ -26,6 +26,7 @@ import localStorageKeys from "../constants/localStorageKeys.json";
 import RosterAttendeeType from "../types/RosterAttendeeType";
 import { createPrivateChannel } from "../utils";
 import Icons from "../custom/Icons";
+import getGlobalVarContext from "../context/getGlobalVarContext";
 
 const cx = classNames.bind(styles);
 
@@ -38,7 +39,8 @@ let chatMessageText: string = "";
 export default React.memo(function ChatInput(props: Props) {
   const { changeChannel, publicChannelCnt } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-
+  const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
+  const { activeChatAttendeeId } = globalVar;
   const [inputText, setInputText] = useState("");
   const [currentChatter, setCurrentChatter] = useState("Everyone");
   const [activeChatAttendee, setActiveChatAttendee] = useState<string>(
@@ -78,6 +80,18 @@ export default React.memo(function ChatInput(props: Props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    if(activeChatAttendeeId){
+      setActiveChatAttendee(activeChatAttendeeId);
+      setActiveChannel(
+        createPrivateChannel(localUserId as string, activeChatAttendeeId)
+      );
+      setCurrentChatter(roster[activeChatAttendeeId]?.name as string);
+      changeChannel("private", activeChatAttendeeId, roster[activeChatAttendeeId]?.msgCount!);
+      updateGlobalVar("activeChatAttendeeId", "");
+    }
+  }, [activeChatAttendeeId]); 
 
   useEffect(() => {
     chatMessageText = inputText;

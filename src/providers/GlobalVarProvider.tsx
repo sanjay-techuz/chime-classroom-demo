@@ -23,6 +23,7 @@ export default function GlobalVarProvider(props: Props) {
       userInfo: {},
       classMode: ClassMode.Student,
       screenSharePermit: false,
+      activeChatAttendeeId:""
   });
 
   const updateGlobalVar = (key: string,value: any) => {
@@ -50,7 +51,10 @@ export default function GlobalVarProvider(props: Props) {
           break;
         case("screenSharePermit"):
           setGlobalVar((oldData) => ({ ...oldData, screenSharePermit: value }))
-          break;                                                    
+          break;
+        case("activeChatAttendeeId"):
+          setGlobalVar((oldData) => ({ ...oldData, activeChatAttendeeId: value }))
+          break;                                                     
         default:
           break;
     }

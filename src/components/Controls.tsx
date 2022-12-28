@@ -380,12 +380,6 @@ export default function Controls(props: Props) {
         <MoreSettings />
 
         <Dialog
-          PaperProps={{
-            style: {
-              backgroundColor: "var(--third_blue_color)",
-              border: "1px solid var(--controls_border_color)",
-            },
-          }}
           open={openScreenSharePermit}
           onClose={handleCloseScreenShareDialog}
           aria-labelledby="alert-dialog-title"
@@ -394,7 +388,6 @@ export default function Controls(props: Props) {
           <DialogContent>
             <DialogContentText
               id="alert-dialog-description"
-              className={cx("Mui_classroom_control_white_color")}
             >
               {isContentShareEnabled && (screenSharePermit || classMode === ClassMode.Teacher) ? intl.formatMessage({
                 id: "Controls.screenShareAlreadySharedDialogMessage",
@@ -405,7 +398,6 @@ export default function Controls(props: Props) {
           </DialogContent>
           <DialogActions>
             <Button
-              className={cx("Mui_classroom_control_white_color")}
               onClick={handleCloseScreenShareDialog}
               autoFocus
             >
