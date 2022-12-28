@@ -27,6 +27,16 @@
   display: block;
 }
 
+.ClassRoom_contentVideoWrapper.screenShareFullView {
+  height: calc(100% - 60px) !important;
+  width: 100% !important;
+  z-index: 1111 !important;
+  top: 0px !important;
+}
+.ClassRoom_contentVideoWrapper.screenShareFullView.rightDrawerOpen {
+  width: calc(100% - 310px) !important;
+}
+
 .ClassRoom_contentVideoWrapper.screenShareView {
   width: 15%;
   height: auto;

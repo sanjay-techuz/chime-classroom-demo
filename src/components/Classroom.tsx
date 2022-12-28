@@ -50,6 +50,7 @@ export default function Classroom() {
   const { meetingStatus, errorMessage } = useContext(getMeetingStatusContext());
   const [isContentShareEnabled, setIsContentShareEnabled] = useState(false);
   const [isScreenShareView, setIsScreenShareView] = useState(false);
+  const [screenShareFullView, setScreenShareFullView] = useState(false);
 
   const [tryToReload, setTryToReload] = useState(true);
   const [viewMode, setViewMode] = useState(ViewMode.Room);
@@ -296,7 +297,11 @@ export default function Classroom() {
                         isContentShareEnabled,
                         screenShareView: !isScreenShareView,
                         rightDrawerOpen,
+                        screenShareFullView: screenShareFullView && isContentShareEnabled
                       })}
+                      onDoubleClick={() => {
+                        setScreenShareFullView(!screenShareFullView)
+                      }}
                     >
                       <ContentVideo
                         onContentShareEnabled={onContentShareEnabled}
