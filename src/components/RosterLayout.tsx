@@ -9,12 +9,9 @@ import { useIntl } from "react-intl";
 import VideoNameplate from "./VideoNameplate";
 import styles from "./RosterLayout.css";
 import { nameInitials } from "../utils";
-import { Avatar, Badge, Typography } from "@mui/material";
-import SmallAvatar from "../custom/roster/SmallAvatar";
+import { Avatar, Typography } from "@mui/material";
 import useRoster from "../hooks/useRoster";
 import RosterAttendeeType from "../types/RosterAttendeeType";
-import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
-import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
 import Icons from "../custom/Icons";
 import { Box } from "@mui/system";
 
@@ -34,7 +31,6 @@ export default function RosterLayout(props: Props) {
   const initials = nameInitials(name);
   const roster = useRoster();
   const rosterAttendee: RosterAttendeeType = roster[attendeeId];
-  const muted = rosterAttendee?.muted ? rosterAttendee?.muted : false;
 
   return (
     <div
@@ -67,32 +63,9 @@ export default function RosterLayout(props: Props) {
       ) : (
         <>
         {rosterAttendee?.raised && <Box className={cx("Mui_roster_layout_raised_hand_box")}>{rosterAttendee?.name} raised a hand <Icons src={"/icons/hand_yellow.svg"} /></Box>}
-          <Badge
-            overlap="circular"
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            badgeContent={
-              <SmallAvatar
-                className={cx("Mui_roster_layout_badge_small_avatar")}
-                bgcolor={
-                  muted ? "var(--color_pink)" : "var(--secondary_blue_color)"
-                }
-              >
-                {muted ? (
-                  <MicOffOutlinedIcon
-                    className={cx("Mui_roster_layout_fontsize")}
-                  />
-                ) : (
-                  <MicNoneOutlinedIcon
-                    className={cx("Mui_roster_layout_fontsize")}
-                  />
-                )}
-              </SmallAvatar>
-            }
-          >
             <Avatar className={cx("Mui_roster_layout_badge_avatar")}>
               {initials}
             </Avatar>
-          </Badge>
           <Typography className={cx("Mui_roster_layout_badge_typography")}>
             {rosterAttendee?.name}
           </Typography>

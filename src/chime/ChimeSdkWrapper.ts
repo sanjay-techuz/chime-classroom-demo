@@ -300,6 +300,8 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
     this.audioVideo?.realtimeSubscribeToAttendeeIdPresence(
       (presentAttendeeId: string, present: boolean): void => {
         if (!present) {
+          const presenterId = presentAttendeeId.split("#")[0];
+          this.roster[presenterId].screenPresenter = false;
           delete this.roster[presentAttendeeId];
           this.publishRosterUpdate.cancel();
           this.publishRosterUpdate();
@@ -316,6 +318,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
           ) => {
             const baseAttendeeId = new DefaultModality(attendeeId).base();
             if (baseAttendeeId !== attendeeId) {
+              this.roster[baseAttendeeId].screenPresenter = true;
               // Don't include the content attendee in the roster.
               //
               // When you or other attendees share content (a screen capture, a video file,
@@ -365,6 +368,7 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
               this.roster[attendeeId].name = json.AttendeeInfo?.Name || '';
               this.roster[attendeeId].msgCount = 0;
               this.roster[attendeeId].presenter = false;
+              this.roster[baseAttendeeId].screenPresenter = false;
               this.roster[attendeeId].raised = false;
               this.roster[attendeeId].host = json.AttendeeInfo?.Host || false;
 
@@ -411,9 +415,11 @@ export default class ChimeSdkWrapper implements DeviceChangeObserver {
   }
 
   // UPDATE SCREEN SHARE PRESENTER  
-  updateRaisedHand = (attendeeId: string, flag: boolean) => { 
-      this.roster[attendeeId].raised = flag;
-      this.publishRosterUpdate();
+  updateRaisedHand = (attendeeId: string, flag: boolean) => {
+      if(Object.keys(this.roster).length !== 0){
+        this.roster[attendeeId].raised = flag;
+        this.publishRosterUpdate();
+      }
   }
 
   joinRoom = async (element: HTMLAudioElement | null): Promise<void> => {

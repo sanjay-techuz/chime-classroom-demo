@@ -20,7 +20,6 @@ import LocalVideo from "./LocalVideo";
 import { Box, Button, IconButton } from "@mui/material";
 import Icons from "../custom/Icons";
 import { countDownTimer } from "../utils/countDownTimer";
-import localStorageKeys from "../constants/localStorageKeys.json";
 import styles from "./RosterSliderView.css";
 
 const MAX_REMOTE_VIDEOS = 16;

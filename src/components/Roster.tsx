@@ -145,6 +145,10 @@ export default function Roster(props: Props) {
                     >
                       {initials}
                     </Avatar>
+                    {rosterAttendee?.screenPresenter && 
+                    <div className={cx("Mui_roster_attendee_screen_presenter_icon")}>
+                      <Icons src={"/icons/screen_presenter.svg"} />
+                    </div> }
                   </ListItemAvatar>
                   <ListItemText
                     primary={
@@ -164,12 +168,12 @@ export default function Roster(props: Props) {
                           {attendeeId === localUserId
                             ? ` Me${
                               rosterAttendee?.host
-                                  ? ", Presenter"
+                                  ? ", Host"
                                   : ""
                               }`
                             : `${
                               rosterAttendee?.host
-                                  ? "Presenter"
+                                  ? "Host"
                                   : ""
                               }`}
                         </Typography>
