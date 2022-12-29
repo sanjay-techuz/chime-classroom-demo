@@ -8,6 +8,7 @@ import {
 } from "amazon-chime-sdk-js";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
+import { useHistory } from "react-router-dom";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -21,6 +22,7 @@ import { Box, Button, IconButton } from "@mui/material";
 import Icons from "../custom/Icons";
 import { countDownTimer } from "../utils/countDownTimer";
 import styles from "./RosterSliderView.css";
+import routes from "../constants/routes.json";
 
 const MAX_REMOTE_VIDEOS = 16;
 let tm: any = 0;
@@ -37,11 +39,12 @@ export default function RosterSliderView(props: Props) {
   const { isContentShareEnabled, rightDrawerOpen } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
-  const { activeSpeakerAttendeeId } = globalVar;
+  const { activeSpeakerAttendeeId, userInfo } = globalVar;
   const [visibleIndices, setVisibleIndices] = useState<{
     [index: string]: { boundAttendeeId: string };
   }>({});
   const roster = useRoster();
+  const history = useHistory();
   const videoElements: HTMLVideoElement[] = [];
   const tiles: { [index: number]: number } = {};
   const currentUser = chime?.configuration?.credentials?.attendeeId;
@@ -70,7 +73,12 @@ export default function RosterSliderView(props: Props) {
         return;
       }
       setInterval(function () {
-        mt.innerHTML = countDownTimer(meetingStartMeeting);
+        const mTime = countDownTimer(meetingStartMeeting);
+        if(!mTime){
+          chime?.leaveRoom(true);
+          history.push(`${routes.MAIN}?id=${userInfo.teacherId}`);
+        }
+        mt.innerHTML = mTime as string;
       }, 1000);
     }
   }, []);

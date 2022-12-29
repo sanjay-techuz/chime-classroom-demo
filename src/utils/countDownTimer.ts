@@ -5,7 +5,7 @@ export function countDownTimer(meetingStartMeeting: number) {
 
     const distance = countDownDate - now;
     if(distance <= 0){
-        return "00 min";
+        return null;
     }
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
