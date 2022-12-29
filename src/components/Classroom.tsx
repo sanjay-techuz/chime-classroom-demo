@@ -25,7 +25,6 @@ import Controls from "./Controls";
 import Error from "./Error";
 import LoadingSpinner from "./LoadingSpinner";
 import CheckMediaPermissions from "./CheckMediaPermissions";
-// import RemoteVideoGroup from "./RemoteVideoGroup";
 import Roster from "./Roster";
 import Main from "../custom/classroom/Main";
 import AppBar from "../custom/classroom/AppBar";

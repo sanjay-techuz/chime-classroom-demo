@@ -7,7 +7,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import App from './components/App';
 import Classroom from './components/Classroom';
 import CreateOrJoin from './components/CreateOrJoin';
-// import Home from './components/Home';
 import Main from './components/Main';
 import ThankyouPage from './components/ThankyouPage';
 import routes from './constants/routes.json';
