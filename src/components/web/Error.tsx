@@ -7,11 +7,11 @@ import React, { ReactNode, useContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useIntl } from 'react-intl';
 
-import routes from "../constants/routes.json";
-import localStorageKeys from "../constants/localStorageKeys.json";
+import routes from "../../constants/routes.json";
+import localStorageKeys from "../../constants/localStorageKeys.json";
 import styles from "./Error.css";
-import getUIStateContext from "../context/getUIStateContext";
-import ClassMode from "../enums/ClassMode";
+import getUIStateContext from "../../context/getUIStateContext";
+import ClassMode from "../../enums/ClassMode";
 
 const cx = classNames.bind(styles);
 

@@ -6,9 +6,9 @@ import { VideoTileState } from "amazon-chime-sdk-js";
 import classNames from "classnames/bind";
 import React, { useContext, useEffect, useRef, useState } from "react";
 
-import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import getChimeContext from "../context/getChimeContext";
-import getGlobalVarContext from "../context/getGlobalVarContext";
+import ChimeSdkWrapper from "../../chime/ChimeSdkWrapper";
+import getChimeContext from "../../context/getChimeContext";
+import getGlobalVarContext from "../../context/getGlobalVarContext";
 import LocalRoster from "./LocalRoster";
 import styles from "./LocalVideo.css";
 import VideoNameplate from "./VideoNameplate";

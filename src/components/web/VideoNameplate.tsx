@@ -4,9 +4,9 @@
 
 import classNames from "classnames/bind";
 import React from "react";
-import Icons from "../custom/Icons";
+import Icons from "../../custom/Icons";
 
-import useAttendee from "../hooks/useAttendee";
+import useAttendee from "../../hooks/useAttendee";
 import styles from "./VideoNameplate.css";
 
 const cx = classNames.bind(styles);

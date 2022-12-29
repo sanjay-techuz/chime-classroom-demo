@@ -22,16 +22,16 @@ import {
   MenuItem,
 } from "@mui/material";
 
-import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import getChimeContext from "../context/getChimeContext";
-import getGlobalVarContext from "../context/getGlobalVarContext";
-import useRoster from "../hooks/useRoster";
-import RosterAttendeeType from "../types/RosterAttendeeType";
+import ChimeSdkWrapper from "../../chime/ChimeSdkWrapper";
+import getChimeContext from "../../context/getChimeContext";
+import getGlobalVarContext from "../../context/getGlobalVarContext";
+import useRoster from "../../hooks/useRoster";
+import RosterAttendeeType from "../../types/RosterAttendeeType";
 import styles from "./Roster.css";
-import MessageTopic from "../enums/MessageTopic";
-import ClassMode from "../enums/ClassMode";
-import { nameInitials } from "../utils";
-import Icons from "../custom/Icons";
+import MessageTopic from "../../enums/MessageTopic";
+import ClassMode from "../../enums/ClassMode";
+import { nameInitials } from "../../utils";
+import Icons from "../../custom/Icons";
 
 const cx = classNames.bind(styles);
 

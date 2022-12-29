@@ -10,19 +10,19 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import { useHistory } from "react-router-dom";
 
-import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import getChimeContext from "../context/getChimeContext";
-import getGlobalVarContext from "../context/getGlobalVarContext";
+import ChimeSdkWrapper from "../../chime/ChimeSdkWrapper";
+import getChimeContext from "../../context/getChimeContext";
+import getGlobalVarContext from "../../context/getGlobalVarContext";
 import RemoteVideo from "./RemoteVideo";
-import useRoster from "../hooks/useRoster";
-import RosterAttendeeType from "../types/RosterAttendeeType";
+import useRoster from "../../hooks/useRoster";
+import RosterAttendeeType from "../../types/RosterAttendeeType";
 import RosterLayout from "./RosterLayout";
 import LocalVideo from "./LocalVideo";
 import { Box, Button, IconButton } from "@mui/material";
-import Icons from "../custom/Icons";
-import { countDownTimer } from "../utils/countDownTimer";
+import Icons from "../../custom/Icons";
+import { countDownTimer } from "../../utils/countDownTimer";
 import styles from "./RosterSliderView.css";
-import routes from "../constants/routes.json";
+import routes from "../../constants/routes.json";
 
 const MAX_REMOTE_VIDEOS = 16;
 let tm: any = 0;

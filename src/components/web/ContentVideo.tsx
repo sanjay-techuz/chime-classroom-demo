@@ -6,8 +6,8 @@ import { DefaultModality, VideoTileState } from "amazon-chime-sdk-js";
 import classNames from "classnames/bind";
 import React, { useContext, useEffect, useRef, useState } from "react";
 
-import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import getChimeContext from "../context/getChimeContext";
+import ChimeSdkWrapper from "../../chime/ChimeSdkWrapper";
+import getChimeContext from "../../context/getChimeContext";
 import styles from "./ContentVideo.css";
 
 const cx = classNames.bind(styles);

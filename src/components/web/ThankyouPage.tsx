@@ -6,10 +6,10 @@ import { useIntl } from "react-intl";
 
 import { Box, Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import ClassMode from '../enums/ClassMode';
+import ClassMode from '../../enums/ClassMode';
 
-import getUIStateContext from '../context/getUIStateContext';
-import common from '../constants/common.json';
+import getUIStateContext from '../../context/getUIStateContext';
+import common from '../../constants/common.json';
 
 export default function ThankyouPage() {
   const intl = useIntl();

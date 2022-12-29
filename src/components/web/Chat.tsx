@@ -19,19 +19,19 @@ import {
   ListItemIcon,
 } from "@mui/material";
 
-import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import getChimeContext from "../context/getChimeContext";
-import getGlobalVarContext from "../context/getGlobalVarContext";
-import useRoster from "../hooks/useRoster";
+import ChimeSdkWrapper from "../../chime/ChimeSdkWrapper";
+import getChimeContext from "../../context/getChimeContext";
+import getGlobalVarContext from "../../context/getGlobalVarContext";
+import useRoster from "../../hooks/useRoster";
 import styles from "./Chat.css";
 import ChatInput from "./ChatInput";
-import MessageTopic from "../enums/MessageTopic";
-import localStorageKeys from "../constants/localStorageKeys.json";
-import { clipBoard, createPrivateChannel } from "../utils";
-import useRemoteControl from "../hooks/useRemoteControl";
-import useRaisedHandAttendees from "../hooks/useRaisedHandAttendees";
+import MessageTopic from "../../enums/MessageTopic";
+import localStorageKeys from "../../constants/localStorageKeys.json";
+import { clipBoard, createPrivateChannel } from "../../utils";
+import useRemoteControl from "../../hooks/useRemoteControl";
+import useRaisedHandAttendees from "../../hooks/useRaisedHandAttendees";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import Icons from "../custom/Icons";
+import Icons from "../../custom/Icons";
 
 const cx = classNames.bind(styles);
 var chatPannelOpen = false;

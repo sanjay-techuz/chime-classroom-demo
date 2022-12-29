@@ -4,11 +4,11 @@
 import React, { ReactNode, useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import App from './components/App';
-import Classroom from './components/Classroom';
-import CreateOrJoin from './components/CreateOrJoin';
-import Main from './components/Main';
-import ThankyouPage from './components/ThankyouPage';
+import App from './components/web/App';
+import Classroom from './components/web/Classroom';
+import CreateOrJoin from './components/web/CreateOrJoin';
+import Main from './components/web/Main';
+import ThankyouPage from './components/web/ThankyouPage';
 import routes from './constants/routes.json';
 import getUIStateContext from './context/getUIStateContext';
 import GlobalVarProvider from './providers/GlobalVarProvider';

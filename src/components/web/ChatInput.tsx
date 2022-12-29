@@ -6,10 +6,10 @@ import classNames from "classnames/bind";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
-import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import getChimeContext from "../context/getChimeContext";
+import ChimeSdkWrapper from "../../chime/ChimeSdkWrapper";
+import getChimeContext from "../../context/getChimeContext";
 import styles from "./ChatInput.css";
-import MessageTopic from "../enums/MessageTopic";
+import MessageTopic from "../../enums/MessageTopic";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
 import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
 import {
@@ -21,12 +21,12 @@ import {
   MenuItem,
   Popover,
 } from "@mui/material";
-import useRoster from "../hooks/useRoster";
-import localStorageKeys from "../constants/localStorageKeys.json";
-import RosterAttendeeType from "../types/RosterAttendeeType";
-import { createPrivateChannel } from "../utils";
-import Icons from "../custom/Icons";
-import getGlobalVarContext from "../context/getGlobalVarContext";
+import useRoster from "../../hooks/useRoster";
+import localStorageKeys from "../../constants/localStorageKeys.json";
+import RosterAttendeeType from "../../types/RosterAttendeeType";
+import { createPrivateChannel } from "../../utils";
+import Icons from "../../custom/Icons";
+import getGlobalVarContext from "../../context/getGlobalVarContext";
 
 const cx = classNames.bind(styles);
 

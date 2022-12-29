@@ -21,12 +21,12 @@ import {
 } from "mic-check";
 import classNames from "classnames/bind";
 
-import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import getChimeContext from "../context/getChimeContext";
-import getGlobalVarContext from "../context/getGlobalVarContext";
+import ChimeSdkWrapper from "../../chime/ChimeSdkWrapper";
+import getChimeContext from "../../context/getChimeContext";
+import getGlobalVarContext from "../../context/getGlobalVarContext";
 // import getUIStateContext from "../context/getUIStateContext";
 import styles from "./CheckMediaPermissions.css";
-import ClassMode from "../enums/ClassMode";
+import ClassMode from "../../enums/ClassMode";
 
 const cx = classNames.bind(styles);
 const browser = Bowser.getParser(window.navigator.userAgent);

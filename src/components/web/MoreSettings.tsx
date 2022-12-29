@@ -14,12 +14,12 @@ import {
   Tooltip,
 } from "@mui/material";
 
-import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import getChimeContext from "../context/getChimeContext";
-import getGlobalVarContext from "../context/getGlobalVarContext";
-import useDevices from "../hooks/useDevices";
+import ChimeSdkWrapper from "../../chime/ChimeSdkWrapper";
+import getChimeContext from "../../context/getChimeContext";
+import getGlobalVarContext from "../../context/getGlobalVarContext";
+import useDevices from "../../hooks/useDevices";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import Icons from "../custom/Icons";
+import Icons from "../../custom/Icons";
 
 export default function MoreSettings() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());

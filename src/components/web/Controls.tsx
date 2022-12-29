@@ -20,17 +20,17 @@ import {
   Popover,
   Tooltip,
 } from "@mui/material";
-import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import routes from "../constants/routes.json";
-import getChimeContext from "../context/getChimeContext";
-import getGlobalVarContext from "../context/getGlobalVarContext";
-import ClassMode from "../enums/ClassMode";
-import SmallAvatar from "../custom/roster/SmallAvatar";
-import { attendanceWenhook } from "../services";
+import ChimeSdkWrapper from "../../chime/ChimeSdkWrapper";
+import routes from "../../constants/routes.json";
+import getChimeContext from "../../context/getChimeContext";
+import getGlobalVarContext from "../../context/getGlobalVarContext";
+import ClassMode from "../../enums/ClassMode";
+import SmallAvatar from "../../custom/roster/SmallAvatar";
+import { attendanceWenhook } from "../../services";
 import MoreSettings from "./MoreSettings";
 import styles from "./Controls.css";
-import MessageTopic from "../enums/MessageTopic";
-import Icons from "../custom/Icons";
+import MessageTopic from "../../enums/MessageTopic";
+import Icons from "../../custom/Icons";
 
 const cx = classNames.bind(styles);
 let timeoutId: number;

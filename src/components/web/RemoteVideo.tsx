@@ -8,10 +8,10 @@ import { useIntl } from "react-intl";
 
 import VideoNameplate from "./VideoNameplate";
 import styles from "./RemoteVideo.css";
-import Icons from "../custom/Icons";
+import Icons from "../../custom/Icons";
 import { Box } from "@mui/material";
-import useRoster from "../hooks/useRoster";
-import RosterAttendeeType from "../types/RosterAttendeeType";
+import useRoster from "../../hooks/useRoster";
+import RosterAttendeeType from "../../types/RosterAttendeeType";
 
 const cx = classNames.bind(styles);
 

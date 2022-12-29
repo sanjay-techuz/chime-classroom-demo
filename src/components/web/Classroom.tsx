@@ -10,14 +10,14 @@ import { useLocation } from "react-router-dom";
 
 import { Box, Divider, Drawer } from "@mui/material";
 
-import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
-import getChimeContext from "../context/getChimeContext";
-import getMeetingStatusContext from "../context/getMeetingStatusContext";
-import getGlobalVarContext from "../context/getGlobalVarContext";
+import ChimeSdkWrapper from "../../chime/ChimeSdkWrapper";
+import getChimeContext from "../../context/getChimeContext";
+import getMeetingStatusContext from "../../context/getMeetingStatusContext";
+import getGlobalVarContext from "../../context/getGlobalVarContext";
 
-import ClassMode from "../enums/ClassMode";
-import MeetingStatus from "../enums/MeetingStatus";
-import ViewMode from "../enums/ViewMode";
+import ClassMode from "../../enums/ClassMode";
+import MeetingStatus from "../../enums/MeetingStatus";
+import ViewMode from "../../enums/ViewMode";
 import Chat from "./Chat";
 import styles from "./Classroom.css";
 import ContentVideo from "./ContentVideo";
@@ -26,13 +26,13 @@ import Error from "./Error";
 import LoadingSpinner from "./LoadingSpinner";
 import CheckMediaPermissions from "./CheckMediaPermissions";
 import Roster from "./Roster";
-import Main from "../custom/classroom/Main";
-import AppBar from "../custom/classroom/AppBar";
-import { attendanceWenhook } from "../services";
+import Main from "../../custom/classroom/Main";
+import AppBar from "../../custom/classroom/AppBar";
+import { attendanceWenhook } from "../../services";
 import {
   useNotificationDispatch,
   Type as NotifType,
-} from "../providers/NotificationProvider";
+} from "../../providers/NotificationProvider";
 import RosterSliderView from "./RosterSliderView";
 
 const cx = classNames.bind(styles);
