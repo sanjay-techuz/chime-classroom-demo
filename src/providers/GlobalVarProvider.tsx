@@ -19,7 +19,6 @@ export default function GlobalVarProvider(props: Props) {
       activeSpeakerAttendeeId:"",
       isChatOpen:false,
       groupChatCounter:0,
-      isMobileView: false,
       userInfo: {},
       classMode: ClassMode.Student,
       screenSharePermit: false,
@@ -40,9 +39,6 @@ export default function GlobalVarProvider(props: Props) {
           break;
         case("groupChatCounter"):
           setGlobalVar((oldData) => ({ ...oldData, groupChatCounter: value }))
-          break;
-        case("isMobileView"):
-          setGlobalVar((oldData) => ({ ...oldData, isMobileView: value }))
           break;
         case("userInfo"):
           setGlobalVar((oldData) => ({ ...oldData, userInfo: value }))

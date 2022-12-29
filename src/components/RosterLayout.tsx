@@ -25,7 +25,7 @@ type Props = {
   view?: string;
 };
 
-export default function RosterLayout(props: Props) {
+export default React.memo(function RosterLayout(props: Props) {
   const intl = useIntl();
   const { attendeeId, activeSpeaker, name, view } = props;
   const initials = nameInitials(name);
@@ -76,4 +76,4 @@ export default function RosterLayout(props: Props) {
       )}
     </div>
   );
-}
+});

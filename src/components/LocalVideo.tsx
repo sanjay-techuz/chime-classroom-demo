@@ -19,7 +19,7 @@ type Props = {
   view?: string;
 };
 
-export default function LocalVideo(props: Props) {
+export default React.memo(function LocalVideo(props: Props) {
   const { view } = props;
   const [enabled, setEnabled] = useState(false);
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -72,4 +72,4 @@ export default function LocalVideo(props: Props) {
       )}
     </>
   );
-}
+});

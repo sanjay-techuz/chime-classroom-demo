@@ -1,4 +1,4 @@
-export function rosterSize(elHeight: number, attdLength: number, isMobileView: boolean) {
+export function rosterSize(elHeight: number, attdLength: number) {
   const maxCols = 7;
   let cols = 1;
   for (cols; cols <= maxCols; cols++) {
@@ -7,7 +7,7 @@ export function rosterSize(elHeight: number, attdLength: number, isMobileView: b
     }
   }
   let row = Math.ceil(attdLength / cols);
-  if (isMobileView && row === 1) {
+  if (row === 1) {
     row = 2;
   }
   const dd = 100 / cols - 1;

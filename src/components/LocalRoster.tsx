@@ -20,7 +20,7 @@ type Props = {
   view?: string;
 };
 
-export default function LocalRoster(props: Props) {
+export default React.memo(function LocalRoster(props: Props) {
   const { attendeeId, name, view } = props;
   const initials = nameInitials(name);
   const roster = useRoster();
@@ -56,4 +56,4 @@ export default function LocalRoster(props: Props) {
       )}
     </div>
   );
-}
+});

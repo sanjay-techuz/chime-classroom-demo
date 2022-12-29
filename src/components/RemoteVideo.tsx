@@ -24,7 +24,7 @@ type Props = {
   view?: string;
 };
 
-export default function RemoteVideo(props: Props) {
+export default React.memo(function RemoteVideo(props: Props) {
   const intl = useIntl();
   const {
     enabled,
@@ -64,4 +64,4 @@ export default function RemoteVideo(props: Props) {
       )}
     </div>
   );
-}
+});

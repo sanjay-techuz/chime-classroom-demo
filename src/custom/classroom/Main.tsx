@@ -3,9 +3,8 @@ import { styled } from "@mui/material/styles";
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   leftopen?: boolean;
   rightopen?: boolean;
-  mobileview?: boolean;
   drawerWidth?: number;
-}>(({ theme, leftopen, rightopen, mobileview, drawerWidth = 0 }) => ({
+}>(({ theme, leftopen, rightopen, drawerWidth = 0 }) => ({
   flexGrow: 1,
   padding: theme.spacing(1),
   backgroundColor: "var(--primary_blue_color) !important",
@@ -19,7 +18,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   height: "100%",
   ...(leftopen &&
     !rightopen &&
-    !mobileview && {
+    {
       width: `calc(100% - ${drawerWidth}px)`,
       // transition: theme.transitions.create("margin", {
       //   easing: theme.transitions.easing.easeOut,
@@ -29,7 +28,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
     }),
   ...(!leftopen &&
     rightopen &&
-    !mobileview && {
+    {
       width: `calc(100% - ${drawerWidth}px)`,
       // transition: theme.transitions.create("margin", {
       //   easing: theme.transitions.easing.easeIn,
@@ -39,7 +38,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
     }),
   ...(leftopen &&
     rightopen &&
-    !mobileview && {
+    {
       width: `calc(100% - ${drawerWidth + drawerWidth}px)`,
       marginLeft: `${drawerWidth}px`,
       marginRight: `${drawerWidth}px`,

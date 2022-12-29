@@ -21,7 +21,7 @@ import useDevices from "../hooks/useDevices";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Icons from "../custom/Icons";
 
-export default function MoreSettings() {
+export default React.memo(function MoreSettings() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar } = useContext(getGlobalVarContext());
   const { localVideo } = globalVar;
@@ -607,4 +607,4 @@ export default function MoreSettings() {
       </Popover>
     </>
   );
-}
+});

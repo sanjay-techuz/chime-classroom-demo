@@ -5,7 +5,6 @@ interface AppBarProps extends MuiAppBarProps {
   leftopen?: boolean;
   rightopen?: boolean;
   anchor?: string;
-  mobileview?: boolean;
   background?: string;
   drawerWidth?: number;
 }
@@ -18,7 +17,6 @@ const AppBar = styled(MuiAppBar, {
     leftopen,
     rightopen,
     anchor,
-    mobileview,
     background,
     drawerWidth = 0,
   }) => ({
@@ -28,7 +26,7 @@ const AppBar = styled(MuiAppBar, {
     }),
     ...(leftopen &&
       !rightopen &&
-      !mobileview && {
+      {
         width: `calc(100% - ${drawerWidth + 16}px) !important`,
         marginLeft: `${drawerWidth}px`,
         transition: theme.transitions.create(["margin", "width"], {
@@ -38,7 +36,7 @@ const AppBar = styled(MuiAppBar, {
       }),
     ...(rightopen &&
       !leftopen &&
-      !mobileview && {
+      {
         width: `calc(100% - ${drawerWidth + 16}px) !important`,
         marginRight: `${drawerWidth}px`,
         transition: theme.transitions.create(["margin", "width"], {
@@ -48,7 +46,7 @@ const AppBar = styled(MuiAppBar, {
       }),
     ...(rightopen &&
       leftopen &&
-      !mobileview && {
+      {
         width: `calc(100% - ${drawerWidth + drawerWidth}px)`,
         marginLeft: `${drawerWidth}px`,
         marginRight: `${drawerWidth}px`,

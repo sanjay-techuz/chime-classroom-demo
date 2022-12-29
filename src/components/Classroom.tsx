@@ -38,7 +38,6 @@ import RosterSliderView from "./RosterSliderView";
 const cx = classNames.bind(styles);
 const drawerWidth = 301;
 
-var resizeTo = 0;
 export default function Classroom() {
   Modal.setAppElement("body");
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -53,7 +52,6 @@ export default function Classroom() {
 
   const [tryToReload, setTryToReload] = useState(true);
   const [viewMode, setViewMode] = useState(ViewMode.Room);
-  const [isMobileView, setIsMobileView] = useState(false);
   const [openChat, setOpenChat] = useState(false);
   const [openParticipants, setOpenParticipants] = useState(false);
   const [rightDrawerOpen, setRightDrawerOpen] = React.useState(false);
@@ -94,19 +92,6 @@ export default function Classroom() {
       }
     }
   }, [locationState]);
-
-  useEffect(() => {
-    if (window.innerWidth < 1100) {
-      setIsMobileView(true);
-      updateGlobalVar("isMobileView", true);
-    } else {
-      setIsMobileView(false);
-      updateGlobalVar("isMobileView", false);
-    }
-    return () => {
-      resizeTo = 0;
-    };
-  }, []);
 
   const stopContentShare = async () => {
     await new Promise((resolve) => setTimeout(resolve, 200));
@@ -186,22 +171,6 @@ export default function Classroom() {
   const closeDrawerRightToggle = () => {
     setRightDrawerOpen(false);
   };
-
-  const updateMobileView = () => {
-    if (window.innerWidth < 1100) {
-      setIsMobileView(true);
-      updateGlobalVar("isMobileView", true);
-    } else {
-      setIsMobileView(false);
-      updateGlobalVar("isMobileView", false);
-    }
-  };
-
-  window.addEventListener("resize", () => {
-    // We execute the same script as before
-    if (resizeTo) clearTimeout(resizeTo);
-    resizeTo = window.setTimeout(() => updateMobileView(), 500);
-  });
 
   useEffect(() => {
     if (openChat) {
@@ -287,7 +256,6 @@ export default function Classroom() {
               >
                 <Main
                   rightopen={rightDrawerOpen}
-                  mobileview={isMobileView}
                   drawerWidth={drawerWidth}
                 >
                   <div className={cx("ClassRoom_left")}>
@@ -383,7 +351,6 @@ export default function Classroom() {
                 rightopen={rightDrawerOpen}
                 anchor="bottom"
                 className={cx("Mui_classroom_control_appbar")}
-                mobileview={isMobileView}
                 background={"var(--third_blue_color)"}
                 drawerWidth={drawerWidth}
               >
