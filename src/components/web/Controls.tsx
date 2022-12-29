@@ -30,7 +30,7 @@ import { attendanceWenhook } from "../../services";
 import MoreSettings from "./MoreSettings";
 import styles from "./Controls.css";
 import MessageTopic from "../../enums/MessageTopic";
-import Icons from "../../custom/Icons";
+import Icons from "../../custom/icons";
 
 const cx = classNames.bind(styles);
 let timeoutId: number;

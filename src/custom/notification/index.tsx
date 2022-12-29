@@ -7,7 +7,7 @@ import {
   Type,
 } from "../../providers/NotificationProvider";
 import { Snackbar } from "@mui/material";
-import Alert from "../../custom/classroom/Alert";
+import Alert from "../classroom/Alert";
 import styles from "./index.css";
 
 const cx = classNames.bind(styles);

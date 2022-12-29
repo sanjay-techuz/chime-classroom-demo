@@ -25,7 +25,7 @@ import useRoster from "../../hooks/useRoster";
 import localStorageKeys from "../../constants/localStorageKeys.json";
 import RosterAttendeeType from "../../types/RosterAttendeeType";
 import { createPrivateChannel } from "../../utils";
-import Icons from "../../custom/Icons";
+import Icons from "../../custom/icons";
 import getGlobalVarContext from "../../context/getGlobalVarContext";
 
 const cx = classNames.bind(styles);

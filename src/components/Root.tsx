@@ -11,7 +11,7 @@ import I18nProvider from "../providers/I18nProvider";
 import { NotificationProvider } from "../providers/NotificationProvider";
 import UIStateProvider from "../providers/UIStateProvider";
 import Routes from "../Routes";
-import NotificationGroup from "./NotificationGroup";
+import NotificationGroup from "../custom/notification";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const Root = () => {

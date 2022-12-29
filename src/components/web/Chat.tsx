@@ -31,7 +31,7 @@ import { clipBoard, createPrivateChannel } from "../../utils";
 import useRemoteControl from "../../hooks/useRemoteControl";
 import useRaisedHandAttendees from "../../hooks/useRaisedHandAttendees";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import Icons from "../../custom/Icons";
+import Icons from "../../custom/icons";
 
 const cx = classNames.bind(styles);
 var chatPannelOpen = false;

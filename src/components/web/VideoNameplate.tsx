@@ -4,7 +4,7 @@
 
 import classNames from "classnames/bind";
 import React from "react";
-import Icons from "../../custom/Icons";
+import Icons from "../../custom/icons";
 
 import useAttendee from "../../hooks/useAttendee";
 import styles from "./VideoNameplate.css";

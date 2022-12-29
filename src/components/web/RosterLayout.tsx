@@ -12,7 +12,7 @@ import { nameInitials } from "../../utils";
 import { Avatar, Typography } from "@mui/material";
 import useRoster from "../../hooks/useRoster";
 import RosterAttendeeType from "../../types/RosterAttendeeType";
-import Icons from "../../custom/Icons";
+import Icons from "../../custom/icons";
 import { Box } from "@mui/system";
 
 const cx = classNames.bind(styles);

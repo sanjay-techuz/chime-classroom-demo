@@ -19,7 +19,7 @@ import RosterAttendeeType from "../../types/RosterAttendeeType";
 import RosterLayout from "./RosterLayout";
 import LocalVideo from "./LocalVideo";
 import { Box, Button, IconButton } from "@mui/material";
-import Icons from "../../custom/Icons";
+import Icons from "../../custom/icons";
 import { countDownTimer } from "../../utils/countDownTimer";
 import styles from "./RosterSliderView.css";
 import routes from "../../constants/routes.json";

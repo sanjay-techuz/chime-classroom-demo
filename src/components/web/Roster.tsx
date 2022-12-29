@@ -31,7 +31,7 @@ import styles from "./Roster.css";
 import MessageTopic from "../../enums/MessageTopic";
 import ClassMode from "../../enums/ClassMode";
 import { nameInitials } from "../../utils";
-import Icons from "../../custom/Icons";
+import Icons from "../../custom/icons";
 
 const cx = classNames.bind(styles);
 
