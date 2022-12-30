@@ -39,7 +39,7 @@ const cx = classNames.bind(styles);
 const drawerWidth = 301;
 
 var resizeTo = 0;
-export default function Classroom() {
+export default function MobileClassroom() {
   Modal.setAppElement("body");
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const intl = useIntl();
@@ -285,6 +285,44 @@ export default function Classroom() {
                 sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
                 aria-label="mailbox folders"
               >
+              <AppBar
+                position="fixed"
+                rightopen={rightDrawerOpen}
+                anchor="top"
+                className={cx("Mui_classroom_control_appbar")}
+                mobileview={isMobileView}
+                background={"var(--third_blue_color)"}
+                drawerWidth={drawerWidth}
+              >
+                <Controls
+                  openChat={openChat}
+                  openParticipants={openParticipants}
+                  onClickShareButton={async (flag: boolean) => {
+                    try {
+                      if (flag) {
+                        await chime?.audioVideo?.startContentShareFromScreenCapture();
+                      } else {
+                        await chime?.audioVideo?.stopContentShare();
+                      }
+                    } catch (err) {
+                      console.log("err.....", err);
+                    }
+                  }}
+                  onClickChatButton={(flag: boolean) => {
+                    if (flag) {
+                      openDrawerRightToggle();
+                      setOpenChat(true);
+                    } else {
+                      if (!openParticipants) {
+                        closeDrawerRightToggle();
+                      }
+                      setOpenChat(false);
+                    }
+                  }}
+                  handleDrawerLeftToggle={handleDrawerLeftToggle}
+                  isContentShareEnabled={isContentShareEnabled}
+                />
+              </AppBar>
                 <Main
                   rightopen={rightDrawerOpen}
                   mobileview={isMobileView}
@@ -321,7 +359,7 @@ export default function Classroom() {
                   sx={{
                     "& .MuiDrawer-paper": {
                       boxSizing: "border-box",
-                      width: `calc(${drawerWidth}px - 16px)`,
+                      width: `calc(100% - 16px)`,
                       right: "8px",
                       top: "8px",
                       bottom: "8px",

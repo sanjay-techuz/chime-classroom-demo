@@ -1,0 +1,131 @@
+/*!
+ * Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+.Controls_btn_active {
+  height: 32px;
+  background-color: var(--pure_white_color) !important;
+  border: 1px solid var(--controls_border_color) !important;
+  color: var(--third_blue_color) !important;
+  cursor: pointer;
+  border-radius: 64px !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  padding: 6px 16px !important;
+  min-width: 32px !important;
+  /* justify-content: space-around !important; */
+}
+
+.Controls_sc_btn_active {
+  height: 32px;
+  background-color: var(--color_thunderbird) !important;
+  border: 1px solid var(--color_thunderbird) !important;
+  color: var(--pure_white_color) !important;
+  cursor: pointer;
+  border-radius: 64px !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  padding: 6px 16px !important;
+  min-width: 32px !important;
+  /* justify-content: space-around !important; */
+}
+
+.Controls_btn_not_active {
+  height: 32px;
+  background-color: var(--third_blue_color) !important;
+  border: 1px solid var(--controls_border_color) !important;
+  color: var(--pure_white_color) !important;
+  cursor: pointer;
+  border-radius: 64px !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  padding: 6px 16px !important;
+  min-width: 32px !important;
+  /* justify-content: space-around !important; */
+}
+
+.Controls_sc_btn_not_active {
+  height: 32px;
+  background-color: var(--color_sc_green) !important;
+  border: 1px solid var(--color_sc_green) !important;
+  color: var(--color_black) !important;
+  cursor: pointer;
+  border-radius: 64px !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  padding: 6px 16px !important;
+  min-width: 32px !important; 
+  /* justify-content: space-around !important; */
+}
+
+.Controls_diveder {
+  border-color: var(--controls_border_color) !important;
+}
+
+.Controls_margin_right {
+  margin-left: 5px;
+}
+
+/*  MUI - CLASSES DESIGN OVERRIDE*/
+
+.Mui_controls_parent_container_box {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: auto !important;
+}
+
+.Mui_controls_child_container_box {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+  max-width: 670px !important;
+}
+
+.Mui_classroom_control_white_color {
+  color: #ffffff !important;
+}
+
+.Mui_classroom_control_second_container {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+  max-width: 120px !important;
+  position: absolute !important;
+  right: 0 !important;
+}
+
+.Mui_controls_raised_hand {
+  background-color: var(--pure_white_color) !important;
+  border: 1px solid var(--controls_border_color) !important;
+  color: var(--third_blue_color) !important;
+  cursor: pointer !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.Mui_controls_dismiss_hand {
+  background-color: var(--third_blue_color) !important;
+  border: 1px solid var(--controls_border_color) !important;
+  color: var(--pure_white_color) !important;
+  cursor: pointer !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.Mui_controls_end_meeting_btn {
+  background-color: var(--color_thunderbird) !important;
+  color: var(--pure_white_color) !important;
+  cursor: pointer !important;
+  width: 32px !important;
+  height: 32px !important;
+}

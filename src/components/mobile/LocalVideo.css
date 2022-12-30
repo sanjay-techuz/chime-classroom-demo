@@ -1,0 +1,34 @@
+/*!
+ * Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+.LocalVideo_localVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--color_black);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.LocalVideo_localVideo.disabled {
+  display: none !important;
+}
+.LocalVideo_localVideo.activeSpeaker {
+  border: 1px solid var(--color_green);
+}
+
+.LocalVideo_video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.activeSpeakerViewMode{
+  width: 195px;
+  height: 105px;
+}

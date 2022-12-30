@@ -1,0 +1,135 @@
+/*!
+ * Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+.ClassRoom_left {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 60px);
+}
+
+.ClassRoom_contentVideoWrapper {
+  position: absolute;
+  top: 120px;
+  display: none;
+  flex: 1 1 auto;
+  overflow-y: hidden;
+  height: calc(100% - 185px);
+  width: 100%;
+}
+.ClassRoom_contentVideoWrapper.rightDrawerOpen {
+  width: calc(100% - 301px) !important;
+}
+
+.ClassRoom_contentVideoWrapper.isContentShareEnabled {
+  display: block;
+}
+
+.ClassRoom_contentVideoWrapper.screenShareFullView {
+  height: calc(100% - 60px) !important;
+  width: 100% !important;
+  z-index: 1111 !important;
+  top: 0px !important;
+}
+.ClassRoom_contentVideoWrapper.screenShareFullView.rightDrawerOpen {
+  width: calc(100% - 310px) !important;
+}
+
+.ClassRoom_contentVideoWrapper.screenShareView {
+  width: 15%;
+  height: auto;
+  position: absolute;
+  z-index: 10000;
+  left: 0;
+  margin-left: 24px;
+  margin-top: 24px;
+  cursor: pointer;
+}
+
+.ClassRoom_remoteVideoGroupWrapper {
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.ClassRoom_classroom.ClassRoom_roomMode.isContentShareEnabled
+  .ClassRoom_remoteVideoGroupWrapper {
+  flex: 0 0 auto;
+}
+
+nav {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.ClassRoom_chat_parent_div {
+  width: 100%;
+  height: 100%;
+}
+
+.ClassRoom_chat_parent_div_open {
+  display: block;
+}
+
+.ClassRoom_chat_parent_div_close {
+  display: none;
+}
+
+.ClassRoom_chat_open_one {
+  position: relative;
+  height: 100%;
+}
+
+.ClassRoom_chat_open_both {
+  position: relative;
+  height: 50%;
+}
+
+.ClassRoom_meeting_timer {
+  position: absolute;
+  height: 29px;
+  left: 8px;
+  top: 120px;
+  background: rgba(0, 0, 0, 0.653482);
+  border-radius: 4px;
+  z-index: 10;
+  padding: 5px 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.0942858px;
+}
+
+/*  MUI - CLASSES DESIGN OVERRIDE*/
+
+.Mui_classroom_parent_container {
+  display: flex !important;
+  width: 100% !important;
+  height: 100% !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.Mui_classroom_child_container {
+  display: flex !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.Mui_classroom_drawer_container_div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.Mui_classroom_header_divider {
+  margin: auto !important;
+  border-color: rgb(77 76 76 / 80%) !important;
+  border-bottom-width: thin !important;
+}
+
+.Mui_classroom_control_appbar {
+  height: 50px !important;
+  width: calc(100% - 16px) !important;
+}

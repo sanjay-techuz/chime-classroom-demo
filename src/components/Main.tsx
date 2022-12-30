@@ -6,11 +6,11 @@ import classNames from "classnames/bind";
 import React, { useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
-import getUIStateContext from "../../context/getUIStateContext";
-import ClassMode from "../../enums/ClassMode";
+import getUIStateContext from "../context/getUIStateContext";
+import ClassMode from "../enums/ClassMode";
 import LoadingSpinner from "./LoadingSpinner";
 import styles from "./Main.css";
-import routes from "../../constants/routes.json";
+import routes from "../constants/routes.json";
 
 const cx = classNames.bind(styles);
 
