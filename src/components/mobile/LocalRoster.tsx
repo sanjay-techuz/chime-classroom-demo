@@ -28,14 +28,14 @@ export default function LocalRoster(props: Props) {
 
   return (
     <div
-      className={cx("RosterLayout_remoteVideo", {
-        activeSpeakerViewMode: view === "activeSpeaker",
+      className={cx("Mobile_RosterLayout_remoteVideo", {
+        Mobile_activeSpeakerViewMode: view === "activeSpeaker",
       })}
     >
       {view === "activeSpeaker" ? (
         <>
           <Typography
-            className={cx("Mui_roster_layout_active_speaker_typography")}
+            className={cx("Mobile_Mui_roster_layout_active_speaker_typography")}
           >
             {name}
           </Typography>
@@ -43,14 +43,14 @@ export default function LocalRoster(props: Props) {
         </>
       ) : (
         <>
-            <Avatar className={cx("Mui_roster_layout_badge_avatar")}>
+            <Avatar className={cx("Mobile_Mui_roster_layout_badge_avatar")}>
               {initials}
             </Avatar>
-          <Typography className={cx("Mui_roster_layout_badge_typography")}>
+          <Typography className={cx("Mobile_Mui_roster_layout_badge_typography")}>
             {name}
           </Typography>
           {rosterAttendee?.host && (
-            <span className={"RosterLayout_host"}>Host</span>
+            <span className={"Mobile_RosterLayout_host"}>Host</span>
           )}
         </>
       )}

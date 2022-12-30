@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
- .RemoteVideo_remoteVideo {
+ .Mobile_RemoteVideo_remoteVideo {
   display: none;
   position: relative;
   background: transparent;
@@ -13,20 +13,20 @@
   border-radius: 8px;
 }
 
-.RemoteVideo_remoteVideo.activeSpeakerViewMode{
+.Mobile_RemoteVideo_remoteVideo.Mobile_activeSpeakerViewMode{
   width: 195px;
   height: 105px;
 }
 
-.RemoteVideo_remoteVideo.enabled {
+.Mobile_RemoteVideo_remoteVideo.enabled {
   display: block !important;
 }
 
-.RemoteVideo_remoteVideo.activeSpeaker {
+.Mobile_RemoteVideo_remoteVideo.activeSpeaker {
   border: 1px solid var(--color_green);
 }
 
-.RemoteVideo_video {
+.Mobile_RemoteVideo_video {
   display: block;
   position: absolute;
   top: 0;
@@ -36,7 +36,7 @@
   object-fit: cover;
 }
 
-.RemoteVideo_raisedHand {
+.Mobile_RemoteVideo_raisedHand {
   z-index: 1;
   position: absolute;
   top: 0;
@@ -72,7 +72,7 @@
   }
 }
 
-.Mui_roster_layout_raised_hand_box{
+.Mobile_Mui_roster_layout_raised_hand_box{
   position: absolute;
   height: 43px;
   top: 30px;

@@ -18,8 +18,7 @@ import useRoster from "../../hooks/useRoster";
 import RosterAttendeeType from "../../types/RosterAttendeeType";
 import RosterLayout from "./RosterLayout";
 import LocalVideo from "./LocalVideo";
-import { Box, Button, IconButton } from "@mui/material";
-import Icons from "../../custom/icons";
+import { Box } from "@mui/material";
 import { countDownTimer } from "../../utils/countDownTimer";
 import styles from "./RosterSliderView.css";
 import routes from "../../constants/routes.json";
@@ -51,9 +50,6 @@ export default function RosterSliderView(props: Props) {
   const [videoAttendees, setVideoAttendees] = useState(new Set());
   const [attendeeIdFullScreen, setAttendeeIdFullScreen] = useState("");
 
-  const [scrollLength, setScrollLength] = useState(0);
-  const [maxScrollLength, setMaxScrollLength] = useState(0);
-
   useEffect(() => {
     if (isContentShareEnabled) {
       setAttendeeIdFullScreen("");
@@ -83,24 +79,6 @@ export default function RosterSliderView(props: Props) {
     }
   }, []);
 
-  useEffect(() => {
-    let attdLength = Object.keys(roster).length - 1;
-    if (attendeeIdFullScreen || contentShareEnabled) {
-      attdLength = attdLength - 1;
-    }
-    const maxCols = 4;
-    let cols = 1;
-    for (cols; cols <= maxCols; cols++) {
-      if (attdLength <= cols * cols) {
-        break;
-      }
-    }
-    let row = Math.ceil(attdLength / cols);
-    if (attendeeIdFullScreen) {
-      row = Math.ceil((attdLength - 1) / cols);
-    }
-    setMaxScrollLength(row * 796);
-  }, [roster, attendeeIdFullScreen]);
 
   const acquireVideoIndex = (tileId: number): number => {
     for (let index = 0; index < MAX_REMOTE_VIDEOS; index += 1) {
@@ -237,70 +215,36 @@ export default function RosterSliderView(props: Props) {
   }
   const attendeeIds = removeSelfAttendeeId(activeAttendee, selfAttendeeId);
   return (
-    <Box className={cx("Mui_roster_slider_parent_container")}>
+    <Box className={cx("Mobile_Mui_roster_slider_parent_container")}>
       {attendeeIds.length === 0 && (
-        <Box className={cx("Mui_roster_slider_local_video_container")}>
+        <Box className={cx("Mobile_Mui_roster_slider_local_video_container")}>
           <LocalVideo view={"grid"} />
         </Box>
       )}
 
       <Box
-        className={cx("Mui_roster_slider_main_container", {
-          Mui_roster_slider_display_none: attendeeIds.length === 0,
-          Mui_roster_slider_display_flex: attendeeIds.length !== 0,
+        className={cx("Mobile_Mui_roster_slider_main_container", {
+          Mobile_Mui_roster_slider_display_none: attendeeIds.length === 0,
+          Mobile_Mui_roster_slider_display_flex: attendeeIds.length !== 0,
         })}
       >
-        <Button
-          className={cx("Mui_roster_slider_white_color")}
-          disabled={scrollLength >= 796 ? false : true}
-          onClick={() => {
-            let sl = scrollLength;
-            if (scrollLength > 0) {
-              sl = sl - 796;
-              if (sl <= 0) {
-                sl = 0;
-              }
-              setScrollLength(sl);
-            }
-            let element = document.getElementById("tileView");
-            if (element) {
-              element.style.overflow = "scroll";
-              element.scrollLeft = sl;
-              element.style.overflow = "hidden";
-            }
-          }}
-        >
-          <IconButton
-            className={cx("Mui_roster_slider_left_btn", {
-              Mui_roster_slider_display_none: scrollLength <= 796,
-              Mui_roster_slider_display_flex: scrollLength >= 796,
-            })}
-          >
-            <Icons src={"/icons/left_arrow.svg"} />
-          </IconButton>
-        </Button>
-        <div id="tileView" className={cx("Mui_roster_slider_tileview")}>
+        <div id="tileView" className={cx("Mobile_Mui_roster_slider_tileview")}>
           <div
             id="scrollview"
-            className={cx("Mui_roster_slider_sliderview")}
-            style={{
-              width: `${maxScrollLength}px`,
-              //if not scroll proper remove minWidth and justifyContent
-              justifyContent: maxScrollLength >= 796 ? "flex-start" : "center",
-            }}
+            className={cx("Mobile_Mui_roster_slider_sliderview")}
           >
-            <span className={"ClassRoom_meeting_timer"}>
+            <span className={"Mobile_ClassRoom_meeting_timer"}>
               Your meeting will end in{" "}
               <span
-                className={cx("Mui_roster_slider_red_color")}
+                className={cx("Mobile_Mui_roster_slider_red_color")}
                 id="meeting_timer"
               ></span>
             </span>
             <div
               className={cx({
-                Mui_roster_slider_active_local_video_view:
+                Mobile_Mui_roster_slider_active_local_video_view:
                   attendeeIdFullScreen === currentUser,
-                Mui_roster_slider_not_active_local_video_view:
+                  Mobile_Mui_roster_slider_not_active_local_video_view:
                   attendeeIdFullScreen !== currentUser,
               })}
               style={
@@ -334,8 +278,8 @@ export default function RosterSliderView(props: Props) {
               return (
                 <div
                   className={cx({
-                    Mui_roster_slider_active_local_video_view: activeSpeaker,
-                    Mui_roster_slider_not_active_local_video_view:
+                    Mobile_Mui_roster_slider_active_local_video_view: activeSpeaker,
+                    Mobile_Mui_roster_slider_not_active_local_video_view:
                       !activeSpeaker,
                   })}
                   style={
@@ -381,8 +325,8 @@ export default function RosterSliderView(props: Props) {
                 return (
                   <div
                     className={cx({
-                      Mui_roster_slider_active_local_video_view: activeSpeaker,
-                      Mui_roster_slider_not_active_local_video_view:
+                      Mobile_Mui_roster_slider_active_local_video_view: activeSpeaker,
+                      Mobile_Mui_roster_slider_not_active_local_video_view:
                         !activeSpeaker,
                     })}
                     style={
@@ -413,45 +357,6 @@ export default function RosterSliderView(props: Props) {
             })}
           </div>
         </div>
-        <Button
-          className={cx("Mui_roster_slider_white_color")}
-          disabled={
-            scrollLength >= maxScrollLength - 796 ||
-            (scrollLength >= 0 && maxScrollLength <= 796)
-              ? true
-              : false
-          }
-          onClick={() => {
-            let sl = scrollLength;
-            if (scrollLength >= 0) {
-              sl += 796;
-              if (sl >= maxScrollLength) {
-                sl = maxScrollLength;
-              }
-              setScrollLength(sl);
-            }
-            let element = document.getElementById("tileView");
-            if (element) {
-              element.style.overflow = "scroll";
-              element.scrollLeft = sl;
-              element.style.overflow = "hidden";
-            }
-          }}
-        >
-          <IconButton
-            className={cx("Mui_roster_slider_left_btn", {
-              Mui_roster_slider_display_none:
-                scrollLength >= maxScrollLength - 796 ||
-                (scrollLength >= 0 && maxScrollLength <= 796),
-              Mui_roster_slider_display_flex: !(
-                scrollLength >= maxScrollLength - 796 ||
-                (scrollLength >= 0 && maxScrollLength <= 796)
-              ),
-            })}
-          >
-            <Icons src={"/icons/right_arrow.svg"} />
-          </IconButton>
-        </Button>
       </Box>
     </Box>
   );

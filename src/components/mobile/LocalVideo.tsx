@@ -53,12 +53,12 @@ export default function LocalVideo(props: Props) {
   return (
     <>
       <div
-        className={cx("LocalVideo_localVideo", {
-          disabled: !enabled,
-          activeSpeakerViewMode: view === "activeSpeaker"
+        className={cx("Mobile_LocalVideo_localVideo", {
+          Mobile_disabled: !enabled,
+          Mobile_activeSpeakerViewMode: view === "activeSpeaker"
         })}
       >
-        <video muted ref={videoElement} className={cx("LocalVideo_video")} />
+        <video muted ref={videoElement} className={cx("Mobile_LocalVideo_video")} />
         <VideoNameplate
           attendeeId={attendeeId as string}
         />

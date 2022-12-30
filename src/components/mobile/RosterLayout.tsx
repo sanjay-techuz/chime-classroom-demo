@@ -34,21 +34,21 @@ export default function RosterLayout(props: Props) {
 
   return (
     <div
-      className={cx("RosterLayout_remoteVideo", {
+      className={cx("Mobile_RosterLayout_remoteVideo", {
         activeSpeaker,
-        activeSpeakerViewMode: view === "activeSpeaker",
+        Mobile_activeSpeakerViewMode: view === "activeSpeaker",
       })}
     >
       {view === "activeSpeaker" ? (
         <>
           <Typography
-            className={cx("Mui_roster_layout_active_speaker_typography")}
+            className={cx("Mobile_Mui_roster_layout_active_speaker_typography")}
           >
             {rosterAttendee?.name}
           </Typography>
           <VideoNameplate attendeeId={attendeeId} />
           {rosterAttendee?.raised && (
-        <div className={cx("RemoteVideo_raisedHand")}>
+        <div className={cx("Mobile_RemoteVideo_raisedHand")}>
           <span
             role="img"
             aria-label={intl.formatMessage({
@@ -62,15 +62,15 @@ export default function RosterLayout(props: Props) {
         </>
       ) : (
         <>
-        {rosterAttendee?.raised && <Box className={cx("Mui_roster_layout_raised_hand_box")}>{rosterAttendee?.name} raised a hand <Icons src={"/icons/hand_yellow.svg"} /></Box>}
-            <Avatar className={cx("Mui_roster_layout_badge_avatar")}>
+        {rosterAttendee?.raised && <Box className={cx("Mobile_Mui_roster_layout_raised_hand_box")}>{rosterAttendee?.name} raised a hand <Icons src={"/icons/hand_yellow.svg"} /></Box>}
+            <Avatar className={cx("Mobile_Mui_roster_layout_badge_avatar")}>
               {initials}
             </Avatar>
-          <Typography className={cx("Mui_roster_layout_badge_typography")}>
+          <Typography className={cx("Mobile_Mui_roster_layout_badge_typography")}>
             {rosterAttendee?.name}
           </Typography>
           {rosterAttendee?.host && (
-            <span className={cx("RosterLayout_host")}>Host</span>
+            <span className={cx("Mobile_RosterLayout_host")}>Host</span>
           )}
         </>
       )}

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-.RosterLayout_remoteVideo {
+.Mobile_RosterLayout_remoteVideo {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,16 +17,16 @@
   color: var(--pure_white_color);
 }
 
-.RosterLayout_remoteVideo.activeSpeakerViewMode {
+.Mobile_RosterLayout_remoteVideo.Mobile_activeSpeakerViewMode {
   width: 195px;
   height: 105px;
 }
 
-.RosterLayout_remoteVideo.activeSpeaker {
+.Mobile_RosterLayout_remoteVideo.activeSpeaker {
   border: 1px solid var(--color_green);
 }
 
-.RosterLayout_host {
+.Mobile_RosterLayout_host {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -35,7 +35,7 @@
   color: #ababab;
 }
 
-.RemoteVideo_raisedHand {
+.Mobile_RemoteVideo_raisedHand {
   z-index: 1;
   position: absolute;
   top: 0;
@@ -73,22 +73,22 @@
 
 /*  MUI - CLASSES DESIGN OVERRIDE*/
 
-.Mui_roster_layout_active_speaker_typography {
+.Mobile_Mui_roster_layout_active_speaker_typography {
   font-size: 16px !important;
   line-height: 24px !important;
   text-transform: capitalize;
 }
 
-.Mui_roster_layout_badge_small_avatar {
+.Mobile_Mui_roster_layout_badge_small_avatar {
   width: 2rem !important;
   height: 2rem !important;
 }
 
-.Mui_roster_layout_fontsize {
+.Mobile_Mui_roster_layout_fontsize {
   font-size: 14px !important;
 }
 
-.Mui_roster_layout_badge_avatar {
+.Mobile_Mui_roster_layout_badge_avatar {
   width: 100px !important;
   height: 100px !important;
   background-color: var(--color_initials_bg) !important;
@@ -97,7 +97,7 @@
   font-size: 3rem !important;
 }
 
-.Mui_roster_layout_badge_typography {
+.Mobile_Mui_roster_layout_badge_typography {
   font-style: normal !important;
   font-weight: 500 !important;
   font-size: 16px !important;
@@ -107,7 +107,7 @@
   margin-top: 13px !important;
 }
 
-.Mui_roster_layout_raised_hand_box{
+.Mobile_Mui_roster_layout_raised_hand_box{
   position: absolute;
   height: 43px;
   top: 30px;

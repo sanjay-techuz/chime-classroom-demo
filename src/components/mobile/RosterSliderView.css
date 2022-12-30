@@ -1,69 +1,67 @@
 /*  MUI - CLASSES DESIGN OVERRIDE*/
 
-.Mui_roster_slider_parent_container {
+.Mobile_Mui_roster_slider_parent_container {
   height: 100% !important;
   width: 100% !important;
   display: flex !important;
   flex-direction: column !important;
 }
 
-.Mui_roster_slider_local_video_container {
+.Mobile_Mui_roster_slider_local_video_container {
   height: 100% !important;
   width: 100% !important;
 }
 
-.Mui_roster_slider_main_container {
+.Mobile_Mui_roster_slider_main_container {
   height: 105px !important;
   width: 100% !important;
   justify-content: center !important;
 }
 
-.Mui_roster_slider_white_color {
+.Mobile_Mui_roster_slider_white_color {
   color: var(--pure_white_color) !important;
 }
 
-.Mui_roster_slider_display_none {
+.Mobile_Mui_roster_slider_display_none {
   display: none !important;
 }
 
-.Mui_roster_slider_display_flex {
+.Mobile_Mui_roster_slider_display_flex {
   display: flex !important;
 }
 
-.Mui_roster_slider_left_btn {
+.Mobile_Mui_roster_slider_left_btn {
   color: var(--pure_white_color) !important;
   background-color: var(--secondary_blue_color) !important;
   width: 40px !important;
   height: 40px !important;
 }
 
-.Mui_roster_slider_tileview {
-  width: 796px !important;
+.Mobile_Mui_roster_slider_tileview {
   height: 105px !important;
-  overflow: hidden !important;
+  overflow: scroll;
 }
 
-.Mui_roster_slider_sliderview {
-  min-width: 796px !important;
+.Mobile_Mui_roster_slider_sliderview {
   height: 100% !important;
   display: flex !important;
   flex-direction: row !important;
 }
 
-.Mui_roster_slider_red_color {
+.Mobile_Mui_roster_slider_red_color {
   color: red !important;
 }
 
-.Mui_roster_slider_active_local_video_view {
-  height: calc(100% - 185px) !important;
+.Mobile_Mui_roster_slider_active_local_video_view {
+  height: calc(100% - 255px) !important;
   display: block !important;
   position: absolute !important;
-  top: 120px !important;
+  top: 190px !important;
   left: 0px !important;
   padding: 0 8px !important;
 }
 
-.Mui_roster_slider_not_active_local_video_view {
+.Mobile_Mui_roster_slider_not_active_local_video_view {
   width: 195px !important;
   height: 105px !important;
   margin: 0px 2px !important;

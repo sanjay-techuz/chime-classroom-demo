@@ -273,13 +273,13 @@ export default function MobileClassroom() {
         }}
       />
       {tryToReload && (
-        <Box className={cx("Mui_classroom_parent_container")}>
+        <Box className={cx("Mobile_Mui_classroom_parent_container")}>
           {meetingStatus === MeetingStatus.Loading && <LoadingSpinner />}
           {meetingStatus === MeetingStatus.Failed && (
             <Error errorMessage={errorMessage} />
           )}
           {meetingStatus === MeetingStatus.Succeeded && (
-            <Box className={cx("Mui_classroom_child_container")}>
+            <Box className={cx("Mobile_Mui_classroom_child_container")}>
               <Box
                 component="nav"
                 sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -289,7 +289,7 @@ export default function MobileClassroom() {
                 position="fixed"
                 rightopen={rightDrawerOpen}
                 anchor="top"
-                className={cx("Mui_classroom_control_appbar")}
+                className={cx("Mobile_Mui_classroom_control_appbar")}
                 mobileview={isMobileView}
                 background={"var(--third_blue_color)"}
                 drawerWidth={drawerWidth}
@@ -328,9 +328,9 @@ export default function MobileClassroom() {
                   mobileview={isMobileView}
                   drawerWidth={drawerWidth}
                 >
-                  <div className={cx("ClassRoom_left")}>
+                  <div className={cx("Mobile_ClassRoom_left")}>
                     <div
-                      className={cx("ClassRoom_contentVideoWrapper", {
+                      className={cx("Mobile_ClassRoom_contentVideoWrapper", {
                         isContentShareEnabled,
                         screenShareView: !isScreenShareView,
                         rightDrawerOpen,
@@ -344,7 +344,7 @@ export default function MobileClassroom() {
                         onContentShareEnabled={onContentShareEnabled}
                       />
                     </div>
-                    <div className={cx("ClassRoom_remoteVideoGroupWrapper")}>
+                    <div className={cx("Mobile_ClassRoom_remoteVideoGroupWrapper")}>
                       <RosterSliderView
                         isContentShareEnabled={isContentShareEnabled}
                         isScreenShareView={isScreenShareView}
@@ -378,13 +378,13 @@ export default function MobileClassroom() {
                     closeDrawerRightToggle();
                   }}
                 >
-                  <div className={cx("Mui_classroom_drawer_container_div")}>
+                  <div className={cx("Mobile_Mui_classroom_drawer_container_div")}>
                     {openParticipants && (
                       <div
                         className={cx({
-                          ClassRoom_chat_open_one:
+                          Mobile_ClassRoom_chat_open_one:
                             !openChat && openParticipants,
-                          ClassRoom_chat_open_both:
+                            Mobile_ClassRoom_chat_open_both:
                             openChat && openParticipants,
                         })}
                       >
@@ -394,13 +394,13 @@ export default function MobileClassroom() {
                         />
                       </div>
                     )}
-                    <Divider className={cx("Mui_classroom_header_divider")} />
+                    <Divider className={cx("Mobile_Mui_classroom_header_divider")} />
                     <div
-                      className={cx("ClassRoom_chat_parent_div", {
-                        ClassRoom_chat_parent_div_open: openChat,
-                        ClassRoom_chat_parent_div_close: !openChat,
-                        ClassRoom_chat_open_one: openChat && !openParticipants,
-                        ClassRoom_chat_open_both: openChat && openParticipants,
+                      className={cx("Mobile_ClassRoom_chat_parent_div", {
+                        Mobile_ClassRoom_chat_parent_div_open: openChat,
+                        Mobile_ClassRoom_chat_parent_div_close: !openChat,
+                        Mobile_ClassRoom_chat_open_one: openChat && !openParticipants,
+                        Mobile_ClassRoom_chat_open_both: openChat && openParticipants,
                       })}
                     >
                       <Chat
@@ -420,7 +420,7 @@ export default function MobileClassroom() {
                 position="fixed"
                 rightopen={rightDrawerOpen}
                 anchor="bottom"
-                className={cx("Mui_classroom_control_appbar")}
+                className={cx("Mobile_Mui_classroom_control_appbar")}
                 mobileview={isMobileView}
                 background={"var(--third_blue_color)"}
                 drawerWidth={drawerWidth}

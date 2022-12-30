@@ -180,7 +180,7 @@ export default function MoreSettings() {
       >
         <Button
           onClick={handleMenuClick}
-          className={"Controls_btn_not_active"}
+          className={"Mobile_Controls_btn_not_active"}
         >
           <Icons src={"/icons/more.svg"} />
         </Button>
@@ -481,7 +481,7 @@ export default function MoreSettings() {
             </MenuItem>
           )}
         </Popover>
-        <Divider className={"Controls_diveder"} />
+        <Divider className={"Mobile_Controls_diveder"} />
         <MenuItem
           onClick={(event) => {
             handleVideoQualityPopoverOpen(event);
@@ -594,7 +594,7 @@ export default function MoreSettings() {
           )}
         </Popover>
 
-        <Divider className={"Controls_diveder"} />
+        <Divider className={"Mobile_Controls_diveder"} />
         <MenuItem onClick={handleFullScreen} sx={{ fontSize: "12px" }}>
           {enterFullScreen
             ? intl.formatMessage({ id: "Classroom.exitFullScreen" })

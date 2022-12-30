@@ -1,4 +1,4 @@
-.VideoNameplate_videoNameplate {
+.Mobile_VideoNameplate_videoNameplate {
   z-index: 1;
   align-items: center;
   position: absolute;
@@ -18,11 +18,11 @@
   color: #7B7B7B;
 }
 
-.VideoNameplate_name{
+.Mobile_VideoNameplate_name{
   margin-left: 5px;
 }
 
-.VideoNameplate_muted{
+.Mobile_VideoNameplate_muted{
   display: flex;
   align-items: center;
 }

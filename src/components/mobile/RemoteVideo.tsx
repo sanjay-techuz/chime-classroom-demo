@@ -38,20 +38,20 @@ export default function RemoteVideo(props: Props) {
 
   return (
     <div
-      className={cx("RemoteVideo_remoteVideo", {
+      className={cx("Mobile_RemoteVideo_remoteVideo", {
         enabled,
         activeSpeaker,
-        activeSpeakerViewMode: view === "activeSpeaker",
+        Mobile_activeSpeakerViewMode: view === "activeSpeaker",
       })}
     >
-      <video muted ref={videoElementRef} className={cx("RemoteVideo_video")} />
+      <video muted ref={videoElementRef} className={cx("Mobile_RemoteVideo_video")} />
       <VideoNameplate attendeeId={attendeeId} />
 
       {rosterAttendee?.raised && (
         view !== "activeSpeaker" ? 
-        <Box className={cx("Mui_roster_layout_raised_hand_box")}>{rosterAttendee?.name} raised a hand <Icons src={"/icons/hand_yellow.svg"} /></Box>
+        <Box className={cx("Mobile_Mui_roster_layout_raised_hand_box")}>{rosterAttendee?.name} raised a hand <Icons src={"/icons/hand_yellow.svg"} /></Box>
         :
-        <div className={cx("RemoteVideo_raisedHand")}>
+        <div className={cx("Mobile_RemoteVideo_raisedHand")}>
           <span
             role="img"
             aria-label={intl.formatMessage({

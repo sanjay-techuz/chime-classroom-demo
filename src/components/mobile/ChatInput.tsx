@@ -112,14 +112,14 @@ export default React.memo(function ChatInput(props: Props) {
     <>
       <Box
         className={cx({
-          Mui_chat_input_display_none: !openEmojiPicker,
-          Mui_chat_input_display_block: openEmojiPicker,
+          Mobile_Mui_chat_input_display_none: !openEmojiPicker,
+          Mobile_Mui_chat_input_display_block: openEmojiPicker,
         })}
       >
         {emojiPickerVal}
       </Box>
-      <Box className={cx("Mui_chat_input_parent_container")}>
-        <Box className={cx("Mui_chat_input_child_container")}>
+      <Box className={cx("Mobile_Mui_chat_input_parent_container")}>
+        <Box className={cx("Mobile_Mui_chat_input_child_container")}>
           <Popover
             anchorOrigin={{
               vertical: "top",
@@ -159,7 +159,7 @@ export default React.memo(function ChatInput(props: Props) {
             }}
           >
             <MenuItem
-              className={cx("Mui_chat_input_popover_everyone_menu_item")}
+              className={cx("Mobile_Mui_chat_input_popover_everyone_menu_item")}
               onClick={() => {
                 setActiveChatAttendee(MessageTopic.PublicChannel);
                 setActiveChannel(MessageTopic.PublicChannel);
@@ -173,16 +173,16 @@ export default React.memo(function ChatInput(props: Props) {
                 <Icons src={"/icons/check_icon_black.svg"} />
               )}
               <ListItem
-                className={cx("Mui_chat_input_popover_everyone_menu_listitem")}
+                className={cx("Mobile_Mui_chat_input_popover_everyone_menu_listitem")}
               >
                 Everyone
               </ListItem>
               <Avatar
                 className={cx(
-                  "Mui_chat_input_popover_everyone_menu_listitem_avatar",
+                  "Mobile_Mui_chat_input_popover_everyone_menu_listitem_avatar",
                   {
-                    Mui_chat_input_display_flex: publicChannelCnt !== 0,
-                    Mui_chat_input_display_none: publicChannelCnt === 0,
+                    Mobile_Mui_chat_input_display_flex: publicChannelCnt !== 0,
+                    Mobile_Mui_chat_input_display_none: publicChannelCnt === 0,
                   }
                 )}
               >
@@ -196,7 +196,7 @@ export default React.memo(function ChatInput(props: Props) {
                 : 0;
               return (
                 <MenuItem
-                  className={cx("Mui_chat_input_popover_private_menu_item")}
+                  className={cx("Mobile_Mui_chat_input_popover_private_menu_item")}
                   onClick={() => {
                     setActiveChatAttendee(chatAttdId);
                     setActiveChannel(
@@ -213,17 +213,17 @@ export default React.memo(function ChatInput(props: Props) {
                   )}
                   <ListItem
                     className={cx(
-                      "Mui_chat_input_popover_everyone_menu_listitem"
+                      "Mobile_Mui_chat_input_popover_everyone_menu_listitem"
                     )}
                   >
                     {rosterAttendee?.name}
                   </ListItem>
                   <Avatar
                     className={cx(
-                      "Mui_chat_input_popover_everyone_menu_listitem_avatar",
+                      "Mobile_Mui_chat_input_popover_everyone_menu_listitem_avatar",
                       {
-                        Mui_chat_input_display_flex: msgCount !== 0,
-                        Mui_chat_input_display_none: msgCount === 0,
+                        Mobile_Mui_chat_input_display_flex: msgCount !== 0,
+                        Mobile_Mui_chat_input_display_none: msgCount === 0,
                       }
                     )}
                   >
@@ -235,7 +235,7 @@ export default React.memo(function ChatInput(props: Props) {
           </Popover>
           To:{" "}
           <Button
-            className={cx("Mui_chat_input_message_to")}
+            className={cx("Mobile_Mui_chat_input_message_to")}
             onClick={handleClick}
           >
             {currentChatter} ^
@@ -243,20 +243,20 @@ export default React.memo(function ChatInput(props: Props) {
           <IconButton
             onClick={() => setOpenEmojiPicker(!openEmojiPicker)}
             color="inherit"
-            className={cx("Mui_chat_input_emoji_icon")}
+            className={cx("Mobile_Mui_chat_input_emoji_icon")}
           >
             <EmojiEmotionsOutlinedIcon sx={{ fontSize: "14px" }} />
           </IconButton>
         </Box>
-        <div className={cx("chatInput")}>
+        <div className={cx("Mobile_chatInput")}>
           <form
             onSubmit={(event) => {
               event.preventDefault();
             }}
-            className={cx("form")}
+            className={cx("Mobile_form")}
           >
             <input
-              className={cx("input")}
+              className={cx("Mobile_input")}
               value={inputText}
               onChange={(event) => {
                 setInputText(event.target.value);

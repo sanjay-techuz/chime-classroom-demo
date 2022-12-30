@@ -76,8 +76,8 @@ export default function ContentVideo(props: Props) {
   }, [enabled]);
 
   return (
-    <div className={cx("ContentVideo_contentVideo")}>
-      <video muted ref={videoElement} className={cx("ContentVideo_video")} />
+    <div className={cx("Mobile_ContentVideo_contentVideo")}>
+      <video muted ref={videoElement} className={cx("Mobile_ContentVideo_video")} />
     </div>
   );
 }

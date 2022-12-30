@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-.ContentVideo_contentVideo {
+.Mobile_ContentVideo_contentVideo {
   display: block;
   background-color: var(--color_black);
   width: 100%;
   height: 100%;
 }
 
-.ContentVideo_video {
+.Mobile_ContentVideo_video {
   display: block;
   width: 100%;
   height: 100%;

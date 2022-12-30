@@ -182,27 +182,27 @@ export default function Chat(props: Props) {
   }, [messages, activeChannel]);
 
   return (
-    <Box className={cx("Mui_chat_parent_container")}>
+    <Box className={cx("Mobile_Mui_chat_parent_container")}>
       <Box>
         <ListItem>
           <ListItemText>
-            <span className={cx("Chat_chat_header")}>
+            <span className={cx("Mobile_Chat_chat_header")}>
               {intl.formatMessage({ id: "Classroom.chat" })}
             </span>
           </ListItemText>
           <ListItemIcon
-            className={cx("Mui_chat_header_list_icon")}
+            className={cx("Mobile_Mui_chat_header_list_icon")}
             onClick={closeChatPanel}
           >
             <Icons src={"/icons/close.svg"} />
           </ListItemIcon>
         </ListItem>
       </Box>
-      <Divider className={cx("Mui_chat_header_divider")} />
-      <Box className={cx("Mui_chat_child_container")}>
+      <Divider className={cx("Mobile_Mui_chat_header_divider")} />
+      <Box className={cx("Mobile_Mui_chat_child_container")}>
         <div
-          className={cx("Chat_messages", {
-            Chat_messages_max_height: openParticipants,
+          className={cx("Mobile_Chat_messages", {
+            Mobile_Chat_messages_max_height: openParticipants,
           })}
         >
           {filterMessage.map((message, index) => {
@@ -220,7 +220,7 @@ export default function Chat(props: Props) {
                 <ListItem
                   key={message.timestampMs}
                   component="div"
-                  className={cx("Mui_chat_message_list_item")}
+                  className={cx("Mobile_Mui_chat_message_list_item")}
                   onMouseEnter={() => {
                     const elem = document.getElementsByClassName(
                       `moreButton_${index}`
@@ -235,10 +235,10 @@ export default function Chat(props: Props) {
                   }}
                 >
                   <ListItemText
-                    className={cx("Mui_chat_message_list_item_text")}
+                    className={cx("Mobile_Mui_chat_message_list_item_text")}
                   >
                     <div
-                      className={cx("Mui_chat_message_list_item_message_div")}
+                      className={cx("Mobile_Mui_chat_message_list_item_message_div")}
                     >
                       <Tooltip
                         title={chime?.roster[message.senderAttendeeId]?.name}
@@ -246,7 +246,7 @@ export default function Chat(props: Props) {
                       >
                         <span
                           className={cx(
-                            "Mui_chat_message_list_item_message_span"
+                            "Mobile_Mui_chat_message_list_item_message_span"
                           )}
                         >
                           {chime?.roster[message.senderAttendeeId]?.name}
@@ -255,16 +255,16 @@ export default function Chat(props: Props) {
                     </div>
                     <Paper
                       elevation={0}
-                      className={cx("Mui_chat_message_list_item_message_paper")}
+                      className={cx("Mobile_Mui_chat_message_list_item_message_paper")}
                     >
                       <Typography
                         className={cx(
-                          "Mui_chat_message_list_item_message_typography"
+                          "Mobile_Mui_chat_message_list_item_message_typography"
                         )}
                         variant="body1"
                       >
-                        <div className={cx("Chat_message_string_parent")}>
-                          <span className={cx("Chat_message_string")}>
+                        <div className={cx("Mobile_Chat_message_string_parent")}>
+                          <span className={cx("Mobile_Chat_message_string")}>
                             {messageString}
                           </span>
                         </div>
@@ -273,15 +273,15 @@ export default function Chat(props: Props) {
                   </ListItemText>
                   <div
                     className={cx(
-                      `moreButton_${index}`,
-                      "Mui_chat_message_list_item_message_more_btn"
+                      `Mobile_moreButton_${index}`,
+                      "Mobile_Mui_chat_message_list_item_message_more_btn"
                     )}
                     defaultValue={messageString}
                   >
                     <Tooltip title={"Copy"} placement="bottom">
                       <IconButton
                         className={cx(
-                          "Mui_chat_message_list_item_message_more_icon_btn"
+                          "Mobile_Mui_chat_message_list_item_message_more_icon_btn"
                         )}
                         onClick={() => {
                           clipBoard(messageString);
@@ -289,7 +289,7 @@ export default function Chat(props: Props) {
                       >
                         <ContentCopyIcon
                           className={cx(
-                            "Mui_chat_message_list_item_message_copy_icon_btn"
+                            "Mobile_Mui_chat_message_list_item_message_copy_icon_btn"
                           )}
                         />
                       </IconButton>
@@ -302,26 +302,26 @@ export default function Chat(props: Props) {
                 <ListItem
                   key={message.timestampMs}
                   component="div"
-                  className={cx("Mui_chat_message_left_list_item")}
+                  className={cx("Mobile_Mui_chat_message_left_list_item")}
                   onMouseEnter={() => {
                     const elem = document.getElementsByClassName(
-                      `moreButton_${index}`
+                      `Mobile_moreButton_${index}`
                     )[0] as HTMLElement;
                     elem.style.opacity = "1";
                   }}
                   onMouseLeave={() => {
                     const elem = document.getElementsByClassName(
-                      `moreButton_${index}`
+                      `Mobile_moreButton_${index}`
                     )[0] as HTMLElement;
                     elem.style.opacity = "0";
                   }}
                 >
                   <ListItemText
-                    className={cx("Mui_chat_message_left_list_item_text")}
+                    className={cx("Mobile_Mui_chat_message_left_list_item_text")}
                   >
                     <div
                       className={cx(
-                        "Mui_chat_message_left_list_item_message_div"
+                        "Mobile_Mui_chat_message_left_list_item_message_div"
                       )}
                     >
                       <Tooltip
@@ -330,7 +330,7 @@ export default function Chat(props: Props) {
                       >
                         <span
                           className={cx(
-                            "Mui_chat_message_list_item_message_span"
+                            "Mobile_Mui_chat_message_list_item_message_span"
                           )}
                         >
                           {chime?.roster[message.senderAttendeeId]?.name}
@@ -339,16 +339,16 @@ export default function Chat(props: Props) {
                     </div>
                     <Paper
                       elevation={0}
-                      className={cx("Mui_chat_message_list_item_message_paper")}
+                      className={cx("Mobile_Mui_chat_message_list_item_message_paper")}
                     >
                       <Typography
                         className={cx(
-                          "Mui_chat_message_left_list_item_message_typography"
+                          "Mobile_Mui_chat_message_left_list_item_message_typography"
                         )}
                         variant="body1"
                       >
-                        <div className={cx("Chat_message_string_parent")}>
-                          <span className={cx("Chat_message_string")}>
+                        <div className={cx("Mobile_Chat_message_string_parent")}>
+                          <span className={cx("Mobile_Chat_message_string")}>
                             {messageString}
                           </span>
                         </div>
@@ -357,15 +357,15 @@ export default function Chat(props: Props) {
                   </ListItemText>
                   <div
                     className={cx(
-                      `moreButton_${index}`,
-                      "Mui_chat_message_list_item_message_more_btn"
+                      `Mobile_moreButton_${index}`,
+                      "Mobile_Mui_chat_message_list_item_message_more_btn"
                     )}
                     defaultValue={messageString}
                   >
                     <Tooltip title={"Copy"} placement="bottom">
                       <IconButton
                         className={cx(
-                          "Mui_chat_message_list_item_message_more_icon_btn"
+                          "Mobile_Mui_chat_message_list_item_message_more_icon_btn"
                         )}
                         onClick={() => {
                           clipBoard(messageString);
@@ -373,7 +373,7 @@ export default function Chat(props: Props) {
                       >
                         <ContentCopyIcon
                           className={cx(
-                            "Mui_chat_message_list_item_message_copy_icon_btn"
+                            "Mobile_Mui_chat_message_list_item_message_copy_icon_btn"
                           )}
                         />
                       </IconButton>
@@ -385,7 +385,7 @@ export default function Chat(props: Props) {
           })}
           <div className="bottom" ref={bottomElement} />
         </div>
-        <div className={cx("Chat_chatInput")}>
+        <div className={cx("Mobile_Chat_chatInput")}>
           <ChatInput
             publicChannelCnt={publicChannelCnt}
             changeChannel={(

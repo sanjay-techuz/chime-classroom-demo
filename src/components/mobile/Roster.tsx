@@ -111,25 +111,25 @@ export default function Roster(props: Props) {
 
   return (
     <>
-      <Box className={cx("Mui_roster_parent_container")}>
+      <Box className={cx("Mobile_Mui_roster_parent_container")}>
         <Box>
           <ListItem>
             <ListItemText>
-              <span className={cx("Roster_participants")}>
+              <span className={cx("Mobile_Roster_participants")}>
                 {intl.formatMessage({ id: "Roster.users" })}
                 {` (${attendeeIds.length})`}
               </span>
             </ListItemText>
             <ListItemIcon
-              className={cx("Mui_roster_user_list_item_icon")}
+              className={cx("Mobile_Mui_roster_user_list_item_icon")}
               onClick={closeParticipantsPanel}
             >
               <Icons src={"/icons/close.svg"} />
             </ListItemIcon>
           </ListItem>
         </Box>
-        <Divider className={cx("Mui_roster_header_divider")} />
-        <Box className={cx("Roster_scrollbar")}>
+        <Divider className={cx("Mobile_Mui_roster_header_divider")} />
+        <Box className={cx("Mobile_Roster_scrollbar")}>
           {attendeeIds &&
             attendeeIds.map((attendeeId: string) => {
               const rosterAttendee: RosterAttendeeType = roster[attendeeId];
@@ -137,33 +137,33 @@ export default function Roster(props: Props) {
               return (
                 <ListItem key={attendeeId} component="div">
                   <ListItemAvatar
-                    className={cx("Mui_roster_attendee_list_item_avatar")}
+                    className={cx("Mobile_Mui_roster_attendee_list_item_avatar")}
                   >
                     <Avatar
-                      className={cx("Mui_roster_attendee__avatar")}
+                      className={cx("Mobile_Mui_roster_attendee__avatar")}
                       variant="circular"
                     >
                       {initials}
                     </Avatar>
                     {rosterAttendee?.screenPresenter && 
-                    <div className={cx("Mui_roster_attendee_screen_presenter_icon")}>
+                    <div className={cx("Mobile_Mui_roster_attendee_screen_presenter_icon")}>
                       <Icons src={"/icons/screen_presenter.svg"} />
                     </div> }
                   </ListItemAvatar>
                   <ListItemText
                     primary={
-                      <span className={cx("Mui_roster_attendee_avatar_span")}>
+                      <span className={cx("Mobile_Mui_roster_attendee_avatar_span")}>
                         <Tooltip title={rosterAttendee.name} placement="bottom">
                           <Typography
                             className={cx(
-                              "Mui_roster_attendee_avatar_typography"
+                              "Mobile_Mui_roster_attendee_avatar_typography"
                             )}
                           >
                             {rosterAttendee.name}
                           </Typography>
                         </Tooltip>
                         <Typography
-                          className={cx("Mui_roster_attendee_host_typography")}
+                          className={cx("Mobile_Mui_roster_attendee_host_typography")}
                         >
                           {attendeeId === localUserId
                             ? ` Me${
@@ -179,13 +179,13 @@ export default function Roster(props: Props) {
                         </Typography>
                       </span>
                     }
-                    className={cx("Mui_roster_attendee_list_item")}
+                    className={cx("Mobile_Mui_roster_attendee_list_item")}
                   />
                   <ListItemIcon
-                    className={cx("Mui_roster_attendee_list_item_icons")}
+                    className={cx("Mobile_Mui_roster_attendee_list_item_icons")}
                   >
                     {rosterAttendee?.raised && (
-                      <div className={cx("Roster_raisedHand")}>
+                      <div className={cx("Mobile_Roster_raisedHand")}>
                         <span
                           role="img"
                           aria-label={intl.formatMessage(
@@ -203,7 +203,7 @@ export default function Roster(props: Props) {
                     )}
                   </ListItemIcon>
                   <ListItemIcon
-                    className={cx("Mui_roster_attendee_list_item_icons")}
+                    className={cx("Mobile_Mui_roster_attendee_list_item_icons")}
                   >
                     {typeof rosterAttendee.muted === "boolean" &&
                       (classMode === ClassMode.Teacher &&
@@ -221,7 +221,7 @@ export default function Roster(props: Props) {
                           placement="bottom"
                         >
                           <div
-                            className={cx("Roster_muted")}
+                            className={cx("Mobile_Roster_muted")}
                             style={{ cursor: "pointer" }}
                             onClick={() => {
                               const mute = rosterAttendee.muted;
@@ -242,7 +242,7 @@ export default function Roster(props: Props) {
                           </div>
                         </Tooltip>
                       ) : (
-                        <div className={cx("Roster_muted")}>
+                        <div className={cx("Mobile_Roster_muted")}>
                           {rosterAttendee.muted ? (
                             <Icons src={"/icons/microphone_off_red.svg"} />
                           ) : (
@@ -253,7 +253,7 @@ export default function Roster(props: Props) {
                   </ListItemIcon>
 
                   <ListItemIcon
-                    className={cx("Mui_roster_attendee_list_item_icons")}
+                    className={cx("Mobile_Mui_roster_attendee_list_item_icons")}
                   >
                     {classMode === ClassMode.Teacher &&
                     attendeeId !== localUserId ? (
@@ -270,7 +270,7 @@ export default function Roster(props: Props) {
                         placement="bottom"
                       >
                         <div
-                          className={cx("Roster_video")}
+                          className={cx("Mobile_Roster_video")}
                           style={{ cursor: "pointer" }}
                           onClick={() => {
                             const focus = videoAttendees.has(attendeeId);
@@ -288,7 +288,7 @@ export default function Roster(props: Props) {
                         </div>
                       </Tooltip>
                     ) : (
-                      <div className={cx("Roster_muted")}>
+                      <div className={cx("Mobile_Roster_muted")}>
                         {videoAttendees.has(attendeeId) ? (
                           <Icons src={"/icons/camera_on_white.svg"} />
                         ) : (
@@ -300,7 +300,7 @@ export default function Roster(props: Props) {
                   <ListItemIcon sx={{ minWidth: "30px" }}>
                     {attendeeId !== localUserId && (
                         <>
-                        <div className={cx("Roster_video")}
+                        <div className={cx("Mobile_Roster_video")}
                           style={{ cursor: "pointer" }} 
                           onClick={(e) => {
                           handleClick(e);
@@ -363,9 +363,9 @@ export default function Roster(props: Props) {
         </Box>
       </Box>
       {classMode === ClassMode.Teacher && (
-        <Box className={cx("Mui_roster_second_container")}>
+        <Box className={cx("Mobile_Mui_roster_second_container")}>
           <Button
-            className={cx("Mui_roster_mute_all_btn")}
+            className={cx("Mobile_Mui_roster_mute_all_btn")}
             onClick={() => {
               chime?.sendMessage(MessageTopic.MuteAll, {
                 focus: true,
@@ -375,7 +375,7 @@ export default function Roster(props: Props) {
             {intl.formatMessage({ id: "Roster.muteAll" })}
           </Button>
           <Button
-            className={cx("Mui_roster_unmute_all_btn")}
+            className={cx("Mobile_Mui_roster_unmute_all_btn")}
             onClick={() => {
               updateGlobalVar("turnOnFocus", !turnOnFocus);
               chime?.sendMessage(MessageTopic.Focus, {

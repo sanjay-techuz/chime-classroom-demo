@@ -150,8 +150,8 @@ export default function Controls(props: Props) {
   };
 
   return (
-    <Box className={cx("Mui_controls_parent_container_box")}>
-      <Box className={cx("Mui_controls_child_container_box")}>
+    <Box className={cx("Mobile_Mui_controls_parent_container_box")}>
+      <Box className={cx("Mobile_Mui_controls_child_container_box")}>
         <Tooltip
           title={
             muted
@@ -171,7 +171,7 @@ export default function Controls(props: Props) {
               await new Promise((resolve) => setTimeout(resolve, 10));
             }}
             className={cx(
-              muted ? "Controls_btn_active" : "Controls_btn_not_active"
+              muted ? "Mobile_Controls_btn_active" : "Mobile_Controls_btn_not_active"
             )}
           >
             {muted ? (
@@ -222,8 +222,8 @@ export default function Controls(props: Props) {
             }}
             className={cx(
               videoStatus === VideoStatus.Enabled
-                ? "Controls_btn_active"
-                : "Controls_btn_not_active"
+                ? "Mobile_Controls_btn_active"
+                : "Mobile_Controls_btn_not_active"
             )}
           >
             {videoStatus === VideoStatus.Enabled ? (
@@ -264,8 +264,8 @@ export default function Controls(props: Props) {
             }}
             className={cx(
               isScreenShared
-                ? "Controls_sc_btn_active"
-                : "Controls_sc_btn_not_active"
+                ? "Mobile_Controls_sc_btn_active"
+                : "Mobile_Controls_sc_btn_not_active"
             )}
           >
             {isScreenShared ? (
@@ -310,7 +310,7 @@ export default function Controls(props: Props) {
                 }
               }}
               className={cx(
-                onChat ? "Controls_btn_active" : "Controls_btn_not_active"
+                onChat ? "Mobile_Controls_btn_active" : "Mobile_Controls_btn_not_active"
               )}
             >
               {onChat ? (
@@ -334,8 +334,8 @@ export default function Controls(props: Props) {
             onClick={handleDrawerLeftToggle}
             className={cx(
               openParticipants
-                ? "Controls_btn_active"
-                : "Controls_btn_not_active"
+                ? "Mobile_Controls_btn_active"
+                : "Mobile_Controls_btn_not_active"
             )}
           >
             {openParticipants ? (
