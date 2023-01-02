@@ -4,11 +4,9 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useHistory } from "react-router-dom";
 import classNames from "classnames/bind";
 
 import {
-  Avatar,
   Badge,
   Box,
   Button,
@@ -16,17 +14,13 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  MenuItem,
-  Popover,
   Tooltip,
 } from "@mui/material";
 import ChimeSdkWrapper from "../../chime/ChimeSdkWrapper";
-import routes from "../../constants/routes.json";
 import getChimeContext from "../../context/getChimeContext";
 import getGlobalVarContext from "../../context/getGlobalVarContext";
 import ClassMode from "../../enums/ClassMode";
 import SmallAvatar from "../../custom/roster/SmallAvatar";
-import { attendanceWenhook } from "../../services";
 import MoreSettings from "./MoreSettings";
 import styles from "./Controls.css";
 import MessageTopic from "../../enums/MessageTopic";
@@ -64,11 +58,9 @@ export default function Controls(props: Props) {
   const {
     localVideo,
     groupChatCounter,
-    userInfo,
     classMode,
     screenSharePermit,
   } = globalVar;
-  const history = useHistory();
   const [muted, setMuted] = useState(false);
   const [isScreenShared, setIsScreenShared] = useState(false);
   const [openScreenSharePermit, setOpenScreenSharePermit] = useState(false);
@@ -76,8 +68,6 @@ export default function Controls(props: Props) {
   const [raised, setRaised] = useState(false);
   const [videoStatus, setVideoStatus] = useState(VideoStatus.Disabled);
   const intl = useIntl();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
   useEffect(() => {
     const callback = (localMuted: boolean) => {
@@ -138,13 +128,6 @@ export default function Controls(props: Props) {
     }
   }, [raised, chime?.configuration]);
 
-  const handleClick = (event: any) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleCloseScreenShareDialog = () => {
     setOpenScreenSharePermit(false);
   };
@@ -177,10 +160,16 @@ export default function Controls(props: Props) {
             {muted ? (
               <>
                 <Icons src={"/icons/microphone_off_black.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({ id: "Controls.unmuteTooltip" })}
+                </span>
               </>
             ) : (
               <>
                 <Icons src={"/icons/microphone_on_white.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({ id: "Controls.muteTooltip" })}
+                </span>
               </>
             )}
           </Button>
@@ -229,10 +218,16 @@ export default function Controls(props: Props) {
             {videoStatus === VideoStatus.Enabled ? (
               <>
                 <Icons src={"/icons/camera_off_black.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({ id: "Controls.startVideo" })}
+                </span>
               </>
             ) : (
               <>
                 <Icons src={"/icons/camera_on_white.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({ id: "Controls.stopVideo" })}
+                </span>
               </>
             )}
           </Button>
@@ -271,10 +266,18 @@ export default function Controls(props: Props) {
             {isScreenShared ? (
               <>
                 <Icons src={"/icons/screen_share_white.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({
+                    id: "Controls.shareScreenStopTooltip",
+                  })}
+                </span>
               </>
             ) : (
               <>
                 <Icons src={"/icons/screen_share_black.svg"} />
+                <span className={cx("Controls_margin_right")}>
+                  {intl.formatMessage({ id: "Controls.shareScreenTooltip" })}
+                </span>
               </>
             )}
           </Button>
@@ -316,10 +319,16 @@ export default function Controls(props: Props) {
               {onChat ? (
                 <>
                   <Icons src={"/icons/chat_black.svg"} />
+                  <span className={cx("Controls_margin_right")}>
+                    {intl.formatMessage({ id: "Controls.Chat" })}
+                  </span>
                 </>
               ) : (
                 <>
                   <Icons src={"/icons/chat.svg"} />
+                  <span className={cx("Controls_margin_right")}>
+                    {intl.formatMessage({ id: "Controls.Chat" })}
+                  </span>
                 </>
               )}
             </Button>
@@ -343,10 +352,13 @@ export default function Controls(props: Props) {
             ) : (
               <Icons src={"/icons/participants.svg"} />
             )}
+            <span className={cx("Controls_margin_right")}>
+              {intl.formatMessage({ id: "Controls.participants" })}
+            </span>
           </Button>
         </Tooltip>
 
-        <MoreSettings />
+        {/* <MoreSettings /> */}
 
         <Dialog
           open={openScreenSharePermit}

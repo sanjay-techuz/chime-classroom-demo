@@ -7,18 +7,18 @@
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 120px);
-  margin-top: 60px;
+  height: calc(100% - 150px);
+  margin-top: 43px;
 }
 
 .Mobile_ClassRoom_contentVideoWrapper {
   position: absolute;
-  top: 190px;
+  top: 165px;
   display: none;
   flex: 1 1 auto;
   overflow-y: hidden;
-  height: calc(100% - 255px);
-  width: 100%;
+  height: calc(100% - 220px);
+  width: 96% !important;
 }
 .Mobile_ClassRoom_contentVideoWrapper.rightDrawerOpen {
   width: calc(100% - 301px) !important;
@@ -30,7 +30,7 @@
 
 .Mobile_ClassRoom_contentVideoWrapper.screenShareFullView {
   height: calc(100% - 60px) !important;
-  width: 100% !important;
+  width: 96% !important;
   z-index: 1111 !important;
   top: 0px !important;
 }
@@ -91,7 +91,7 @@ nav {
   position: absolute;
   height: 29px;
   left: 8px;
-  top: 190px;
+  top: 165px;
   background: rgba(0, 0, 0, 0.653482);
   border-radius: 4px;
   z-index: 10;
@@ -133,4 +133,5 @@ nav {
 .Mobile_Mui_classroom_control_appbar {
   height: 50px !important;
   width: calc(100% - 16px) !important;
+  bottom: 0px !important;
 }

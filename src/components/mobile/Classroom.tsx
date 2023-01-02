@@ -34,6 +34,7 @@ import {
   Type as NotifType,
 } from "../../providers/NotificationProvider";
 import RosterSliderView from "./RosterSliderView";
+import TopControlBar from "./TopControlBar";
 
 const cx = classNames.bind(styles);
 const drawerWidth = 301;
@@ -291,37 +292,10 @@ export default function MobileClassroom() {
                 anchor="top"
                 className={cx("Mobile_Mui_classroom_control_appbar")}
                 mobileview={isMobileView}
-                background={"var(--third_blue_color)"}
+                background={"var(--color_black)"}
                 drawerWidth={drawerWidth}
               >
-                <Controls
-                  openChat={openChat}
-                  openParticipants={openParticipants}
-                  onClickShareButton={async (flag: boolean) => {
-                    try {
-                      if (flag) {
-                        await chime?.audioVideo?.startContentShareFromScreenCapture();
-                      } else {
-                        await chime?.audioVideo?.stopContentShare();
-                      }
-                    } catch (err) {
-                      console.log("err.....", err);
-                    }
-                  }}
-                  onClickChatButton={(flag: boolean) => {
-                    if (flag) {
-                      openDrawerRightToggle();
-                      setOpenChat(true);
-                    } else {
-                      if (!openParticipants) {
-                        closeDrawerRightToggle();
-                      }
-                      setOpenChat(false);
-                    }
-                  }}
-                  handleDrawerLeftToggle={handleDrawerLeftToggle}
-                  isContentShareEnabled={isContentShareEnabled}
-                />
+                <TopControlBar />
               </AppBar>
                 <Main
                   rightopen={rightDrawerOpen}
@@ -422,7 +396,7 @@ export default function MobileClassroom() {
                 anchor="bottom"
                 className={cx("Mobile_Mui_classroom_control_appbar")}
                 mobileview={isMobileView}
-                background={"var(--third_blue_color)"}
+                background={"var(--color_black)"}
                 drawerWidth={drawerWidth}
               >
                 <Controls

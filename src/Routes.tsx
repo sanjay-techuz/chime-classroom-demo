@@ -20,6 +20,14 @@ export default function Routes() {
   const [state] = useContext(getUIStateContext());
   const [ isMobileView, setIsMobileView ] = useState(false);
 
+  useEffect(() => {
+    if (window.innerWidth < 1000) {
+      setIsMobileView(true);
+    } else {
+      setIsMobileView(false);
+    }
+  },[]);
+
   const updateMobileView = () => {
     if (window.innerWidth < 1000) {
       setIsMobileView(true);
