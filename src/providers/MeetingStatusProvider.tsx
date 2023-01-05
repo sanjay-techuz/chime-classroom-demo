@@ -18,8 +18,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getMeetingStatusContext from "../context/getMeetingStatusContext";
-import getUIStateContext from "../context/getUIStateContext";
-import ClassMode from "../enums/ClassMode";
 import MeetingStatus from "../enums/MeetingStatus";
 import common from "../constants/common.json";
 import routes from "../constants/routes.json";
@@ -39,7 +37,6 @@ export default function MeetingStatusProvider(props: Props) {
   }>({
     meetingStatus: MeetingStatus.Loading,
   });
-  const [state] = useContext(getUIStateContext());
   const navigate = useNavigate();
   const query = new URLSearchParams(useLocation().search);
   const location = useLocation();
@@ -84,7 +81,7 @@ export default function MeetingStatusProvider(props: Props) {
             userID,
             duration,
             isRecording,
-            state.classMode === ClassMode.Student ? "student" : "teacher",
+            mode === "mp" ? "teacher" : "student",
             query.get("optionalFeature")
           );
 
@@ -101,7 +98,7 @@ export default function MeetingStatusProvider(props: Props) {
                 MeetingSessionStatusCode.AudioCallEnded
               ) {
                 // navigate('/');
-                if (state.classMode === ClassMode.Teacher) {
+                if (mode === "mp") {
                   chime?.leaveRoom(true);
                   navigate(`${routes.MAIN}?id=${id}`);
                   // window.location.href = `${common.domain}complete?id=${id}`;
