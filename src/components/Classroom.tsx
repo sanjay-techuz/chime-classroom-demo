@@ -4,7 +4,6 @@
 
 import classNames from "classnames/bind";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import Modal from "react-modal";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router-dom";
 
@@ -39,7 +38,6 @@ const cx = classNames.bind(styles);
 const drawerWidth = 301;
 
 export default function Classroom() {
-  Modal.setAppElement("body");
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const intl = useIntl();
   const notifDispatch = useNotificationDispatch();
