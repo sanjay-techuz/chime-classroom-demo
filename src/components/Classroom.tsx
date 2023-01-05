@@ -306,10 +306,11 @@ export default function Classroom() {
                     closeDrawerRightToggle();
                   }}
                 >
-                  <div className={cx("Mui_classroom_drawer_container_div")}>
-                    {openParticipants && (
+                  <div className={cx("Mui_classroom_drawer_container_div")}>                    
                       <div
                         className={cx({
+                          ClassRoom_chat_parent_div_open: openParticipants,
+                          ClassRoom_chat_parent_div_close: !openParticipants,
                           ClassRoom_chat_open_one:
                             !openChat && openParticipants,
                           ClassRoom_chat_open_both:
@@ -321,7 +322,6 @@ export default function Classroom() {
                           openChatPanel={() => setOpenChat(true)}
                         />
                       </div>
-                    )}
                     <Divider className={cx("Mui_classroom_header_divider")} />
                     <div
                       className={cx("ClassRoom_chat_parent_div", {
