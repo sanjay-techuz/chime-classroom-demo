@@ -3,14 +3,14 @@
 /* eslint-disable  */
 
 import React from "react";
-import { hot } from "react-hot-loader/root";
+// import { hot } from "react-hot-loader/root";
 import { BrowserRouter } from "react-router-dom";
 
 import ChimeProvider from "../providers/ChimeProvider";
 import I18nProvider from "../providers/I18nProvider";
 import { NotificationProvider } from "../providers/NotificationProvider";
 import UIStateProvider from "../providers/UIStateProvider";
-import Routes from "../Routes";
+import Routers from "../Routers";
 import NotificationGroup from "./NotificationGroup";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -28,7 +28,7 @@ const Root = () => {
           <I18nProvider>
             <ChimeProvider>
               <UIStateProvider>
-                <Routes />
+                <Routers />
                 <NotificationGroup />
               </UIStateProvider>
             </ChimeProvider>
@@ -39,4 +39,4 @@ const Root = () => {
   );
 };
 
-export default hot(Root);
+export default Root;

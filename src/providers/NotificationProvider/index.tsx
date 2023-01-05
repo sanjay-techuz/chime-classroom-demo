@@ -1,4 +1,5 @@
-import React, { useReducer, Dispatch, useContext } from 'react';
+/* eslint-disable  */ 
+import React, { useReducer, Dispatch, useContext, ReactNode } from 'react';
 
 import {
   StateType,
@@ -13,7 +14,12 @@ import {
 const StateContext = React.createContext<StateType>(initialState);
 const DispatchContext = React.createContext<Dispatch<Action>>((): void => {});
 
-const NotificationProvider: React.FC = ({ children }) => {
+type Props = {
+  children: ReactNode;
+};
+
+const NotificationProvider = (props: Props) => {
+  const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (

@@ -13,7 +13,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -40,7 +40,7 @@ export default function MeetingStatusProvider(props: Props) {
     meetingStatus: MeetingStatus.Loading,
   });
   const [state] = useContext(getUIStateContext());
-  const history = useHistory();
+  const navigate = useNavigate();
   const query = new URLSearchParams(useLocation().search);
   const location = useLocation();
   const locationState = location?.state || null;
@@ -100,10 +100,10 @@ export default function MeetingStatusProvider(props: Props) {
                 sessionStatus.statusCode() ===
                 MeetingSessionStatusCode.AudioCallEnded
               ) {
-                // history.push('/');
+                // navigate('/');
                 if (state.classMode === ClassMode.Teacher) {
                   chime?.leaveRoom(true);
-                  history.push(`${routes.MAIN}?id=${id}`);
+                  navigate(`${routes.MAIN}?id=${id}`);
                   // window.location.href = `${common.domain}complete?id=${id}`;
                 } else {
                   const webhookRes = {
@@ -118,7 +118,7 @@ export default function MeetingStatusProvider(props: Props) {
                   await attendanceWenhook(webhookRes);
 
                   chime?.leaveRoom(false);
-                  history.push(routes.MAIN);
+                  navigate(routes.MAIN);
                   // window.location.href = `${common.domain}complete`;
                 }
               }

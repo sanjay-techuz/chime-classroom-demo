@@ -6,7 +6,7 @@ import classNames from "classnames/bind";
 import React from "react";
 // import Dropdown, { Option } from "react-dropdown";
 // import { FormattedMessage, useIntl } from "react-intl";
-// import { useHistory, useLocation } from "react-router-dom";
+// import { useNavigate, useLocation } from "react-router-dom";
 // import { v4 as uuidv4 } from "uuid";
 
 // import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -33,7 +33,7 @@ export default function CreateOrJoin() {
   // const [name, setName] = useState("");
   // const [region, setRegion] = useState<RegionType | undefined>(undefined);
   // const [optionalFeature, setOptionalFeature] = useState("");
-  // const history = useHistory();
+  // const navigate = useNavigate();
   // const intl = useIntl();
   // const query = new URLSearchParams(useLocation().search);
 
@@ -51,7 +51,7 @@ export default function CreateOrJoin() {
   //   //     setTitle(meetingParam);
   //   //   }
   //   //   if (meetingParam && isRecordingUrl) {
-  //   //     history.push(
+  //   //     navigate(
   //   //       `/classroom?title=${encodeURIComponent(
   //   //         meetingParam
   //   //       )}&name=Unknown&region=us-east-1`
@@ -89,7 +89,7 @@ export default function CreateOrJoin() {
           onSubmit={(event) => {
             event.preventDefault();
             if (title && name) {
-              history.push(
+              navigate(
                 `/classroom?meetingID=${encodeURIComponent(title)}&userName=${encodeURIComponent(name)}&mode=${encodeURIComponent("ap")}`
               );
             }

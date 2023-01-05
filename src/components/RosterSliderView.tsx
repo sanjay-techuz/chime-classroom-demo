@@ -8,7 +8,7 @@ import {
 } from "amazon-chime-sdk-js";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
@@ -44,7 +44,7 @@ export default function RosterSliderView(props: Props) {
     [index: string]: { boundAttendeeId: string };
   }>({});
   const roster = useRoster();
-  const history = useHistory();
+  const navigate = useNavigate();
   const videoElements: HTMLVideoElement[] = [];
   const tiles: { [index: number]: number } = {};
   const currentUser = chime?.configuration?.credentials?.attendeeId;
@@ -76,7 +76,7 @@ export default function RosterSliderView(props: Props) {
         const mTime = countDownTimer(meetingStartMeeting);
         if(!mTime){
           chime?.leaveRoom(true);
-          history.push(`${routes.MAIN}?id=${userInfo.teacherId}`);
+          navigate(`${routes.MAIN}?id=${userInfo.teacherId}`);
         }
         mt.innerHTML = mTime as string;
       }, 1000);

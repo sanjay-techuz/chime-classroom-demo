@@ -3,7 +3,7 @@
 /* eslint-disable  */
 
 import { useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { DataMessage } from "amazon-chime-sdk-js";
 
@@ -32,7 +32,7 @@ export default function useRemoteControl() {
   const { globalVar,updateGlobalVar } = useContext(getGlobalVarContext());
   const { userInfo, classMode } = globalVar;
   // const [state] = useContext(getUIStateContext());
-  const history = useHistory();
+  const navigate = useNavigate();
   const localUserId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
 
@@ -78,7 +78,7 @@ export default function useRemoteControl() {
               }
               chime?.leaveRoom(false);
               // window.location.href = `${common.domain}complete`
-              history.push(routes.MAIN);
+              navigate(routes.MAIN);
             }
           }
           break;

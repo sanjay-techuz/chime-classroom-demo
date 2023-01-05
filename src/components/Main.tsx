@@ -4,7 +4,7 @@
 
 import classNames from "classnames/bind";
 import React, { useContext, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import getUIStateContext from "../context/getUIStateContext";
 import ClassMode from "../enums/ClassMode";
@@ -17,7 +17,7 @@ const cx = classNames.bind(styles);
 export default function Main() {
   const query = new URLSearchParams(useLocation().search);
   const [, dispatch] = useContext(getUIStateContext());
-  const history = useHistory();
+  const navigate = useNavigate();
   const meetingName = query.get("meeting_name") || "";
   const meetingID = query.get("meetingID") || "";
   const id = query.get("id") || "";
@@ -31,7 +31,7 @@ export default function Main() {
   useEffect(() => {
     console.log(meetingID, userName, mode);
     if (!userName || !mode) {
-      history.push(`${routes.CREATE_OR_JOIN}`);
+      navigate(`${routes.CREATE_OR_JOIN}`);
     } else {
       if (mode) {
         dispatch({
@@ -41,9 +41,7 @@ export default function Main() {
           },
         });
       }
-      let histroyObject = {
-        pathname: '/classroom',
-        search: `?meetingID=${meetingID}`,
+      const histroyObject = {
         state: {
           meetingID: meetingID,
           userName: userName,
@@ -58,7 +56,7 @@ export default function Main() {
       }
 
       console.log("🏁🏁🏁🏁🏁",histroyObject);
-      history.push(histroyObject);
+      navigate(`/classroom?meetingID=${meetingID}`,histroyObject);
     }
   }, []);
 

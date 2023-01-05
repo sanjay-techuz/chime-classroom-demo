@@ -4,7 +4,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 
 import {
@@ -68,7 +68,7 @@ export default function Controls(props: Props) {
     classMode,
     screenSharePermit,
   } = globalVar;
-  const history = useHistory();
+  const navigate = useNavigate();
   const [muted, setMuted] = useState(false);
   const [isScreenShared, setIsScreenShared] = useState(false);
   const [openScreenSharePermit, setOpenScreenSharePermit] = useState(false);
@@ -476,7 +476,7 @@ export default function Controls(props: Props) {
               sx={{ fontSize: "12px" }}
               onClick={() => {
                 chime?.leaveRoom(true);
-                history.push(`${routes.MAIN}?id=${userInfo.teacherId}`);
+                navigate(`${routes.MAIN}?id=${userInfo.teacherId}`);
               }}
             >
               {intl.formatMessage({ id: "Controls.EndMeeting" })}
@@ -498,7 +498,7 @@ export default function Controls(props: Props) {
                 await attendanceWenhook(webhookRes);
               }
               chime?.leaveRoom(false);
-              history.push(routes.MAIN);
+              navigate(routes.MAIN);
             }}
           >
             {intl.formatMessage({ id: "Controls.LeaveMeeting" })}
