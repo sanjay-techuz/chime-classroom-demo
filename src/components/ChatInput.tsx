@@ -196,6 +196,7 @@ export default React.memo(function ChatInput(props: Props) {
                 : 0;
               return (
                 <MenuItem
+                  key={chatAttdId}
                   className={cx("Mui_chat_input_popover_private_menu_item")}
                   onClick={() => {
                     setActiveChatAttendee(chatAttdId);

@@ -8,7 +8,6 @@ import { useIntl } from "react-intl";
 import {
   Button,
   Divider,
-  ListItem,
   MenuItem,
   Popover,
   Tooltip,
@@ -299,9 +298,9 @@ export default React.memo(function MoreSettings() {
                   ) : (
                     <Icons src={"/icons/check_icon_black.svg"} />
                   )}
-                  <ListItem
-                    sx={{ padding: "0px 10px", fontSize: "12px" }}
-                  >{`${device.name}`}</ListItem>
+                  <div
+                    style={{ padding: "0px 10px", fontSize: "12px" }}
+                  >{`${device.name}`}</div>
                 </MenuItem>
               );
             })}
@@ -385,9 +384,9 @@ export default React.memo(function MoreSettings() {
                   ) : (
                     <Icons src={"/icons/check_icon_black.svg"} />
                   )}
-                  <ListItem
-                    sx={{ padding: "0px 10px", fontSize: "12px" }}
-                  >{`${device.name}`}</ListItem>
+                  <div
+                    style={{ padding: "0px 10px", fontSize: "12px" }}
+                  >{`${device.name}`}</div>
                 </MenuItem>
               );
             })}
@@ -471,9 +470,9 @@ export default React.memo(function MoreSettings() {
                   ) : (
                     <Icons src={"/icons/check_icon_black.svg"} />
                   )}
-                  <ListItem
-                    sx={{ padding: "0px 10px", fontSize: "12px" }}
-                  >{`${device.name}`}</ListItem>
+                  <div
+                    style={{ padding: "0px 10px", fontSize: "12px" }}
+                  >{`${device.name}`}</div>
                 </MenuItem>
               );
             })}
@@ -583,9 +582,9 @@ export default React.memo(function MoreSettings() {
                 ) : (
                   <Icons src={"/icons/check_icon_black.svg"} />
                 )}
-                <ListItem
-                  sx={{ padding: "0px 10px", fontSize: "12px" }}
-                >{`${quality.name}`}</ListItem>
+                <div
+                  style={{ padding: "0px 10px", fontSize: "12px" }}
+                >{`${quality.name}`}</div>
               </MenuItem>
             );
           })}

@@ -18,7 +18,7 @@ import useRoster from "../hooks/useRoster";
 import RosterAttendeeType from "../types/RosterAttendeeType";
 import RosterLayout from "./RosterLayout";
 import LocalVideo from "./LocalVideo";
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Icons from "../custom/Icons";
 import { countDownTimer } from "../utils/countDownTimer";
 import styles from "./RosterSliderView.css";
@@ -270,14 +270,14 @@ export default function RosterSliderView(props: Props) {
             }
           }}
         >
-          <IconButton
+          <div
             className={cx("Mui_roster_slider_left_btn", {
               Mui_roster_slider_display_none: scrollLength <= 796,
               Mui_roster_slider_display_flex: scrollLength >= 796,
             })}
           >
             <Icons src={"/icons/left_arrow.svg"} />
-          </IconButton>
+          </div>
         </Button>
         <div id="tileView" className={cx("Mui_roster_slider_tileview")}>
           <div
@@ -333,6 +333,7 @@ export default function RosterSliderView(props: Props) {
                 attendeeIdFullScreen === attendeeId ? true : false;
               return (
                 <div
+                  key={key}
                   className={cx({
                     Mui_roster_slider_active_local_video_view: activeSpeaker,
                     Mui_roster_slider_not_active_local_video_view:
@@ -438,7 +439,7 @@ export default function RosterSliderView(props: Props) {
             }
           }}
         >
-          <IconButton
+          <div
             className={cx("Mui_roster_slider_left_btn", {
               Mui_roster_slider_display_none:
                 scrollLength >= maxScrollLength - 796 ||
@@ -450,7 +451,7 @@ export default function RosterSliderView(props: Props) {
             })}
           >
             <Icons src={"/icons/right_arrow.svg"} />
-          </IconButton>
+          </div>
         </Button>
       </Box>
     </Box>

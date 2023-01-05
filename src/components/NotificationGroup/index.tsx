@@ -30,6 +30,7 @@ const NotificationGroup = () => {
       {notifications.map((item: any) =>
         item.variant === Variant.WARNING ? (
           <Snackbar
+            key={item.id}
             open={true}
             className={cx("Mui_snackbar_from_top")}
             onClose={() => dispatch({ type: Type.REMOVE, payload: item.id })}
@@ -52,6 +53,7 @@ const NotificationGroup = () => {
           </Snackbar>
         ) : (
           <Snackbar
+            key={item.id}
             open={true}
             className={cx("Mui_snackbar_from_top")}
             sx={{

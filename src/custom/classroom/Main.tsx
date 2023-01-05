@@ -2,9 +2,9 @@ import { styled } from "@mui/material/styles";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   leftopen?: boolean;
-  rightopen?: boolean;
-  drawerWidth?: number;
-}>(({ theme, leftopen, rightopen, drawerWidth = 0 }) => ({
+  rightopen?: number;
+  drawerwidth?: number;
+}>(({ theme, leftopen, rightopen, drawerwidth = 0 }) => ({
   flexGrow: 1,
   padding: theme.spacing(1),
   backgroundColor: "var(--primary_blue_color) !important",
@@ -19,29 +19,29 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   ...(leftopen &&
     !rightopen &&
     {
-      width: `calc(100% - ${drawerWidth}px)`,
+      width: `calc(100% - ${drawerwidth}px)`,
       // transition: theme.transitions.create("margin", {
       //   easing: theme.transitions.easing.easeOut,
       //   duration: theme.transitions.duration.enteringScreen,
       // }),
-      marginLeft: `${drawerWidth}px`,
+      marginLeft: `${drawerwidth}px`,
     }),
   ...(!leftopen &&
     rightopen &&
     {
-      width: `calc(100% - ${drawerWidth}px)`,
+      width: `calc(100% - ${drawerwidth}px)`,
       // transition: theme.transitions.create("margin", {
       //   easing: theme.transitions.easing.easeIn,
       //   duration: theme.transitions.duration.enteringScreen,
       // }),
-      marginRight: `${drawerWidth}px`,
+      marginRight: `${drawerwidth}px`,
     }),
   ...(leftopen &&
     rightopen &&
     {
-      width: `calc(100% - ${drawerWidth + drawerWidth}px)`,
-      marginLeft: `${drawerWidth}px`,
-      marginRight: `${drawerWidth}px`,
+      width: `calc(100% - ${drawerwidth + drawerwidth}px)`,
+      marginLeft: `${drawerwidth}px`,
+      marginRight: `${drawerwidth}px`,
     }),
   ...(!leftopen &&
     !rightopen && {

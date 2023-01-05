@@ -3,10 +3,10 @@ import { styled } from "@mui/material/styles";
 
 interface AppBarProps extends MuiAppBarProps {
   leftopen?: boolean;
-  rightopen?: boolean;
+  rightopen?: number;
   anchor?: string;
   background?: string;
-  drawerWidth?: number;
+  drawerwidth?: number;
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -18,7 +18,7 @@ const AppBar = styled(MuiAppBar, {
     rightopen,
     anchor,
     background,
-    drawerWidth = 0,
+    drawerwidth = 0,
   }) => ({
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
@@ -27,8 +27,8 @@ const AppBar = styled(MuiAppBar, {
     ...(leftopen &&
       !rightopen &&
       {
-        width: `calc(100% - ${drawerWidth + 16}px) !important`,
-        marginLeft: `${drawerWidth}px`,
+        width: `calc(100% - ${drawerwidth + 16}px) !important`,
+        marginLeft: `${drawerwidth}px`,
         transition: theme.transitions.create(["margin", "width"], {
           easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen,
@@ -37,8 +37,8 @@ const AppBar = styled(MuiAppBar, {
     ...(rightopen &&
       !leftopen &&
       {
-        width: `calc(100% - ${drawerWidth + 16}px) !important`,
-        marginRight: `${drawerWidth}px`,
+        width: `calc(100% - ${drawerwidth + 16}px) !important`,
+        marginRight: `${drawerwidth}px`,
         transition: theme.transitions.create(["margin", "width"], {
           easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen,
@@ -47,9 +47,9 @@ const AppBar = styled(MuiAppBar, {
     ...(rightopen &&
       leftopen &&
       {
-        width: `calc(100% - ${drawerWidth + drawerWidth}px)`,
-        marginLeft: `${drawerWidth}px`,
-        marginRight: `${drawerWidth}px`,
+        width: `calc(100% - ${drawerwidth + drawerwidth}px)`,
+        marginLeft: `${drawerwidth}px`,
+        marginRight: `${drawerwidth}px`,
         transition: theme.transitions.create(["margin", "width"], {
           easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen,

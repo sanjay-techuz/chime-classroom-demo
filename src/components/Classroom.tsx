@@ -253,8 +253,8 @@ export default function Classroom() {
                 aria-label="mailbox folders"
               >
                 <Main
-                  rightopen={rightDrawerOpen}
-                  drawerWidth={drawerWidth}
+                  rightopen={rightDrawerOpen ? 1 : 0}
+                  drawerwidth={drawerWidth}
                 >
                   <div className={cx("ClassRoom_left")}>
                     <div
@@ -346,11 +346,11 @@ export default function Classroom() {
               </Box>
               <AppBar
                 position="fixed"
-                rightopen={rightDrawerOpen}
+                rightopen={rightDrawerOpen ? 1 : 0}
                 anchor="bottom"
                 className={cx("Mui_classroom_control_appbar")}
                 background={"var(--third_blue_color)"}
-                drawerWidth={drawerWidth}
+                drawerwidth={drawerWidth}
               >
                 <Controls
                   openChat={openChat}

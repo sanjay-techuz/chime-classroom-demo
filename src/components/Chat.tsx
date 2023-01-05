@@ -12,7 +12,6 @@ import {
   ListItem,
   ListItemText,
   Paper,
-  Typography,
   Tooltip,
   IconButton,
   Divider,
@@ -257,18 +256,17 @@ export default function Chat(props: Props) {
                       elevation={0}
                       className={cx("Mui_chat_message_list_item_message_paper")}
                     >
-                      <Typography
+                      <div
                         className={cx(
                           "Mui_chat_message_list_item_message_typography"
                         )}
-                        variant="body1"
                       >
                         <div className={cx("Chat_message_string_parent")}>
                           <span className={cx("Chat_message_string")}>
                             {messageString}
                           </span>
                         </div>
-                      </Typography>
+                      </div>
                     </Paper>
                   </ListItemText>
                   <div
@@ -341,18 +339,17 @@ export default function Chat(props: Props) {
                       elevation={0}
                       className={cx("Mui_chat_message_list_item_message_paper")}
                     >
-                      <Typography
+                      <div
                         className={cx(
                           "Mui_chat_message_left_list_item_message_typography"
                         )}
-                        variant="body1"
                       >
                         <div className={cx("Chat_message_string_parent")}>
                           <span className={cx("Chat_message_string")}>
                             {messageString}
                           </span>
                         </div>
-                      </Typography>
+                      </div>
                     </Paper>
                   </ListItemText>
                   <div

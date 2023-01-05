@@ -35,6 +35,11 @@
   background-color: var(--secondary_blue_color) !important;
   width: 40px !important;
   height: 40px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .Mui_roster_slider_tileview {
