@@ -100,7 +100,7 @@ export default React.memo(function ChatInput(props: Props) {
     return (
       <EmojiPicker
         height={260}
-        width={260}
+        width={280}
         theme={Theme.DARK}
         onEmojiClick={onClick}
         autoFocusSearch={true}
