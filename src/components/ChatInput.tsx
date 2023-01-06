@@ -246,7 +246,7 @@ export default React.memo(function ChatInput(props: Props) {
             className={cx("Mui_chat_input_message_to")}
             onClick={handleClick}
           >
-            {currentChatter} ^
+            {currentChatter} &nbsp; <Icons src={"/icons/dropdown.svg"} />
           </Button>
           <IconButton
             onClick={() => setOpenEmojiPicker(!openEmojiPicker)}
