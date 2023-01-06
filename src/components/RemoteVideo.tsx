@@ -34,7 +34,7 @@ export default React.memo(function RemoteVideo(props: Props) {
     view,
   } = props;
   const roster = useRoster();
-  const rosterAttendee: RosterAttendeeType = roster[attendeeId!];
+  const rosterAttendee: RosterAttendeeType = attendeeId ? roster[attendeeId] : {};
 
   return (
     <div
@@ -45,7 +45,7 @@ export default React.memo(function RemoteVideo(props: Props) {
       })}
     >
       <video muted ref={videoElementRef} className={cx("RemoteVideo_video")} />
-      <VideoNameplate attendeeId={attendeeId} />
+      <VideoNameplate name={rosterAttendee?.name} muted={rosterAttendee?.muted}/>
 
       {rosterAttendee?.raised && (
         view !== "activeSpeaker" ? 

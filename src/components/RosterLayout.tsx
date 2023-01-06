@@ -46,7 +46,7 @@ export default React.memo(function RosterLayout(props: Props) {
           >
             {rosterAttendee?.name}
           </Typography>
-          <VideoNameplate attendeeId={attendeeId} />
+          <VideoNameplate name={rosterAttendee?.name} muted={rosterAttendee?.muted}/>
           {rosterAttendee?.raised && (
         <div className={cx("RemoteVideo_raisedHand")}>
           <span

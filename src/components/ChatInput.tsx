@@ -17,7 +17,6 @@ import {
   Box,
   Button,
   IconButton,
-  ListItem,
   MenuItem,
   Popover,
 } from "@mui/material";
@@ -172,11 +171,11 @@ export default React.memo(function ChatInput(props: Props) {
               ) : (
                 <Icons src={"/icons/check_icon_black.svg"} />
               )}
-              <ListItem
+              <div
                 className={cx("Mui_chat_input_popover_everyone_menu_listitem")}
               >
                 Everyone
-              </ListItem>
+              </div>
               <Avatar
                 className={cx(
                   "Mui_chat_input_popover_everyone_menu_listitem_avatar",
@@ -212,13 +211,13 @@ export default React.memo(function ChatInput(props: Props) {
                   ) : (
                     <Icons src={"/icons/check_icon_black.svg"} />
                   )}
-                  <ListItem
+                  <div
                     className={cx(
                       "Mui_chat_input_popover_everyone_menu_listitem"
                     )}
                   >
                     {rosterAttendee?.name}
-                  </ListItem>
+                  </div>
                   <Avatar
                     className={cx(
                       "Mui_chat_input_popover_everyone_menu_listitem_avatar",

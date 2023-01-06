@@ -6,27 +6,18 @@ import classNames from "classnames/bind";
 import React from "react";
 import Icons from "../custom/Icons";
 
-import useAttendee from "../hooks/useAttendee";
 import styles from "./VideoNameplate.css";
 
 const cx = classNames.bind(styles);
 
 type Props = {
-  attendeeId: string | null;
+  name?: string;
+  muted?: boolean;
 };
 
 export default React.memo(function VideoNameplate(props: Props) {
-  const { attendeeId } = props;
-  if (!attendeeId) {
-    return <></>;
-  }
+  const { name = "",  muted = false} = props;
 
-  const attendee = useAttendee(attendeeId);
-  if (!attendee.name || typeof !attendee.muted !== "boolean") {
-    return <></>;
-  }
-
-  const { name, muted } = attendee;
   return (
     <div className={cx("VideoNameplate_videoNameplate")}>
       <div className={cx("VideoNameplate_muted")}>

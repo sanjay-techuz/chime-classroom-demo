@@ -9,22 +9,19 @@ import VideoNameplate from "./VideoNameplate";
 import styles from "./RosterLayout.css";
 import { nameInitials } from "../utils";
 import { Avatar, Typography } from "@mui/material";
-import useRoster from "../hooks/useRoster";
-import RosterAttendeeType from "../types/RosterAttendeeType";
 
 const cx = classNames.bind(styles);
 
 type Props = {
-  attendeeId: string;
-  name: string;
+  muted?: boolean;
+  host?: boolean;
+  name?: string;
   view?: string;
 };
 
 export default React.memo(function LocalRoster(props: Props) {
-  const { attendeeId, name, view } = props;
+  const { muted = false, host = false, name = "", view } = props;
   const initials = nameInitials(name);
-  const roster = useRoster();
-  const rosterAttendee: RosterAttendeeType = roster[attendeeId];
 
   return (
     <div
@@ -39,7 +36,7 @@ export default React.memo(function LocalRoster(props: Props) {
           >
             {name}
           </Typography>
-          <VideoNameplate attendeeId={attendeeId} />
+          <VideoNameplate name={name} muted={muted} />
         </>
       ) : (
         <>
@@ -49,7 +46,7 @@ export default React.memo(function LocalRoster(props: Props) {
           <Typography className={cx("Mui_roster_layout_badge_typography")}>
             {name}
           </Typography>
-          {rosterAttendee?.host && (
+          {host && (
             <span className={"RosterLayout_host"}>Host</span>
           )}
         </>

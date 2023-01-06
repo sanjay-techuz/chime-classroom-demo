@@ -9,6 +9,8 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import getChimeContext from "../context/getChimeContext";
 import getGlobalVarContext from "../context/getGlobalVarContext";
+import useRoster from "../hooks/useRoster";
+import RosterAttendeeType from "../types/RosterAttendeeType";
 import LocalRoster from "./LocalRoster";
 import styles from "./LocalVideo.css";
 import VideoNameplate from "./VideoNameplate";
@@ -27,7 +29,7 @@ export default React.memo(function LocalVideo(props: Props) {
   const videoElement = useRef(null);
   const attendeeId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;
-  const name = chime?.name;
+  const name = chime?.name || "";
 
   useEffect(() => {
     chime?.audioVideo?.addObserver({
@@ -50,6 +52,9 @@ export default React.memo(function LocalVideo(props: Props) {
     });
   }, []);
 
+  const roster = useRoster();
+  const rosterAttendee: RosterAttendeeType = attendeeId ? roster[attendeeId] : {};
+
   return (
     <>
       <div
@@ -60,13 +65,15 @@ export default React.memo(function LocalVideo(props: Props) {
       >
         <video muted ref={videoElement} className={cx("LocalVideo_video")} />
         <VideoNameplate
-          attendeeId={attendeeId as string}
+          name={rosterAttendee?.name ? rosterAttendee?.name : name} 
+          muted={rosterAttendee?.muted}
         />
       </div>
       {!enabled && (
         <LocalRoster
-          attendeeId={attendeeId as string}
-          name={name as string}
+          name={rosterAttendee?.name ? rosterAttendee?.name : name} 
+          muted={rosterAttendee?.muted}
+          host={rosterAttendee?.host}
           view={view}
         />
       )}
