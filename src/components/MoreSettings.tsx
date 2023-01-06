@@ -287,20 +287,25 @@ export default React.memo(function MoreSettings() {
               return (
                 <MenuItem
                   key={`${device.value}`}
+                  sx={{ justifyContent: "space-between !important"}}
                   value={`${device.value}`}
                   onClick={async () => {
                     await chime?.chooseAudioInputDevice(device);
                   }}
                 >
+                  <div>
+                  <div
+                    style={{ padding: "0px 10px", fontSize: "12px" }}
+                  >{`${device.name}`}</div>
+                  </div>
+                  <div>
                   {deviceSwitcherState?.currentAudioInputDevice?.value ===
                   device.value ? (
                     <Icons src={"/icons/check_icon.svg"} />
                   ) : (
                     <Icons src={"/icons/check_icon_black.svg"} />
                   )}
-                  <div
-                    style={{ padding: "0px 10px", fontSize: "12px" }}
-                  >{`${device.name}`}</div>
+                  </div>
                 </MenuItem>
               );
             })}
@@ -373,20 +378,25 @@ export default React.memo(function MoreSettings() {
               return (
                 <MenuItem
                   key={`${device.value}`}
+                  sx={{ justifyContent: "space-between !important"}}
                   value={`${device.value}`}
                   onClick={async () => {
                     await chime?.chooseAudioOutputDevice(device);
                   }}
                 >
+                  <div>
+                  <div
+                    style={{ padding: "0px 10px", fontSize: "12px" }}
+                  >{`${device.name}`}</div>
+                  </div>
+                  <div>
                   {deviceSwitcherState?.currentAudioOutputDevice?.value ===
                   device.value ? (
                     <Icons src={"/icons/check_icon.svg"} />
                   ) : (
                     <Icons src={"/icons/check_icon_black.svg"} />
                   )}
-                  <div
-                    style={{ padding: "0px 10px", fontSize: "12px" }}
-                  >{`${device.name}`}</div>
+                  </div>
                 </MenuItem>
               );
             })}
@@ -459,20 +469,25 @@ export default React.memo(function MoreSettings() {
               return (
                 <MenuItem
                   key={`${device.value}`}
+                  sx={{ justifyContent: "space-between !important"}}
                   value={`${device.value}`}
                   onClick={async () => {
                     await chime?.chooseVideoInputDevice(device);
                   }}
-                >
+                > 
+                <div>
+                  <div
+                    style={{ padding: "0px 10px", fontSize: "12px" }}
+                  >{`${device.name}`}</div>
+                  </div>
+                  <div>
                   {deviceSwitcherState?.currentVideoInputDevice?.value ===
                   device.value ? (
                     <Icons src={"/icons/check_icon.svg"} />
                   ) : (
                     <Icons src={"/icons/check_icon_black.svg"} />
                   )}
-                  <div
-                    style={{ padding: "0px 10px", fontSize: "12px" }}
-                  >{`${device.name}`}</div>
+                  </div>
                 </MenuItem>
               );
             })}
@@ -544,6 +559,7 @@ export default React.memo(function MoreSettings() {
             return (
               <MenuItem
                 key={`${quality.value}`}
+                sx={{ justifyContent: "space-between !important"}}
                 value={`${quality.value}`}
                 onClick={async () => {
                   const qualityValue = quality.value;
@@ -577,14 +593,18 @@ export default React.memo(function MoreSettings() {
                   }
                 }}
               >
+                <div>
+                <div
+                  style={{ padding: "0px 10px", fontSize: "12px" }}
+                >{`${quality.name}`}</div>
+                </div>
+                <div>
                 {selectedQuality?.name === quality.name ? (
                   <Icons src={"/icons/check_icon.svg"} />
                 ) : (
                   <Icons src={"/icons/check_icon_black.svg"} />
                 )}
-                <div
-                  style={{ padding: "0px 10px", fontSize: "12px" }}
-                >{`${quality.name}`}</div>
+                </div>
               </MenuItem>
             );
           })}

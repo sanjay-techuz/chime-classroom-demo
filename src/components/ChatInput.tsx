@@ -166,11 +166,7 @@ export default React.memo(function ChatInput(props: Props) {
                 changeChannel(MessageTopic.PublicChannel, "", 0);
               }}
             >
-              {activeChatAttendee === MessageTopic.PublicChannel ? (
-                <Icons src={"/icons/check_icon.svg"} />
-              ) : (
-                <Icons src={"/icons/check_icon_black.svg"} />
-              )}
+              <div>
               <div
                 className={cx("Mui_chat_input_popover_everyone_menu_listitem")}
               >
@@ -187,6 +183,14 @@ export default React.memo(function ChatInput(props: Props) {
               >
                 {publicChannelCnt}
               </Avatar>
+              </div>
+              <div>
+              {activeChatAttendee === MessageTopic.PublicChannel ? (
+                <Icons src={"/icons/check_icon.svg"} />
+              ) : (
+                <Icons src={"/icons/check_icon_black.svg"} />
+              )}
+              </div>
             </MenuItem>
             {chatAttendeeIds.map((chatAttdId: string) => {
               const rosterAttendee: RosterAttendeeType = roster[chatAttdId];
@@ -206,11 +210,7 @@ export default React.memo(function ChatInput(props: Props) {
                     changeChannel("private", chatAttdId, msgCount);
                   }}
                 >
-                  {activeChatAttendee === chatAttdId ? (
-                    <Icons src={"/icons/check_icon.svg"} />
-                  ) : (
-                    <Icons src={"/icons/check_icon_black.svg"} />
-                  )}
+                  <div>
                   <div
                     className={cx(
                       "Mui_chat_input_popover_everyone_menu_listitem"
@@ -229,6 +229,14 @@ export default React.memo(function ChatInput(props: Props) {
                   >
                     {msgCount}
                   </Avatar>
+                  </div>
+                  <div>
+                  {activeChatAttendee === chatAttdId ? (
+                    <Icons src={"/icons/check_icon.svg"} />
+                  ) : (
+                    <Icons src={"/icons/check_icon_black.svg"} />
+                  )}
+                  </div>
                 </MenuItem>
               );
             })}

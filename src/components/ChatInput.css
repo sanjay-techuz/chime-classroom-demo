@@ -50,6 +50,8 @@
 
 .Mui_chat_input_popover_everyone_menu_item {
   padding: 3px 10px !important;
+  display: flex !important;
+  justify-content: space-between !important;
 }
 
 .Mui_chat_input_popover_everyone_menu_listitem {
