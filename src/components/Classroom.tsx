@@ -108,7 +108,7 @@ export default function Classroom() {
   // See more comments in ContentVideo.
   const onContentShareEnabled = useCallback(
     async (enabled: boolean) => {
-      if (enabled && viewMode === ViewMode.ScreenShare) {
+      if (enabled) {
         await stopContentShare();
       }
       setIsContentShareEnabled(enabled);

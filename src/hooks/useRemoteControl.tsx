@@ -128,6 +128,7 @@ export default function useRemoteControl() {
             if (focus) {
               notifDispatch({ type: NotifType.SCREEN_SHARE_PERMIT, payload: { message: intl.formatMessage({ id: "Notification.screenSharePermit" })} });
             }else{
+              chime?.audioVideo?.stopContentShare();
               notifDispatch({ type: NotifType.SCREEN_SHARE_PERMIT, payload: { message: intl.formatMessage({ id: "Notification.screenShareNotPermit" })} });
             }
           }

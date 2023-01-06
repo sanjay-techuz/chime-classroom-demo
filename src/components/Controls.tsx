@@ -263,11 +263,7 @@ export default function Controls(props: Props) {
             onClick={() => {
               if (classMode === ClassMode.Teacher || screenSharePermit) {
                 if (!isScreenShared) {
-                  if(isContentShareEnabled){
-                    setOpenScreenSharePermit(true);
-                  }else{
                     onClickShareButton(true);
-                  }
                 } else {
                   onClickShareButton(false);
                 }
