@@ -123,7 +123,7 @@ export default function Roster(props: Props) {
               className={cx("Mui_roster_user_list_item_icon")}
               onClick={closeParticipantsPanel}
             >
-              <Icons src={"/icons/close.svg"} />
+              <Icons src={"/icons/close.svg"} alt="close" />
             </ListItemIcon>
           </ListItem>
         </Box>
@@ -149,7 +149,7 @@ export default function Roster(props: Props) {
                     </Avatar>
                     {rosterAttendee?.screenPresenter && 
                     <div className={cx("Mui_roster_attendee_screen_presenter_icon")}>
-                      <Icons src={"/icons/screen_presenter.svg"} />
+                      <Icons src={"/icons/screen_presenter.svg"} alt="close" />
                     </div> }
                   </ListItemAvatar>
                   <ListItemText
@@ -199,7 +199,7 @@ export default function Roster(props: Props) {
                             }
                           )}
                         >
-                          <Icons src={"/icons/hand_yellow.svg"} />
+                          <Icons src={"/icons/hand_yellow.svg"} alt="hand_yellow" />
                         </span>
                       </div>
                     )}
@@ -237,18 +237,18 @@ export default function Roster(props: Props) {
                             }}
                           >
                             {rosterAttendee.muted ? (
-                              <Icons src={"/icons/microphone_off_red.svg"} />
+                              <Icons src={"/icons/microphone_off_red.svg"} alt="microphone_off_red" />
                             ) : (
-                              <Icons src={"/icons/microphone_on_white.svg"} />
+                              <Icons src={"/icons/microphone_on_white.svg"} alt="microphone_on_white" />
                             )}
                           </div>
                         </Tooltip>
                       ) : (
                         <div className={cx("Roster_muted")}>
                           {rosterAttendee.muted ? (
-                            <Icons src={"/icons/microphone_off_red.svg"} />
+                            <Icons src={"/icons/microphone_off_red.svg"} alt="microphone_off_red" />
                           ) : (
-                            <Icons src={"/icons/microphone_on_white.svg"} />
+                            <Icons src={"/icons/microphone_on_white.svg"} alt="microphone_on_white" />
                           )}
                         </div>
                       ))}
@@ -283,18 +283,18 @@ export default function Roster(props: Props) {
                           }}
                         >
                           {videoAttendees.has(attendeeId) ? (
-                            <Icons src={"/icons/camera_on_white.svg"} />
+                            <Icons src={"/icons/camera_on_white.svg"}  alt="camera_on_white" />
                           ) : (
-                            <Icons src={"/icons/camera_off_red.svg"} />
+                            <Icons src={"/icons/camera_off_red.svg"}  alt="camera_off_red" />
                           )}
                         </div>
                       </Tooltip>
                     ) : (
                       <div className={cx("Roster_muted")}>
                         {videoAttendees.has(attendeeId) ? (
-                          <Icons src={"/icons/camera_on_white.svg"} />
+                          <Icons src={"/icons/camera_on_white.svg"}  alt="camera_on_white"/>
                         ) : (
-                          <Icons src={"/icons/camera_off_red.svg"} />
+                          <Icons src={"/icons/camera_off_red.svg"}  alt="camera_off_red"/>
                         )}
                       </div>
                     )}
@@ -308,7 +308,7 @@ export default function Roster(props: Props) {
                           handleClick(e);
                           setSelectedAttdId(attendeeId)
                           }}>
-                          <Icons src={"/icons/roster_more.svg"} />
+                          <Icons src={"/icons/roster_more.svg"} alt="roster_more"/>
                           </div>
                         {attendeeId === selectedAttdId && 
                         <Menu

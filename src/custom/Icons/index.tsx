@@ -1,14 +1,14 @@
-/* eslint-disable */
 // Example code from react-popper-tooltip
 
 import React from "react";
 
-const Icons = ({ src }: { src: string }) => (
+const Icons = ({ src, alt }: { src: string, alt: string }) => (
   <img
     style={{
       objectFit: "contain",
     }}
     src={src}
+    alt={alt}
   />
 );
 

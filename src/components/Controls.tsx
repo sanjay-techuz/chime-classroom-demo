@@ -175,14 +175,14 @@ export default function Controls(props: Props) {
           >
             {muted ? (
               <>
-                <Icons src={"/icons/microphone_off_black.svg"} />
+                <Icons src={"/icons/microphone_off_black.svg"} alt="microphone_off_black" />
                 <span className={cx("Controls_margin_right")}>
                   {intl.formatMessage({ id: "Controls.unmuteTooltip" })}
                 </span>
               </>
             ) : (
               <>
-                <Icons src={"/icons/microphone_on_white.svg"} />
+                <Icons src={"/icons/microphone_on_white.svg"} alt="microphone_on_white" />
                 <span className={cx("Controls_margin_right")}>
                   {intl.formatMessage({ id: "Controls.muteTooltip" })}
                 </span>
@@ -234,14 +234,14 @@ export default function Controls(props: Props) {
           >
             {videoStatus === VideoStatus.Enabled ? (
               <>
-                <Icons src={"/icons/camera_off_black.svg"} />
+                <Icons src={"/icons/camera_off_black.svg"} alt="camera_off_black"/>
                 <span className={cx("Controls_margin_right")}>
                   {intl.formatMessage({ id: "Controls.stopVideo" })}
                 </span>
               </>
             ) : (
               <>
-                <Icons src={"/icons/camera_on_white.svg"} />
+                <Icons src={"/icons/camera_on_white.svg"} alt="camera_on_white"/>
                 <span className={cx("Controls_margin_right")}>
                   {intl.formatMessage({ id: "Controls.startVideo" })}
                 </span>
@@ -278,7 +278,7 @@ export default function Controls(props: Props) {
           >
             {isScreenShared ? (
               <>
-                <Icons src={"/icons/screen_share_white.svg"} />
+                <Icons src={"/icons/screen_share_white.svg"} alt="screen_share_white" />
                 <span className={cx("Controls_margin_right")}>
                   {intl.formatMessage({
                     id: "Controls.shareScreenStopTooltip",
@@ -287,7 +287,7 @@ export default function Controls(props: Props) {
               </>
             ) : (
               <>
-                <Icons src={"/icons/screen_share_black.svg"} />
+                <Icons src={"/icons/screen_share_black.svg"} alt="screen_share_black" />
                 <span className={cx("Controls_margin_right")}>
                   {intl.formatMessage({ id: "Controls.shareScreenTooltip" })}
                 </span>
@@ -331,14 +331,14 @@ export default function Controls(props: Props) {
             >
               {onChat ? (
                 <>
-                  <Icons src={"/icons/chat_black.svg"} />
+                  <Icons src={"/icons/chat_black.svg"} alt="chat_black" />
                   <span className={cx("Controls_margin_right")}>
                     {intl.formatMessage({ id: "Controls.Chat" })}
                   </span>
                 </>
               ) : (
                 <>
-                  <Icons src={"/icons/chat.svg"} />
+                  <Icons src={"/icons/chat.svg"} alt="chat" />
                   <span className={cx("Controls_margin_right")}>
                     {intl.formatMessage({ id: "Controls.Chat" })}
                   </span>
@@ -362,9 +362,9 @@ export default function Controls(props: Props) {
             )}
           >
             {openParticipants ? (
-              <Icons src={"/icons/participants_black.svg"} />
+              <Icons src={"/icons/participants_black.svg"} alt="participants_black"  />
             ) : (
-              <Icons src={"/icons/participants.svg"} />
+              <Icons src={"/icons/participants.svg"} alt="participants"  />
             )}
             <span className={cx("Controls_margin_right")}>
               {intl.formatMessage({ id: "Controls.participants" })}
@@ -421,9 +421,9 @@ export default function Controls(props: Props) {
               }}
             >
               {raised ? (
-                <Icons src={"/icons/hand.svg"} />
+                <Icons src={"/icons/hand.svg"} alt="hand" />
               ) : (
-                <Icons src={"/icons/hand_white.svg"} />
+                <Icons src={"/icons/hand_white.svg"} alt="hand_white" />
               )}
             </Avatar>
           </Tooltip>
@@ -487,7 +487,7 @@ export default function Controls(props: Props) {
             onClick={handleClick}
             className={cx("Mui_controls_end_meeting_btn")}
           >
-            <Icons src={"/icons/endmeeting.svg"} />
+            <Icons src={"/icons/endmeeting.svg"} alt="endmeeting" />
           </Avatar>
         </Tooltip>
       </Box>

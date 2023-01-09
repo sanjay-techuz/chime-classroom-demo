@@ -47,7 +47,7 @@ export default React.memo(function RemoteVideo(props: Props) {
 
       {rosterAttendee?.raised && (
         view !== "activeSpeaker" ? 
-        <Box className={cx("Mui_roster_layout_raised_hand_box")}>{rosterAttendee?.name} raised a hand <Icons src={"/icons/hand_yellow.svg"} /></Box>
+        <Box className={cx("Mui_roster_layout_raised_hand_box")}>{rosterAttendee?.name} raised a hand <Icons src={"/icons/hand_yellow.svg"} alt="hand_yellow" /></Box>
         :
         <div className={cx("RemoteVideo_raisedHand")}>
           <span
@@ -56,7 +56,7 @@ export default React.memo(function RemoteVideo(props: Props) {
               id: "RemoteVideo.raiseHandAriaLabel",
             })}
           >
-            <Icons src={"/icons/hand_yellow.svg"} />
+            <Icons src={"/icons/hand_yellow.svg"} alt="hand_yellow" />
           </span>
         </div>
       )}

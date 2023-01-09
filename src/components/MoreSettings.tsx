@@ -181,7 +181,7 @@ export default React.memo(function MoreSettings() {
           onClick={handleMenuClick}
           className={"Controls_btn_not_active"}
         >
-          <Icons src={"/icons/more.svg"} />
+          <Icons src={"/icons/more.svg"} alt="more" />
           <span className={"Controls_margin_right"}>
             {intl.formatMessage({ id: "Controls.menu" })}
           </span>
@@ -252,9 +252,9 @@ export default React.memo(function MoreSettings() {
                   <div>
                   {deviceSwitcherState?.currentAudioInputDevice?.value ===
                   device.value ? (
-                    <Icons src={"/icons/check_icon.svg"} />
+                    <Icons src={"/icons/check_icon.svg"}  alt="check_icon" />
                   ) : (
-                    <Icons src={"/icons/check_icon_black.svg"} />
+                    <Icons src={"/icons/check_icon_black.svg"}  alt="check_icon_black" />
                   )}
                   </div>
                 </MenuItem>
@@ -320,9 +320,9 @@ export default React.memo(function MoreSettings() {
                   <div>
                   {deviceSwitcherState?.currentAudioOutputDevice?.value ===
                   device.value ? (
-                    <Icons src={"/icons/check_icon.svg"} />
+                    <Icons src={"/icons/check_icon.svg"} alt="check_icon" />
                   ) : (
-                    <Icons src={"/icons/check_icon_black.svg"} />
+                    <Icons src={"/icons/check_icon_black.svg"} alt="check_icon_black" />
                   )}
                   </div>
                 </MenuItem>
@@ -388,9 +388,9 @@ export default React.memo(function MoreSettings() {
                   <div>
                   {deviceSwitcherState?.currentVideoInputDevice?.value ===
                   device.value ? (
-                    <Icons src={"/icons/check_icon.svg"} />
+                    <Icons src={"/icons/check_icon.svg"} alt="check_icon" />
                   ) : (
-                    <Icons src={"/icons/check_icon_black.svg"} />
+                    <Icons src={"/icons/check_icon_black.svg"} alt="check_icon_black" />
                   )}
                   </div>
                 </MenuItem>
@@ -482,9 +482,9 @@ export default React.memo(function MoreSettings() {
                 </div>
                 <div>
                 {selectedQuality?.name === quality.name ? (
-                  <Icons src={"/icons/check_icon.svg"} />
+                  <Icons src={"/icons/check_icon.svg"} alt="check_icon" />
                 ) : (
-                  <Icons src={"/icons/check_icon_black.svg"} />
+                  <Icons src={"/icons/check_icon_black.svg"} alt="check_icon_black" />
                 )}
                 </div>
               </MenuItem>

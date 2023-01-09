@@ -20,9 +20,9 @@ export default React.memo(function VideoNameplate(props: Props) {
     <div className={cx("VideoNameplate_videoNameplate")}>
       <div className={cx("VideoNameplate_muted")}>
         {muted ? (
-          <Icons src={"/icons/microphone_red_small.svg"} />
+          <Icons src={"/icons/microphone_red_small.svg"} alt="microphone_red_small"/>
         ) : (
-          <Icons src={"/icons/microphone_on_grey.svg"} />
+          <Icons src={"/icons/microphone_on_grey.svg"} alt="microphone_on_grey" />
         )}
       </div>
       <div className={cx("VideoNameplate_name")}>{name}</div>

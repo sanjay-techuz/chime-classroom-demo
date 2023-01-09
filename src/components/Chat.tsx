@@ -190,7 +190,7 @@ export default function Chat(props: Props) {
             className={cx("Mui_chat_header_list_icon")}
             onClick={closeChatPanel}
           >
-            <Icons src={"/icons/close.svg"} />
+            <Icons src={"/icons/close.svg"} alt="close" />
           </ListItemIcon>
         </ListItem>
       </Box>

@@ -280,7 +280,7 @@ export default function RosterSliderView(props: Props) {
               Mui_roster_slider_display_flex: scrollLength >= 796,
             })}
           >
-            <Icons src={"/icons/left_arrow.svg"} />
+            <Icons src={"/icons/left_arrow.svg"} alt="left_arrow" />
           </div>
         </Button>
         <div id="tileView" className={cx("Mui_roster_slider_tileview")}>
@@ -453,7 +453,7 @@ export default function RosterSliderView(props: Props) {
               ),
             })}
           >
-            <Icons src={"/icons/right_arrow.svg"} />
+            <Icons src={"/icons/right_arrow.svg"} alt="right_arrow"/>
           </div>
         </Button>
       </Box>

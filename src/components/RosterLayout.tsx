@@ -53,14 +53,14 @@ export default React.memo(function RosterLayout(props: Props) {
               id: "RemoteVideo.raiseHandAriaLabel",
             })}
           >
-            <Icons src={"/icons/hand_yellow.svg"} />
+            <Icons src={"/icons/hand_yellow.svg"} alt="hand_yellow" />
           </span>
         </div>
       )}
         </>
       ) : (
         <>
-        {rosterAttendee?.raised && <Box className={cx("Mui_roster_layout_raised_hand_box")}>{rosterAttendee?.name} raised a hand <Icons src={"/icons/hand_yellow.svg"} /></Box>}
+        {rosterAttendee?.raised && <Box className={cx("Mui_roster_layout_raised_hand_box")}>{rosterAttendee?.name} raised a hand <Icons src={"/icons/hand_yellow.svg"} alt="hand_yellow" /></Box>}
             <Avatar className={cx("Mui_roster_layout_badge_avatar")}>
               {initials}
             </Avatar>

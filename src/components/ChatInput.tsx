@@ -161,9 +161,9 @@ export default React.memo(function ChatInput(props: Props) {
               </div>
               <div>
               {activeChatAttendee === MessageTopic.PublicChannel ? (
-                <Icons src={"/icons/check_icon.svg"} />
+                <Icons src={"/icons/check_icon.svg"} alt="check_icon" />
               ) : (
-                <Icons src={"/icons/check_icon_black.svg"} />
+                <Icons src={"/icons/check_icon_black.svg"} alt="check_icon_black" />
               )}
               </div>
             </MenuItem>
@@ -207,9 +207,9 @@ export default React.memo(function ChatInput(props: Props) {
                   </div>
                   <div>
                   {activeChatAttendee === chatAttdId ? (
-                    <Icons src={"/icons/check_icon.svg"} />
+                    <Icons src={"/icons/check_icon.svg"} alt="check_icon" />
                   ) : (
-                    <Icons src={"/icons/check_icon_black.svg"} />
+                    <Icons src={"/icons/check_icon_black.svg"} alt="check_icon_black" />
                   )}
                   </div>
                 </MenuItem>
@@ -221,7 +221,7 @@ export default React.memo(function ChatInput(props: Props) {
             className={cx("Mui_chat_input_message_to")}
             onClick={handleClick}
           >
-            {currentChatter} &nbsp; <Icons src={"/icons/dropdown.svg"} />
+            {currentChatter} &nbsp; <Icons src={"/icons/dropdown.svg"} alt="dropdown" />
           </Button>
           <IconButton
             onClick={() => setOpenEmojiPicker(!openEmojiPicker)}
