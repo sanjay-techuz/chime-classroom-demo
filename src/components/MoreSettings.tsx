@@ -19,6 +19,7 @@ import useDevices from "../hooks/useDevices";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Icons from "../custom/Icons";
 import Tooltip from "../custom/classroom/Tooltip";
+import { MoreSettingsPopOver } from "../custom/classroom/Popover";
 
 export default React.memo(function MoreSettings() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -257,30 +258,7 @@ export default React.memo(function MoreSettings() {
             horizontal: "left",
           }}
           onClose={handleMicrophonePopoverClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: "visible",
-              marginLeft: "10px",
-              bgcolor: "var(--third_blue_color)",
-              color: "var(--pure_white_color)",
-              border: "1px solid var(--controls_border_color)",
-              "&:before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: "50%",
-                left: -5,
-                width: 10,
-                height: 10,
-                borderBottom: "1px solid var(--controls_border_color)",
-                borderLeft: "1px solid var(--controls_border_color)",
-                backgroundColor: "var(--third_blue_color)",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0,
-              },
-            },
-          }}
+          PaperProps={MoreSettingsPopOver}
         >
           {deviceSwitcherState.audioInputDevices &&
             deviceSwitcherState.audioInputDevices.map((device) => {
@@ -348,30 +326,7 @@ export default React.memo(function MoreSettings() {
           }}
           onClose={handleSpeakerPopoverClose}
           onMouseLeave={handleSpeakerPopoverClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: "visible",
-              marginLeft: "10px",
-              bgcolor: "var(--third_blue_color)",
-              color: "var(--pure_white_color)",
-              border: "1px solid var(--controls_border_color)",
-              "&:before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: "50%",
-                left: -5,
-                width: 10,
-                height: 10,
-                borderBottom: "1px solid var(--controls_border_color)",
-                borderLeft: "1px solid var(--controls_border_color)",
-                backgroundColor: "var(--third_blue_color)",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0,
-              },
-            },
-          }}
+          PaperProps={MoreSettingsPopOver}
         >
           {deviceSwitcherState.audioOutputDevices &&
             deviceSwitcherState.audioOutputDevices.map((device) => {
@@ -439,30 +394,7 @@ export default React.memo(function MoreSettings() {
           }}
           onClose={handleCameraPopoverClose}
           onMouseLeave={handleCameraPopoverClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: "visible",
-              marginLeft: "10px",
-              bgcolor: "var(--third_blue_color)",
-              color: "var(--pure_white_color)",
-              border: "1px solid var(--controls_border_color)",
-              "&:before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: "50%",
-                left: -5,
-                width: 10,
-                height: 10,
-                borderBottom: "1px solid var(--controls_border_color)",
-                borderLeft: "1px solid var(--controls_border_color)",
-                backgroundColor: "var(--third_blue_color)",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0,
-              },
-            },
-          }}
+          PaperProps={MoreSettingsPopOver}
         >
           {deviceSwitcherState.videoInputDevices &&
             deviceSwitcherState.videoInputDevices.map((device) => {
@@ -530,30 +462,7 @@ export default React.memo(function MoreSettings() {
           }}
           onClose={handleVideoQualityPopoverClose}
           onMouseLeave={handleVideoQualityPopoverClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: "visible",
-              marginLeft: "10px",
-              bgcolor: "var(--third_blue_color)",
-              color: "var(--pure_white_color)",
-              border: "1px solid var(--controls_border_color)",
-              "&:before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: "50%",
-                left: -5,
-                width: 10,
-                height: 10,
-                borderBottom: "1px solid var(--controls_border_color)",
-                borderLeft: "1px solid var(--controls_border_color)",
-                backgroundColor: "var(--third_blue_color)",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0,
-              },
-            },
-          }}
+          PaperProps={MoreSettingsPopOver}
         >
           {videoQualityList.map((quality) => {
             return (

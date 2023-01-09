@@ -26,6 +26,7 @@ import RosterAttendeeType from "../types/RosterAttendeeType";
 import { createPrivateChannel } from "../utils";
 import Icons from "../custom/Icons";
 import getGlobalVarContext from "../context/getGlobalVarContext";
+import { ChatInputPopOver } from "../custom/classroom/Popover";
 
 const cx = classNames.bind(styles);
 
@@ -131,31 +132,7 @@ export default React.memo(function ChatInput(props: Props) {
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                bottom: "70px !important",
-                top: "initial !important",
-                bgcolor: "var(--third_blue_color)",
-                color: "var(--pure_white_color)",
-                border: "1px solid var(--controls_border_color)",
-                overflow: "visible",
-                "&:before": {
-                  content: '""',
-                  display: "block",
-                  position: "absolute",
-                  bottom: -10,
-                  left: "10%",
-                  width: 10,
-                  height: 10,
-                  transform: "translateY(-50%) rotate(45deg)",
-                  zIndex: 0,
-                  borderBottom: "1px solid var(--controls_border_color)",
-                  borderRight: "1px solid var(--controls_border_color)",
-                  backgroundColor: "var(--third_blue_color)",
-                },
-              },
-            }}
+            PaperProps={ChatInputPopOver}
           >
             <MenuItem
               className={cx("Mui_chat_input_popover_everyone_menu_item")}
