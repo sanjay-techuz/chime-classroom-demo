@@ -332,7 +332,6 @@ export default function Classroom() {
                       })}
                     >
                       <Chat
-                        openParticipants={openParticipants}
                         closeChatPanel={() => {
                           if (!openParticipants) {
                             closeDrawerRightToggle();

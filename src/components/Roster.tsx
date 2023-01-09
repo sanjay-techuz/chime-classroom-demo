@@ -130,7 +130,10 @@ export default function Roster(props: Props) {
           </ListItem>
         </Box>
         <Divider className={cx("Mui_roster_header_divider")} />
-        <Box className={cx("Roster_scrollbar")}>
+        <Box className={cx({
+          Roster_teacher_scrollbar: classMode === ClassMode.Teacher,
+          Roster_student_scrollbar: classMode === ClassMode.Student,
+        })}>
           {attendeeIds &&
             attendeeIds.map((attendeeId: string) => {
               const rosterAttendee: RosterAttendeeType = roster[attendeeId];

@@ -40,11 +40,10 @@ var currentChannel: string = MessageTopic.PublicChannel;
 var publicChannelCnt = 0;
 
 type Props = {
-  openParticipants: boolean;
   closeChatPanel: () => void;
 };
 export default function Chat(props: Props) {
-  const { openParticipants, closeChatPanel } = props;
+  const { closeChatPanel } = props;
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const intl = useIntl();
 
@@ -200,9 +199,7 @@ export default function Chat(props: Props) {
       <Divider className={cx("Mui_chat_header_divider")} />
       <Box className={cx("Mui_chat_child_container")}>
         <div
-          className={cx("Chat_messages", {
-            Chat_messages_max_height: openParticipants,
-          })}
+          className={cx("Chat_messages")}
         >
           {filterMessage.map((message, index) => {
             let messageString: string = "";
