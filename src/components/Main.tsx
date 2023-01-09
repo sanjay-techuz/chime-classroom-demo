@@ -28,8 +28,8 @@ export default function Main() {
 
   useEffect(() => {
     console.log(meetingID, userName, mode);
-    const mTitle = document.getElementById("title");
-    if(mTitle) mTitle.innerHTML = `Tutorac - ${meetingName || meetingID}`;
+    // const mTitle = document.getElementById("title");
+    // if(mTitle) mTitle.innerHTML = `Tutorac - ${meetingName || meetingID}`;
 
     if (!userName || !mode) {
       navigate(`${routes.CREATE_OR_JOIN}`);
