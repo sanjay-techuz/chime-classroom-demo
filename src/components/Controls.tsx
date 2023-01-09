@@ -237,14 +237,14 @@ export default function Controls(props: Props) {
               <>
                 <Icons src={"/icons/camera_off_black.svg"} />
                 <span className={cx("Controls_margin_right")}>
-                  {intl.formatMessage({ id: "Controls.startVideo" })}
+                  {intl.formatMessage({ id: "Controls.stopVideo" })}
                 </span>
               </>
             ) : (
               <>
                 <Icons src={"/icons/camera_on_white.svg"} />
                 <span className={cx("Controls_margin_right")}>
-                  {intl.formatMessage({ id: "Controls.stopVideo" })}
+                  {intl.formatMessage({ id: "Controls.startVideo" })}
                 </span>
               </>
             )}
