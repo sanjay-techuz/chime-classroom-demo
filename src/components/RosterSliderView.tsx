@@ -68,17 +68,23 @@ export default function RosterSliderView(props: Props) {
     const meetingStartMeeting = chime?.endTime;
     
     if (mt) {
+      const timerTag = document.createElement("span");
+      timerTag.classList.add("Mui_roster_slider_red_color");
+      mt.appendChild(timerTag);
       if (!meetingStartMeeting) {
-        mt!.innerHTML = "00 min";
+        timerTag!.innerHTML = "00 min";
         return;
       }
       setInterval(function () {
-        const mTime = countDownTimer(meetingStartMeeting);
-        if(!mTime){
+        const { time, shouldShow } = countDownTimer(meetingStartMeeting);
+        if(!time){
           chime?.leaveRoom(true);
           navigate(`${routes.MAIN}?id=${userInfo.teacherId}`);
         }
-        mt.innerHTML = mTime as string;
+        if(shouldShow){
+          mt.style.display = "block";
+        }
+        timerTag.innerHTML = time as string;
       }, 1000);
     }
   }, []);
@@ -289,12 +295,11 @@ export default function RosterSliderView(props: Props) {
               justifyContent: maxScrollLength >= 796 ? "flex-start" : "center",
             }}
           >
-            <span className={"ClassRoom_meeting_timer"}>
+            <span className={"ClassRoom_meeting_timer"} id="meeting_timer">
               Your meeting will end in{" "}
-              <span
+              {/* <span
                 className={cx("Mui_roster_slider_red_color")}
-                id="meeting_timer"
-              ></span>
+              ></span> */}
             </span>
             <div
               className={cx({

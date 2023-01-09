@@ -87,6 +87,7 @@ nav {
 }
 
 .ClassRoom_meeting_timer {
+  display: none;
   position: absolute;
   height: 29px;
   left: 8px;
