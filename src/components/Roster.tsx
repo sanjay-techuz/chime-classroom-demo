@@ -32,6 +32,7 @@ import ClassMode from "../enums/ClassMode";
 import { nameInitials } from "../utils";
 import Icons from "../custom/Icons";
 import Tooltip from "../custom/classroom/Tooltip";
+import { RosterPopover } from "../custom/classroom/Popover";
 
 const cx = classNames.bind(styles);
 
@@ -317,29 +318,7 @@ export default function Roster(props: Props) {
                           anchorEl={anchorEl}
                           open={open}
                           onClose={handleClose}
-                          PaperProps={{
-                            elevation: 0,
-                            sx: {
-                              bgcolor: "var(--third_blue_color)",
-                              color: "var(--pure_white_color)",
-                              border: "1px solid var(--controls_border_color)",
-                              overflow: "visible",
-                              "&:before": {
-                                content: '""',
-                                display: "block",
-                                position: "absolute",
-                                top: 0,
-                                right: "10%",
-                                width: 10,
-                                height: 10,
-                                transform: "translateY(-50%) rotate(45deg)",
-                                zIndex: 0,
-                                borderTop: "1px solid var(--controls_border_color)",
-                                borderLeft: "1px solid var(--controls_border_color)",
-                                backgroundColor: "var(--third_blue_color)",
-                              },
-                            },
-                          }}  
+                          PaperProps={RosterPopover}  
                         >
                           <MenuItem sx={{ fontSize: "12px" }} onClick={() => handleChat(attendeeId)}>Chat</MenuItem>
                           {classMode === ClassMode.Teacher && <MenuItem sx={{ fontSize: "12px" }} onClick={() => {

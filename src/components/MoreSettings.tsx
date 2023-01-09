@@ -19,7 +19,7 @@ import useDevices from "../hooks/useDevices";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Icons from "../custom/Icons";
 import Tooltip from "../custom/classroom/Tooltip";
-import { MoreSettingsPopOver } from "../custom/classroom/Popover";
+import { MoreSettingsPopOver, MoreSettingsMicPopOver } from "../custom/classroom/Popover";
 
 export default React.memo(function MoreSettings() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
@@ -202,32 +202,7 @@ export default React.memo(function MoreSettings() {
         anchorEl={menuAnchorEl}
         open={openMenu}
         onClose={handleMenuClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            bottom: "75px !important",
-            top: "initial !important",
-            bgcolor: "var(--third_blue_color)",
-            color: "var(--pure_white_color)",
-            border: "1px solid var(--controls_border_color)",
-            width: "250px",
-            overflow: "visible",
-            "&:before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              bottom: -10,
-              left: "50%",
-              width: 10,
-              height: 10,
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
-              borderBottom: "1px solid var(--controls_border_color)",
-              borderRight: "1px solid var(--controls_border_color)",
-              backgroundColor: "var(--third_blue_color)",
-            },
-          },
-        }}
+        PaperProps={MoreSettingsMicPopOver}
       >
         <MenuItem
           onClick={(event) => {
