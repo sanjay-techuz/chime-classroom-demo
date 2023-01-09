@@ -1,5 +1,3 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
 /* eslint-disable  */
 
 import {
@@ -66,7 +64,7 @@ export default function RosterSliderView(props: Props) {
   useEffect(() => {
     const mt = document.getElementById("meeting_timer");
     const meetingStartMeeting = chime?.endTime;
-    
+
     if (mt) {
       const timerTag = document.createElement("span");
       timerTag.classList.add("Mui_roster_slider_red_color");

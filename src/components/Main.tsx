@@ -1,5 +1,3 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
 /* eslint-disable  */
 
 import classNames from "classnames/bind";
@@ -32,7 +30,7 @@ export default function Main() {
     console.log(meetingID, userName, mode);
     const mTitle = document.getElementById("title");
     if(mTitle) mTitle.innerHTML = `Tutorac - ${meetingName || meetingID}`;
-    
+
     if (!userName || !mode) {
       navigate(`${routes.CREATE_OR_JOIN}`);
     } else {
