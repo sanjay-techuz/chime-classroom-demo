@@ -13,7 +13,6 @@ import {
   ListItem,
   ListItemIcon,
   ListItemAvatar,
-  Tooltip,
   ListItemText,
   Typography,
   Button,
@@ -32,6 +31,7 @@ import MessageTopic from "../enums/MessageTopic";
 import ClassMode from "../enums/ClassMode";
 import { nameInitials } from "../utils";
 import Icons from "../custom/Icons";
+import Tooltip from "../custom/classroom/Tooltip";
 
 const cx = classNames.bind(styles);
 

@@ -18,7 +18,6 @@ import {
   DialogContentText,
   MenuItem,
   Popover,
-  Tooltip,
 } from "@mui/material";
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
 import routes from "../constants/routes.json";
@@ -31,6 +30,7 @@ import MoreSettings from "./MoreSettings";
 import styles from "./Controls.css";
 import MessageTopic from "../enums/MessageTopic";
 import Icons from "../custom/Icons";
+import Tooltip from "../custom/classroom/Tooltip";
 
 const cx = classNames.bind(styles);
 let timeoutId: number;

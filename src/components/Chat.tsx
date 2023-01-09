@@ -12,7 +12,6 @@ import {
   ListItem,
   ListItemText,
   Paper,
-  Tooltip,
   IconButton,
   Divider,
   ListItemIcon,
@@ -31,6 +30,7 @@ import useRemoteControl from "../hooks/useRemoteControl";
 import useRaisedHandAttendees from "../hooks/useRaisedHandAttendees";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Icons from "../custom/Icons";
+import Tooltip from "../custom/classroom/Tooltip";
 
 const cx = classNames.bind(styles);
 var chatPannelOpen = false;

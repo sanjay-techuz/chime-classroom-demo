@@ -10,7 +10,6 @@ import {
   Divider,
   MenuItem,
   Popover,
-  Tooltip,
 } from "@mui/material";
 
 import ChimeSdkWrapper from "../chime/ChimeSdkWrapper";
@@ -19,6 +18,7 @@ import getGlobalVarContext from "../context/getGlobalVarContext";
 import useDevices from "../hooks/useDevices";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Icons from "../custom/Icons";
+import Tooltip from "../custom/classroom/Tooltip";
 
 export default React.memo(function MoreSettings() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
