@@ -31,6 +31,7 @@
 
 .Mui_chat_input_display_flex {
   display: flex !important;
+  margin-right: 10px !important;
 }
 
 .Mui_chat_input_display_block {
@@ -61,9 +62,9 @@
 
 .Mui_chat_input_popover_everyone_menu_listitem_avatar {
   background-color: var(--color_pink) !important;
-  height: 20px !important;
-  width: 20px !important;
-  font-size: 1rem !important;
+  height: 17px !important;
+  width: 16px !important;
+  font-size: 12px !important;
 }
 
 .Mui_chat_input_popover_private_menu_item {

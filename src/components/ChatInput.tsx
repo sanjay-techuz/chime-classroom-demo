@@ -141,7 +141,7 @@ export default React.memo(function ChatInput(props: Props) {
                 changeChannel(MessageTopic.PublicChannel, "", 0);
               }}
             >
-              <div>
+              <div style={{ display: "flex"}}>
               <div
                 className={cx("Mui_chat_input_popover_everyone_menu_listitem")}
               >
@@ -185,7 +185,7 @@ export default React.memo(function ChatInput(props: Props) {
                     changeChannel("private", chatAttdId, msgCount);
                   }}
                 >
-                  <div>
+                  <div style={{ display: "flex"}}>
                   <div
                     className={cx(
                       "Mui_chat_input_popover_everyone_menu_listitem"
