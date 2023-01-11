@@ -69,6 +69,7 @@
 
 .Mui_chat_input_popover_private_menu_item {
   padding: 0px 10px !important;
+  justify-content: space-between !important;
 }
 
 .Mui_chat_input_message_to {
