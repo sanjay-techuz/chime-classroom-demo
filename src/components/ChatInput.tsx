@@ -39,8 +39,8 @@ export default React.memo(function ChatInput(props: Props) {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
   const { activeChatAttendeeId } = globalVar;
-  const [inputText, setInputText] = useState("");
-  const [currentChatter, setCurrentChatter] = useState("Everyone");
+  const [inputText, setInputText] = useState<string>("");
+  const [currentChatter, setCurrentChatter] = useState<string>("Everyone");
   const [activeChatAttendee, setActiveChatAttendee] = useState<string>(
     MessageTopic.PublicChannel
   );

@@ -16,7 +16,7 @@ type Props = {
 
 export default function ContentVideo(props: Props) {
   const { onContentShareEnabled } = props;
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState<boolean>(false);
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const videoElement = useRef(null);
 

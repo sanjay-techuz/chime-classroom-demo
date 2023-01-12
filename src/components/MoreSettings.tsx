@@ -39,8 +39,11 @@ export default React.memo(function MoreSettings() {
       value: ["320", "180", "15", "400"],
     },
   ];
-  const [selectedQuality, setSelectedQuality] = useState(videoQualityList[0]);
-  const [enterFullScreen, setEnterFullScreen] = React.useState(false);
+  const [selectedQuality, setSelectedQuality] = useState<{
+    name: string;
+    value: string[];
+  }>(videoQualityList[0]);
+  const [enterFullScreen, setEnterFullScreen] = React.useState<boolean>(false);
   const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(
     null
   );

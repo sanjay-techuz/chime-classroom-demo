@@ -42,15 +42,15 @@ export default function Classroom() {
 
   const { updateGlobalVar } = useContext(getGlobalVarContext());
   const { meetingStatus, errorMessage } = useContext(getMeetingStatusContext());
-  const [isContentShareEnabled, setIsContentShareEnabled] = useState(false);
-  const [isScreenShareView, setIsScreenShareView] = useState(false);
-  const [screenShareFullView, setScreenShareFullView] = useState(false);
+  const [isContentShareEnabled, setIsContentShareEnabled] = useState<boolean>(false);
+  const [isScreenShareView, setIsScreenShareView] = useState<boolean>(false);
+  const [screenShareFullView, setScreenShareFullView] = useState<boolean>(false);
 
-  const [tryToReload, setTryToReload] = useState(true);
-  const [viewMode, setViewMode] = useState(ViewMode.Room);
-  const [openChat, setOpenChat] = useState(false);
-  const [openParticipants, setOpenParticipants] = useState(false);
-  const [rightDrawerOpen, setRightDrawerOpen] = React.useState(false);
+  const [tryToReload, setTryToReload] = useState<boolean>(true);
+  const [viewMode, setViewMode] = useState<number>(ViewMode.Room);
+  const [openChat, setOpenChat] = useState<boolean>(false);
+  const [openParticipants, setOpenParticipants] = useState<boolean>(false);
+  const [rightDrawerOpen, setRightDrawerOpen] = React.useState<boolean>(false);
   const location = useLocation();
   const locationState = location?.state || null;
 

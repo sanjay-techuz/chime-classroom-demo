@@ -45,8 +45,8 @@ export default function Roster(props: Props) {
   const { globalVar, updateGlobalVar } = useContext(getGlobalVarContext());
   const { classMode, turnOnFocus } = globalVar;
   const roster = useRoster();
-  const [videoAttendees, setVideoAttendees] = useState(new Set());
-  const [ selectedAttdId, setSelectedAttdId ] = useState("");
+  const [videoAttendees, setVideoAttendees] = useState<Set<unknown>>(new Set());
+  const [ selectedAttdId, setSelectedAttdId ] = useState<string>("");
   const intl = useIntl();
   const localUserId =
     chime?.meetingSession?.configuration?.credentials?.attendeeId;

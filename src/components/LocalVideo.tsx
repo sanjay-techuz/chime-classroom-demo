@@ -21,7 +21,7 @@ type Props = {
 
 export default React.memo(function LocalVideo(props: Props) {
   const { view } = props;
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState<boolean>(false);
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
   const { updateGlobalVar } = useContext(getGlobalVarContext());
   const videoElement = useRef(null);

@@ -46,11 +46,11 @@ export default function RosterSliderView(props: Props) {
   const videoElements: HTMLVideoElement[] = [];
   const tiles: { [index: number]: number } = {};
   const currentUser = chime?.configuration?.credentials?.attendeeId;
-  const [videoAttendees, setVideoAttendees] = useState(new Set());
-  const [attendeeIdFullScreen, setAttendeeIdFullScreen] = useState("");
+  const [videoAttendees, setVideoAttendees] = useState<Set<unknown>>(new Set());
+  const [attendeeIdFullScreen, setAttendeeIdFullScreen] = useState<string>("");
 
-  const [scrollLength, setScrollLength] = useState(0);
-  const [maxScrollLength, setMaxScrollLength] = useState(0);
+  const [scrollLength, setScrollLength] = useState<number>(0);
+  const [maxScrollLength, setMaxScrollLength] = useState<number>(0);
 
   useEffect(() => {
     if (isContentShareEnabled) {

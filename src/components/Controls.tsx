@@ -68,12 +68,12 @@ export default function Controls(props: Props) {
     screenSharePermit,
   } = globalVar;
   const navigate = useNavigate();
-  const [muted, setMuted] = useState(false);
-  const [isScreenShared, setIsScreenShared] = useState(false);
-  const [openScreenSharePermit, setOpenScreenSharePermit] = useState(false);
-  const [onChat, setOnChat] = useState(false);
-  const [raised, setRaised] = useState(false);
-  const [videoStatus, setVideoStatus] = useState(VideoStatus.Disabled);
+  const [muted, setMuted] = useState<boolean>(false);
+  const [isScreenShared, setIsScreenShared] = useState<boolean>(false);
+  const [openScreenSharePermit, setOpenScreenSharePermit] = useState<boolean>(false);
+  const [onChat, setOnChat] = useState<boolean>(false);
+  const [raised, setRaised] = useState<boolean>(false);
+  const [videoStatus, setVideoStatus] = useState<number>(VideoStatus.Disabled);
   const intl = useIntl();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

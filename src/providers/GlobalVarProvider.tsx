@@ -12,7 +12,17 @@ export default function GlobalVarProvider(props: Props) {
   
   const { children } = props;
   const GlobalVarContext = getGlobalVarContext();
-  const [globalVar, setGlobalVar] = useState({
+  const [globalVar, setGlobalVar] = useState<{
+    localVideo: boolean;
+    activeSpeakerAttendeeId: string;
+    isChatOpen: boolean;
+    groupChatCounter: number;
+    userInfo: {};
+    classMode: ClassMode;
+    screenSharePermit: boolean;
+    activeChatAttendeeId: string;
+    turnOnFocus: boolean;
+}>({
       localVideo:false,
       activeSpeakerAttendeeId:"",
       isChatOpen:false,

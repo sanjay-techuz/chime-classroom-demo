@@ -9,7 +9,7 @@ import MessageTopic from '../enums/MessageTopic';
 
 export default function useRaisedHandAttendees() {
   const chime: ChimeSdkWrapper | null = useContext(getChimeContext());
-  const [raisedHandAttendees, setRaisedHandAttendees] = useState(new Set());
+  const [raisedHandAttendees, setRaisedHandAttendees] = useState<Set<unknown>>(new Set());
   useEffect(() => {
     const realTimeRaisedHandAttendees = new Set();
     const callback = (message: DataMessage) => {
