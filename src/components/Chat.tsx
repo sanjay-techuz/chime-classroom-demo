@@ -212,7 +212,7 @@ export default function Chat(props: Props) {
             if (message.senderAttendeeId === localUserId) {
               return (
                 <ListItem
-                  key={message.timestampMs}
+                  key={`${message.timestampMs + Math.random()}`}
                   component="div"
                   className={cx("Mui_chat_message_list_item")}
                   onMouseEnter={() => {
@@ -293,7 +293,7 @@ export default function Chat(props: Props) {
             } else {
               return (
                 <ListItem
-                  key={message.timestampMs}
+                  key={`${message.timestampMs + Math.random()}`}
                   component="div"
                   className={cx("Mui_chat_message_left_list_item")}
                   onMouseEnter={() => {
